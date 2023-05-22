@@ -1,0 +1,8 @@
+
+
+	A tener en cuenta:
+	------------------
+
+	- Se han realizado vistas de forma generalizada, durante
+	  la realización de la página habrá pequeñas modificaciones
+          dependiendo de la página.
