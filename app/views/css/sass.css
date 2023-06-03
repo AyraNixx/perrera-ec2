@@ -12108,11 +12108,26 @@ h5, .h5 {
   background-color: #425C81;
 }
 
+.show-menu {
+  width: 100% !important;
+  transition: width 0.3s ease-in-out;
+}
+
+.close-menu {
+  opacity: 1;
+  width: 0;
+  transition: width 0.2s ease-in-out;
+}
+
 #menu {
+  display: block;
   min-height: 100%;
   width: 17em;
   position: fixed;
   top: 0;
+}
+#menu #close-btn {
+  display: none;
 }
 #menu > div {
   max-height: 700px;
@@ -12194,6 +12209,7 @@ header {
   height: 57px;
 }
 header button {
+  visibility: hidden;
   width: 80px;
   font-size: 28px;
   cursor: pointer;
@@ -12201,7 +12217,6 @@ header button {
 header button .hamburguer-inner {
   width: 40px;
   height: 20px;
-  top: 10%;
   transform: translate(-50%, 50%);
 }
 header button .hamburguer-inner > span {
@@ -12282,6 +12297,49 @@ header button .hamburguer-inner > span:last-of-type {
   right: 0;
 }
 
+@media (max-width: 768px) {
+  #menu {
+    width: 0;
+  }
+  #menu #close-btn {
+    display: inline-block;
+    width: 5rem;
+    height: 30px;
+    outline: none;
+  }
+  #menu #close-btn:hover {
+    background: #7A8BB0;
+    color: white;
+  }
+  #content {
+    width: 100%;
+    left: 0;
+  }
+  #content main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+  }
+  #content main .date {
+    padding-top: 1rem !important;
+    padding-bottom: 0 !important;
+    text-align: center !important;
+  }
+  #content main .home-tasks {
+    width: 100%;
+  }
+  #content main .home-tasks .task-header {
+    border-bottom: 2px solid #425C81;
+  }
+  #content main .home-tasks .task-table {
+    padding-top: 1rem;
+  }
+  header #header-btn {
+    visibility: visible;
+  }
+}
 @media (max-width: 576px) {
   .bg-1 {
     max-width: 220px;

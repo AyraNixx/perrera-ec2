@@ -30,14 +30,14 @@ $user_profile = 'Administrador';
 
 <body>
     <!-- MENU -->
-    <?php include_once "./components/menu.php";?>    
+    <?php include_once "./components/menu.php"; ?>
 
 
     <!-- CONTENIDO -->
     <section id="content">
 
         <!-- HEADER -->
-        <?php include_once "./components/header.php";?>
+        <?php include_once "./components/header.php"; ?>
 
 
         <!-- CONTENEDOR PRINCIPAL -->
@@ -185,7 +185,9 @@ $user_profile = 'Administrador';
         </main>
 
     </section>
-
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="./js/widthMenu.js"></script>
 </body>
 
 </html>

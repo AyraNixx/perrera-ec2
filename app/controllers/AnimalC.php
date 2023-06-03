@@ -21,7 +21,7 @@ class AnimalC
     const ERROR_INSERT = "No se ha podido introducir el nuevo registro a la base de datos. Revisa los datos introducidos";
     const ERROR_UPDATE = "No se ha podido modificar el registro.";
     const ERROR_DELETE = "No se ha podido eliminar el elemento.";
-    const VIEW_ANIMAL = "../views/V_Animales.php";
+    const VIEW_ANIMAL = "V_Animales.php";
     const VIEW_UPDATE_EDIT = "../views/update_or_add_animal.php";
 
 
@@ -327,6 +327,7 @@ class AnimalC
 
     public function view(array $datos_visibles, array $datos, String $view)
     {
+
         $data_visible = $datos_visibles;
         $data = $datos;
 
@@ -339,9 +340,10 @@ class AnimalC
 
 $animal = new AnimalC();
 
-if (!empty($_POST["action"])) {
-    $action = $_POST["action"];
-} else {
+if (!empty($_REQUEST["action"])) {
+    $action = $_REQUEST["action"];
+}
+ else {
     $action = "index";
 }
 $animal->run($action);

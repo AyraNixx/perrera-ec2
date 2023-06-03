@@ -180,12 +180,29 @@ h5 {
 /// 
 /// /////////////////////////////////////////////////////////////////////////////////
 
+.show-menu
+{
+    width: 100% !important;
+    transition: width .3s ease-in-out;
+}
+
+.close-menu 
+{
+    opacity: 1;
+    width: 0;
+    transition: width .2s ease-in-out;
+}
 
 #menu {
+    display: block;
     min-height: 100%;
     width: 17em;
     position: fixed;
     top: 0;
+
+    #close-btn {
+        display: none;
+    }
 
     &>div {
         max-height: 700px;
@@ -297,6 +314,7 @@ header {
     height: 57px;
 
     button {
+        visibility: hidden;
         width: 80px;
 
         font-size: 28px;
@@ -306,8 +324,6 @@ header {
         .hamburguer-inner {
             width: 40px;
             height: 20px;
-
-            top: 10%;
 
             transform: translate(-50%, 50%);
 
@@ -447,6 +463,72 @@ header {
 .bg-2 {
     right: 0;
 }
+
+
+// LUEGO LO CAMBIO Y PONGO TODO JUNTO EN CADA MEDIA
+@media (max-width: 768px) {
+    #menu {
+        width: 0;
+
+        #close-btn {
+            display: inline-block;
+            width: 5rem;
+            height: 30px;
+            outline: none;
+    
+            &:hover 
+            {
+                background: #7A8BB0;
+                color: white;
+            }
+        }
+    }
+
+    #content {
+        width: 100%;
+        left: 0;
+
+        main {
+            display: flex;
+
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            padding: 1rem;
+
+            .date {
+                padding-top: 1rem !important;
+                padding-bottom: 0 !important;
+                text-align: center !important;
+            }
+
+            .home-tasks {
+                width: 100%;
+
+                .task-header {
+                    border-bottom: 2px solid $primary;
+                }
+
+                .task-table {
+                    padding-top: 1rem;
+                }
+            }
+        }
+    }
+
+    header {
+        #header-btn {
+            visibility: visible;
+        }
+    }
+}
+
+
+
+
+
+
 
 @media (max-width: 576px) {
     .bg-1 {

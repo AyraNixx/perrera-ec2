@@ -64,7 +64,7 @@
             <hr>
 
             <div class="logout">
-                <h5><a href="#" class="text-white">Cerrar sesión</a></h5>
+                <h5><a href="/app/controllers/LoginC.php?action=logout" class="text-white">Cerrar sesión</a></h5>
             </div>
         </div>
     </div>
