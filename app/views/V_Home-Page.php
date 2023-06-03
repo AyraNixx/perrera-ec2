@@ -1,14 +1,17 @@
 <?php
 
-//Comprobamos que la sesion esta iniciada
+// Comprobamos que la sesion esta iniciada
 session_start();
 //Si no tenemos guardado login 
-if (!isset($_SESSION["login"])) {
+if (!isset($_SESSION["login"])) 
+{
     header("Location:../../public/Login.php");
 }
 
 $user_name = $_SESSION["nombre"];
-$rol = $_SESSION["rol"];
+// $user_name = 'Pedro';
+$user_surname = 'Gonzales';
+$user_profile = 'Administrador';
 
 ?>
 
@@ -19,181 +22,170 @@ $rol = $_SESSION["rol"];
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="/app/views/css/sass.css">
-    <link rel="shortcut icon" href="/public/imgs/logos/logo1.png" type="image/x-icon">
+    <title>Inicio</title>
+    <link rel="shortcut icon" href="../../public/imgs/logos/logo1.png" type="image/x-icon">
     <script src="https://kit.fontawesome.com/8d125d2b91.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../views/css/sass.css">
 </head>
 
-<body class="bg-white">
-
-    <div class="container-fluid bg-transparent vh-100">
-
-        <!-- ENCABEZADO -->
-        <header>
-            <!-- Image and text -->
-            <nav class="navbar border-bottom border-secondary ">
-                <a class="navbar-brand ms-3" href="./V_Home-Page.php">
-                    <!-- Usamos la etiqueta object para que en caso de que un navegador no permita visualizar svg
-                         tenga como alternativa una imagen con extensión png. -->
-                    <object data="../../public/imgs/logos/logo1.svg" type="image/svg+xml" width="30" height="30" class="d-inline-block align-top me-2" alt="Logo perrera">
-                        <img src="../../public/imgs/logos/logo1.png">
-                    </object>
-                    Patas arriba
-                </a>
+<body>
+    <!-- MENU -->
+    <?php include_once "./components/menu.php";?>    
 
 
+    <!-- CONTENIDO -->
+    <section id="content">
 
-                <!-- Butón que muestra el menú -->
-
-
-                <!-- Apuntes -->
-                <!-- data-toggle: Indica el comportamiento del botón al hacer clic en él, en este caso que va activar 
-                                  un elemento colapsable -->
-                <!-- data-target: Indica el elemento que se debe colapsar, se pasa el id del elemento a colapsar -->
-                <!-- aria-controls: Se usa para vincular el botón con el elememto que se va a controlar -->
-                <!-- aria-expanded: Indica si el elemento está expandido o colapsado actualmente -->
-                <!-- aria-label: Etiqueta descriptiva para el botón -->
-                <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#sidenav" aria-controls="sidenav" aria-expanded="false" aria-label="Botón para abrir el menú">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+        <!-- HEADER -->
+        <?php include_once "./components/header.php";?>
 
 
-            </nav>
-        </header>
+        <!-- CONTENEDOR PRINCIPAL -->
+        <main class="mt-5">
+            <div class="date w-100 p-3 pt-4 text-end text-capitalize text-primary">
 
-        <!-- CONTENIDO -->
-        <div class="d-flex" id="main-container">
+                <?php
+                // Sacamos la fecha actual
+                $format = new IntlDateFormatter(
+                    'es_Es',
+                    IntlDateFormatter::FULL, // Utilizamos el estilo completo para mostrar el nombre completo del mes
+                    IntlDateFormatter::NONE // No especificamos el formato de la hora, ya que solo estamos formateando la fecha
+                );
 
-            <!-- MENU -->
-            <!-- <div id="sidenav" class="bg-white border-end border-secondary ">
-                <ul class="list-unstyled">
-                    <li><a href="./V_Home-Page.php">Inicio</a></li>
-                    <li><a href="./V_Animales.php">Animales</a></li>
-                    <hr>
-                    <li><a href="../controllers/LoginC.php?action=logout">Cerrar sesión</a></li>
-                </ul>
-            </div> -->
-
-            <div id="sidenav" class="bg-white">
-                <div class="menu-user">
-                    <span><?= $user_name ?></span>
-                    <br />
-                    <span>Administrador</span>
-                </div>
-                <div class="menu-opt d-flex flex-column">
-                    <hr class="menu-hr">
-                    <a href="" class="menu-link pt-1">
-                        <i class="fa-solid fa-house"></i>
-                        Inicio
-                    </a>
-                    <details class="pt-2">
-                        <summary class="text-primary">Animales</summary>
-                        <a href="" class="menu-link px-3">
-                            Animales
-                        </a>
-                    </details>
-
-                    <details class="pt-2">
-                        <summary class="text-primary">Empleados</summary>
-                        <a href="" class="menu-link px-3">
-                            Usuarios
-                        </a>
-                        <br/>
-                        <a href="" class="menu-link px-3">
-                            Perfiles
-                        </a>
-                    </details>
-                </div>
-                <div class="settings">
-                    <hr class="menu-hr">
-                    <a href="">
-                        <i class="fa-solid fa-gear"></i>
-                        Ajustes
-                    </a>
-                </div>
-                <div class="logout">
-                    <hr class="menu-hr">
-                    <a href="">
-                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                        Cerrar sesión
-                    </a>
-                </div>
+                echo $format->format(new DateTime());
+                ?>
             </div>
 
-            <main class="main-content px-4 pb-5 ">
-                <div class="date">
+            <!-- TEXTO BIENVENIDA -->
+            <h1 class="welcome-text mt-5 text-primary font-weight-bold text-uppercase text-center">Bienvenido</h1>
 
-                    <?php
-                    // Sacamos la fecha actual
-                    $format = new IntlDateFormatter(
-                        'es_Es',
-                        IntlDateFormatter::FULL, // Utilizamos el estilo completo para mostrar el nombre completo del mes
-                        IntlDateFormatter::NONE // No especificamos el formato de la hora, ya que solo estamos formateando la fecha
-                    );
+            <h4 class="welcome-text mt-3 text-info text-uppercase text-center" style="font-weight: 200;">
+                <?= $user_name ?>
+            </h4>
 
-                    echo $format->format(new DateTime());
-                    ?>
+            <!-- TABLA DE TAREAS -->
+            <section class="home-tasks m-3 mt-5 p-3">
+
+                <div class="task-header d-flex justify-content-between align-items-center flex-wrap w-100 py-3 pb-4 text-primary">
+                    <!-- TÍTULO -->
+                    <h5 class="mb-0">Mis tareas</h5>
+                    <!-- SELECT -->
+                    <select name="show_task" id="show_task" class="border-0 bg-transparent text-uppercase">
+                        <option value="pending_task">Pendientes</option>
+                        <option value="finished_task">Finalizadas</option>
+                    </select>
+
                 </div>
 
-                <h3 class="welcome-text text-primary font-weight-bold text-uppercase">
-                    Bienvenido
-                </h3>
+                <!-- TABLA DE TAREAS -->
+                <div class="task-table">
+                    <table class="table table-striped" width="100%">
+                        <thead class="text-center">
+                            <tr>
+                                <th></th>
+                                <th>Nombre</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            <tr>
+                                <td>1</td>
+                                <td>Clark</td>
+                                <td>
+                                    <span class="task-active rounded-pill bg-success px-3 text-uppercase text-white small">Activa</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Peter</td>
+                                <td>
+                                    <span class="task-active rounded-pill bg-success px-3 text-uppercase text-white small">Activa</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>John</td>
+                                <td>
+                                    <span class="task-active rounded-pill bg-success px-3 text-uppercase text-white small">Activa</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Peter</td>
+                                <td>
+                                    <span class="task-active rounded-pill bg-success px-3 text-uppercase text-white small">Activa</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>John</td>
+                                <td>
+                                    <span class="task-active rounded-pill bg-success px-3 text-uppercase text-white small">Activa</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Peter</td>
+                                <td>
+                                    <span class="task-active rounded-pill bg-success px-3 text-uppercase text-white small">Activa</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>John</td>
+                                <td>
+                                    <span class="task-active rounded-pill bg-success px-3 text-uppercase text-white small">Activa</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Peter</td>
+                                <td>
+                                    <span class="task-active rounded-pill bg-success px-3 text-uppercase text-white small">Activa</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>John</td>
+                                <td>
+                                    <span class="task-active rounded-pill bg-success px-3 text-uppercase text-white small">Activa</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Peter</td>
+                                <td>
+                                    <span class="task-active rounded-pill bg-success px-3 text-uppercase text-white small">Activa</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-                <h5 class="welcome-text text-info text-uppercase">
-                    <?= $user_name ?>
-                </h5>
+                    <!-- PAGINACIÓN -->
 
-                <div class="position-relative w-100 h-100 bg-primary task-container">
-
-
-                    <div class="task-container-bg w-100 h-100 d-flex flex-column bg-white">
-                        <div class="task-header d-flex justify-content-between align-items-center">
-                            <div class="title-container d-flex align-items-center">
-                                <div class="img-container">
-
-                                </div>
-                                <h5 class="title-task text-uppercase m-0">mis tareas</h5>
-                            </div>
-
-                            <div class="position-relative">
-                                <select name="show_task" id="show_task" class="border-0 text-primary">
-                                    <option value="">Pendientes</option>
-                                    <option value="">Finalizadas</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="task-table-container h-100 text-break">
-
-                        </div>
-
+                    <div class="pagination float-end p-2">
+                        <button type="submit" class="border-0 bg-transparent text-primary">
+                            <i class="fa-sharp fa-solid fa-backward"></i>
+                        </button>
+                        <select name="page" id="page" class="mx-1 ">
+                            <?php
+                            for ($i = 1; $i <= 100; $i++) {
+                                echo "<option value'$i'>$i</option>";
+                            }
+                            ?>
+                        </select>
+                        <span class="pe-2">of <?= 10 ?></span>
+                        <button type="submit" class="border-0 bg-transparent text-primary">
+                            <i class="fa-sharp fa-solid fa-forward"></i>
+                        </button>
                     </div>
-
-
-                    <!-- TRIANGULOS DE FONDO -->
-                    <object data="../../public/imgs/bg/triangulo1.svg" type="image/svg+xml" class="bg-1" alt="Triangulo de fondo 1">
-                        <img src="../../public/imgs/bg/triangulo1.webp">
-                        <img src="../../public/imgs/bg/triangulo1.png">
-                    </object>
-
-
-                    <object data="../../public/imgs/bg/triangulo2.svg" type="image/svg+xml" class="bg-2" alt="Triangulo de fondo 2">
-                        <img src="../../public/imgs/bg/triangulo2.webp">
-                        <img src="../../public/imgs/bg/triangulo2.png">
-                    </object>
                 </div>
+            </section>
 
+        </main>
 
+    </section>
 
-            </main>
-
-        </div>
-    </div>
-    <!-- JQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <!-- Bootstrap JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/js/bootstrap.min.js" integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 
 </html>

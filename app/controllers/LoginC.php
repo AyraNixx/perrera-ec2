@@ -171,8 +171,6 @@ class LoginC
 }
 
 
-// $routes = new Route();
-
 
 // Comprobamos que la clave action se encuentra dentro del array de $_REQUEST
 $action = (isset($_REQUEST["action"])) ? $_REQUEST["action"] : "";

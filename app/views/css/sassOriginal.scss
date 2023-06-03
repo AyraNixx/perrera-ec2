@@ -1,0 +1,434 @@
+/*********************************************************/
+
+//                        COLORES
+
+/*********************************************************/
+
+//-- Colores fondos
+$bg_white: #FBFBFB;
+$bg_light-gray: #F5F5F5; // Se usa también para las filas de las tablas
+$bg-gray: #E0E0E0;
+$bg_darker-gray: #9FA0A1;
+$bg_dark-blue: #425C81;
+$darker_gray: #696969;
+
+//-- Colores filas tablas
+$bg_light-blue: #a8b9e099;
+
+//-- Colores letras
+$font_dark-blue: #7A8BB0;
+
+//-- Colores bordes
+$border_light-blue: #A8B9E0; // Lo he usado en el mockup para el botón de agregar
+$border_light-blue-opacity: #a8b9e0a1;
+
+
+//--ERROR-LABEL
+$red: #6a1313;
+
+
+
+/*********************************************************/
+
+//                        COLORES BOOTSTRAP
+
+/*********************************************************/
+$white: $bg_white;
+$primary: $bg_dark-blue;
+$secondary: $border_light-blue-opacity;
+$info: $darker_gray;
+$danger:$red;
+  
+
+
+
+/*********************************************************/
+
+//                        FORM
+
+/*********************************************************/
+
+$input-disabled-bg: true;
+$input-placeholder-color: $bg_dark-blue;
+$form-text-color: $bg_dark-blue;
+
+
+@import "../../../bootstrap/scss/bootstrap.scss";
+
+
+*
+{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////
+/// 
+///                 LOGIN  
+/// 
+/// /////////////////////////////////////////////////////////////////////////////////
+
+.login {
+
+
+    .form-control {
+        border-radius: 0;
+        border: 0;
+        border-bottom: 1px solid #425C81;
+
+        padding-left: 0;
+
+        color: $font_dark-blue;
+
+        &:focus {
+            outline: 0;
+            box-shadow: none;
+        }
+
+        &:focus {
+            outline: 0;
+            box-shadow: none;
+        }
+    }
+
+    .form-check {
+        &:focus {
+            border: 0;
+            outline: 0;
+            box-shadow: none;
+        }
+
+        &:checked {
+            background-color: #425C81;
+        }
+    }
+
+
+
+}
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////
+/// 
+///                 MENU  
+/// 
+/// /////////////////////////////////////////////////////////////////////////////////
+header 
+{
+    height: 57px;
+
+    button
+    {        
+        width: 80px;
+
+        font-size: 28px;
+
+        cursor: pointer;
+
+        .hamburguer-inner
+        {
+            width: 40px;
+            height: 20px;  
+
+            top: 10%;
+
+            transform: translate(-50%, 50%);
+
+            & > span 
+            {
+                height: 4px;
+                
+                background-color: $bg_dark-blue;
+                
+                border: 0;
+
+                position: absolute;
+
+                &:nth-of-type(2)
+                {
+                    width: calc(100% - 10px);
+                }
+
+                &:last-of-type
+                {
+                    width: calc(100% - 20px);
+                }
+            }
+        }
+    }
+}
+
+
+#main-container {
+    height: calc(100% - 60px);
+}
+
+
+#sidenav {
+    max-width: 20rem;
+    width: 20rem;
+
+    padding: 40px 45px 40px 40px;
+
+    border: 1px solid $bg_dark-blue;
+    border-top: 0;
+    border-left: 0;
+
+    // position: fixed;
+    // top: 0;
+    // left: 0;
+    // z-index: 1000;
+}
+
+
+main.main-content {
+    flex-grow: 1;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .date {
+        align-self: flex-end;
+
+        margin: 35px 10px 50px;
+
+        color: $bg_dark-blue;
+    }
+
+    h3.welcome-text {
+        letter-spacing: .15rem;
+    }
+
+    h5.welcome-text {
+        margin-bottom: 30px;
+        padding: 20px 0;
+
+        font-weight: lighter;
+    }
+
+    .task-container {
+        padding: 40px;
+
+        border-radius: 5px;
+
+        .task-container-bg {
+            padding: 25px;
+
+            border-radius: 5px;
+
+            .task-header {
+
+                .title-container .img-container {
+                    width: 60px;
+                    height: 60px;
+
+                    margin-right: 20px;
+
+                    border: 1px solid black;
+                    border-radius: 50%;
+
+                }
+
+                .task-show-container {
+                    top: 28px;
+
+                    span {
+                        padding: 10px;
+
+                        border: 1px solid #696969;
+
+                        &:first-of-type {
+                            border-right: 0;
+                            border-top-left-radius: 10px 10px;
+                        }
+
+                        &:last-of-type {
+                            border-top-right-radius: 10px 10px;
+                        }
+                    }
+                }
+
+            }
+
+            .task-table-container
+            {
+                margin: 20px 0;            
+            }
+
+        }
+
+        .bg-1 {
+            top: -200px;
+            left: -100px;
+        }
+
+        .bg-2 {
+            transform: rotate(90deg);
+            top: -230px;
+            right: 100px;
+            height: 300px;
+        }
+    }
+}
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////
+/// 
+///                 FONDOS  
+/// 
+/// /////////////////////////////////////////////////////////////////////////////////
+
+.bg-1,
+.bg-2 {
+
+    position: absolute;
+    z-index: -1;
+}
+
+.bg-2 {
+    right: 0;
+}
+
+@media (max-width: 576px) {
+    .bg-1 {
+        max-width: 220px;
+        top: 23rem;
+    }
+
+    .bg-2 {
+        max-width: 200px;
+        top: 10rem;
+    }
+
+    form {
+        position: relative;
+        padding: 30px;
+    }
+
+    form::before {
+        content: "";
+
+        width: 100%;
+        height: 100%;
+
+        background: linear-gradient(286deg, $bg_darker-gray 0%, $bg-gray 50%, $bg_light-gray 100%);
+
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        filter: blur(100px);
+        clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0);
+
+        z-index: -1;
+    }
+}
+
+@media (min-width: 576px) {
+
+    .bg-1 {
+        max-width: 220px;
+        top: 23rem;
+    }
+
+    .bg-2 {
+        max-width: 200px;
+        top: 10rem;
+    }
+
+    form {
+        position: relative;
+        padding: 30px;
+    }
+
+    form::before {
+        content: "";
+
+        width: 100%;
+        height: 100%;
+
+        background: linear-gradient(286deg, $bg_darker-gray 0%, $bg-gray 50%, $bg_light-gray 100%);
+
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        filter: blur(100px);
+        clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0);
+
+        z-index: -1;
+    }
+
+}
+
+@media (min-width: 768px) {
+
+    .bg-1 {
+        max-width: 280px;
+        top: 19rem;
+    }
+
+    .bg-2 {
+        max-width: 230px;
+        top: 5rem;
+    }
+
+    form {
+        padding: 0;
+    }
+
+    form::before {
+        display: none;
+    }
+}
+
+@media (min-width: 992px) {
+
+    .bg-1 {
+        max-width: 320px;
+        top: 17rem;
+    }
+
+    .bg-2 {
+        max-width: 250px;
+    }
+}
+
+@media (min-width: 1200px) {
+
+    .bg-1 {
+        max-width: 350px;
+        top: 15rem;
+    }
+
+    .bg-2 {
+        max-width: 270px;
+    }
+}
+
+@media (min-width: 1400px) {
+    .bg-1 {
+        max-width: 400px;
+        top: 12rem;
+    }
+
+    .bg-2 {
+        max-width: 300px;
+    }
+}

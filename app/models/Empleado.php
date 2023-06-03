@@ -96,6 +96,6 @@ class Empleado extends Model
 }
 
 
-$empleado = new Empleado();
-var_dump($empleado->get_all("empleados"));
-var_dump($empleado->insert(["nombre"=>"Prueba", "apellidos"=>"Apellido", "NIF"=>"12345678B", "correo" =>"correo@ejemplo.com", "passwd" => '$2y$10$R3df5klmB4465I67XRSaUuZT/FYme6cpyZL1v8fw6Zlr/cjMcc66O', "salt" => "12385753","telf"=>"123456789", "roles_id"=>"001100321890425372672"]));
+// $empleado = new Empleado();
+// var_dump($empleado->get_all("empleados"));
+// var_dump($empleado->insert(["nombre"=>"Prueba", "apellidos"=>"Apellido", "NIF"=>"12345678B", "correo" =>"correo@ejemplo.com", "passwd" => '$2y$10$R3df5klmB4465I67XRSaUuZT/FYme6cpyZL1v8fw6Zlr/cjMcc66O', "salt" => "12385753","telf"=>"123456789", "roles_id"=>"001100321890425372672"]));
