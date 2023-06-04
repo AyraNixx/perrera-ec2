@@ -42,7 +42,7 @@ function search_table(e) {
     });
 
     if($tbody.find('tr:visible').length === 0) {
-        $("tbody").append("<tr> <td></td> </tr>");
+        $("tbody").append("<tr><td>No se ha encontrado nin</td></tr>");
     }
 }
 
