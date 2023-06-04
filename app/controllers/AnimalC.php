@@ -29,6 +29,7 @@ class AnimalC
     // -- ATRIBUTOS
     // 
     private $animal;
+    private $especie;
     private $msg;
 
 
@@ -39,6 +40,7 @@ class AnimalC
     function __construct()
     {
         $this->animal = new Animal();
+        $this->especie = new Especie();
         $this->msg = null;
     }
 
@@ -111,6 +113,9 @@ class AnimalC
             case "show_cages":
                 $this->show_cages_available();
                 break;
+            case "filter":
+                $this->filter_data();
+                break;
             default:
                 $this->index();
                 break;
@@ -123,12 +128,12 @@ class AnimalC
         $animales_visibles = $this->animal->pagination_visible_with_more_info($ord, $field, $page, $amount);
         // Obtenemos todos los animales
         $animales = $this->animal->pagination_all_with_more_info($ord, $field, $page, $amount);
-
+        $especies = $this->especie->get_all("especies");
         // echo "<pre>";
         // var_dump($animales_visibles);
         // echo "</pre>";
         // Mostramos la vista
-        $this->view($animales_visibles, $animales, $view);
+        $this->view($animales_visibles, ["animales"=>$animales, "especies"=>$especies], $view);
     }
 
 
@@ -254,7 +259,7 @@ class AnimalC
 
             // Insertamos el nuevo registro y guardamos el resultado
             $result = $this->animal->update();
-            
+
             // Si algo ha ido mal, guardamos mensaje y mostramos la página de Animales
             if ($result == null) {
                 $this->setMsg(self::ERROR_UPDATE);
@@ -303,9 +308,6 @@ class AnimalC
         }
     }
 
-    // public function details()
-    // {
-    // }
     public function show_cages_available()
     {
         // Comprobamos que el campo id no esté vacío
@@ -325,11 +327,37 @@ class AnimalC
         }
     }
 
+    public function filter_data()
+    {
+        if (isset($_POST["field"]) && isset($_POST["value_field"])) {
+            // Guardamos los valores
+            $field = $_POST["field"];
+            $value_field = $_POST["value_field"];
+
+            // Llamamos a la función y guardamos el resultado obtenido
+            $data_visible = $this->animal->filter_table($field, $value_field);
+
+            if ($data_visible == null) {
+                $this->msg = self::ERROR_INSERT;
+            }
+            include "../views/components/animalList.php";
+            // Devolver los registros en formato JSON
+            // header('Content-Type: application/json');
+            // echo json_encode($result);
+        }else{
+            $this->index("/components/animalList.php");
+        }
+
+        echo "olvidona";
+    }
+
+
     public function view(array $datos_visibles, array $datos, String $view)
     {
 
         $data_visible = $datos_visibles;
-        $data = $datos;
+        $data = $datos["animales"];
+        $especie = $datos["especies"];
 
         $new_msg = $this->getMsg();
 
@@ -342,8 +370,7 @@ $animal = new AnimalC();
 
 if (!empty($_REQUEST["action"])) {
     $action = $_REQUEST["action"];
-}
- else {
+} else {
     $action = "index";
 }
 $animal->run($action);

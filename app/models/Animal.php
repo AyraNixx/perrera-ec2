@@ -292,6 +292,39 @@ class Animal extends Model
         }
         return null;
     }
+
+
+    public function filter_table(String $field, mixed $value_field, String $field_ord = "nombre", String $ord = "ASC", int $page = 1, int $amount = 10)
+    {
+        // Rodeamos el código en un try catch para controlar las excepciones
+        try {
+            // Calculamos desde que línea se empieza
+            $offset = ($page - 1) * $amount;
+            // Query
+            $query = "SELECT a.*, e.nombre as nombre_especie, j.ubicacion 
+            FROM perrera.animales a 
+                INNER JOIN especies e ON a.especies_id = e.id
+                INNER JOIN jaulas j ON a.jaulas_id = j.id
+                WHERE a.disponible = 1 AND a.$field = :field
+                        ORDER BY $field_ord $ord LIMIT :amount OFFSET :offset";
+            // Preparamos la consulta para su ejecución
+            $stm = $this->conBD->prepare($query);
+            // Vinculamos los parámetros al nombre de la variable especificada
+            $stm->bindParam(":field", $value_field, PDO::PARAM_STR);
+            $stm->bindParam(":amount", $amount, PDO::PARAM_INT);
+            $stm->bindParam(":offset", $offset, PDO::PARAM_INT);
+            // Ejecutamos la consulta
+            $stm->execute();
+            // Devolvemos resultado obtenido
+            return $stm->fetchAll();
+        } catch (PDOException $e) {
+            // Guardamos el error en el log
+            Utils::save_log_error("PDOException caught: " . $e->getMessage());
+        } catch (Exception $e) {
+            // Guardamos el error en el log
+            Utils::save_log_error("Unexpected error caught: " . $e->getMessage());
+        }
+    }
 }
 
 // $animal = new Animal();

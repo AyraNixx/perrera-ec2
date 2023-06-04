@@ -26,6 +26,17 @@ $user_profile = 'Administrador';
     <link rel="shortcut icon" href="../../public/imgs/logos/logo1.png" type="image/x-icon">
     <script src="https://kit.fontawesome.com/8d125d2b91.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../views/css/sass.css">
+    <style>
+        #tabla {
+            margin-top: 20px;
+        }
+
+        @media (max-width: 767.98px) {
+            .col-md-6 {
+                margin-bottom: 10px;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -45,7 +56,8 @@ $user_profile = 'Administrador';
 
         <!-- CONTENEDOR PRINCIPAL -->
         <main class="mt-5">
-            <?php include_once "../views/components/animalList.php";?>
+            <?php include_once "../views/components/filterAnimal.php"; ?>
+            <?php include_once "../views/components/animalList.php"; ?>
         </main>
 
     </section>
@@ -59,7 +71,7 @@ $user_profile = 'Administrador';
     if ($new_msg != null) { ?>
 
         <script>
-            $(document).ready(function() {                
+            $(document).ready(function() {
                 $("#aviso").modal("show");
             });
         </script>
@@ -73,6 +85,7 @@ $user_profile = 'Administrador';
         }
     </script>
     <script src="../views/js/widthMenu.js"></script>
+    <script src="../views/js/filteredTable.js"></script>
 </body>
 
-</html> 
+</html>

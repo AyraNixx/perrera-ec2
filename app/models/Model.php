@@ -103,7 +103,7 @@ class Model
      * @param String table
      * @param int $id;
      */
-    public function get_one(String $table, int $id)
+    public function get_one(String $table, String $id)
     {
         // Rodeamos el código en un try catch para controlar las excepciones
         try {
@@ -117,6 +117,29 @@ class Model
             $stm->execute();
             // Devolvemos resultado obtenido
             return $stm->fetch();
+        } catch (PDOException $e) {
+            // Guardamos el error en el log
+            Utils::save_log_error("PDOException caught: " . $e->getMessage());
+        } catch (Exception $e) {
+            // Guardamos el error en el log
+            Utils::save_log_error("Unexpected error caught: " . $e->getMessage());
+        }
+    }
+
+    public function filter_data(String $table, String $field, mixed $value_field)
+    {
+        // Rodeamos el código en un try catch para controlar las excepciones
+        try {
+            // Query
+            $query = "SELECT * FROM $table WHERE disponible = 1 AND $field = :field";
+            // Preparamos la consulta para su ejecución
+            $stm = $this->conBD->prepare($query);
+            // Vinculamos los parámetros al nombre de la variable especificada
+            $stm->bindParam(":field", $value_field, PDO::PARAM_STMT);
+            // Ejecutamos la consulta
+            $stm->execute();
+            // Devolvemos resultado obtenido
+            return $stm->fetchAll();
         } catch (PDOException $e) {
             // Guardamos el error en el log
             Utils::save_log_error("PDOException caught: " . $e->getMessage());
@@ -161,12 +184,11 @@ class Model
      * @param String table
      * @param int $id;
      */
-    public function soft_delete(String $table, int $id)
+    public function soft_delete(String $table, String $id)
     {
         // Rodeamos el código en un try catch para controlar las excepciones
         try {
-            if(is_int($id))
-            {
+            if (is_int($id)) {
                 $id = "00" . $id;
             }
             // Query
@@ -282,5 +304,3 @@ class Model
         return ceil(count(self::get_all_visibles($table)) / $amount);
     }
 }
-
-?>
