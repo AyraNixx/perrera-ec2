@@ -1,73 +1,39 @@
-$(function(){
-  let id = $("#especie").val();
-
+$(function () {
+  let id = $("#especies_id").val();
   let id_jaula = $("#cage_selected").val();
 
-  $.ajax({
-    url: '../../app/controllers/AnimalC.php', // url destino
-    // Datos que vamos a pasarle
-    data: 
-    {
-      'action': 'show_cages',
-      'especies_id': id
-    },
-    type: 'POST', // timpo de petición 
-    // dataType: 'json',         
-    // Si todo ha ido bien
-    success: function (data) {
-      let data_array = JSON.parse(data); // Pasamos de JSON a Array
+  function cargarJaulas() {
+    $.ajax({
+      url: '../../app/controllers/AnimalC.php',
+      data: {
+        'action': 'show_cages',
+        'especies_id': id
+      },
+      type: 'POST',
+      dataType: 'json',
+      success: function (data) {
+        $("#jaulas_id").empty();
 
-      $("#jaula").empty(); // Vaciamos el select de jaula
+        $.each(data, function (key, value) {
+          let new_option = $("<option>")
+            .val(value.id)
+            .text(value.ubicacion)
+            .appendTo("#jaulas_id");
 
-      // Recorremos el array
-      $.each(data_array, function (key, value) {
-
-        // Creamos los nuevos options
-        let new_option = $("<option>")
-          .val(value.id)
-          .text(value.ubicacion)
-          .appendTo("#jaula"); // Añadimos los options al select jaula
-
-          if (value.id == id_jaula) 
-          {
+          if (value.id == id_jaula) {
             new_option.prop("selected", true);
           }
+        });
+      }
+    });
+  }
 
-      });
-    }
-  });
-});
+  // Llamada inicial al cargar la página
+  cargarJaulas();
 
-$("#especie").change(function () {
-
-  let id = $(this).val();
-
-  $.ajax({
-    url: '../../app/controllers/AnimalC.php', // url destino
-    // Datos que vamos a pasarle
-    data: 
-    {
-      'action': 'show_cages',
-      'especies_id': id
-    },
-    type: 'POST', // timpo de petición 
-    // dataType: 'json',         
-    // Si todo ha ido bien
-    success: function (data) {
-      let data_array = JSON.parse(data); // Pasamos de JSON a Array
-
-      $("#jaula").empty(); // Vaciamos el select de jaula
-
-      // Recorremos el array
-      $.each(data_array, function (key, value) {
-
-        // Creamos los nuevos options
-        let new_option = $("<option>")
-          .val(value.id)
-          .text(value.ubicacion)
-          .appendTo("#jaula"); // Añadimos los options al select jaula
-
-      });
-    }
+  // Evento change para el select #especies_id
+  $("#especies_id").change(function () {
+    id = $(this).val();
+    cargarJaulas();
   });
 });

@@ -1,4 +1,4 @@
-<header class="w-100 navbar border-0 border-bottom border-secondary border-2 bg-white position-fixed top-0">
+<header class="w-100 navbar border-0 border-bottom border-secondary border-2 bg-white position-fixed top-0" style="z-index:99">
     <a class="d-flex align-items-center navbar-brand ms-3" href="/app/controllers/C_Home.php">
         <!-- Usamos la etiqueta object para que en caso de que un navegador no permita visualizar svg
                          tenga como alternativa una imagen con extensión png. -->

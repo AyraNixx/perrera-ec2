@@ -103,7 +103,7 @@ class Animal extends Model
             $stm = $this->conBD->prepare($query);
 
             $stm->bindParam(":nombre", $this->animal["nombre"], PDO::PARAM_STR);
-            $stm->bindParam(":especies_id", $this->animal["especie"], PDO::PARAM_STR);
+            $stm->bindParam(":especies_id", $this->animal["especies_id"], PDO::PARAM_STR);
             $stm->bindParam(":raza", $this->animal["raza"], PDO::PARAM_STR);
             $stm->bindParam(":genero", $this->animal["genero"], PDO::PARAM_STR);
             $stm->bindParam(":tamanio", $this->animal["tamanio"], PDO::PARAM_STR);
@@ -115,7 +115,8 @@ class Animal extends Model
             $stm->bindParam(":estado_salud", $this->animal["estado_salud"], PDO::PARAM_STR);
             $stm->bindParam(":necesidades_especiales", $this->animal["necesidades_especiales"], PDO::PARAM_STR);
             $stm->bindParam(":otras_observaciones", $this->animal["otras_observaciones"], PDO::PARAM_STR);
-            $stm->bindParam(":jaulas_id", $this->animal["jaula"], PDO::PARAM_STR);
+            $stm->bindParam(":jaulas_id", $this->animal["jaulas_id"], PDO::PARAM_STR);
+
 
             // Ejecutamos la query           
             // Devolvemos resultados
@@ -164,7 +165,7 @@ class Animal extends Model
 
             $stm->bindParam(":id", $this->animal["id"], PDO::PARAM_STR);
             $stm->bindParam(":nombre", $this->animal["nombre"], PDO::PARAM_STR);
-            $stm->bindParam(":especies_id", $this->animal["especie"], PDO::PARAM_STR);
+            $stm->bindParam(":especies_id", $this->animal["especies_id"], PDO::PARAM_STR);
             $stm->bindParam(":raza", $this->animal["raza"], PDO::PARAM_STR);
             $stm->bindParam(":genero", $this->animal["genero"], PDO::PARAM_STR);
             $stm->bindParam(":tamanio", $this->animal["tamanio"], PDO::PARAM_STR);
@@ -176,7 +177,7 @@ class Animal extends Model
             $stm->bindParam(":estado_salud", $this->animal["estado_salud"], PDO::PARAM_STR);
             $stm->bindParam(":necesidades_especiales", $this->animal["necesidades_especiales"], PDO::PARAM_STR);
             $stm->bindParam(":otras_observaciones", $this->animal["otras_observaciones"], PDO::PARAM_STR);
-            $stm->bindParam(":jaulas_id", $this->animal["jaula"], PDO::PARAM_STR);
+            $stm->bindParam(":jaulas_id", $this->animal["jaulas_id"], PDO::PARAM_STR);
 
             // Ejecutamos la query           
             // Devolvemos resultados
@@ -332,7 +333,7 @@ class Animal extends Model
 // $animal->setAnimal([
 //     "id" => "001100292511104238040",
 //     "nombre" => "prueba_video",
-//     "especie" => "00B100292511104237965",
+//     "especies_id" => "00B100292511104237965",
 //     "raza" => "husky",
 //     "genero" => "M",
 //     "tamanio" => "40cm",
@@ -344,6 +345,6 @@ class Animal extends Model
 //     "estado_salud" => "bien",
 //     "necesidades_especiales" => "no",
 //     "otras_observaciones" => "",
-//     "jaula" => "00J100292511104237972"
+//     "jaulas_id" => "00J100292511104237972"
 // ]);
-// var_dump($animal->update());
+// var_dump($animal->add());

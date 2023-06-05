@@ -58,6 +58,7 @@ $user_profile = 'Administrador';
         <main class="mt-5">
             <?php include_once "../views/components/filterAnimal.php"; ?>
             <?php include_once "../views/components/animalList.php"; ?>
+            <?php include_once "../views/components/pagination.php"; ?>
         </main>
 
     </section>

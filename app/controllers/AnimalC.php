@@ -150,35 +150,23 @@ class AnimalC
 
         // Comprobamos que los campos no estén vacíos
         if (
-            isset($_POST["id"]) && isset($_POST["nombre"]) && isset($_POST["especie"]) && isset($_POST["raza"])
-            && isset($_POST["genero"]) && isset($_POST["tamanio"]) && isset($_POST["peso"]) && isset($_POST["colores"])
-            && isset($_POST["personalidad"]) && isset($_POST["fech_nac"]) && isset($_POST["estado_adopcion"])
-            && isset($_POST["estado_salud"]) && isset($_POST["necesidades_especiales"]) && isset($_POST["otras_observaciones"])
-            && isset($_POST["jaula"])
+            isset($_POST["id"])
         ) {
-            // Creamos un nuevo array
-            $update = [];
-            // Guardamos los valores del Post
-            $update["id"] = $_POST["id"];
-            $update["nombre"] = $_POST["nombre"];
-            $update["especie"] = $_POST["especie"];
-            $update["raza"] = $_POST["raza"];
-            $update["genero"] = $_POST["genero"];
-            $update["tamanio"] = $_POST["tamanio"];
-            $update["peso"] = $_POST["peso"];
-            $update["colores"] = $_POST["colores"];
-            $update["personalidad"] = $_POST["personalidad"];
-            $update["fech_nac"] = $_POST["fech_nac"];
-            $update["estado_adopcion"] = $_POST["estado_adopcion"];
-            $update["estado_salud"] = $_POST["estado_salud"];
-            $update["necesidades_especiales"] = $_POST["necesidades_especiales"];
-            $update["otras_observaciones"] = $_POST["otras_observaciones"];
-            $update["jaula"] = $_POST["jaula"];
+            // Creamos un nuevo array y guardamos los valores de get
+            $update = $this->animal->get_one("animales", $_POST["id"]);
+
+             // Si algo ha ido mal, guardamos mensaje y mostramos la página de Animales
+             if ($update == null || $update == false) 
+            {
+                $this->setMsg(self::ERROR_UPDATE);
+
+                $this->index();
+                return;
+            }
 
             // Si entra en este condicional, significa que Post no está vacío y que se trata de una actualizacion
             $action = 2;
         }
-
         // Incluimos la vista de crear y modificar
         require_once SELF::VIEW_UPDATE_EDIT;
     }
@@ -187,17 +175,17 @@ class AnimalC
     {
         // Comprobamos que los campos no estén vacíos
         if (
-            isset($_POST["nombre"]) && isset($_POST["especie"]) && isset($_POST["raza"])
+            isset($_POST["nombre"]) && isset($_POST["especies_id"]) && isset($_POST["raza"])
             && isset($_POST["genero"]) && isset($_POST["tamanio"]) && isset($_POST["peso"]) && isset($_POST["colores"])
             && isset($_POST["personalidad"]) && isset($_POST["fech_nac"]) && isset($_POST["estado_adopcion"])
             && isset($_POST["estado_salud"]) && isset($_POST["necesidades_especiales"]) && isset($_POST["otras_observaciones"])
-            && isset($_POST["jaula"])
+            && isset($_POST["jaulas_id"])
         ) {
             // Creamos un nuevo array
             $new_animal = [];
             // Guardamos los valores del Post
             $new_animal["nombre"] = $_POST["nombre"];
-            $new_animal["especie"] = $_POST["especie"];
+            $new_animal["especies_id"] = $_POST["especies_id"];
             $new_animal["raza"] = $_POST["raza"];
             $new_animal["genero"] = $_POST["genero"];
             $new_animal["tamanio"] = $_POST["tamanio"];
@@ -209,7 +197,7 @@ class AnimalC
             $new_animal["estado_salud"] = $_POST["estado_salud"];
             $new_animal["necesidades_especiales"] = $_POST["necesidades_especiales"];
             $new_animal["otras_observaciones"] = $_POST["otras_observaciones"];
-            $new_animal["jaula"] = $_POST["jaula"];
+            $new_animal["jaulas_id"] = $_POST["jaulas_id"];
 
             // Le pasamos el array como valor para el atributo privado del modelo Animal
             $this->animal->setAnimal($new_animal);
@@ -229,18 +217,18 @@ class AnimalC
     {
         // Comprobamos que los campos no estén vacíos
         if (
-            isset($_POST["nombre"]) && isset($_POST["especie"]) && isset($_POST["raza"])
+            isset($_POST["nombre"]) && isset($_POST["especies_id"]) && isset($_POST["raza"])
             && isset($_POST["genero"]) && isset($_POST["tamanio"]) && isset($_POST["peso"]) && isset($_POST["colores"])
             && isset($_POST["personalidad"]) && isset($_POST["fech_nac"]) && isset($_POST["estado_adopcion"])
             && isset($_POST["estado_salud"]) && isset($_POST["necesidades_especiales"]) && isset($_POST["otras_observaciones"])
-            && isset($_POST["jaula"])
+            && isset($_POST["jaulas_id"])
         ) {
             // Creamos un nuevo array
             $new_animal = [];
             // Guardamos los valores del Post
             $new_animal["id"] = $_POST["id"];
             $new_animal["nombre"] = $_POST["nombre"];
-            $new_animal["especie"] = $_POST["especie"];
+            $new_animal["especies_id"] = $_POST["especies_id"];
             $new_animal["raza"] = $_POST["raza"];
             $new_animal["genero"] = $_POST["genero"];
             $new_animal["tamanio"] = $_POST["tamanio"];
@@ -252,7 +240,7 @@ class AnimalC
             $new_animal["estado_salud"] = $_POST["estado_salud"];
             $new_animal["necesidades_especiales"] = $_POST["necesidades_especiales"];
             $new_animal["otras_observaciones"] = $_POST["otras_observaciones"];
-            $new_animal["jaula"] = $_POST["jaula"];
+            $new_animal["jaulas_id"] = $_POST["jaulas_id"];
 
             // Le pasamos el array como valor para el atributo privado del modelo Animal
             $this->animal->setAnimal($new_animal);
@@ -322,7 +310,6 @@ class AnimalC
             $jaulas = $this->animal->get_cages_available($especie);
             // Devolvemos el null o las jaulas dependiendo del resultado obtenido de la función
             // anterior
-            // var_dump($jaulas);
             echo (($jaulas == null) ? null : json_encode($jaulas));
         }
     }
@@ -347,8 +334,6 @@ class AnimalC
         }else{
             $this->index("/components/animalList.php");
         }
-
-        echo "olvidona";
     }
 
 
@@ -373,4 +358,5 @@ if (!empty($_REQUEST["action"])) {
 } else {
     $action = "index";
 }
-$animal->run($action);
+
+$animal->run($action); 

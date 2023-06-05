@@ -195,7 +195,6 @@ class Model
             $query = "UPDATE $table SET disponible = '0' WHERE id = :id";
             // Preparamos la consulta para su ejecución
             $stm = $this->conBD->prepare($query);
-            var_dump($id);
             // Vinculamos los parámetros al nombre de la variable especificada
             $stm->bindParam(":id", $id, PDO::PARAM_STR);
             // Ejecutamos la consulta y devolvemos resultado obtenido

@@ -1,23 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
+<div class="row show_pages">
+    <span class="register-amount">
+        Filas por página:
+        <select name="amount" id="amount" class="amount">
+            <option value="10" selected>10</option>
+        </select>
+    </span>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
-<body>
-    <div id="prueba">
-
+    <div class="select-page">
+        <button class="previous" value="1">
+            <i class="fa-regular fa-angle-left"></i>
+        </button>
+        <select name="page" id="page">
+            <option value="1" selected>1</option>
+            <option value="2">2</option>
+        </select>
+        <span>100</span>
+        <button class="next" value="2">
+            <i class="fa-regular fa-angle-right"></i>
+        </button>
     </div>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script>
-        
-    </script>
-</body>
-
-</html>
+</div>

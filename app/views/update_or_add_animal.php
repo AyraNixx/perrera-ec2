@@ -16,12 +16,12 @@
             <label for="nombre">Nombre</label>
             <input type="text" name="nombre" id="nombre" value="<?= ($action == 1) ? "" : $update["nombre"] ?>">
 
-            <label for="especie">Especie</label>
-            <select name="especie" id="especie">
+            <label for="especies_id">Especie</label>
+            <select name="especies_id" id="especies_id">
                 <option <?= ($action == 1) ? "selected" : "" ?>>Seleccionar especie</option>
                 <?php
                 foreach ($data_especies as $especie) {
-                    echo "<option value='" . $especie["id"] . "'" . (($action == 2 && $update["especie"] == $especie["id"]) ? "selected" : "") . ">" . $especie["nombre"] . "</option>";
+                    echo "<option value='" . $especie["id"] . "'" . (($action == 2 && $update["especies_id"] == $especie["id"]) ? "selected" : "") . ">" . $especie["nombre"] . "</option>";
                 }
                 ?>
             </select>
@@ -114,12 +114,12 @@
             <?= ($action == 1) ? "" : $update["otras_observaciones"] ?>
             </textarea>
 
-            <label for="jaula">Jaulas disponibles</label>
-            <select name="jaula" id="jaula">
+            <label for="jaulas_id">Jaulas disponibles</label>
+            <select name="jaulas_id" id="jaulas_id">
                 <option <?= ($action == 1) ? "selected" : "" ?>>Seleccionar jaula</option>
                 <?php
-                if (isset($update["jaula"])) {
-                    echo "<input type='hidden' id='cage_selected' name='cage_selected' value='" . $update["jaula"] . "'>";
+                if (isset($update["jaulas_id"])) {
+                    echo "<input type='hidden' id='cage_selected' name='cage_selected' value='" . $update["jaulas_id"] . "'>";
                 }
                 ?>
             </select>
