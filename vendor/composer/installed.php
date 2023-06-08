@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => '__root__',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => NULL,
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'reference' => 'e60f9d3a89040e8b77038fb4782d76f816d7a428',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,11 +11,20 @@
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => NULL,
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => 'e60f9d3a89040e8b77038fb4782d76f816d7a428',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'fpdf/fpdf' => array(
+            'pretty_version' => '1.85.0',
+            'version' => '1.85.0.0',
+            'reference' => '5ba6a7d4363174ac828a0c15cc1b4a8f845b1e16',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../fpdf/fpdf',
             'aliases' => array(),
             'dev_requirement' => false,
         ),

@@ -13,11 +13,16 @@ class ComposerStaticInit0db84a1a8efb73540fd16ce0fb6c2740
     public static $prefixLengthsPsr4 = array (
         'F' => 
         array (
+            'Fpdf\\' => 5,
             'FastRoute\\' => 10,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
+        'Fpdf\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/fpdf/fpdf/src/Fpdf',
+        ),
         'FastRoute\\' => 
         array (
             0 => __DIR__ . '/..' . '/nikic/fast-route/src',
