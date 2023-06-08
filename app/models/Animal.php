@@ -100,7 +100,7 @@ class Animal extends Model
                 :jaulas_id)";
 
             //Preparamos la query
-            $stm = $this->conBD->prepare($query);
+            $stm = $this->conBD->prepare($query);                        
 
             $stm->bindParam(":nombre", $this->animal["nombre"], PDO::PARAM_STR);
             $stm->bindParam(":especies_id", $this->animal["especies_id"], PDO::PARAM_STR);
@@ -122,10 +122,10 @@ class Animal extends Model
             // Devolvemos resultados
             return $stm->execute();
             // En caso de excepción, lo guardamos en el log
-        } catch (PDOException $e) {
+        } catch (PDOException $e) {echo $e->getMessage();
             // Guardamos el error en el log
             Utils::save_log_error("PDOException caught: " . $e->getMessage());
-        } catch (Exception $e) {
+        } catch (Exception $e) {echo $e->getMessage();
             // Guardamos el error en el log
             Utils::save_log_error("Unexpected error caught: " . $e->getMessage());
         }
@@ -326,25 +326,25 @@ class Animal extends Model
             Utils::save_log_error("Unexpected error caught: " . $e->getMessage());
         }
     }
+
 }
 
-// $animal = new Animal();
-// // var_dump($animal->get_all("animales"));
-// $animal->setAnimal([
-//     "id" => "001100292511104238040",
-//     "nombre" => "prueba_video",
-//     "especies_id" => "00B100292511104237965",
-//     "raza" => "husky",
-//     "genero" => "M",
-//     "tamanio" => "40cm",
-//     "peso" => "30,5",
-//     "colores" => "blanco",
-//     "personalidad" => "Alegre",
-//     "fech_nac" => "1999-03-20",
-//     "estado_adopcion" => "1",
-//     "estado_salud" => "bien",
-//     "necesidades_especiales" => "no",
-//     "otras_observaciones" => "",
-//     "jaulas_id" => "00J100292511104237972"
-// ]);
-// var_dump($animal->add());
+$animal = new Animal();
+// var_dump($animal->get_all("animales"));
+$animal->setAnimal([
+    "nombre" => "prueba_video",
+    "especies_id" => "00B100292511104237965",
+    "raza" => "husky",
+    "genero" => "M",
+    "tamanio" => "40cm",
+    "peso" => "305m",
+    "colores" => "blanco",
+    "personalidad" => "Alegre",
+    "fech_nac" => "1999-03-20",
+    "estado_adopcion" => "1",
+    "estado_salud" => "bien",
+    "necesidades_especiales" => "no",
+    "otras_observaciones" => "",
+    "jaulas_id" => "00J100321890425372678"
+]);
+var_dump($animal->add());

@@ -273,6 +273,7 @@ class AnimalC
             if ($resultado == null) {
                 $this->setMsg(self::ERROR_DELETE);
             }
+            $this->setMsg("Registro borrado con éxito.");
             $this->index();
         }
     }
