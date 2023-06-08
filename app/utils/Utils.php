@@ -7,6 +7,7 @@ use \PDO;
 use \PDOException;
 use \Exception;
 
+
 class Utils
 {
 
@@ -96,13 +97,13 @@ class Utils
      *                                                                     *
      ***********************************************************************/
 
-    public static function send_email(Array $data)
+    public static function send_email(array $data)
     {
         // URL de la API
         $url = 'https://api.sendinblue.com/v3/smtp/email';
 
         // API KEY
-        $apiKey = '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';
+        $apiKey = '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';
 
         // VARIABLES NECESARIAS PARA EL CORREO ELECTRÓNICO
         $subject = ($data["subject"] == 1) ? "CUENTA REGISTRADA" : "CAMBIO DE CONTRASEÑA"; // ASUNTO
@@ -138,7 +139,7 @@ class Utils
         $result = json_decode($response, true);
     }
 
-    public static function content_email(Array $data)
+    public static function content_email(array $data)
     {
         if ($data["content"] == 1) {
             $msg = '<p class="message">Hola ' . $data["nombre"] . ',</p>
@@ -290,7 +291,7 @@ class Utils
                         <a href="' . $data["url"] . '" class="button">' . (($data["content"] == 1) ? 'Cambiar' : 'Restablecer') . ' Contraseña</a>
                     </div>
                     ' . (($data["content"] == 2) ? "<i class='message fst-italic'>Por favor, ignora este mensaje si no has solicitado.</i>" : "") .
-                    '</div>
+            '</div>
                 <div class="footer">
                     <p>Patas Arriba</p>
                     <p>C/ No existente 4, nº 3G</p>
@@ -311,16 +312,69 @@ class Utils
 
 
 
+
+    /***********************************************************************
+     *                                                                     *
+     *                               IMÁGENES                              *
+     *                                                                     *
+     ***********************************************************************/
+    /**
+     * Funcion para guardar una imagen
+     * @param array $file Array con los datos de la imagen.
+     * @return mixed Devuelve la ruta en la que se encuentra la imagen, si existe un problema, devuelve false
+     */
+    function save_img($file)
+    {
+        //Creamos una constante que es para el tamaño máximo permitido
+        define("MAX_FILE_SIZE", 2097152);
+        //Definimos un array con posibles extensiones válidas para una imagen
+        $extension = ["img/png", "img/jpeg", "img/gif", "image/svg", "image/jpg"];
+        //Comprobamos si es una imagen.
+        if (!getimagesize($file["tmp_name"]) && !in_array($file["type"], $extension)) {
+            return false;
+        }
+
+        //Comprobamos que el tamaño sea menor al tamaño máximo permitido
+        if ($file["size"] > MAX_FILE_SIZE) {
+            return false;
+        }
+
+        $end = explode(".", $file["name"]);
+        $file_name = uniqid() . "." . end($end);
+        //Carpeta de destino
+        $file_path = "./public/imgs/" . $file_name;
+
+        //Usamos move_uploaded_file para mover el archivo subido a la carpeta indicada
+        //Utilizamos $file["tmp_name] porque es la ubicación temporal donde se encuentra
+        //el archivo subido, el segundo argumento es la ruta al repositorio
+        move_uploaded_file($file["tmp_name"], $file_path);
+        //Devolvemos la url
+        return $file_path;
+    }
+
+
+    /**
+     * Elimina la imagen especificada de la carpeta
+     * @param String $file_path String con la ruta de la imagen (esta incluida)
+     */
+    public static function delete_img(String $file_path)
+    {
+        //Utilizamos file_exist para comprobar que el archivo existe
+        if (!file_exists($file_path)) {
+            return false;
+        }
+
+        //Eliminamos la imagen
+        return unlink($file_path);
+    }
+
+
+
     /***********************************************************************
      *                                                                     *
      *                               GENERAR PDF                           *
      *                                                                     *
      ***********************************************************************/
-
-
-
-
-
 }
 
 // var_dump(Utils::send_email(["subject" => 1, "content" => 1, "nombre" => "Rosalía", "email" => "thejokerjune@gmail.com", "url" => "twitter.com"]));
