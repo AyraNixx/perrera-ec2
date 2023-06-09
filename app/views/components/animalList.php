@@ -9,7 +9,7 @@
                 <th class='text-center'>Fecha de nacimiento</th>
                 <th class='text-center'>Estado adopción</th>
                 <th class='text-center'>Jaula</th>
-                <th colspan="2" class='text-center'>333.</th>
+                <th colspan="2" class='text-center'></th>
             </tr>
         </thead>
         <tbody>
@@ -25,29 +25,25 @@
                 echo "<td class='text-center'>" . $dato["fech_nac"] . "</td>";
                 echo "<td class='text-center'>" . $dato["estado_adopcion"] . "</td>";
                 echo "<td class='text-center'>" . $dato["ubicacion"] . "</td>";
-                echo "<td class='px-4'>";
+                echo "<td class='ps-4 pe-2'>";
             ?>
-                <table>
-                    <tr class="bg-transparent">
-                        <td class="pe-1">
-                            <form action="<?= $url ?>" method="post" class="p-0">
-                                <input type="hidden" name="id" value="<?= $dato["id"] ?>">
-                                <button value="add_or_update" name="action" class="border-0 bg-transparent text-success">
-                                    <i class="fa-solid fa-marker"></i>
-                                </button>
-                            </form>
-                        </td>
-                        <td>|</td>
-                        <td class="ps-1">
-                            <form action="<?= $url ?>" method="POST" class="p-0">
-                                <input type="hidden" name="id" value="<?= $dato["id"] ?>">
-                                <button value="sdelete" name="action" class="border-0 bg-transparent text-danger">
-                                    <i class="fa-solid fa-trash-can"></i>
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                </table>
+                <form action="<?= $url ?>" method="post" class="p-0">
+                    <input type="hidden" name="id" value="<?= $dato["id"] ?>">
+                    <button value="add_or_update" name="action" class="border-0 bg-transparent text-success">
+                        <i class="fa-solid fa-marker"></i>
+                    </button>
+                </form>
+                <?php
+                echo "</td>";
+                echo "<td>|</td>";
+                echo "<td class='ps-2 pe-4'>";
+                ?>
+                <form action="<?= $url ?>" method="POST" class="p-0">
+                    <input type="hidden" name="id" value="<?= $dato["id"] ?>">
+                    <button value="sdelete" name="action" class="border-0 bg-transparent text-danger">
+                        <i class="fa-solid fa-trash-can"></i>
+                    </button>
+                </form>
 
             <?php
                 echo "</td>";
