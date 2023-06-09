@@ -31,7 +31,7 @@ function search_filter(e) {
 
 
 function search_table(e) {
-    console.log(e);
+    
     $('#list-container tbody tr').each(function () 
     {
         if ($(this).find('td').text().toLowerCase().startsWith(e)) {
@@ -41,10 +41,12 @@ function search_table(e) {
         }
     });
 
-    if($tbody.find('tr:visible').length === 0) {
-        $("tbody").append("<tr><td>No se ha encontrado nin</td></tr>");
+    if($('#list-container tbody').find('tr:visible').length === 0) {
+        $("tbody").append("<tr><td colspan='7'>No se ha encontrado ningún registro.</td></tr>");
     }
 }
+
+
 
 
 function filter(e) {
