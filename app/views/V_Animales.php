@@ -31,9 +31,44 @@ $user_profile = 'Administrador';
             margin-top: 20px;
         }
 
+        .modal-body label {
+            display: block;
+
+            padding: 1em 0 .5em;
+        }
+
+        .modal-body form input,
+        .modal-body form select,
+        .modal-body form textarea {
+            box-sizing: border-box;
+
+            width: 100%;
+
+            padding: .3em;
+
+            border: 1px solid #425C81;
+            border-radius: 4px;
+
+            outline: none;
+            box-shadow: none;
+
+        }
+
+        .modal-body form .form-textarea {
+            resize: vertical;
+            height: 6em;
+            padding: 0.375rem 0.75rem;
+        }
+
         @media (max-width: 767.98px) {
             .col-md-6 {
+                width: 100%;
                 margin-bottom: 10px;
+            }
+
+            .modal-body form,
+            .modal-body {
+                padding: 1em !important;
             }
         }
     </style>
@@ -47,8 +82,11 @@ $user_profile = 'Administrador';
     <!-- CONTENIDO -->
     <section id="content">
 
-        <!-- MODAL -->
+        <!-- MODAL ALERTA -->
         <?php include_once "../views/components/modalAlert.php"; ?>
+
+        <!-- MODAL ANIMAL -->
+        <?php include_once "../views/components/insertAnimal.php"; ?>
 
         <!-- HEADER -->
         <?php include_once "../views/components/header.php"; ?>

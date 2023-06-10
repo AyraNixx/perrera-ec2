@@ -23,10 +23,8 @@
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
-                <form action="<?= $url ?>" method="post" class="p-0">
-                    <label for="add-btn">Añadir Registro:</label>
-                    <button id="add_or_update" class="btn btn-primary" name="action" value="add_or_update">Añadir</button>
-                </form>
+                <label for="add-btn">Añadir Registro:</label>
+                <button id="add_or_update" class="btn btn-primary" data-toggle="modal" data-target="#insert">Añadir</button>
             </div>
         </div>
         <div class="col-md-6 d-none">
