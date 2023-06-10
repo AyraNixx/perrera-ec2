@@ -329,22 +329,22 @@ class Animal extends Model
 
 }
 
-$animal = new Animal();
-// var_dump($animal->get_all("animales"));
-$animal->setAnimal([
-    "nombre" => "prueba_video",
-    "especies_id" => "00B100292511104237965",
-    "raza" => "husky",
-    "genero" => "M",
-    "tamanio" => "40cm",
-    "peso" => "305m",
-    "colores" => "blanco",
-    "personalidad" => "Alegre",
-    "fech_nac" => "1999-03-20",
-    "estado_adopcion" => "1",
-    "estado_salud" => "bien",
-    "necesidades_especiales" => "no",
-    "otras_observaciones" => "",
-    "jaulas_id" => "00J100321890425372678"
-]);
-var_dump($animal->add());
+// $animal = new Animal();
+// // var_dump($animal->get_all("animales"));
+// $animal->setAnimal([
+//     "nombre" => "prueba_video",
+//     "especies_id" => "00B100292511104237965",
+//     "raza" => "husky",
+//     "genero" => "M",
+//     "tamanio" => "40cm",
+//     "peso" => "305m",
+//     "colores" => "blanco",
+//     "personalidad" => "Alegre",
+//     "fech_nac" => "1999-03-20",
+//     "estado_adopcion" => "1",
+//     "estado_salud" => "bien",
+//     "necesidades_especiales" => "no",
+//     "otras_observaciones" => "",
+//     "jaulas_id" => "00J100321890425372678"
+// ]);
+// var_dump($animal->add());

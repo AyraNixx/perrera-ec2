@@ -36,13 +36,14 @@ function search_table(e) {
     {
         if ($(this).find('td').text().toLowerCase().startsWith(e)) {
             $(this).show();
+            $("#no-results").remove();
         } else {
             $(this).hide();
         }
     });
 
     if($('#list-container tbody').find('tr:visible').length === 0) {
-        $("tbody").append("<tr><td colspan='7'>No se ha encontrado ningún registro.</td></tr>");
+        $("tbody").append("<tr id='no-results'><td colspan='7'>No se ha encontrado ningún registro.</td></tr>");    
     }
 }
 

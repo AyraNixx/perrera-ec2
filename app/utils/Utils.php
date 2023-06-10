@@ -103,7 +103,7 @@ class Utils
         $url = 'https://api.sendinblue.com/v3/smtp/email';
 
         // API KEY
-        $apiKey = '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';
+        $apiKey = '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';
 
         // VARIABLES NECESARIAS PARA EL CORREO ELECTRÓNICO
         $subject = ($data["subject"] == 1) ? "CUENTA REGISTRADA" : "CAMBIO DE CONTRASEÑA"; // ASUNTO
@@ -149,11 +149,11 @@ class Utils
                 <br/>Su clave temporal es:<br/>
                 <span style="display:inline-block; width:100%; text-align:center; color:#426081; text-weight:bold; margin-top:25px;">PaTasARRiba2023</span>
                 </p>';
-        } elseif ($data["content"] == 2) {
-            $msg = '<p class="message">Hola' . $data["nombre"] . ',</p>
-                <p class="message">Te hemos enviado este email en respuesta a tu petición de restablecer tu contraseña.</p>
-                <p class="message">Para restablecer tu contraseña, haz clic en el siguiente enlace:</p>';
-        }
+            } elseif ($data["content"] == 2) {
+                $msg = '<p class="message">Hola ' . $data["nombre"] . ',</p>
+                    <p class="message">Te hemos enviado este email en respuesta a la petición de restablecimiento de contraseña.</p>
+                    <p class="message">Para restablecer la contraseña, haz clic en el siguiente enlace:</p>';
+            }
 
         $emailContent = '<!DOCTYPE html>
         <html lang="es">
