@@ -2,6 +2,8 @@ $(function () {
   let id = $("#especies_id").val();
   let id_jaula = $("#cage_selected").val();
 
+  console.log("heee");
+
   function cargarJaulas() {
     $.ajax({
       url: '../../app/controllers/AnimalC.php',
@@ -12,6 +14,7 @@ $(function () {
       type: 'POST',
       dataType: 'json',
       success: function (data) {
+        console.log(data);
         $("#jaulas_id").empty();
 
         $.each(data, function (key, value) {

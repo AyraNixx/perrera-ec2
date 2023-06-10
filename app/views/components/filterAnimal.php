@@ -6,7 +6,7 @@
                 <select id="filter-select" class="form-control">
                     <option value="">Todos los animales</option>
                     <?php
-                    foreach ($especie as $show_one) {
+                    foreach ($data_especies as $show_one) {
                         echo "<option value='" . $show_one["id"] . "'>Mostrar " . $show_one["nombre"] . "</option>";
                     }
                     ?>
@@ -23,8 +23,8 @@
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
-                <label for="add-btn">Añadir Registro:</label>
-                <button id="add_or_update" class="btn btn-primary" data-toggle="modal" data-target="#insert">Añadir</button>
+                <label for="add">Añadir Registro:</label>
+                <button id="add" class="btn btn-primary" data-toggle="modal" data-target="#insert">Añadir</button>
             </div>
         </div>
         <div class="col-md-6 d-none">

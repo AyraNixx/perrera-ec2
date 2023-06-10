@@ -127,24 +127,18 @@ class AnimalC
         // Obtenemos todos los animales visibles
         $animales_visibles = $this->animal->pagination_visible_with_more_info($ord, $field, $page, $amount);
         // Obtenemos todos los animales
-        $animales = $this->animal->pagination_all_with_more_info($ord, $field, $page, $amount);
-        $especies = $this->especie->get_all("especies");
+        $animales = $this->animal->pagination_all_with_more_info($ord, $field, $page, $amount);    
+        $data_especies = $this->especie->get_all("especies");
         // echo "<pre>";
         // var_dump($animales_visibles);
         // echo "</pre>";
         // Mostramos la vista
-        $this->view($animales_visibles, ["animales"=>$animales, "especies"=>$especies], $view);
+        $this->view($animales_visibles, ["animales"=>$animales, "especies"=>$data_especies], $view);
     }
 
 
     public function add_or_update()
     {
-        // Intanciamos un objeto de la clase Especie
-        $especies = new Especie();
-        // Intanciamos un objeto de la clase Jaula
-        // $jaulas = new Jaula();
-
-        $data_especies = $especies->get_all("especies");
         // Creamos una nueva variable, por defecto es uno que significa insert
         $action = 1;
 
@@ -343,7 +337,7 @@ class AnimalC
 
         $data_visible = $datos_visibles;
         $data = $datos["animales"];
-        $especie = $datos["especies"];
+        $data_especies = $datos["especies"];
 
         $new_msg = $this->getMsg();
 

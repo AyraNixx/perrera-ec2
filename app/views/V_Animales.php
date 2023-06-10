@@ -125,6 +125,7 @@ $user_profile = 'Administrador';
     </script>
     <script src="../views/js/widthMenu.js"></script>
     <script src="../views/js/filteredTable.js"></script>
+    <script src="../views/js/changeJaulaValues.js"></script>
 </body>
 
 </html>
