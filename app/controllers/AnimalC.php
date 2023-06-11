@@ -32,6 +32,14 @@ class AnimalC
     private $especie;
     private $msg;
 
+    //
+    // -- ATRIBUTOS PARA LA PAGINACIÓN
+    //
+    private $field;
+    private $ord;
+    private $amount;
+    private $page;
+
 
 
     // 
@@ -42,6 +50,11 @@ class AnimalC
         $this->animal = new Animal();
         $this->especie = new Especie();
         $this->msg = null;
+
+        $this->field = "nombre";
+        $this->ord = "ASC";
+        $this->amount = "10";
+        $this->page = "1";
     }
 
 
@@ -66,7 +79,85 @@ class AnimalC
         return $this;
     }
 
+    /**
+     * Get the value of field
+     */
+    public function getField()
+    {
+        return $this->field;
+    }
 
+    /**
+     * Set the value of field
+     *
+     * @return  self
+     */
+    public function setField($field)
+    {
+        $this->field = $field;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of ord
+     */
+    public function getOrd()
+    {
+        return $this->ord;
+    }
+
+    /**
+     * Set the value of ord
+     *
+     * @return  self
+     */
+    public function setOrd($ord)
+    {
+        $this->ord = $ord;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of amount
+     */
+    public function getAmount()
+    {
+        return $this->amount;
+    }
+
+    /**
+     * Set the value of amount
+     *
+     * @return  self
+     */
+    public function setAmount($amount)
+    {
+        $this->amount = $amount;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of page
+     */
+    public function getPage()
+    {
+        return $this->page;
+    }
+
+    /**
+     * Set the value of page
+     *
+     * @return  self
+     */
+    public function setPage($page)
+    {
+        $this->page = $page;
+
+        return $this;
+    }
 
     // 
     // -- MÉTODOS
@@ -109,8 +200,11 @@ class AnimalC
             case "show_cages":
                 $this->show_cages_available();
                 break;
-            case "filter":
-                $this->filter_data();
+            // case "filter":
+            //     $this->filter_data();
+            //     break;
+            case "pagination":
+                $this->pagination();
                 break;
             default:
                 $this->index();
@@ -118,19 +212,19 @@ class AnimalC
         }
     }
 
-    public function index($view = "V_Animales.php", String $ord = "ASC", String $field = "nombre", int $page = 1, int $amount = 10)
+    public function index($view = "V_Animales.php")
     {
         // Obtenemos todos los animales visibles
-        $animales_visibles = $this->animal->pagination_visible_with_more_info($ord, $field, $page, $amount);
+        $animales_visibles = $this->animal->pagination_visible_with_more_info($this->ord, $this->field, $this->page, $this->amount);
         // Obtenemos todos los animales
-        $animales = $this->animal->pagination_all_with_more_info($ord, $field, $page, $amount);    
+        $animales = $this->animal->pagination_all_with_more_info($this->ord, $this->field, $this->page, $this->amount);
         $data_especies = $this->especie->get_all("especies");
-        $total_pages = $this->animal->total_pages_visibles("animales", $amount);
+        $total_pages = $this->animal->total_pages_visibles("animales", $this->amount);
         // echo "<pre>";
         // var_dump($animales_visibles);
         // echo "</pre>";
         // Mostramos la vista
-        $this->view($animales_visibles, ["animales"=>$animales, "especies"=>$data_especies, "total_pages"=>$total_pages], $view);
+        $this->view($animales_visibles, ["animales" => $animales, "especies" => $data_especies, "total_pages" => $total_pages], $view);
     }
 
     public function add()
@@ -294,11 +388,37 @@ class AnimalC
             // Devolver los registros en formato JSON
             // header('Content-Type: application/json');
             // echo json_encode($result);
-        }else{
+        } else {
             $this->index("/components/animalList.php");
         }
     }
 
+    public function pagination()
+    {
+        var_dump($_POST);
+
+        // Obtenemos los valores nuevos (si es que hay)
+        $this->ord = $this->get_value("ord", $this->ord);
+        $this->field = $this->get_value("field", $this->field);
+        $this->amount = $this->get_value("amount", $this->amount);
+        $this->page = $this->get_value("page", $this->page);
+
+        // Obtenemos todos los animales visibles
+        $animales_visibles = $this->animal->pagination_visible_with_more_info($this->ord, $this->field, $this->page, $this->amount);
+        // Obtenemos todos los animales
+        $animales = $this->animal->pagination_all_with_more_info($this->ord, $this->field, $this->page, $this->amount);
+        $data_especies = $this->especie->get_all("especies");
+        $total_pages = $this->animal->total_pages_visibles("animales", $this->amount);
+    }
+
+    public function get_value(String $val, String $originalVal)
+    {
+        if (isset($_POST[$val])) {
+            return $_POST[$val];
+        } else {
+            return $originalVal;
+        }
+    }
 
     public function view(array $datos_visibles, array $datos, String $view)
     {
@@ -319,8 +439,9 @@ $animal = new AnimalC();
 
 if (!empty($_REQUEST["action"])) {
     $action = $_REQUEST["action"];
+    // echo json_encode($_POST); // Codificar $_POST como JSON y enviarlo como respuesta
 } else {
     $action = "index";
 }
 
-$animal->run($action); 
+$animal->run($action);

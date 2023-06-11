@@ -1,11 +1,11 @@
 $(document).ready(function () {
 
-    $('#filter-select').change(function (e) {
-        let selectVal = $(this).val();
+    // $('#filter-select').change(function (e) {
+    //     let selectVal = $(this).val();
 
-        filter(selectVal);
+    //     filter(selectVal);
 
-    });
+    // });
 
     $("#search-filter").on("keyup", function () {
         search_filter($(this).val().toLowerCase());
@@ -50,41 +50,41 @@ function search_table(e) {
 
 
 
-function filter(e) {
+// function filter(e) {
 
-    if (e == '') {
-        $.ajax({
-            url: '../controllers/AnimalC.php',
-            method: 'POST',
-            data: {
-                action: 'filter'
-            },
-            success: function (response) {
+//     // if (e == '') {
+//     //     $.ajax({
+//     //         url: '../controllers/AnimalC.php',
+//     //         method: 'POST',
+//     //         data: {
+//     //             action: 'filter'
+//     //         },
+//     //         success: function (response) {
 
-                $('#list-container').html('');
+//     //             $('#list-container').html('');
 
-                $('#list-container').append(response);
-            }
-        });
-    }
+//     //             $('#list-container').append(response);
+//     //         }
+//     //     });
+//     // }
 
-    if (e != '') {
-        $.ajax({
-            url: '../controllers/AnimalC.php',
-            method: 'POST',
-            data: {
-                action: 'filter',
-                field: 'especies_id',
-                value_field: e
-            },
-            success: function (response) {
+//     if (e != '') {
+//         $.ajax({
+//             url: '../controllers/AnimalC.php',
+//             method: 'POST',
+//             data: {
+//                 action: 'filter',
+//                 field: 'especies_id',
+//                 value_field: e
+//             },
+//             success: function (response) {
 
-                $('#list-container').html('');
+//                 $('#list-container').html('');
 
-                $('#list-container').append(response);
-            }
-        });
-    }
-}
+//                 $('#list-container').append(response);
+//             }
+//         });
+//     }
+// }
 
-filter('');
+// filter('');

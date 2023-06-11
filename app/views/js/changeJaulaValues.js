@@ -2,8 +2,6 @@ $(function () {
   let id = $("#especies_id").val();
   let id_jaula = $("#cage_selected").val();
 
-  console.log("heee");
-
   function cargarJaulas() {
     $.ajax({
       url: '../../app/controllers/AnimalC.php',

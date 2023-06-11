@@ -4,33 +4,33 @@
         <thead>
             <tr>
                 <th class='text-center'>
-                    <div class="d-flex align-items-center justify-content-center">
+                    <div class="d-flex align-items-end justify-content-center">
                         <span>Nombre</span>
-                        <button class="btn btn-link sort-btn p-0" data-column="nombre" data-order="asc">
+                        <button class="btn btn-link sort-btn p-0" data-field="nombre" data-ord="asc">
                             <i class="fas fa-sort"></i>
                         </button>
                     </div>
                 </th>
                 <th class='text-center'>
-                    <div class="d-flex align-items-center justify-content-center">
+                    <div class="d-flex align-items-end justify-content-center">
                         <span>Especie</span>
-                        <button class="btn btn-link sort-btn p-0" data-column="especie" data-order="asc">
+                        <button class="btn btn-link sort-btn p-0" data-field="nombre_especie" data-ord="asc">
                             <i class="fas fa-sort"></i>
                         </button>
                     </div>
                 </th>
                 <th class='text-center'>
-                    <div class="d-flex align-items-center justify-content-center">
+                    <div class="d-flex align-items-end justify-content-center">
                         <span>Raza</span>
-                        <button class="btn btn-link sort-btn p-0" data-column="raza" data-order="asc">
+                        <button class="btn btn-link sort-btn p-0" data-field="raza" data-ord="asc">
                             <i class="fas fa-sort"></i>
                         </button>
                     </div>
                 </th>
                 <th class='text-center'>
-                    <div class="d-flex align-items-center justify-content-center">
+                    <div class="d-flex align-items-end justify-content-center">
                         <span>Fecha de nacimiento</span>
-                        <button class="btn btn-link sort-btn p-0" data-column="fecha_nacimiento" data-order="asc">
+                        <button class="btn btn-link sort-btn p-0" data-field="fech_nac" data-ord="asc">
                             <i class="fas fa-sort"></i>
                         </button>
                     </div>
