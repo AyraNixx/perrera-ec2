@@ -45,11 +45,9 @@ class Especie extends Model
             return $stm->execute();
             // En caso de excepción, lo guardamos en el log
         } catch (PDOException $e) {
-            echo "todo mal";
             // Guardamos el error en el log
             Utils::save_log_error("PDOException caught: " . $e->getMessage());
         } catch (Exception $e) {
-            echo "todo mal";
             // Guardamos el error en el log
             Utils::save_log_error("Unexpected error caught: " . $e->getMessage());
         }

@@ -3,6 +3,8 @@
         Filas por página:
         <select name="amount" id="amount" class="amount px-1 border-0 cursos-pointer" style="outline: none;">
             <option value="10" selected>10</option>
+            <option value="25" selected>25</option>
+            <option value="50" selected>50</option>
         </select>
     </span>
 
@@ -11,10 +13,14 @@
             <i class="fa-solid fa-chevron-left" style="font-size: .7em;"></i>
         </button>
         <select name="page" id="page" class="amount px-1 border-0 cursos-pointer" style="outline: none;">
-            <option value="1" selected>1</option>
-            <option value="2">2</option>
+            <?php
+                for($i = 1; $i <= $total_pages; $i++)
+                {
+                 echo "<option value='$i'>$i</option>";   
+                }
+            ?>
         </select>
-        <span class="me-1">of 100</span>
+        <span class="me-1">of <?=$total_pages?></span>
         <button class="next bg-transparent border-0" value="2">
             <i class="fa-solid fa-chevron-right" style="font-size: .7em;"></i>
         </button>

@@ -122,10 +122,10 @@ class Animal extends Model
             // Devolvemos resultados
             return $stm->execute();
             // En caso de excepción, lo guardamos en el log
-        } catch (PDOException $e) {echo $e->getMessage();
+        } catch (PDOException $e) {
             // Guardamos el error en el log
             Utils::save_log_error("PDOException caught: " . $e->getMessage());
-        } catch (Exception $e) {echo $e->getMessage();
+        } catch (Exception $e) {
             // Guardamos el error en el log
             Utils::save_log_error("Unexpected error caught: " . $e->getMessage());
         }
@@ -201,7 +201,7 @@ class Animal extends Model
             $query = "SELECT j.id, j.ubicacion 
                         FROM perrera.jaulas j
                             INNER JOIN especies e ON e.id = j.especies_id
-                                WHERE j.especies_id = :especie AND j.disponible = 1";
+                                WHERE j.especies_id = :especie AND j.disponible = 1 AND j.ocupada = 1";
 
             // Preparamos la consulta para su ejecución
             $statement = $this->conBD->prepare($query);

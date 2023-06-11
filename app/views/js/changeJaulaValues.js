@@ -14,7 +14,6 @@ $(function () {
       type: 'POST',
       dataType: 'json',
       success: function (data) {
-        console.log(data);
         $("#jaulas_id").empty();
 
         $.each(data, function (key, value) {

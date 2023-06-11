@@ -86,10 +86,6 @@ class AnimalC
                 // Llama a la función index
                 $this->index();
                 break;
-                // Si es insert
-            case "add_or_update":
-                $this->add_or_update();
-                break;
             case "add":
                 // Llama a la función add
                 $this->add();
@@ -129,40 +125,12 @@ class AnimalC
         // Obtenemos todos los animales
         $animales = $this->animal->pagination_all_with_more_info($ord, $field, $page, $amount);    
         $data_especies = $this->especie->get_all("especies");
+        $total_pages = $this->animal->total_pages_visibles("animales", $amount);
         // echo "<pre>";
         // var_dump($animales_visibles);
         // echo "</pre>";
         // Mostramos la vista
-        $this->view($animales_visibles, ["animales"=>$animales, "especies"=>$data_especies], $view);
-    }
-
-
-    public function add_or_update()
-    {
-        // Creamos una nueva variable, por defecto es uno que significa insert
-        $action = 1;
-
-        // Comprobamos que los campos no estén vacíos
-        if (
-            isset($_POST["id"])
-        ) {
-            // Creamos un nuevo array y guardamos los valores de get
-            $update = $this->animal->get_one("animales", $_POST["id"]);
-
-             // Si algo ha ido mal, guardamos mensaje y mostramos la página de Animales
-             if ($update == null || $update == false) 
-            {
-                $this->setMsg(self::ERROR_UPDATE);
-
-                $this->index();
-                return;
-            }
-
-            // Si entra en este condicional, significa que Post no está vacío y que se trata de una actualizacion
-            $action = 2;
-        }
-        // Incluimos la vista de crear y modificar
-        require_once SELF::VIEW_UPDATE_EDIT;
+        $this->view($animales_visibles, ["animales"=>$animales, "especies"=>$data_especies, "total_pages"=>$total_pages], $view);
     }
 
     public function add()
@@ -338,6 +306,7 @@ class AnimalC
         $data_visible = $datos_visibles;
         $data = $datos["animales"];
         $data_especies = $datos["especies"];
+        $total_pages = $datos["total_pages"];
 
         $new_msg = $this->getMsg();
 

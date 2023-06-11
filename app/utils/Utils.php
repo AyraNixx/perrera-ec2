@@ -67,7 +67,7 @@ class Utils
     /**
      * Guarda las excepciones en un log, indicando la fecha y hora en el que se produjo
      */
-    public static function save_log_error($error, $path = "/app/logs/log.log")
+    public static function save_log_error($error, $path = "app/logs/log.log")
     {
         //Utilizamos error_log que envia un mensaje de error según lo indicado
         //Le pasamos el error (que pasamos con print_r para que se vea más claro)

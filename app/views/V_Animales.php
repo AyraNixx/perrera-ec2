@@ -60,6 +60,12 @@ $user_profile = 'Administrador';
             padding: 0.375rem 0.75rem;
         }
 
+        .fa-sort {
+            font-size: .7em;
+            line-height: 2em;
+            padding-left: 0.5em;
+        }
+
         @media (max-width: 767.98px) {
             .col-md-6 {
                 width: 100%;
@@ -75,6 +81,7 @@ $user_profile = 'Administrador';
 </head>
 
 <body>
+
     <!-- MENU -->
     <?php include_once "../views/components/menu.php"; ?>
 
