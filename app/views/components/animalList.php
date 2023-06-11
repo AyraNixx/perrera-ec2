@@ -40,9 +40,10 @@
                 <th class='text-center' colspan="2"></th>
             </tr>
         </thead>
-
         <tbody>
+
             <?php
+
             //Recorremos el array data
             foreach ($data_visible as $dato) {
                 $url = "AnimalC.php"; //URL destino
@@ -79,6 +80,7 @@
                 echo "</tr>";
             }
             ?>
+
         </tbody>
     </table>
 </div>

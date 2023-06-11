@@ -102,7 +102,9 @@ $user_profile = 'Administrador';
         <!-- CONTENEDOR PRINCIPAL -->
         <main class="mt-5">
             <?php include_once "../views/components/filterAnimal.php"; ?>
+
             <?php include_once "../views/components/animalList.php"; ?>
+
             <?php include_once "../views/components/pagination.php"; ?>
         </main>
 
@@ -135,8 +137,6 @@ $user_profile = 'Administrador';
     <script src="../views/js/changeJaulaValues.js"></script>
     <script src="../views/js/pagination.js"></script>
     <script>
-
-
         // $(document).ready(function() {
         //     console.log("ho");
         //     $('.aaaa').popover('disable'); // Desactivar el Popover de Bootstrap

@@ -393,10 +393,10 @@ class AnimalC
         }
     }
 
+
     public function pagination()
     {
         var_dump($_POST);
-
         // Obtenemos los valores nuevos (si es que hay)
         $this->ord = $this->get_value("ord", $this->ord);
         $this->field = $this->get_value("field", $this->field);
@@ -404,12 +404,51 @@ class AnimalC
         $this->page = $this->get_value("page", $this->page);
 
         // Obtenemos todos los animales visibles
-        $animales_visibles = $this->animal->pagination_visible_with_more_info($this->ord, $this->field, $this->page, $this->amount);
+        $data_visible = $this->animal->pagination_visible_with_more_info($this->ord, $this->field, $this->page, $this->amount);
         // Obtenemos todos los animales
-        $animales = $this->animal->pagination_all_with_more_info($this->ord, $this->field, $this->page, $this->amount);
+        $data = $this->animal->pagination_all_with_more_info($this->ord, $this->field, $this->page, $this->amount);
         $data_especies = $this->especie->get_all("especies");
-        $total_pages = $this->animal->total_pages_visibles("animales", $this->amount);
+        $total_pages = $this->animal->total_pages_visibles("animales", $this->amount);       
+        
+        //Recorremos el array data
+        foreach ($data_visible as $dato) {
+            $url = "AnimalC.php"; //URL destino
+
+            echo "<tr>";
+            echo "<td class='text-center sticky-column' id='showRegister' value='" . $dato["id"] . "'>" . $dato["nombre"] . "</td>";
+            echo "<td class='text-center'>" . $dato["nombre_especie"] . "</td>";
+            echo "<td class='text-center'>" . $dato["raza"] . "</td>";
+            echo "<td class='text-center'>" . $dato["fech_nac"] . "</td>";
+            echo "<td class='text-center'>" . $dato["estado_adopcion"] . "</td>";
+            echo "<td class='text-center'>" . $dato["ubicacion"] . "</td>";
+            echo "<td class='ps-4 pe-2'>";
+        ?>
+            <form action="<?= $url ?>" method="post" class="p-0">
+                <input type="hidden" name="id" value="<?= $dato["id"] ?>">
+                <button value="add_or_update" name="action" class="border-0 bg-transparent text-success">
+                    <i class="fa-solid fa-marker"></i>
+                </button>
+            </form>
+            <?php
+            echo "</td>";
+            echo "<td>|</td>";
+            echo "<td class='ps-2 pe-4'>";
+            ?>
+            <form action="<?= $url ?>" method="POST" class="p-0">
+                <input type="hidden" name="id" value="<?= $dato["id"] ?>">
+                <button value="sdelete" name="action" class="border-0 bg-transparent text-danger">
+                    <i class="fa-solid fa-trash-can"></i>
+                </button>
+            </form>
+
+        <?php
+            echo "</td>";
+            echo "</tr>";
+        }
+        
     }
+    
+    
 
     public function get_value(String $val, String $originalVal)
     {

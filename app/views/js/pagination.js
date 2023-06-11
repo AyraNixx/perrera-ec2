@@ -9,11 +9,8 @@ $(document).ready(function() {
         let page = $("#page").val();
 
         // Cambiar el valor de ord de asc a desc, o viceversa
-        if (ord === "asc") {
-            ord = "desc";
-        } else if (ord === "desc") {
-            ord = "asc";
-        }
+        let newOrd = (ord === "asc") ? "desc" : "asc";
+        $(this).data("ord", newOrd); // Actualizar el valor del atributo data-ord
 
         // Realizar la solicitud AJAX
         $.ajax({
@@ -21,13 +18,14 @@ $(document).ready(function() {
             url: "../../app/controllers/AnimalC.php",
             data: {
                 "action": "pagination",
-                "ord": ord,
+                "ord": newOrd, // Usar el nuevo valor de ord
                 "field": field,
                 "amount": amount,
                 "page": page
             },
             success: function(response) {
-                console.log(response);
+                $("#list-container tbody").html("");
+                $("#list-container tbody").html(response);
             },
             error: function(error) {
                 console.log('Error:', error);
