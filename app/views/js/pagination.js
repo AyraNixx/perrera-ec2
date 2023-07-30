@@ -1,12 +1,13 @@
-$(document).ready(function() {
-    $(document).on('click', '.sort-btn', function() {
+$(document).ready(function () {
+
+    // Para filtrar la tabla
+    $(document).on('click', '.sort-btn', function () {
         // Obtener los valores del campo y ord
         let field = $(this).data("field");
         let ord = $(this).data("ord");
-
         // Obtener los valores de page y amount
-        let amount = $("#amount").val();
-        let page = $("#page").val();
+        let amount = parseInt($("#amount").val());
+        let page = parseInt($("#page").val());
 
         // Cambiar el valor de ord de asc a desc, o viceversa
         let newOrd = (ord === "asc") ? "desc" : "asc";
@@ -23,54 +24,115 @@ $(document).ready(function() {
                 "amount": amount,
                 "page": page
             },
-            success: function(response) {
+            success: function (response) {
+                console.log(response);                
                 $("#list-container tbody").html("");
                 $("#list-container tbody").html(response);
             },
-            error: function(error) {
+            error: function (error) {
                 console.log('Error:', error);
             }
         });
     });
+
+    // Para ir a la página anterior
+    $('#previous').click(function (e) {
+
+        // Obtener los valores de page y amount
+        let amount = parseInt($("#amount").val());
+        let prev = parseInt($("#previous").val());
+
+        let data = {
+            "action": "pagination",
+            "amount": amount,
+            "page": prev
+        };
+
+        callController(data);
+
+        // Actualizamos el valor del select page
+        $("#page").val(prev);
+    });
+
+    // Para ir a la página siguiente
+    $("#next").click(function (e) {
+
+        let next = parseInt($("#next").val());
+
+        // Obtener los valores de page y amount
+        let amount = parseInt($("#amount").val());
+
+
+        let data = {
+            "action": "pagination",
+            "amount": amount,
+            "page": next
+        };
+
+        callController(data);
+
+        // Actualizamos el valor del select page
+        $("#page").val(next);
+    });
+
+
+    $("#page").change(function (e) {
+
+        // Obtener los valores de page y amount
+        let amount = parseInt($("#amount").val());
+        let page = parseInt($("#page").val());
+
+        let data = {
+            "action": "pagination",
+            "amount": amount,
+            "page": next
+        };
+
+        callController(data);
+        updateBtn();
+        // Actualizamos el valor del select page
+        $("#page").val(selectedPage);
+
+    });
+
+
+
+    function callController(data) {
+        // Realizar la llamada Ajax para obtener los datos de la página anterior/siguiente
+        $.ajax({
+            url: '../../app/controllers/AnimalC.php',
+            method: 'POST',
+            data: data,
+            success: function (response) {
+                console.log(response);
+                $("#list-container tbody").html("");
+                $("#list-container tbody").html(response);
+                updateBtn();
+            },
+            error: function () {
+                alert('Error al obtener los datos');
+            }
+        });
+    }
+
+    function updateBtn() {
+        let page = parseInt($("#page").val());
+        let total_pages = parseInt($("#total_pages").text());
+
+        if (page === 1) {
+            $("#previous").prop("disabled", true);
+        } else {
+            $("#previous").prop("disabled", false);
+        }
+
+        if (page === total_pages) {
+            $("#next").prop("disabled", true);
+        } else {
+            $("#next").prop("disabled", false);
+        }
+    }
+
+    // Llamamos a la función updateBtn() al cargar la página para inicializar los botones
+    updateBtn();
+
 });
-
-
-
-
-
-
-// $('.previous').click(function(){
-    
-//     // Guardamos el valor de page para que sea más fácil interaccionar con ella
-//     let page = $("#page").val();
-//     // Guardamos también el valor de la cantidad de registros que queremos por 
-//     // página
-//     let amount = $("#amount").val();
-
-//     // En caso de que page sea distinto y mayor de 1, le restamos uno para obtener 
-//     // la página anterior
-//     if(page != 1 && page > 1)
-//     {
-//         page = parseInt(page) - 1;
-//     }
-
-//     // Realizar la llamada Ajax para obtener los datos de la página anterior
-//     $.ajax({
-//         url: '../../app/controllers/AnimalC.php',
-//         method: 'POST',
-//         data: {
-//             "amount": amount,
-//             "page": page, "prueba":1
-//         },
-//         success: function(response) {
-//             console.log(response);
-//             // // Actualizar el contenido de la tabla con los datos de la página anterior
-//             // $('#table-body').html(response);
-//             // // Actualizar el valor del select de página con la página anterior
-//             // $('#page').val(previousPage);
-//         },
-//         error: function() {
-//             alert('Error al obtener los datos');
-//         }
-//     });
-// })

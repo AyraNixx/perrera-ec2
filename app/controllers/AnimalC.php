@@ -200,9 +200,9 @@ class AnimalC
             case "show_cages":
                 $this->show_cages_available();
                 break;
-            // case "filter":
-            //     $this->filter_data();
-            //     break;
+                // case "filter":
+                //     $this->filter_data();
+                //     break;
             case "pagination":
                 $this->pagination();
                 break;
@@ -395,21 +395,23 @@ class AnimalC
 
 
     public function pagination()
-    {
-        var_dump($_POST);
+    {        
         // Obtenemos los valores nuevos (si es que hay)
         $this->ord = $this->get_value("ord", $this->ord);
         $this->field = $this->get_value("field", $this->field);
         $this->amount = $this->get_value("amount", $this->amount);
         $this->page = $this->get_value("page", $this->page);
 
+        var_dump($this->ord);
+        var_dump($this->field);
+
         // Obtenemos todos los animales visibles
         $data_visible = $this->animal->pagination_visible_with_more_info($this->ord, $this->field, $this->page, $this->amount);
         // Obtenemos todos los animales
         $data = $this->animal->pagination_all_with_more_info($this->ord, $this->field, $this->page, $this->amount);
         $data_especies = $this->especie->get_all("especies");
-        $total_pages = $this->animal->total_pages_visibles("animales", $this->amount);       
-        
+        $total_pages = $this->animal->total_pages_visibles("animales", $this->amount);
+
         //Recorremos el array data
         foreach ($data_visible as $dato) {
             $url = "AnimalC.php"; //URL destino
@@ -422,7 +424,7 @@ class AnimalC
             echo "<td class='text-center'>" . $dato["estado_adopcion"] . "</td>";
             echo "<td class='text-center'>" . $dato["ubicacion"] . "</td>";
             echo "<td class='ps-4 pe-2'>";
-        ?>
+            ?>
             <form action="<?= $url ?>" method="post" class="p-0">
                 <input type="hidden" name="id" value="<?= $dato["id"] ?>">
                 <button value="add_or_update" name="action" class="border-0 bg-transparent text-success">
@@ -441,24 +443,26 @@ class AnimalC
                 </button>
             </form>
 
-        <?php
+            <?php
             echo "</td>";
             echo "</tr>";
         }
-        
     }
-    
-    
 
+
+    // Obtiene el valor de post y si no existe, te devuelve el original
     public function get_value(String $val, String $originalVal)
     {
         if (isset($_POST[$val])) {
+            $this->$val = $_POST[$val]; 
             return $_POST[$val];
         } else {
             return $originalVal;
         }
     }
 
+
+    // Te lleva a la vista
     public function view(array $datos_visibles, array $datos, String $view)
     {
 
@@ -466,6 +470,7 @@ class AnimalC
         $data = $datos["animales"];
         $data_especies = $datos["especies"];
         $total_pages = $datos["total_pages"];
+        $page = $this->page;
 
         $new_msg = $this->getMsg();
 

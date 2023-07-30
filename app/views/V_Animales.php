@@ -31,6 +31,14 @@ $user_profile = 'Administrador';
             margin-top: 20px;
         }
 
+        td {
+            /* Ajusta la altura deseada para las celdas */
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+
         .modal-body label {
             display: block;
 
@@ -136,18 +144,6 @@ $user_profile = 'Administrador';
     <script src="../views/js/filteredTable.js"></script>
     <script src="../views/js/changeJaulaValues.js"></script>
     <script src="../views/js/pagination.js"></script>
-    <script>
-        // $(document).ready(function() {
-        //     console.log("ho");
-        //     $('.aaaa').popover('disable'); // Desactivar el Popover de Bootstrap
-
-        //     $('.aaaa').on('click', function(event){
-        //         console.log("hey bb");
-        //         console.log($(this).data('column'));
-        //         console.log($(this).data('order'));
-        //     });
-        // });
-    </script>
 </body>
 
 </html>
