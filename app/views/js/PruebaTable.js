@@ -1,22 +1,22 @@
 "use strict";
 
 
-function col_selected(page) {
-    let col;
-    let order;
-    let addClass;
-    let rmvClass;
+function col_selected(th) {
 
-    // Si la página tiene un valor que se puede considerar como falso, se pone 0. 
-    // En caso contrario, se mantiene el número pasado
-    page = page ? page : 0;
+    let col; // Campo por el que hay que filtrar
+    let order; // Ordenación
+    let page; // Página en la que se encuentre en la tabla
+    let amount; // Cantidad 
+    let addClass; // clase que vamos añadir
+    let rmvClass; // clase que vamos a eliminar
 
-    // Recorremos todas las th que tengan la clase sorting
-
-    if ($(this).attr('order') != '') // Si order es distinto de nulo
+    // Obtenemos el valor del atributo order que tenemos en la th seleccioanda
+    if ($(th).attr('order') != '') // Si order es distinto de nulo
     {
-        col = $(this).attr('col'); // Asignamos el nombre de la columna que tenga
-        order = $(this).attr('order'); // Asignamos el orden que tenga
+        col = $(th).attr('col'); // Obtenemos la columna
+        order = $(th).attr('order'); // Obtenemos la ordenación
+        page = $("#page").val(); // Obtenemos la página
+        amount = $("#amount").val(); // Obtenemos la cantidad
 
         addClass = (order == 'ASC') ? 'ASC' : 'DESC';
         rmvClass = (order == 'ASC') ? 'DESC' : 'ASC';
@@ -25,6 +25,9 @@ function col_selected(page) {
     console.log("Pagina: " + page);
     console.log("Col: " + col);
     console.log("order: " + order);
+    console.log("page: " + page);
+    console.log("amount: " + amount);
+
 
     // Usamos ajax
     // $.ajax({
@@ -46,6 +49,6 @@ $(function () {
     $("th.sorting").click(function (e) {
         // alert($(this).attr("col"));
         // console.log()
-        col_selected(page, this);
+        col_selected(this);
     });
 })
