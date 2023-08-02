@@ -3,7 +3,7 @@
     <table id="list-container" class="table table-striped" style="width:100%; vertical-align:middle">
         <thead>
             <tr>
-                <th class='text-center sorting' col="Nombre" order="asc">
+                <th class='text-center sorting' col="Nombre" ord="asc">
                     <div class="d-flex align-items-end justify-content-center">
                         <span>Nombre</span>
                         <button class="btn btn-link sort-btn p-0">
@@ -11,7 +11,7 @@
                         </button>
                     </div>
                 </th>
-                <th class='text-center sorting' col="Especie" order="asc">
+                <th class='text-center sorting' col="Especie" ord="asc">
                     <div class="d-flex align-items-end justify-content-center">
                         <span>Especie</span>
                         <button class="btn btn-link sort-btn p-0">
@@ -19,7 +19,7 @@
                         </button>
                     </div>
                 </th>
-                <th class='text-center sorting' col="Raza" order="asc">
+                <th class='text-center sorting' col="Raza" ord="asc">
                     <div class="d-flex align-items-end justify-content-center">
                         <span>Raza</span>
                         <button class="btn btn-link sort-btn p-0">
@@ -27,7 +27,7 @@
                         </button>
                     </div>
                 </th>
-                <th class='text-center sorting' col="Fechnac" order="asc">
+                <th class='text-center sorting' col="Fechnac" ord="asc">
                     <div class="d-flex align-items-end justify-content-center">
                         <span>Fecha de nacimiento</span>
                         <button class="btn btn-link sort-btn p-0">
@@ -35,8 +35,8 @@
                         </button>
                     </div>
                 </th>
-                <th class='text-center sorting' col="EstadoAdp" order="asc">Estado adopción</th>
-                <th class='text-center sorting' col="Jaula" order="asc">Jaula</th>
+                <th class='text-center sorting' col="EstadoAdp" ord="asc">Estado adopción</th>
+                <th class='text-center sorting' col="Jaula" ord="asc">Jaula</th>
                 <th class='text-center' colspan="2"></th>
             </tr>
         </thead>
@@ -59,7 +59,7 @@
             ?>
                 <form action="<?= $url ?>" method="post" class="p-0">
                     <input type="hidden" name="id" value="<?= $dato["id"] ?>">
-                    <button value="add_or_update" name="action" class="border-0 bg-transparent text-success">
+                    <button value="add_or_update" name="action" class="bord-0 bg-transparent text-success">
                         <i class="fa-solid fa-marker"></i>
                     </button>
                 </form>
@@ -70,7 +70,7 @@
                 ?>
                 <form action="<?= $url ?>" method="POST" class="p-0">
                     <input type="hidden" name="id" value="<?= $dato["id"] ?>">
-                    <button value="sdelete" name="action" class="border-0 bg-transparent text-danger">
+                    <button value="sdelete" name="action" class="bord-0 bg-transparent text-danger">
                         <i class="fa-solid fa-trash-can"></i>
                     </button>
                 </form>
