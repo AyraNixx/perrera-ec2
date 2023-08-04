@@ -119,20 +119,32 @@ class LoginC
                 return;
             }
 
+            // Guardamos el rol
+            // var_dump($data_user["roles_id"]);
+            $rol = $this->empleado->get_rol($data_user["roles_id"]);
+            // $rol = $rol["rol"];
+            // $rol = 'prueba';
+
+            // var_dump($data_user);
+
             // Iniciamos sesión
             session_start();
             // Guardamos las siguientes variables en la session
             $_SESSION["login"] = true;
             $_SESSION["nombre"] = $data_user["nombre"];
             $_SESSION["correo"] = $data_user["correo"];
-            $_SESSION["rol"] = $rol = $this->empleado->get_rol($data_user["rol_id"]);
+            $_SESSION["rol"] = $rol;
+            $_SESSION["prueba"] = $data_user["roles_id"];
 
+
+
+            var_dump($rol);
 
             
             // Dependiendo del rol asignado  
             // POR AHORA VOY A MANDARLOS TODOS AL MISMO INDEX
 
-            header("Location: " . self::VIEW_INDEX);
+            // header("Location: " . self::VIEW_INDEX);
             exit();
         } catch (Exception $e) {
             Utils::save_log_error("Unexpected error caught: " . $e->getMessage());

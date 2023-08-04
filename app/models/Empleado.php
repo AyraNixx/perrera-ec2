@@ -106,15 +106,16 @@ class Empleado extends Model
             //Consulta
             $query = "SELECT rol FROM roles WHERE id = :rol_id";
 
+            var_dump($rol_id);
             // Preparamos la query
             $stm = $this->conBD->prepare($query);
 
             // Vinculamos los parámetros
-            $stm->bindParam("rol_id", $rol_id, PDO::PARAM_STR);
+            $stm->bindParam(":rol_id", $rol_id, PDO::PARAM_STR);
 
             // Ejecutamos la query
             // Devolvemos los resultados
-            return $stm->fetch()["rol"];
+            return $stm->fetch();
 
         } catch (PDOException $e) {
             // Guardamos el error en el log

@@ -12,6 +12,8 @@ $user_name = $_SESSION["nombre"];
 // $user_name = 'Pedro';
 $user_surname = 'Gonzales';
 $user_profile = 'Administrador';
+$rol = $_SESSION["rol"];
+$pruebas = $_SESSION["pruebas"];
 
 ?>
 
@@ -29,6 +31,8 @@ $user_profile = 'Administrador';
 </head>
 
 <body>
+    <?=$rol?>
+    <?= "ESTO ES UNA PRUEBA " . $pruebas?>
     <!-- MENU -->
     <?php include_once "./components/menu.php"; ?>
 
