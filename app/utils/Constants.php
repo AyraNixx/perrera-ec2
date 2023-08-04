@@ -11,7 +11,9 @@ define("VIEW_ANIMAL", "V_Animales.php");
 define("VIEW_UPDATE_EDIT", "../views/update_or_add_animal.php");
 
 
-
+// CONSTANTES ROLES EMPLEADOS
+define("USER_ROL_ADMIN", "ADMIN");
+define("USER_ROL_GENERAL", "GENERAL");
 
 
 ?>

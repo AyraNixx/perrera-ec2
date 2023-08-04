@@ -125,7 +125,9 @@ class LoginC
             $_SESSION["login"] = true;
             $_SESSION["nombre"] = $data_user["nombre"];
             $_SESSION["correo"] = $data_user["correo"];
-            $_SESSION["rol"] = $data_user["roles_id"];
+            $_SESSION["rol"] = $rol = $this->empleado->get_rol($data_user["rol_id"]);
+
+
             
             // Dependiendo del rol asignado  
             // POR AHORA VOY A MANDARLOS TODOS AL MISMO INDEX

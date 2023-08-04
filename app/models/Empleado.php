@@ -66,9 +66,7 @@ class Empleado extends Model
             $query = "INSERT INTO empleados (nombre, apellidos, NIF, correo, passwd, salt, telf, roles_id) VALUE(:nombre, :apellidos, :NIF, :correo, :passwd, :salt, :telf, :roles_id)";
 
             //Preparamos la query
-            $stm = $this->conBD->prepare($query);
-
-            var_dump($empleado["roles_id"]);
+            $stm = $this->conBD->prepare($query);            
 
             $stm->bindParam(":nombre", $empleado["nombre"], PDO::PARAM_STR);
             $stm->bindParam(":apellidos", $empleado["apellidos"], PDO::PARAM_STR);
@@ -91,6 +89,40 @@ class Empleado extends Model
             Utils::save_log_error("Unexpected error caught: " . $e->getMessage());
         }
 
+        return null;
+    }
+
+    /**
+     * Obtiene el rol del empleado
+     * 
+     * @param String rol_id
+     * @return String Rol del empleado
+     * @author Paula Moreno Hermoso
+     */
+    public function get_rol(String $rol_id)
+    {
+        try
+        {
+            //Consulta
+            $query = "SELECT rol FROM roles WHERE id = :rol_id";
+
+            // Preparamos la query
+            $stm = $this->conBD->prepare($query);
+
+            // Vinculamos los parámetros
+            $stm->bindParam("rol_id", $rol_id, PDO::PARAM_STR);
+
+            // Ejecutamos la query
+            // Devolvemos los resultados
+            return $stm->fetch()["rol"];
+
+        } catch (PDOException $e) {
+            // Guardamos el error en el log
+            Utils::save_log_error("PDOException caught: " . $e->getMessage());
+        } catch (Exception $e) {
+            // Guardamos el error en el log
+            Utils::save_log_error("Unexpected error caught: " . $e->getMessage());
+        }
         return null;
     }
 }

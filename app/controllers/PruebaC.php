@@ -92,7 +92,7 @@ class AnimalC
         return $this->page;
     }
 
-   
+
     public function setPage($page)
     {
         $this->page = $page;
@@ -134,16 +134,25 @@ class AnimalC
     }
 
     public function index($view = "PruebaV.php")
-    {
+    {        
+        if ($_SESSION["rol"] == USER_ROL_ADMIN) {
+            // Obtenemos todos los registros, tantos los visibles como los no visibles
+            $data = $this->animal->pagination_all_with_more_info($this->ord, $this->col, $this->page, $this->amount);
+            // Obtenemos el total de páginas de todos los registros, tanto los visibles como los que no
+            $total_pages = $this->animal->total_pages("animales", $this->amount);
+        } else {
+            // Obtenemos todos los registros los visibles
+            $data = $this->animal->pagination_visible_with_more_info($this->ord, $this->col, $this->page, $this->amount);
+            // Obtenemos el total de páginas de todos los registros, solo los visibles
+            $total_pages = $this->animal->total_pages_visibles("animales", $this->amount);            
+        }
         // Obtenemos todos los animales visibles
         $animales_visibles = $this->animal->pagination_visible_with_more_info($this->ord, $this->col, $this->page, $this->amount);
         // Obtenemos todos los animales
         $animales = $this->animal->pagination_all_with_more_info($this->ord, $this->col, $this->page, $this->amount);
         $data_especies = $this->especie->get_all("especies");
         $total_pages = $this->animal->total_pages_visibles("animales", $this->amount);
-        // echo "<pre>";
-        // var_dump($animales_visibles);
-        // echo "</pre>";
+
         // Mostramos la vista
         $this->view($animales_visibles, ["animales" => $animales, "especies" => $data_especies, "total_pages" => $total_pages], $view);
     }
@@ -166,7 +175,6 @@ class AnimalC
 
     public function prueba()
     {
-        echo "hola";
     }
 }
 
@@ -175,10 +183,18 @@ $animal = new AnimalC();
 
 $action = !empty($_REQUEST["action"]) ? $_REQUEST["action"] : "index";
 
-if(!empty($_POST["col"])){ $animal->setCol($_POST["col"]);}
-if(!empty($_POST["ord"])){ $animal->setOrd($_POST["ord"]);}
-if(!empty($_POST["page"])){ $animal->setPage($_POST["page"]);}
-if(!empty($_POST["amount"])){ $animal->setAmount($_POST["amount"]);}
+if (!empty($_POST["col"])) {
+    $animal->setCol($_POST["col"]);
+}
+if (!empty($_POST["ord"])) {
+    $animal->setOrd($_POST["ord"]);
+}
+if (!empty($_POST["page"])) {
+    $animal->setPage($_POST["page"]);
+}
+if (!empty($_POST["amount"])) {
+    $animal->setAmount($_POST["amount"]);
+}
 
 
 $animal->run($action);
