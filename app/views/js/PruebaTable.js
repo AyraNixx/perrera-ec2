@@ -41,7 +41,7 @@ function col_selected(th) {
         // },
         // dataType: "json",
         success: function (response) {
-            console.log(response);
+            $('#body').html(response);
         },
         error: function (xhr, status, error) {
             // Se ha producido un error en la solicitud AJAX

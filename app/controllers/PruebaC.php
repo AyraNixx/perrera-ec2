@@ -148,30 +148,29 @@ class AnimalC
         }
         // Obtenemos todas las especies     
         $data_especies = $this->especie->get_all("especies");
-
-        // Mostramos la vista       
-        $this->view($data, ["especies" => $data_especies, "total_pages" => $total_pages], $view);
-    }
-
-
-    // Te lleva a la vista
-    public function view(array $data, array $datos, String $view)
-    {
-
-        $show_data = $data;
-        $data_especies = $datos["especies"];
-        $total_pages = $datos["total_pages"];
+        // La página actual
         $page = $this->getPage();
-
+        // Mensaje
         $new_msg = $this->getMsg();
+
+        // echo "<pre>";
+        // var_dump($page);
+        // echo "<h1>-------------------------</h1>";
+        // var_dump($data);
+        // echo "<h1>-------------------------</h1>";
+        // var_dump($data_especies);
+        // echo "<h1>-------------------------</h1>";
+        // var_dump($total_pages);
+        // echo "</pre>";
 
 
         require_once "../views/" . $view;
+
     }
 
     public function prueba()
     {
-        var_dump($_SESSION);
+        $this->index();
     }
 }
 
