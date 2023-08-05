@@ -135,16 +135,11 @@ class LoginC
             $_SESSION["correo"] = $data_user["correo"];
             $_SESSION["rol"] = $rol;
             $_SESSION["prueba"] = $data_user["roles_id"];
-
-
-
-            var_dump($rol);
-
             
             // Dependiendo del rol asignado  
             // POR AHORA VOY A MANDARLOS TODOS AL MISMO INDEX
 
-            // header("Location: " . self::VIEW_INDEX);
+            header("Location: " . self::VIEW_INDEX);
             exit();
         } catch (Exception $e) {
             Utils::save_log_error("Unexpected error caught: " . $e->getMessage());
