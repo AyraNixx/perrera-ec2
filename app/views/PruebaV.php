@@ -1,17 +1,7 @@
 <?php
-
-//Comprobamos que la sesion esta iniciada
-// session_start();
-// //Si no tenemos guardado login 
-// if (!isset($_SESSION["login"])) 
-// {
-//     header("Location:../../public/Login.php");
-// }
-
-// $user_name = $_SESSION["nombre"];
-$user_name = 'Pedro';
+$user_name = $_SESSION["nombre"];
 $user_surname = 'Gonzales';
-$user_profile = 'Administrador';
+$user_profile = $_SESSION["rol"];;
 
 ?>
 

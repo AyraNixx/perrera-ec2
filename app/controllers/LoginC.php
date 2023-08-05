@@ -134,7 +134,6 @@ class LoginC
             $_SESSION["nombre"] = $data_user["nombre"];
             $_SESSION["correo"] = $data_user["correo"];
             $_SESSION["rol"] = $rol;
-            $_SESSION["prueba"] = $data_user["roles_id"];
             
             // Dependiendo del rol asignado  
             // POR AHORA VOY A MANDARLOS TODOS AL MISMO INDEX

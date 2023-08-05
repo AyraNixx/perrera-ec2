@@ -23,9 +23,9 @@
                 <details>
                     <summary>
                         <h5>Animales</h5>
-                    </summary>
+                    </summary> 
                     <a href="/app/controllers/AnimalC.php">Animales</a><br />
-                    <a href="#">Jaulas</a><br />
+                    <a href="/app/controllers/PruebaC.php">Jaulas</a><br />
                 </details>
 
                 <details>

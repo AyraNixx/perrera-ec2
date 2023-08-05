@@ -134,8 +134,8 @@ class AnimalC
     }
 
     public function index($view = "PruebaV.php")
-    {        
-        if ($_SESSION["rol"] == USER_ROL_ADMIN) {
+    {
+        if (strtoupper($_SESSION["rol"]) == USER_ROL_ADMIN) {
             // Obtenemos todos los registros, tantos los visibles como los no visibles
             $data = $this->animal->pagination_all_with_more_info($this->ord, $this->col, $this->page, $this->amount);
             // Obtenemos el total de páginas de todos los registros, tanto los visibles como los que no
@@ -144,40 +144,46 @@ class AnimalC
             // Obtenemos todos los registros los visibles
             $data = $this->animal->pagination_visible_with_more_info($this->ord, $this->col, $this->page, $this->amount);
             // Obtenemos el total de páginas de todos los registros, solo los visibles
-            $total_pages = $this->animal->total_pages_visibles("animales", $this->amount);            
+            $total_pages = $this->animal->total_pages_visibles("animales", $this->amount);
         }
-        // Obtenemos todos los animales visibles
-        $animales_visibles = $this->animal->pagination_visible_with_more_info($this->ord, $this->col, $this->page, $this->amount);
-        // Obtenemos todos los animales
-        $animales = $this->animal->pagination_all_with_more_info($this->ord, $this->col, $this->page, $this->amount);
+        // Obtenemos todas las especies     
         $data_especies = $this->especie->get_all("especies");
-        $total_pages = $this->animal->total_pages_visibles("animales", $this->amount);
 
-        // Mostramos la vista
-        $this->view($animales_visibles, ["animales" => $animales, "especies" => $data_especies, "total_pages" => $total_pages], $view);
+        // Mostramos la vista       
+        $this->view($data, ["especies" => $data_especies, "total_pages" => $total_pages], $view);
     }
 
 
     // Te lleva a la vista
-    public function view(array $datos_visibles, array $datos, String $view)
+    public function view(array $data, array $datos, String $view)
     {
 
-        $data_visible = $datos_visibles;
-        $data = $datos["animales"];
+        $show_data = $data;
         $data_especies = $datos["especies"];
         $total_pages = $datos["total_pages"];
-        $page = $this->page;
+        $page = $this->getPage();
 
         $new_msg = $this->getMsg();
+
 
         require_once "../views/" . $view;
     }
 
     public function prueba()
     {
+        var_dump($_SESSION);
     }
 }
 
+
+//Comprobamos que la sesion esta iniciada
+session_start();
+
+//Si no tenemos guardado login 
+if (!isset($_SESSION["login"])) 
+{
+    header("Location:../../public/Login.php");
+}
 
 $animal = new AnimalC();
 
