@@ -75,6 +75,29 @@ $user_profile = $_SESSION["rol"];;
                 padding: 1em !important;
             }
         }
+
+        @keyframes typing {
+
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink {
+
+            from, to { border-color: transparent; }
+            50%{border-color: black;}
+        }
+
+        .loanding 
+        {
+            border-right: 3px solid black;
+        
+            white-space: nowrap;
+            letter-spacing: .1em;
+            overflow: hidden;
+
+            animation: typing 3.5s steps(30, end) infinite, blink .5s step-end infinite;
+        }
     </style>
 </head>
 
@@ -100,9 +123,12 @@ $user_profile = $_SESSION["rol"];;
         <!-- CONTENEDOR PRINCIPAL -->
         <main class="mt-5" id="main">
 
-            <div id="overlay" style="height:100%; margin:0 auto">
-                <div style="height:50%">
-                    <img src="https://cdnl.iconscout.com/lottie/premium/thumb/loader-5478777-4574111.gif" width="100%" height="100%" />
+            <div id="overlay" class="d-flex flex-column justify-content-center align-items-center" style="height:350px; max-height:500px;">
+                <div style="text-align: center;">
+                    <img src="https://cdnl.iconscout.com/lottie/premium/thumb/loader-5478777-4574111.gif" width="70" height="70" />
+                    <div>                        
+                        <h6 style="text-transform: uppercase;" class="loanding">Cargando...</h6>
+                    </div>
                 </div>
             </div>
 
