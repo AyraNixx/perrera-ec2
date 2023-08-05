@@ -98,7 +98,14 @@ $user_profile = $_SESSION["rol"];;
 
 
         <!-- CONTENEDOR PRINCIPAL -->
-        <main class="mt-5">
+        <main class="mt-5" id="main">
+
+            <div id="overlay" style="height:100%; margin:0 auto">
+                <div style="height:50%">
+                    <img src="https://cdnl.iconscout.com/lottie/premium/thumb/loader-5478777-4574111.gif" width="100%" height="100%" />
+                </div>
+            </div>
+
             <?php include_once "../views/components/filterAnimal.php"; ?>
 
             <?php include_once "../views/components/PruebaCom.php"; ?>

@@ -1,4 +1,4 @@
-<div class="w-100" style="overflow: auto;">
+<div class="w-100" style="overflow: auto;" id="table">
 
     <table id="list-container" class="table table-striped" style="width:100%; vertical-align:middle">
         <thead>
@@ -45,20 +45,20 @@
             <?php
 
             //Recorremos el array data
-            foreach ($show_data as $data) {
+            foreach ($data as $show_data) {
                 $url = "AnimalC.php"; //URL destino
 
                 echo "<tr>";
-                echo "<td class='text-center sticky-column' id='showRegister' value='" . $data["id"] . "'>" . $data["nombre"] . "</td>";
-                echo "<td class='text-center'>" . $data["nombre_especie"] . "</td>";
-                echo "<td class='text-center'>" . $data["raza"] . "</td>";
-                echo "<td class='text-center'>" . $data["fech_nac"] . "</td>";
-                echo "<td class='text-center'>" . $data["estado_adopcion"] . "</td>";
-                echo "<td class='text-center'>" . $data["ubicacion"] . "</td>";
+                echo "<td class='text-center sticky-column' id='showRegister' value='" . $show_data["id"] . "'>" . $show_data["nombre"] . "</td>";
+                echo "<td class='text-center'>" . $show_data["nombre_especie"] . "</td>";
+                echo "<td class='text-center'>" . $show_data["raza"] . "</td>";
+                echo "<td class='text-center'>" . $show_data["fech_nac"] . "</td>";
+                echo "<td class='text-center'>" . $show_data["estado_adopcion"] . "</td>";
+                echo "<td class='text-center'>" . $show_data["ubicacion"] . "</td>";
                 echo "<td class='ps-4 pe-2'>";
             ?>
                 <form action="<?= $url ?>" method="post" class="p-0">
-                    <input type="hidden" name="id" value="<?= $data["id"] ?>">
+                    <input type="hidden" name="id" value="<?= $show_data["id"] ?>">
                     <button value="add_or_update" name="action" class="bord-0 bg-transparent text-success">
                         <i class="fa-solid fa-marker"></i>
                     </button>
@@ -69,7 +69,7 @@
                 echo "<td class='ps-2 pe-4'>";
                 ?>
                 <form action="<?= $url ?>" method="POST" class="p-0">
-                    <input type="hidden" name="id" value="<?= $data["id"] ?>">
+                    <input type="hidden" name="id" value="<?= $show_data["id"] ?>">
                     <button value="sdelete" name="action" class="bord-0 bg-transparent text-danger">
                         <i class="fa-solid fa-trash-can"></i>
                     </button>

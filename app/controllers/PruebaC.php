@@ -151,7 +151,7 @@ class AnimalC
         // La página actual
         $page = $this->getPage();
         // Mensaje
-        $new_msg = $this->getMsg();
+        $new_msg = $this->getMsg();    
 
         // echo "<pre>";
         // var_dump($page);
@@ -170,7 +170,29 @@ class AnimalC
 
     public function prueba()
     {
-        $this->index();
+        if (strtoupper($_SESSION["rol"]) == USER_ROL_ADMIN) {
+            // Obtenemos todos los registros, tantos los visibles como los no visibles
+            $data = $this->animal->pagination_all_with_more_info($this->ord, $this->col, $this->page, $this->amount);
+            // Obtenemos el total de páginas de todos los registros, tanto los visibles como los que no
+            $total_pages = $this->animal->total_pages("animales", $this->amount);
+        } else {
+            // Obtenemos todos los registros los visibles
+            $data = $this->animal->pagination_visible_with_more_info($this->ord, $this->col, $this->page, $this->amount);
+            // Obtenemos el total de páginas de todos los registros, solo los visibles
+            $total_pages = $this->animal->total_pages_visibles("animales", $this->amount);
+        }
+        // Obtenemos todas las especies     
+        $data_especies = $this->especie->get_all("especies");
+        // La página actual
+        $page = $this->getPage();
+        // Mensaje
+        $new_msg = $this->getMsg();   
+
+        var_dump($this->getOrd());
+        var_dump($this->getCol());
+
+        require_once "../views/components/PruebaCom.php";
+        require_once "../views/components/pagination.php";
     }
 }
 

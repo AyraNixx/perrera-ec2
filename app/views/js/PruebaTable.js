@@ -41,7 +41,9 @@ function col_selected(th) {
         // },
         // dataType: "json",
         success: function (response) {
-            $('#body').html(response);
+            console.log(response);
+            $("#table, #pagination").remove();
+            $('#main').append(response);
         },
         error: function (xhr, status, error) {
             // Se ha producido un error en la solicitud AJAX

@@ -1,4 +1,4 @@
-<div class="row show-pages w-100 align-items-center justify-content-between" style="height:fit-content; font-size:.8em;">
+<div class="row show-pages w-100 align-items-center justify-content-between" style="height:fit-content; font-size:.8em;" id="pagination">
     <span class="register-amount w-auto text-uppercase p-0" style="letter-spacing: .1em; ">
         Filas por página:
         <select name="amount" id="amount" class="amount px-1 border-0 cursos-pointer" style="outline: none;" data-page="10">
