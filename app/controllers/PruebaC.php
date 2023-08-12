@@ -188,11 +188,15 @@ class AnimalC
         // Mensaje
         $new_msg = $this->getMsg();   
 
+        // var_dump($this->getOrd());
+        // var_dump($this->getCol());
+
+        // require_once "../views/components/PruebaCom.php";
+        // require_once "../views/components/pagination.php";
+        var_dump($data);
         var_dump($this->getOrd());
         var_dump($this->getCol());
-
-        require_once "../views/components/PruebaCom.php";
-        require_once "../views/components/pagination.php";
+        var_dump($_POST);
     }
 }
 

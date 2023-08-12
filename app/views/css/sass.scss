@@ -180,14 +180,12 @@ h5 {
 /// 
 /// /////////////////////////////////////////////////////////////////////////////////
 
-.show-menu
-{
+.show-menu {
     width: 100% !important;
     transition: width .3s ease-in-out;
 }
 
-.close-menu 
-{
+.close-menu {
     opacity: 1;
     width: 0;
     transition: width .2s ease-in-out;
@@ -449,6 +447,57 @@ header {
 
 //////////////////////////////////////////////////////////////////////////////////////
 /// 
+///                 LOADER  
+/// 
+/// /////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////
+/// 
+///                 MODAL   
+/// 
+/// /////////////////////////////////////////////////////////////////////////////////
+#insert {
+    .modal-body {
+        label {
+            display: block;
+            padding: 1em 0 .5em;
+        }
+
+        form 
+        {
+            input, select, .form-textarea
+            {
+
+                box-sizing: border-box;
+                width: 100%;        
+                padding: .3em;        
+                border: 1px solid #425C81;
+                border-radius: 4px;        
+                outline: none;
+                box-shadow: none;
+            }
+
+            .form-textarea {
+                resize: vertical;
+                height: 6em;
+                padding: 0.375rem 0.75rem;
+            }
+        }        
+    }
+
+}
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////
+/// 
 ///                 FONDOS  
 /// 
 /// /////////////////////////////////////////////////////////////////////////////////
@@ -475,9 +524,8 @@ header {
             width: 5rem;
             height: 30px;
             outline: none;
-    
-            &:hover 
-            {
+
+            &:hover {
                 background: #7A8BB0;
                 color: white;
             }

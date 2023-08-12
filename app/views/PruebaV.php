@@ -76,27 +76,58 @@ $user_profile = $_SESSION["rol"];;
             }
         }
 
+        /* 
+                LOADER CLASES 
+        */
+
+        .loader 
+        {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid blue;
+            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            margin: 0 auto;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin 
+        {
+            0%{transform: rotate(0deg);}
+            100%{transform: rotate(360deg);}
+        }
+
         @keyframes typing {
 
-            from { width: 0; }
-            to { width: 100%; }
+            from {
+                width: 0;
+            }
+
+            to {
+                width: 100%;
+            }
         }
 
         @keyframes blink {
 
-            from, to { border-color: transparent; }
-            50%{border-color: black;}
+            from,
+            to {
+                border-color: transparent;
+            }
+
+            50% {
+                border-color: black;
+            }
         }
 
-        .loanding 
-        {
-            border-right: 3px solid black;
-        
+        .loanding {
+            border-right: 2px solid black;
+
             white-space: nowrap;
             letter-spacing: .1em;
             overflow: hidden;
 
-            animation: typing 3.5s steps(30, end) infinite, blink .5s step-end infinite;
+            animation: typing 4s steps(30, end) infinite, blink .5s step-end infinite;
         }
     </style>
 </head>
@@ -125,9 +156,10 @@ $user_profile = $_SESSION["rol"];;
 
             <div id="overlay" class="d-flex flex-column justify-content-center align-items-center" style="height:350px; max-height:500px;">
                 <div style="text-align: center;">
+                    <div class="loader" width="70" height="70"></div>
                     <img src="https://cdnl.iconscout.com/lottie/premium/thumb/loader-5478777-4574111.gif" width="70" height="70" />
-                    <div>                        
-                        <h6 style="text-transform: uppercase;" class="loanding">Cargando...</h6>
+                    <div>
+                        <h6 style="text-transform: uppercase;" class="loanding text-secondary">Cargando...</h6>
                     </div>
                 </div>
             </div>

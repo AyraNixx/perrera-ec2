@@ -4,12 +4,13 @@
 function col_selected(th) {
 
     let col, ord, page, amount, addClass, rmvClass; // Campos que necesitamos
-    
+
     // Obtenemos los valores que necesitamos, en caso de que no tengan nada, ponemos uno por defecto
     col = $(th).attr('col'); // Obtenemos la columna
     ord = $(th).attr('ord'); // Obtenemos la ordenación
     page = $("#page").val(); // Obtenemos la página
     amount = $("#amount").val(); // Obtenemos la cantidad
+    console.log(ord);
 
     // En caso que no tenga valor, sea nulo o undefined, ponemos un valor por defecto
     col = (col != undefined && col != null && col != "") ? col : "nombre";
@@ -24,6 +25,7 @@ function col_selected(th) {
         rmvClass = (ord == 'ASC') ? 'DESC' : 'ASC';
     }
 
+    console.log(ord);
     // console.log("Pagina: " + page);
     // console.log("Col: " + col);
     // console.log("ord: " + ord);
@@ -31,7 +33,7 @@ function col_selected(th) {
     // console.log("amount: " + amount);
 
 
-    // Usamos ajax
+    // // Usamos ajax
     $.ajax({
         type: "POST",
         url: "../controllers/PruebaC.php",
@@ -40,10 +42,23 @@ function col_selected(th) {
         //     $('.loanding').show(); // Muestra un 'Cargando' mientras se actualizan los campos
         // },
         // dataType: "json",
+        beforesend: function () { $("#overlay").show(); },
         success: function (response) {
+            setInterval(function () { $("#overlay").hide(); }, 500);
             console.log(response);
             $("#table, #pagination").remove();
             $('#main').append(response);
+
+            if (col != '' && ord != '') {
+                $("th.sorting").each(function () {
+                    if ($(this).attr('col') == col) {
+                        $(this).attr("ord", ord);
+                        $(this).removeClass(classRemove);
+                        $(this).addClass(classAdd);
+                    }
+                });
+            }
+
         },
         error: function (xhr, status, error) {
             // Se ha producido un error en la solicitud AJAX
@@ -55,13 +70,12 @@ function col_selected(th) {
         }
     });
 
-    $(".loading").fadeOut("slow");
+    // $(".loading").fadeOut("slow");
 }
 
 
 
-function change_selPage(page)
-{
+function change_selPage(page) {
 
 }
 
@@ -72,7 +86,7 @@ $(function () {
         col_selected(this);
     });
 
-    $("#page").change(function (e) { 
-        alert($(this).val());        
+    $("#page").change(function (e) {
+        alert($(this).val());
     });
 });

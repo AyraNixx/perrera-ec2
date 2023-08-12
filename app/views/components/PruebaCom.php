@@ -3,7 +3,7 @@
     <table id="list-container" class="table table-striped" style="width:100%; vertical-align:middle">
         <thead>
             <tr>
-                <th class='text-center sorting' col="Nombre" ord="asc">
+                <th class='text-center sorting' col="Nombre" ord="ASC">
                     <div class="d-flex align-items-end justify-content-center">
                         <span>Nombre</span>
                         <button class="btn btn-link sort-btn p-0">
@@ -11,7 +11,7 @@
                         </button>
                     </div>
                 </th>
-                <th class='text-center sorting' col="Especie" ord="asc">
+                <th class='text-center sorting' col="Especie" ord="ASC">
                     <div class="d-flex align-items-end justify-content-center">
                         <span>Especie</span>
                         <button class="btn btn-link sort-btn p-0">
@@ -19,7 +19,7 @@
                         </button>
                     </div>
                 </th>
-                <th class='text-center sorting' col="Raza" ord="asc">
+                <th class='text-center sorting' col="Raza" ord="ASC">
                     <div class="d-flex align-items-end justify-content-center">
                         <span>Raza</span>
                         <button class="btn btn-link sort-btn p-0">
@@ -27,7 +27,7 @@
                         </button>
                     </div>
                 </th>
-                <th class='text-center sorting' col="Fechnac" ord="asc">
+                <th class='text-center sorting' col="Fechnac" ord="ASC">
                     <div class="d-flex align-items-end justify-content-center">
                         <span>Fecha de nacimiento</span>
                         <button class="btn btn-link sort-btn p-0">
@@ -35,8 +35,8 @@
                         </button>
                     </div>
                 </th>
-                <th class='text-center sorting' col="EstadoAdp" ord="asc">Estado adopción</th>
-                <th class='text-center sorting' col="Jaula" ord="asc">Jaula</th>
+                <th class='text-center sorting' col="EstadoAdp" ord="ASC">Estado adopción</th>
+                <th class='text-center sorting' col="Jaula" ord="ASC">Jaula</th>
                 <th class='text-center' colspan="2"></th>
             </tr>
         </thead>
