@@ -12234,11 +12234,30 @@ header button .hamburguer-inner > span:last-of-type {
   outline: 0;
 }
 
+#overlay .loader {
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid rgba(168, 185, 224, 0.631372549);
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  margin: 0 auto;
+  animation: spin 2s linear infinite;
+}
+#overlay .loanding {
+  border-right: 2px solid rgba(168, 185, 224, 0.631372549);
+  white-space: nowrap;
+  letter-spacing: 0.1em;
+  overflow: hidden;
+  animation: typing 4s steps(30, end) infinite, blink 0.5s step-end infinite;
+}
+
 #insert .modal-body label {
   display: block;
   padding: 1em 0 0.5em;
 }
-#insert .modal-body form input, #insert .modal-body form select, #insert .modal-body form .form-textarea {
+#insert .modal-body form input,
+#insert .modal-body form select,
+#insert .modal-body form textarea {
   box-sizing: border-box;
   width: 100%;
   padding: 0.3em;
@@ -12263,6 +12282,30 @@ header button .hamburguer-inner > span:last-of-type {
   right: 0;
 }
 
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+@keyframes blink {
+  from, to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: rgba(168, 185, 224, 0.631372549);
+  }
+}
 @media (max-width: 768px) {
   #menu {
     width: 0;
@@ -12358,6 +12401,16 @@ header button .hamburguer-inner > span:last-of-type {
     -webkit-clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0);
             clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0);
     z-index: -1;
+  }
+}
+@media (max-width: 767.98px) {
+  .col-md-6 {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .modal-body form,
+  .modal-body {
+    padding: 1em !important;
   }
 }
 @media (min-width: 768px) {

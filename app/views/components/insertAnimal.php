@@ -54,7 +54,7 @@
                                         <input type="file" class="custom-file-input d-none" id="img">
                                         <label class="custom-file-label" for="img" style="padding: 0;padding-left:.25em;">Subir imagen...</label>
                                     </div>
-                                    <div class="input-group-prepend">
+                                    <div class="input-group-prepend" id="upload-span">
                                         <span class="input-group-text bg-primary text-white border-0" style="border-end-start-radius: 0;border-start-start-radius: 0;">Upload</span>
                                     </div>
                                 </div>

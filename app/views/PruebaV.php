@@ -28,107 +28,12 @@ $user_profile = $_SESSION["rol"];;
             white-space: nowrap;
         }
 
-
-        .modal-body label {
-            display: block;
-
-            padding: 1em 0 .5em;
-        }
-
-        .modal-body form input,
-        .modal-body form select,
-        .modal-body form textarea {
-            box-sizing: border-box;
-
-            width: 100%;
-
-            padding: .3em;
-
-            border: 1px solid #425C81;
-            border-radius: 4px;
-
-            outline: none;
-            box-shadow: none;
-
-        }
-
-        .modal-body form .form-textarea {
-            resize: vertical;
-            height: 6em;
-            padding: 0.375rem 0.75rem;
-        }
-
         .fa-sort {
             font-size: .7em;
             line-height: 2em;
             padding-left: 0.5em;
         }
 
-        @media (max-width: 767.98px) {
-            .col-md-6 {
-                width: 100%;
-                margin-bottom: 10px;
-            }
-
-            .modal-body form,
-            .modal-body {
-                padding: 1em !important;
-            }
-        }
-
-        /* 
-                LOADER CLASES 
-        */
-
-        .loader 
-        {
-            border: 8px solid #f3f3f3;
-            border-top: 8px solid blue;
-            border-radius: 50%;
-            width: 70px;
-            height: 70px;
-            margin: 0 auto;
-            animation: spin 2s linear infinite;
-        }
-
-        @keyframes spin 
-        {
-            0%{transform: rotate(0deg);}
-            100%{transform: rotate(360deg);}
-        }
-
-        @keyframes typing {
-
-            from {
-                width: 0;
-            }
-
-            to {
-                width: 100%;
-            }
-        }
-
-        @keyframes blink {
-
-            from,
-            to {
-                border-color: transparent;
-            }
-
-            50% {
-                border-color: black;
-            }
-        }
-
-        .loanding {
-            border-right: 2px solid black;
-
-            white-space: nowrap;
-            letter-spacing: .1em;
-            overflow: hidden;
-
-            animation: typing 4s steps(30, end) infinite, blink .5s step-end infinite;
-        }
     </style>
 </head>
 
@@ -156,9 +61,8 @@ $user_profile = $_SESSION["rol"];;
 
             <div id="overlay" class="d-flex flex-column justify-content-center align-items-center" style="height:350px; max-height:500px;">
                 <div style="text-align: center;">
-                    <div class="loader" width="70" height="70"></div>
-                    <img src="https://cdnl.iconscout.com/lottie/premium/thumb/loader-5478777-4574111.gif" width="70" height="70" />
-                    <div>
+                    <div class="loader" width="70" height="70"></div>                                    
+                    <div class="mt-3">
                         <h6 style="text-transform: uppercase;" class="loanding text-secondary">Cargando...</h6>
                     </div>
                 </div>
