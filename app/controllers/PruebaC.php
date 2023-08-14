@@ -191,9 +191,9 @@ class AnimalC
         // var_dump($this->getOrd());
         // var_dump($this->getCol());
 
-        // require_once "../views/components/PruebaCom.php";
-        // require_once "../views/components/pagination.php";
-        var_dump($data);
+        require_once "../views/components/PruebaCom.php";
+        require_once "../views/components/pagination.php";
+        var_dump($data[0]);
         var_dump($this->getOrd());
         var_dump($this->getCol());
         var_dump($_POST);

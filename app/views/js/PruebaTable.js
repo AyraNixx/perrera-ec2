@@ -18,19 +18,16 @@ function col_selected(th) {
     page = (page != undefined && page != null && page != "") ? page : 1;
     amount = (amount != undefined && amount != null && amount != "") ? amount : 10;
 
-    // Obtenemos el valor del atributo ord que tenemos en la th seleccioanda
-    if ($(th).attr('ord') != '') // Si ord es distinto de nulo
-    {
-        addClass = (ord == 'ASC') ? 'ASC' : 'DESC';
-        rmvClass = (ord == 'ASC') ? 'DESC' : 'ASC';
-    }
+    // Cambiamos el valor de ord dependiendo de su valor original, es decir, si era ASC, se pondrá DESC
+    // y viceversa.
+    ord = (ord == 'ASC') ? 'DESC' : 'ASC';
 
     console.log(ord);
-    // console.log("Pagina: " + page);
-    // console.log("Col: " + col);
-    // console.log("ord: " + ord);
-    // console.log("page: " + page);
-    // console.log("amount: " + amount);
+    console.log("Pagina: " + page);
+    console.log("Col: " + col);
+    console.log("ord: " + ord);
+    console.log("page: " + page);
+    console.log("amount: " + amount);
 
 
     // // Usamos ajax
@@ -43,18 +40,16 @@ function col_selected(th) {
         // },
         // dataType: "json",
         beforesend: function () { $("#overlay").show(); },
-        success: function (response) {
+        success: function (response) {            
+            $("#table, #pagination").remove();
             setInterval(function () { $("#overlay").hide(); }, 500);
             console.log(response);
-            $("#table, #pagination").remove();
             $('#main').append(response);
 
             if (col != '' && ord != '') {
                 $("th.sorting").each(function () {
                     if ($(this).attr('col') == col) {
                         $(this).attr("ord", ord);
-                        $(this).removeClass(classRemove);
-                        $(this).addClass(classAdd);
                     }
                 });
             }
@@ -70,7 +65,7 @@ function col_selected(th) {
         }
     });
 
-    // $(".loading").fadeOut("slow");
+    $("#overlay").fadeOut("slow");
 }
 
 
