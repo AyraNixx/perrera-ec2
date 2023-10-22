@@ -300,4 +300,48 @@ class Model
         // Luego redondeamos para arriba con ceil.
         return ceil(count(self::get_all_visibles($table)) / $amount);
     }
+
+
+    public function query(String $query)
+    {
+        // Rodeamos el código en un try catch para controlar las excepciones
+        try {
+            $statement = $this->conBD->prepare($query);
+            // Ejecutamos la consulta
+            $statement->execute();
+            //Devolvemos las filas resultantes
+            return $statement->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            // Guardamos el error en el log
+            Utils::save_log_error("PDOException caught: " . $e->getMessage());
+        } catch (Exception $e) {
+            // Guardamos el error en el log
+            Utils::save_log_error("Unexpected error caught: " . $e->getMessage());
+        }
+        return null;
+    }
+
+    public function queryParam(String $query, Array $params = [])
+    {
+        // Rodeamos el código en un try catch para controlar las excepciones
+        try {
+            $stmt = $this->conBD->prepare($query);
+
+            foreach($params as $key => $value){
+                $stmt->bindParam($key, $value);
+            }
+            // Ejecutamos la consulta
+            $stmt->execute();
+            //Devolvemos las filas resultantes
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            echo $e->getMessage();
+            // Guardamos el error en el log
+            Utils::save_log_error("PDOException caught: " . $e->getMessage());
+        } catch (Exception $e) {echo $e->getMessage();
+            // Guardamos el error en el log
+            Utils::save_log_error("Unexpected error caught: " . $e->getMessage());
+        }
+        return null;
+    }
 }

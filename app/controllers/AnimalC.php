@@ -282,7 +282,7 @@ class AnimalC
             // Creamos un nuevo array
             $new_animal = [];
             // Guardamos los valores del Post
-            $new_animal["id"] = $_POST["id"];
+            $new_animal["id"] = $_POST[" id"];
             $new_animal["nombre"] = $_POST["nombre"];
             $new_animal["especies_id"] = $_POST["especies_id"];
             $new_animal["raza"] = $_POST["raza"];

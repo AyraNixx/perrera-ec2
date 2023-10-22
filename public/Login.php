@@ -64,7 +64,6 @@
 
 
             <div class="row justify-content-center align-items-center col-10 col-sm-7 col-md-6 col-lg-3 p-2">
-
                 <form class="login" method="POST" action="../app/controllers/LoginC.php">
                     <?php
                         $msg = (isset($_GET["msg"])) ? base64_decode($_GET["msg"]) : "";
@@ -82,7 +81,7 @@
                     </div>
                     <div class="form-check mt-4">
                         <input type="checkbox" class="form-check-input" id="remember_me" name="remember_me">
-                        <label class="form-check-label" for="exampleCheck1">Recúerdame</label>
+                        <label class="form-check-label" for="remember_me">Recúerdame</label>
                     </div>
                     <div class="form-group text-center mt-4">
                         <button type="submit" class="btn btn-primary mt-3 py-2 px-5" name="action" value="login">Log in</button>

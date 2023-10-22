@@ -29,7 +29,7 @@ class Empleado extends Model
         // Rodeamos el código en un try catch para controlar las excepciones
         try {
             // Query
-            $query = "SELECT * FROM empleados WHERE correo = :correo";
+            $query = "SELECT * FROM empleados WHERE correo = :correo LIMIT 1";
             // Preparamos la consulta para su ejecución
             $stm = $this->conBD->prepare($query);
             // Vinculamos los parámetros al nombre de la variable especificada
@@ -128,7 +128,7 @@ class Empleado extends Model
     }
 }
 
-
 // $empleado = new Empleado();
+// var_dump($empleado->user_found($_SESSION['correo']));
 // var_dump($empleado->get_all("empleados"));
 // var_dump($empleado->insert(["nombre"=>"Prueba", "apellidos"=>"Apellido", "NIF"=>"12345678B", "correo" =>"correo@ejemplo.com", "passwd" => '$2y$10$R3df5klmB4465I67XRSaUuZT/FYme6cpyZL1v8fw6Zlr/cjMcc66O', "salt" => "12385753","telf"=>"123456789", "roles_id"=>"001100321890425372672"]));

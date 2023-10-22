@@ -57,8 +57,8 @@ $user_profile = $_SESSION["rol"];;
 
 
         <!-- CONTENEDOR PRINCIPAL -->
-        <main class="mt-5" id="main">
-
+        <main class="mt-5 d-flex flex-column justify-content-center align-content-center p-3" id="main">
+<!-- 
             <div id="overlay" class="d-flex flex-column justify-content-center align-items-center" style="height:350px; max-height:500px;">
                 <div style="text-align: center;">
                     <div class="loader" width="70" height="70"></div>                                    
@@ -66,7 +66,7 @@ $user_profile = $_SESSION["rol"];;
                         <h6 style="text-transform: uppercase;" class="loanding text-secondary">Cargando...</h6>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <?php include_once "../views/components/filterAnimal.php"; ?>
 
@@ -103,6 +103,7 @@ $user_profile = $_SESSION["rol"];;
     <!-- <script src="../views/js/filteredTable.js"></script>
     <script src="../views/js/changeJaulaValues.js"></script>
     <script src="../views/js/pagination.js"></script> -->
+    <script src="../views/js/Utils.js"></script>
     <script src="../views/js/PruebaTable.js"></script>
 </body>
 

@@ -6,7 +6,7 @@ use \model\Especie;
 use \model\Jaula;
 // use \Exception;
 
-require_once "../utils/Utils.php";
+require_once "../utils/Utils.php"; 
 require_once "../utils/Constants.php";
 require_once "../models/Animal.php";
 require_once "../models/Especie.php";
@@ -205,9 +205,9 @@ class AnimalC
 session_start();
 
 //Si no tenemos guardado login 
-if (!isset($_SESSION["login"])) 
-{
+if (!Utils::is_logged_in()) {
     header("Location:../../public/Login.php");
+    die;
 }
 
 $animal = new AnimalC();

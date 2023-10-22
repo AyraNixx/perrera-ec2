@@ -108,7 +108,7 @@ $user_profile = 'Administrador';
 
 
         <!-- CONTENEDOR PRINCIPAL -->
-        <main class="mt-5">
+        <main class="mt-5 d-flex flex-column justify-content-center align-content-center p-3">
             <?php include_once "../views/components/filterAnimal.php"; ?>
 
             <?php include_once "../views/components/animalList.php"; ?>

@@ -23,7 +23,7 @@ $font_dark-blue: #7A8BB0;
 $border_light-blue: #A8B9E0; // Lo he usado en el mockup para el botón de agregar
 $border_light-blue-opacity: #a8b9e0a1;
 
-$bg-striped-table: #a8b9e0a1;
+$bg-striped-table: #BDC7DE;
 
 
 $blue-menu: #7182a8d1;
@@ -403,10 +403,26 @@ header {
 }
 
 .table-striped {
+    overflow-x: auto;
+    max-width: 100%;
+    table-layout: fixed;
+
     thead {
         tr>* {
+            width: 150px;
+            background: $white;
+
+            font-size: .87rem;
             font-weight: 300;
             text-transform: uppercase;
+
+            vertical-align: middle;
+            table-layout: fixed;
+
+            position: sticky;
+            top: 0;
+            left: 0;
+            z-index: 300;
         }
     }
 
@@ -421,9 +437,26 @@ header {
 
         tr>* {
             color: $info;
+            font-size: .85rem;
+            overflow: inherit;
         }
     }
 
+    tbody tr>td:first-child,
+    thead tr>th:first-child {
+        position: sticky;
+        left: 0;
+
+        z-index: 300;
+    }
+
+    tbody tr>td:first-child {
+        background: $white;
+    }
+
+    tbody tr:nth-of-type(odd)>td:first-child {
+        background: $bg-striped-table;
+    }
 }
 
 //
@@ -533,6 +566,111 @@ header {
 
 
 
+
+//////////////////////////////////////////////////////////////////////////////////////
+/// 
+///                     BOTONES CON DROPDOWN
+/// 
+///  ////////////////////////////////////////////////////////////////////////////////
+.btn-group.dropdown {
+    display: none;
+}
+
+.button-dropdown {
+    box-sizing: border-box;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 2em;
+    padding: 1.1em;
+
+    background: #fefefe;
+    border: 1px solid #dbdbdb;
+    border-radius: .2em;
+
+    font-size: .9rem;
+    line-height: 1.5;
+    text-align: center;
+    color: #363636;
+
+    position: relative;
+    vertical-align: top;
+
+    box-shadow: none !important;
+    outline: none !important;
+
+    white-space: nowrap;
+    touch-action: manipulation;
+    cursor: pointer;
+
+    &:hover {
+        background: #efefef;
+    }
+
+    &:active {
+        background: #dddddd;
+    }
+
+    .btn-group & {
+        padding-left: 1em;
+        padding-right: 1em;
+
+        &:first-of-type {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        &:last-of-type {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-left: none;
+        }
+
+        &:not(:first-of-type):not(:last-of-type) {
+            border-radius: 0%;
+            border-left: none;
+        }
+    }
+}
+
+.btn-dropdown-options {
+    display: none;
+    border: 1px solid black;
+    border: 1px solid #dbdbdb;
+    border-top: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: .2em;
+    border-bottom-right-radius: .2em;
+    background: #fefefe;
+    top: 91%;
+    z-index: 100;
+
+    ul li {
+        padding: 6.5px 1em;
+        font-size: .8em;
+        cursor: pointer;
+
+        &:hover {
+            background: #efefef;
+        }
+    
+        &:active {
+            background: #dddddd;
+        }
+    }
+}
+
+.show-block {
+    display: block;
+}
+
+
+
+
+
 //////////////////////////////////////////////////////////////////////////////////////
 /// 
 ///                 KEYFRAMES  
@@ -637,6 +775,14 @@ header {
         #header-btn {
             visibility: visible;
         }
+    }
+
+    .btn-group.dropdown {
+        display: inline-flex;
+    }
+
+    .btn-group {
+        display: none;
     }
 }
 

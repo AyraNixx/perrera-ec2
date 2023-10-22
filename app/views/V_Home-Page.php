@@ -3,6 +3,7 @@
 // Comprobamos que la sesion esta iniciada
 session_start();
 //Si no tenemos guardado login 
+
 if (!isset($_SESSION["login"])) 
 {
     header("Location:../../public/Login.php");

@@ -2,10 +2,13 @@
 
 
 namespace utils;
+use \model\Model;
 
 use \PDO;
 use \PDOException;
 use \Exception;
+
+require_once "../models/Model.php";
 
 
 class Utils
@@ -30,7 +33,7 @@ class Utils
             //el usuario y su contraseña en caso de que tuviese una.
             //En mi caso, no he especificado contrasenia porque no tengo.
             //Si usase contraseá, la añadiría después de $DB_USER
-            return $conBD = new PDO(DB_DRIVER . ":host=" . DB_HOST . ";dbname=" . DB_SCHEMA, DB_USER, DB_PASSWD);
+            return $conBD = new PDO(DB_DRIVER . ":host=" . DB_HOST . ";dbname=" . DB_SCHEMA, DB_USER);
         } catch (PDOException $e) {
             //Llamamos a la funcion save_log_error de la misma clase
             self::save_log_error($e->getMessage());
@@ -67,7 +70,7 @@ class Utils
     /**
      * Guarda las excepciones en un log, indicando la fecha y hora en el que se produjo
      */
-    public static function save_log_error($error, $path = "app/logs/log.log")
+    public static function save_log_error($error, $path = "../logs/log.log")
     {
         //Utilizamos error_log que envia un mensaje de error según lo indicado
         //Le pasamos el error (que pasamos con print_r para que se vea más claro)
@@ -376,9 +379,36 @@ class Utils
     
     /***********************************************************************
      *                                                                     *
-     *                               GENERAR PDF                           *
+     *                               CHECK SESSION                         *
      *                                                                     *
      ***********************************************************************/
+
+    public static function is_logged_in(){
+        if(!empty($_SESSION['login']))
+        {
+            return true;
+        }
+
+        $cookie = $_COOKIE['remem'] ?? null;
+
+        if($cookie && strstr($cookie, ":"))
+        {
+            $mo = new Model();
+
+            $cookie_array = explode(":", $cookie);
+            $token_key = $cookie_array[0];
+            $token_value = $cookie_array[1];
+
+            $query = "SELECT * FROM USERS WHERE TOKEN_KEY = '$token_key' LIMIT 1";
+            $remember_user_array = $mo->query($query)[0];
+
+            if($token_value == $remember_user_array['token_value']){
+                $_SESSION['login'] = true;
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
 // var_dump(Utils::send_email(["subject" => 1, "content" => 1, "nombre" => "Rosalía", "email" => "thejokerjune@gmail.com", "url" => "twitter.com"]));
