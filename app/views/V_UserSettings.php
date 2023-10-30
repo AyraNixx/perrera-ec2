@@ -113,7 +113,7 @@
 
         <!-- CONTENEDOR PRINCIPAL -->
         <main class="mx-4 mt-5">
-            
+
             <div class="row align-items-center h-100 justify-content-center">
                 <div class="col-lg-11 col-sm-12">
                     <div class="row h-100 w-100 pt-5">
@@ -304,7 +304,7 @@
                                             <h5 class="h5 pb-1 text-uppercase text-primary" style="font-size:.9rem" input_type="psswd">Contraseña</h5>
                                         </div>
                                         <div class="col-sm-12 col-md-9">
-                                            <p class="mt-2 mb-0 pt-1" style="font-size: .7rem;"><span class="text-secondary" style="cursor:pointer;" data-toggle="modal" data-target="#change_psswd">Modificar contraseña.</span> Mejora la seguridad de tu cuenta con una contraseña segura.</p>
+                                            <p class="mb-0 pt-0" style="font-size: .7rem;"><span class="text-secondary" style="cursor:pointer;" data-toggle="modal" data-target="#change_psswd">Modificar contraseña.</span> Mejora la seguridad de tu cuenta con una contraseña segura.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -321,6 +321,23 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <?php
+    if ($new_msg != null) { ?>
+
+        <script>
+            $(document).ready(function() {
+                $("#aviso").modal("show");
+            });
+        </script>
+    <?php
+    }
+    ?>
+
+    <script>
+        function close_modal() {
+            $("#aviso").modal("hide");
+        }
+    </script>
     <script src="../views/js/Utils.js"></script>
 
 

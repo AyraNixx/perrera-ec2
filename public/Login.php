@@ -66,10 +66,16 @@
             <div class="row justify-content-center align-items-center col-10 col-sm-7 col-md-6 col-lg-3 p-2">
                 <form class="login" method="POST" action="../app/controllers/LoginC.php">
                     <?php
-                        $msg = (isset($_GET["msg"])) ? base64_decode($_GET["msg"]) : "";
+                        $msg = (isset($_REQUEST["msg"])) ? base64_decode($_REQUEST["msg"]) : "";
                     ?>
                     <div class="error-label bg-danger text-white text-center p-2 mb-3 <?=($msg != "") ? "d-block" : "d-none"?>">
                         <?=$msg;?>
+                    </div>
+                    <?php
+                        $msgOk = (isset($_GET["msgOk"])) ? base64_decode($_GET["msgOk"]) : "";
+                    ?>
+                    <div class="error-label bg-primary text-white text-center p-2 mb-3 <?=($msgOk != "") ? "d-block" : "d-none"?>">
+                        <?=$msgOk;?>
                     </div>
                     <div class="form-group">
                         <label for="correo">Email</label>

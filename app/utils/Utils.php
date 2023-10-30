@@ -100,21 +100,33 @@ class Utils
      *                                                                     *
      ***********************************************************************/
 
-    public static function send_email(array $data)
-    {
+    public static function generate_token_email_link($isEmail = false) {
+        $token = hash("sha256", bin2hex(random_bytes(16))); // Generamos un token aleatorio
+        $t_expires = date("Y-m-d H:i:s", time() + 6 * 300); //Ponemos que solo sean 30 minutos y usamos date para generar un valor que podamos guardar en la variable creada en la base de datos   
+        $array_token = [];
+        if($isEmail) {
+           $array_token = ['reset_token_email_hash' => $token, 't_reset_token_email_expires_at' => $t_expires];
+        }else{
+            $array_token = ['reset_token_psswd_hash' => $token, 't_reset_token_psswd_expires_at' => $t_expires];
+        }
+        return $array_token; // Devolvemos un array 
+    }
+
+    public static function send_email(array $data) {
         // URL de la API
         $url = 'https://api.sendinblue.com/v3/smtp/email';
 
         // API KEY
-        $apiKey = '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';
+        $apiKey = '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';
 
         // VARIABLES NECESARIAS PARA EL CORREO ELECTRÓNICO
-        $subject = ($data["subject"] == 1) ? "CUENTA REGISTRADA" : "CAMBIO DE CONTRASEÑA"; // ASUNTO
+        $subject = $data["subject"]; // ASUNTO
         // CONTENIDO HTML
         // $htmlContent = '<p>Tu código de activación es: '.$data["codActivacion"].'</p>';        
         $htmlContent = self::content_email($data);
-        $senderEmail = 'paulamorenohermoso99@gmail.com';
-        $senderName = 'Paula';
+        $senderEmail = 'patas-arriba.info@soporte.com';
+        //$senderEmail = 'paulamorenohermoso99@gmail.com';
+        $senderName = 'Soporte';
         $recipientEmail = $data["email"];
 
         $data = array(
@@ -144,18 +156,25 @@ class Utils
 
     public static function content_email(array $data)
     {
-        if ($data["content"] == 1) {
-            $msg = '<p class="message">Hola ' . $data["nombre"] . ',</p>
-                <p class="message">Le informamos que ha sido registrado con éxito.</p>
-                <p class="message">Se le ha generado una clave temporal para poder acceder a su cuenta.<br/>
-                En el momento en el que inicie sesión, se le pedirá que introduzca una nueva contraseña.
-                <br/>Su clave temporal es:<br/>
+        if ($data["subject"] == 1) {
+            $msg = '<p class="message">Estimado ' . $data["name"] . ',</p>
+                <p class="message">Te damos la bienvenida a ¡Patas arriba! Esperamos que disfrutes de tu experiencia.</p>
+                <p class="message">Para comenzar en nuestra plataforma, necestiamos que verifiques tu cuenta mediante el código de acceso proporcionado:</p>
                 <span style="display:inline-block; width:100%; text-align:center; color:#426081; text-weight:bold; margin-top:25px;">PaTasARRiba2023</span>
-                </p>';
-            } elseif ($data["content"] == 2) {
-                $msg = '<p class="message">Hola ' . $data["nombre"] . ',</p>
-                    <p class="message">Te hemos enviado este email en respuesta a la petición de restablecimiento de contraseña.</p>
-                    <p class="message">Para restablecer la contraseña, haz clic en el siguiente enlace:</p>';
+                <p class="message">Por favor, ingresa este código en la plataforma para completar tu registro.</p>
+                <p class="message">¡Gracias por unirte a nosotros!</p>';
+            } elseif ($data["subject"] == Constants::SEND_RESET_PSSWD_SUBJECT) {
+                $msg = '<p class="message">' . $data["name"] . ',</p>
+                    <p class="message">Le informamos que su contraseña ha sido modificada con éxito.</p>
+                    <p class="message">Si usted no ha realizado la modificación, haga click en el siguiente botón para modificar la contraseña: </p>';
+            }elseif($data["subject"] == Constants::SEND_RESET_EMAIL){
+                $msg = '<p class="message">Estimado ' . $data["name"] . ',</p>
+                    <p class="message">Le informamos que se ha realizado un cambio en su dirección de correo electrónico en nuestra plataforma.A continuación, se le especificarán los cambios realizados: <br/></p>
+                    <p class="message">Antiguo correo electrónico: ' . $data['old_email'] . '</p>
+                    <p class="message">Nuevo correo electrónico: ' . $data['new_email'] . '</p>
+                    <p class="message">Si no has realizado la modificación, por favor haga click en el botón de "Restablecer". En caso de que el enlace haya expirado, póngase en contacto con nuestro soporte en el número de teléfono proporcionado en el pie del mensaje</p>';
+
+
             }
 
         $emailContent = '<!DOCTYPE html>
@@ -233,6 +252,7 @@ class Utils
 
                 .content {
                     padding: 30px;
+                    padding-top:10px;
                     border-radius: 4px;
                     margin-bottom: 20px;
                 }
@@ -259,7 +279,7 @@ class Utils
                     color: white;
                     text-transform: uppercase;
                     font-size: 1rem;
-                    padding: 1em;
+                    padding: .5em 1em;
                 }
 
                 .footer {
@@ -286,15 +306,19 @@ class Utils
                     <div class="logo">
                         <img src="https://www.pngkit.com/png/full/333-3331142_white-lock-png-download-white-padlock-icon-png.png" alt="Logo" />
                     </div>
-                    <h3>' . (($data["content"] == 1) ? 'Cuenta registrada' : 'Restablece tu contraseña') . '<h3>
+                    <div style="width:75%; margin: 3em auto 0; text-align:center;">
+                        <h3>' . $data["subject"] . '<h3>
+                    </div>                    
                 </div>
                 <div class="content">
-                    ' . $msg . '
-                    <div class="button-container">
-                        <a href="' . $data["url"] . '" class="button">' . (($data["content"] == 1) ? 'Cambiar' : 'Restablecer') . ' Contraseña</a>
-                    </div>
-                    ' . (($data["content"] == 2) ? "<i class='message fst-italic'>Por favor, ignora este mensaje si no has solicitado.</i>" : "") .
-            '</div>
+                    ' . $msg .
+                    (($data["link"] != null) ? '<div class="button-container">
+                        <a href="' . $data["link"] . '" class="button"> Restablecer </a>
+                    </div>' : "")
+                    . (($data["subject"] != null) ? "<i class='message fst-italic'>Por favor, ignora este mensaje si has realizado la acción.</i>" : "") .
+                    '<p class="message">Atentamente, </p>
+                    <p class="message">¡Patas arriba!</p>
+            </div>
                 <div class="footer">
                     <p>Patas Arriba</p>
                     <p>C/ No existente 4, nº 3G</p>

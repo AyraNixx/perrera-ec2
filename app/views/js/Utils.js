@@ -156,25 +156,36 @@ $('form').on('focusout', function (event) {
     let email_inputs = $(this).find(':input[type=email]');
     let tlf_inputs = $(this).find(':input[type=tel]');
     let text_inputs = $(this).find(':input[type=text]');
+    let psswd_inputs = $(this).find(':input[type=password]');
+   
 
     let profile_values = { name: name_val, lname: lname_val, fechnac: fechnac_val };
 
-    if (email_inputs.length > 1) {
+    if (email_inputs.length > 1) { 
         if (email_inputs[0].value == email_inputs[1].value && email_inputs[0].value != email_val) {
             send = true;
         }
-    }
-
-    if (tlf_inputs.length == 1) {
+    }   
+    if (tlf_inputs.length == 1) {   
         tlf_inputs.each(function () {
-
             if ($(this).val() != tlf_val) {
                 send = true;
             }
         })
-    }
-
-    text_inputs.each(function () {
+    }   
+    if (
+        $('input[name=old_psswd]').length > 0 &&
+        $('input[name=new_psswd]').length > 0 &&
+        $('input[name=new_psswd2]').length > 0 &&
+        $.trim($('input[name=old_psswd]').val()) !== '' &&
+        $.trim($('input[name=new_psswd]').val()) !== '' &&
+        $.trim($('input[name=new_psswd2]').val()) !== '' &&
+        $.trim($('input[name=old_psswd]').val()) !== $.trim($('input[name=new_psswd]').val()) &&
+        $.trim($('input[name=new_psswd]').val()) === $.trim($('input[name=new_psswd2]').val())
+    ) {
+        send = true;
+    }   
+    text_inputs.each(function () { 
         if ($(this).attr('id') in profile_values) {
             if ($(this).val() != profile_values[$(this).attr('id')]) {
                 send = true;
