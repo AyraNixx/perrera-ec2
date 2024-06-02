@@ -1,17 +1,14 @@
 <?php
 
-//Comprobamos que la sesion esta iniciada
-// session_start();
 // //Si no tenemos guardado login 
-// if (!isset($_SESSION["login"])) 
-// {
-//     header("Location:../../public/Login.php");
-// }
+if (!isset($_SESSION["login"])) 
+{
+    header("Location:../../public/Login.php");
+}
 
-// $user_name = $_SESSION["nombre"];
-$user_name = 'Pedro';
-$user_surname = 'Gonzales';
-$user_profile = 'Administrador';
+$user_name = $_SESSION["nombre"];
+$user_surname = $_SESSION['apellidos'];
+$user_profile = $_SESSION["rol"];
 
 ?>
 
@@ -30,60 +27,10 @@ $user_profile = 'Administrador';
         #tabla {
             margin-top: 20px;
         }
-
         td {
-            /* Ajusta la altura deseada para las celdas */
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-        }
-
-
-        .modal-body label {
-            display: block;
-
-            padding: 1em 0 .5em;
-        }
-
-        .modal-body form input,
-        .modal-body form select,
-        .modal-body form textarea {
-            box-sizing: border-box;
-
-            width: 100%;
-
-            padding: .3em;
-
-            border: 1px solid #425C81;
-            border-radius: 4px;
-
-            outline: none;
-            box-shadow: none;
-
-        }
-
-        .modal-body form .form-textarea {
-            resize: vertical;
-            height: 6em;
-            padding: 0.375rem 0.75rem;
-        }
-
-        .fa-sort {
-            font-size: .7em;
-            line-height: 2em;
-            padding-left: 0.5em;
-        }
-
-        @media (max-width: 767.98px) {
-            .col-md-6 {
-                width: 100%;
-                margin-bottom: 10px;
-            }
-
-            .modal-body form,
-            .modal-body {
-                padding: 1em !important;
-            }
         }
     </style>
 </head>
@@ -108,7 +55,8 @@ $user_profile = 'Administrador';
 
 
         <!-- CONTENEDOR PRINCIPAL -->
-        <main class="mt-5 d-flex flex-column justify-content-center align-content-center p-3">
+        <!-- <main class="mt-5 d-flex flex-column justify-content-center align-content-center p-3"> -->
+        <main class="mt-5 d-flex flex-column justify-content-center align-content-center p-3" id="main">            
             <?php include_once "../views/components/filterAnimal.php"; ?>
 
             <?php include_once "../views/components/animalList.php"; ?>
@@ -140,10 +88,14 @@ $user_profile = 'Administrador';
             $("#aviso").modal("hide");
         }
     </script>
-    <script src="../views/js/widthMenu.js"></script>
+    <!-- <script src="../views/js/widthMenu.js"></script>
     <script src="../views/js/filteredTable.js"></script>
     <script src="../views/js/changeJaulaValues.js"></script>
-    <script src="../views/js/pagination.js"></script>
+    <script src="../views/js/pagination.js"></script> -->
+    <script src="/DES/perrera-ec2/app/views/js/Utils.js"></script>
+    <script src="/DES/perrera-ec2/app/views/js/widthMenu.js"></script>
+    <script src="/DES/perrera-ec2/app/views/js/changeJaulaValues.js"></script>
+    <script src="/DES/perrera-ec2/app/views/js/pagination.js"></script>
 </body>
 
 </html>

@@ -171,7 +171,7 @@
                                 </div>
 
                                 <div class="col-sm-12 col-md-12 profile-edit" style="display:none;">
-                                    <form class="col-12" action="../controllers/SettingsC.php" method="POST">
+                                    <form class="col-12" data-form="form-settings" action="../controllers/SettingsC.php" method="POST" id="change_profile_form">
                                         <div class="form-group col-md-11 col-sm-12 mx-auto px-sm-3">
                                             <div class="row">
                                                 <div class="col-sm-12 col-md-3">
@@ -211,7 +211,7 @@
                                         </div>
                                         <hr>
                                         <div class="d-inline-flex align-items-center justify-content-center w-100 my-3">
-                                            <input type="submit" value="Guardar" name="edit" class="py-1 w-25 text-white border-0 me-2 bg-secondary" style="border-radius:3px; font-size:.9em;" disabled>
+                                            <button type="submit" name="action" value="CHANGE_PROFILE" class="py-1 w-25 bg-secondary text-white border-0 me-2" style="border-radius:3px; font-size:.9em;" disabled>Guardar</button>
                                             <button class="py-1 w-25 bg-primary text-white border-0" style="border-radius:3px; font-size:.9em;" onclick="edit_form_profile(event)">Cancelar</button>
                                         </div>
                                     </form>
@@ -242,7 +242,7 @@
                                             <p class="m-0" style="font-size: .7rem;">Correo electrónico vinculado a la cuenta</p>
                                         </div>
                                         <div class="col-sm-12 col-md-9 edit" style="display: none;">
-                                            <form class="col-12" action="../controllers/SettingsC.php" method="POST">
+                                            <form class="col-12" data-form="form-settings" action="../controllers/SettingsC.php" method="POST" id="change_email_form">
                                                 <div class="form-group">
                                                     <input type="email" class="hide-str form-control px-3 border border-1 border-primary-subtle rounded bg-transparent" style="font-size: .8rem;" value="<?= $data['correo'] ?>" name="new_email" id="new_email" title="Correo no válido" required />
                                                     <label for="new_email" class="border-light fw-bold text-primary" style="font-size: .8em;">Confirma tu nueva dirección de correo</label>
@@ -271,7 +271,7 @@
                                         </div>
                                         <div class="col-sm-12 col-md-9 not-edit">
                                             <div class="col-12 d-flex align-items-center">
-                                                <p input_type="tlf" class="hide-str form-control p-0 border-0" style="font-size: .8rem;">000000000</p>
+                                                <p input_type="tlf" class="hide-str form-control p-0 border-0" style="font-size: .8rem;"><?=$data['telf']?></p>
                                                 <div class="d-flex mb-3 px-2 text-primary" style="font-size:.8em">
                                                     <div class="me-2 ms-1 small-btn">
                                                         <i class="fa-regular fa-eye show-text"></i>
@@ -284,11 +284,11 @@
                                             <p class="m-0" style="font-size: .7rem;">Número de teléfono vinculado a la cuenta</p>
                                         </div>
                                         <div class="col-sm-12 col-md-9 edit" style="display: none;">
-                                            <form class="col-12" action="../controllers/SettingsC.php" method="POST">
+                                            <form class="col-12" data-form="form-settings" action="../controllers/SettingsC.php" method="POST" id="change_tlf_form">
                                                 <label for="tlf" class="border-light fw-bold text-primary" style="font-size: .8em;" hidden></label>
-                                                <input type="tel" class="hide-str form-control px-3 border border-1 border-primary-subtle rounded bg-transparent" style="font-size: .8rem;" value="000000000" name="tlf" id="tlf" />
+                                                <input type="tel" class="hide-str form-control px-3 border border-1 border-primary-subtle rounded bg-transparent" style="font-size: .8rem;" value="<?=$data['telf']?>" name="tlf" id="tlf" />
                                                 <div class="d-inline-flex align-items-center justify-content-center w-100 my-3">
-                                                    <input type="submit" value="Guardar" name="edit" class="py-1 w-50 bg-secondary text-white border-0 me-2" style="border-radius:3px; font-size:.9em;" disabled />
+                                                    <button type="submit" name="action" value="CHANGE_TLF" class="py-1 w-50 bg-secondary text-white border-0 me-2" style="border-radius:3px; font-size:.9em;" disabled>Guardar</button>
                                                     <button class="py-1 w-50 bg-primary text-white border-0" style="border-radius:3px; font-size:.9em;" onclick="edit_privacy_info(event)">Cancelar</button>
                                                 </div>
                                             </form>
@@ -338,10 +338,8 @@
             $("#aviso").modal("hide");
         }
     </script>
-    <script src="../views/js/Utils.js"></script>
-
-
-    <script src="../views/js/widthMenu.js"></script>
+    <script src="/DES/perrera-ec2/app/views/js/Utils.js"></script>
+    <script src="/DES/perrera-ec2/app/views/js/widthMenu.js"></script>
 </body>
 
 </html>

@@ -1,53 +1,6 @@
-<!-- <div class="w-100 border border-1 border-secondary p-3">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="filter-select">Filtrar por lista:</label>
-                <select id="filter-select" class="form-control"> 
-                    <option value="">Todos los animales</option>-->
-                    <?php
-                    // foreach ($data_especies as $show_one) {
-                    //     echo "<option value='" . $show_one["id"] . "'>Mostrar " . $show_one["nombre"] . "</option>";
-                    // }
-                    ?>
-                <!-- </select>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="search-filter">Buscar lista:</label>
-                <input type="text" id="search-filter" class="form-control" placeholder="Buscar...">
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label for="add">Añadir Registro:</label>
-                <button id="add" class="btn btn-primary" data-toggle="modal" data-target="#insert">Añadir</button>
-            </div>
-        </div>
-        <div class="col-md-6 d-none">
-            <div class="form-group">
-                <label for="delete-btn">Eliminar Registro:</label>
-                <button id="delete-btn" class="btn btn-danger">Eliminar</button>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="form-group">
-                <label for="search_table">Buscar por nombre:</label>
-                <input type="text" id="search_table" class="form-control" placeholder="Buscar por nombre...">
-            </div>
-        </div>
-    </div>
-</div> -->
-
-
-
-
-
+<div class="w-100 p-0 mt-3 text-end" style=" font-size: xx-small; ">
+    <a href="../controllers/EspecieC.php" style=" text-decoration: underline; cursor: pointer;">Ver especies</a>
+</div>
 <div class="w-100 border border-1 border-secondary p-3 my-4">
     <div class="row justify-content-between">
 
@@ -60,7 +13,7 @@
                 </div>
                 <div class="col-lg-10 col-md-9 col-sm-11">
                     <div class="d-flex flex-column"><span class="title_name" style=" font-size: .7rem;"></span>
-                        <h6 class="h5 text-primary mb-0" style="letter-spacing: 0; text-transform:none !important; font-size:.8rem;">Listado de filtros para <span class="title_name"></span></h6>
+                        <h6 class="h5 text-primary mb-0" style="letter-spacing: 0; text-transform:none !important; font-size:.8rem;" data-controller='AnimalC.php'>Listado de filtros para <span class="title_name"></span></h6>
                     </div>
                 </div>
 
@@ -91,7 +44,7 @@
                         <button type="button" id="add" class="button-dropdown " data-toggle="modal" data-target="#insert">
                             Añadir
                         </button>
-                        <button type="button" onclick="show_btn_options()" class="button-dropdown px-1">
+                        <button type="button" onclick="show_btn_options(event)" class="button-dropdown px-1">
                             <i class="fa-solid fa-caret-down"></i>
                         </button>
                         <div class="btn-dropdown-options w-100 position-absolute start-0">

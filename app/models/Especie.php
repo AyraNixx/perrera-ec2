@@ -42,7 +42,14 @@ class Especie extends Model
 
             // Ejecutamos la query           
             // Devolvemos resultados
-            return $stm->execute();
+            if($stm->execute()){
+                $query = "SELECT id FROM perrera.especies ORDER BY id DESC LIMIT 1";
+                $stm = $this->conBD->prepare($query);
+                $stm->execute();
+                return $stm->fetch()['id'];
+            }else{
+                return false;
+            }
             // En caso de excepción, lo guardamos en el log
         } catch (PDOException $e) {
             // Guardamos el error en el log
@@ -52,7 +59,7 @@ class Especie extends Model
             Utils::save_log_error("Unexpected error caught: " . $e->getMessage());
         }
 
-        return null;
+        return false;
     }
 }
 

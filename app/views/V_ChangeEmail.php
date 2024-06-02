@@ -69,7 +69,7 @@ require_once "../utils/Constants.php";
             <div class="row justify-content-center align-items-center col-10 col-sm-7 col-md-6 col-lg-3 p-2">
                 <form class="login" method="POST" action="../controllers/SettingsC.php">
                     <?php
-                        $msg = (isset($_REQUEST["msg"])) ? base64_decode($_REQUEST["msg"]) : "";
+                        $msg = (isset($_GET["msg"])) ? base64_decode($_GET["msg"]) : "";
                     ?>
                     <div class="error-label bg-danger text-white text-center p-2 mb-3 <?=($msg != "") ? "d-block" : "d-none"?>">
                         <?=$msg;?>
@@ -85,7 +85,7 @@ require_once "../utils/Constants.php";
                     <?php                    
                     if(isset($data['correo'])){
                         echo '<input type="hidden" name="email" value="' .  $data["correo"] . '">';
-                        echo '<input type="hidden" name="token_psswd" value="' .  $_REQUEST["token_psswd"] . '">';
+                        echo '<input type="hidden" name="token_psswd" value="' .  $_GET["token_psswd"] . '">';
                     }
                     ?>
                     <div class="form-group text-center mt-4">                        

@@ -38,11 +38,11 @@ BEGIN
        y ahora va 
     */
     IF (total_animales_jaulas > tamanio_jaula) THEN
-        UPDATE jaulas SET ocupada = 1 WHERE id = NEW.jaulas_id;
+        UPDATE jaulas SET ocupada = 0 WHERE id = NEW.jaulas_id;
         SIGNAL SQLSTATE '45100' SET MESSAGE_TEXT = 'No hay espacio disponible en esta jaula';
     ELSEIF (total_animales_jaulas = tamanio_jaula) THEN
         IF (NOT EXISTS(SELECT * FROM jaulas WHERE id = NEW.jaulas_id AND ocupada = 1)) THEN
-            UPDATE jaulas SET ocupada = 1 WHERE id = NEW.jaulas_id;
+            UPDATE jaulas SET ocupada = 0 WHERE id = NEW.jaulas_id;
         END IF;
     END IF;
 END$$

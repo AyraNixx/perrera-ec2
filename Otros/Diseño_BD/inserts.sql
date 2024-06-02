@@ -65,7 +65,29 @@ INSERT INTO `perrera`.`jaulas` (`ubicacion`, `tamanio`, `ocupada`, `estado_comid
 					('H-04', 2, 0, 0, 1, 'Jaula para otras especies.', '00B100292511104237969');
                     
                                                     
-
+use perrera;
 /*			INSERT ANIMALES			*/						
+INSERT INTO `animales` (`nombre`, `especies_id`, `raza`, `genero`, `tamanio`, `peso`, `colores`, `personalidad`, `fech_nac`, `estado_adopcion`, `estado_salud`, `necesidades_especiales`, `otras_observaciones`, `jaulas_id`, `disponible`) VALUES
+('Max', '00B100292511104237965', 'No especificada', 'M', 'Pequeño', 4.00, 'No especificado', '-', '2024-05-01', 'Disponible', 'Bien', 'NO', '-', '00J100823587618816006', 1),
+('Luna', '00B100292511104237965', 'No especificada', 'F', 'Pequeño', 5.00, 'No especificado', '-', '2024-05-01', 'Disponible', 'Bien', 'NO', '-', '00J100823587618816007', 1),
+('Buddy', '00B100292511104237965', 'No especificada', 'M', 'Pequeño', 3.00, 'No especificado', '-', '2024-05-01', 'Disponible', 'Bien', 'NO', '-', '00J100823587618816008', 1),
+('Bailey', '00B100292511104237965', 'No especificada', 'M', 'Pequeño', 2.00, 'No especificado', '-', '2024-05-01', 'Disponible', 'Bien', 'NO', '-', '00J100823587618816009', 1),
+('Rocky', '00B100292511104237965', 'No especificada', 'M', 'Pequeño', 4.00, 'No especificado', '-', '2024-05-01', 'Disponible', 'Bien', 'NO', '-', '00J100823587618816010', 1),
+('Coco', '00B100292511104237965', 'No especificada', 'F', 'Pequeño', 3.00, 'No especificado', '-', '2024-05-01', 'Disponible', 'Bien', 'NO', '-', '00J100823587618816011', 1),
+('Milo', '00B100292511104237965', 'No especificada', 'M', 'Pequeño', 2.00, 'No especificado', '-', '2024-05-01', 'Disponible', 'Bien', 'NO', '-', '00J100823587618816012', 1),
+('Lola', '00B100292511104237965', 'No especificada', 'F', 'Pequeño', 2.00, 'No especificado', '-', '2024-05-01', 'Disponible', 'Bien', 'NO', '-', '00J100823587618816013', 1),
+('Teddy', '00B100292511104237965', 'No especificada', 'M', 'Pequeño', 3.00, 'No especificado', '-', '2024-05-01', 'Disponible', 'Bien', 'NO', '-', '00J100823587618816014', 1),
+('Sophie', '00B100292511104237965', 'No especificada', 'F', 'Mediano', 3.00, 'No especificado', '-', '2024-05-01', 'Disponible', 'Bien', 'NO', '-', '00J100823587618816015', 1),
+('Ziggy', '00B100292511104237965', 'No especificada', 'M', 'Mediano', 3.00, 'No especificado', '-', '2024-05-01', 'Disponible', 'Bien', 'NO', '-', '00J100823587618816016', 1),
+('Oliver', '00B100292511104237965', 'No especificada', 'M', 'Mediano', 2.00, 'No especificado', '-', '2024-05-01', 'Disponible', 'Bien', 'NO', '-', '00J100823587618816017', 1),
+('Ruby', '00B100292511104237965', 'No especificada', 'F', 'Mediano', 2.00, 'No especificado', '-', '2024-05-01', 'Disponible', 'Bien', 'NO', '-', '00J100823587618816018', 1),
+('Daisy', '00B100292511104237965', 'No especificada', 'F', 'Grande', 2.00, 'No especificado', '-', '2024-05-01', 'Disponible', 'Bien', 'NO', '-', '00J100823587618816019', 1),
+('Mia', '00B100292511104237965', 'No especificada', 'F', 'Grande', 3.00, 'No especificado', '-', '2024-05-01', 'Disponible', 'Bien', 'NO', '-', '00J100823587618816020', 1),
+('Toby', '00B100292511104237965', 'No especificada', 'M', 'Grande', 2.00, 'No especificado', '-', '2024-05-01', 'Disponible', 'Bien', 'NO', '-', '00J100823587618816021', 1),
+('Sadie', '00B100292511104237965', 'No especificada', 'F', 'Grande', 3.00, 'No especificado', '-', '2024-05-01', 'Disponible', 'Bien', 'NO', '-', '00J100823587618816022', 1),
+('Bailey', '00B100292511104237965', 'No especificada', 'M', 'Grande', 2.00, 'No especificado', '-', '2024-05-01', 'Disponible', 'Bien', 'NO', '-', '00J100823587618816023', 1),
+('Luna', '00B100292511104237966', 'No especificada', 'F', 'Pequeño', 1.00, 'No especificado', '-', '2024-05-01', 'Disponible', 'Bien', 'NO', '-', '00J100823587618816025', 1),
+('Simba', '00B100292511104237966', 'No especificada', 'M', 'Pequeño', 1.00, 'No especificado', '-', '2024-05-01', 'Disponible', 'Bien', 'NO', '-', '00J100823587618816026', 1);
+
 
 							

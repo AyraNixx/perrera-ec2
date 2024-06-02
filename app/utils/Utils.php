@@ -117,7 +117,7 @@ class Utils
         $url = 'https://api.sendinblue.com/v3/smtp/email';
 
         // API KEY
-        $apiKey = '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';
+        $apiKey = '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';
 
         // VARIABLES NECESARIAS PARA EL CORREO ELECTRÓNICO
         $subject = $data["subject"]; // ASUNTO
@@ -154,8 +154,7 @@ class Utils
         $result = json_decode($response, true);
     }
 
-    public static function content_email(array $data)
-    {
+    public static function content_email(array $data) {        
         if ($data["subject"] == 1) {
             $msg = '<p class="message">Estimado ' . $data["name"] . ',</p>
                 <p class="message">Te damos la bienvenida a ¡Patas arriba! Esperamos que disfrutes de tu experiencia.</p>
@@ -167,14 +166,12 @@ class Utils
                 $msg = '<p class="message">' . $data["name"] . ',</p>
                     <p class="message">Le informamos que su contraseña ha sido modificada con éxito.</p>
                     <p class="message">Si usted no ha realizado la modificación, haga click en el siguiente botón para modificar la contraseña: </p>';
-            }elseif($data["subject"] == Constants::SEND_RESET_EMAIL){
+            }elseif($data["subject"] == Constants::SEND_RESET_EMAIL_SUBJECT){
                 $msg = '<p class="message">Estimado ' . $data["name"] . ',</p>
                     <p class="message">Le informamos que se ha realizado un cambio en su dirección de correo electrónico en nuestra plataforma.A continuación, se le especificarán los cambios realizados: <br/></p>
                     <p class="message">Antiguo correo electrónico: ' . $data['old_email'] . '</p>
                     <p class="message">Nuevo correo electrónico: ' . $data['new_email'] . '</p>
                     <p class="message">Si no has realizado la modificación, por favor haga click en el botón de "Restablecer". En caso de que el enlace haya expirado, póngase en contacto con nuestro soporte en el número de teléfono proporcionado en el pie del mensaje</p>';
-
-
             }
 
         $emailContent = '<!DOCTYPE html>
@@ -186,7 +183,7 @@ class Utils
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Recuperar contraseña</title>
             <link href="https://fonts.googleapis.com/css?family=Lato:400,700&display=swap" rel="stylesheet" type="text/css">
-            <link rel="shortcut icon" href="../../public/imgs/logos/logo1.png" type="image/x-icon">
+            <link rel="shortcut icon" href="../public/imgs/logos/logo1.png" type="image/x-icon">
             <style>
                 body {
                     margin: 0;
@@ -312,7 +309,7 @@ class Utils
                 </div>
                 <div class="content">
                     ' . $msg .
-                    (($data["link"] != null) ? '<div class="button-container">
+                    ((isset($data["link"])) ? '<div class="button-container">
                         <a href="' . $data["link"] . '" class="button"> Restablecer </a>
                     </div>' : "")
                     . (($data["subject"] != null) ? "<i class='message fst-italic'>Por favor, ignora este mensaje si has realizado la acción.</i>" : "") .
@@ -350,10 +347,12 @@ class Utils
      * @param array $file Array con los datos de la imagen.
      * @return mixed Devuelve la ruta en la que se encuentra la imagen, si existe un problema, devuelve false
      */
-    function save_img($file)
+    public static function save_img($file)
     {
         //Creamos una constante que es para el tamaño máximo permitido
-        define("MAX_FILE_SIZE", 2097152);
+        if(!defined('MAX_SIZE')){
+            define("MAX_SIZE", 2097152);
+        }
         //Definimos un array con posibles extensiones válidas para una imagen
         $extension = ["img/png", "img/jpeg", "img/gif", "image/svg", "image/jpg"];
         //Comprobamos si es una imagen.
@@ -362,14 +361,15 @@ class Utils
         }
 
         //Comprobamos que el tamaño sea menor al tamaño máximo permitido
-        if ($file["size"] > MAX_FILE_SIZE) {
+        if ($file["size"] > MAX_SIZE) {
             return false;
         }
 
         $end = explode(".", $file["name"]);
         $file_name = uniqid() . "." . end($end);
         //Carpeta de destino
-        $file_path = "./public/imgs/" . $file_name;
+        // $file_path = "./public/imgs/schema" . $file_name;
+        $file_path = "../../public/imgs/schema" . $file_name;
 
         //Usamos move_uploaded_file para mover el archivo subido a la carpeta indicada
         //Utilizamos $file["tmp_name] porque es la ubicación temporal donde se encuentra
@@ -436,3 +436,4 @@ class Utils
 }
 
 // var_dump(Utils::send_email(["subject" => 1, "content" => 1, "nombre" => "Rosalía", "email" => "thejokerjune@gmail.com", "url" => "twitter.com"]));
+// var_dump(Utils::connectBD());

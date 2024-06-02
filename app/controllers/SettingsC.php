@@ -23,32 +23,27 @@ class Settings
 
     function __construct()
     {
-        $_SESSION["correo"] = 'thejokerjune@gmail.com';
         $this->empleado = new Empleado();
         $this->data = $this->empleado->user_found($_SESSION["correo"]);
+        
     }
 
-    public function getMsg()
-    {
+    public function getMsg(){
         return $this->msg;
     }
-    public function setMsg($msg)
-    {
+    public function setMsg($msg){
         $this->msg = $msg;
         return $this;
     }
-    public function getAlert()
-    {
+    public function getAlert(){
         return $this->alert;
     }
-    public function setAlert($alert)
-    {
+    public function setAlert($alert){
         $this->alert = $alert;
         return $this;
     }
 
-    public function run(String $action)
-    {
+    public function run(String $action){
         if ($action == Constants::UPDT_PASSWD_STR) {
             $this->updt_psswd();
         } else if ($action == Constants::UPDT_EMAIL_STR) {
@@ -56,7 +51,7 @@ class Settings
         } else if ($action == Constants::UPDT_TLF_STR) {
             $this->updt_tlf();
         } else if ($action == Constants::UPDT_PROFILE_STR) {
-            $this->updt_psswd();
+            $this->updt_profile();
         } else if($action == Constants::RESET_PSSWD){
             $this->reset_psswd();
         }else {
@@ -87,7 +82,11 @@ class Settings
                     $reset_psswd_token = $this->empleado->queryParam(Constants::UPDT_REST_PSSWD_VALUE_SELECT, $token_params); // ejecutamos la consulta                                       
                     if (!empty($reset_psswd_token) || $reset_psswd_token != false) { // Si todo ha ido bien
                         // Generamos un array para almacenar los valores neesarios para el correo de notificación
-                        $data_email = ['subject' => Constants::SEND_RESET_PSSWD_SUBJECT, 'name' => $this->data['nombre'] . ' ' . $this->data['apellidos'], 'email' => $this->data['correo'], 'link' => Constants::CONTROLLER_SETTINGS . '?action=' . Constants::RESET_PSSWD . '&token_psswd=' . $token_params['reset_token_psswd_hash']];
+                        $data_email = [
+                            'subject' => Constants::SEND_RESET_PSSWD_SUBJECT, 
+                            'name' => $this->data['nombre'] . ' ' . $this->data['apellidos'], 
+                            'email' => $_SESSION['correo'], 
+                            'link' => Constants::CONTROLLER_SETTINGS . '?action=' . Constants::RESET_PSSWD . '&token_psswd=' . $token_params['reset_token_psswd_hash']];
                         $send_msg = Utils::send_email($data_email); // Enviamos el email                                                  
                         ($send_msg == null || empty($send_msg)) ?? $this->setMsg(Constants::ERROR_SEND_MSG_PSSWD);  // Si algo ha salido mal durante el envío del email, lo informamos                                    
                     }
@@ -101,7 +100,7 @@ class Settings
 
 
     private function updt_email() {
-        if (isset($_POST['new_email']) && isset($_POST['old_email'])) { // Si a través del POST vienen valores asociadas a estas dos claves
+        if (isset($_POST['new_email'])) { // Si a través del POST vienen valores asociadas a estas dos claves            
             $new_email = $_POST['new_email']; // almacenamos el nuevo email
             $old_email = $this->data['correo']; // almacenamos el antiguo email
             if ($new_email != $old_email) { // comprobamos que el nuevo correo es distinto del antiguo
@@ -112,12 +111,12 @@ class Settings
                     $token_params = Utils::generate_token_email_link(); // Generamos el token de reset y el tiempo que es válido
                     $token_params["id"] = $this->data['id']; // Añadimos, además, el id del usuario para realizar la query
                     $reset_email_token = $this->empleado->queryParam(Constants::UPDT_REST_EMAIL_VALUE_SELECT, $token_params); // ejecutamos la consulta
-                    if (empty($reset_psswd_token) || $reset_psswd_token == false) { // Si todo ha ido bien
+                    if (!empty($reset_email_token) || $reset_email_token != false) { // Si todo ha ido bien
                         $data_email = [
                             'subject' => Constants::SEND_RESET_EMAIL_SUBJECT,
                             'name' => $this->data['nombre'] . ' ' . $this->data['apellidos'],
                             'email' => $old_email,
-                            'link' => Constants::VIEW_CHANGE_PSSWD . $token_params['reset_token_hash']
+                            // 'link' => Constants::CONTROLLER_SETTINGS . '?action=' . Constants::RESET_EMAIL . '&token_email=' . $token_params['reset_token_email_hash']
                         ];
                         $send_msg = Utils::send_email($data_email); // Enviamos el email   
                         ($send_msg == null || empty($send_msg)) ?? $this->setMsg(Constants::ERROR_SEND_MSG_EMAIL);  // Si algo ha salido mal durante el envío del email, lo informamos                                                        
@@ -128,31 +127,41 @@ class Settings
                 }
             }
         }
+        $this->data['correo'] = $new_email;
         $this->index();
     }
 
 
-    private function updt_tlf()
-    {
-        if (isset($_POST['new_tlf'])) {
-            $params = ['new_tlf' => $_POST['new_tlf'], 'id' => $this->data['id']];
+    private function updt_tlf() {
+        if (isset($_POST['tlf'])) {
+            $params = ['new_tlf' => $_POST['tlf'], 'id' => $this->data['id']];
             $result = $this->empleado->queryParam(Constants::UPDT_TLF_SELECT, $params);
 
             if ($result == null) {
                 $this->setMsg(Constants::ERROR_TLF);
             }
         }
+        $this->data['telf'] = $_POST['tlf'];
         $this->index();
     }
 
-    private function updt_profile()
-    {
+    private function updt_profile(){
+        if(isset($_POST)){
+            $params = ["name" => $_POST["name"], "surname" => $_POST["lname"], "fechnac" => $_POST["fechnac"], "id" => $this->data["id"]];
+        }
+        $result = $this->empleado->queryParam(Constants::UPDT_PROFILE_SELECT, $params);
+        if ($result == null) {
+            $this->setMsg(Constants::ERROR_PROFILE);
+        }
+        $this->data['nombre'] = $_POST["name"];
+        $this->data['apellidos'] = $_POST["lname"];
+        $this->data['fechnac'] = $_POST["fechnac"];
+        $this->index();
     }
+    
 
     private function reset_psswd(){
-        var_dump($_REQUEST);
         if(isset($_REQUEST['token_psswd'])){
-            echo 'eeeeeeeeeeeeeeeee';
             $token = ['reset_token' => $_REQUEST['token_psswd']];
             $result = $this->empleado->queryParam(Constants::GET_USER_TOKEN_PSSWD_SELECT, $token);  
             if($result == false || empty($result)) {
@@ -170,7 +179,6 @@ class Settings
                 }
                 include Constants::VIEW_CHANGE_PSSWD;
             }else if(isset($_REQUEST['email'])){
-                echo 'eeeeeeeeeeeeeeeee';
                 if (isset($_POST['new_psswd']) && isset($_POST['new_psswd2'])) { // Si nos llega un valor con la clave new_psswd por Post
                     if($_POST['new_psswd'] != $_POST['new_psswd2']){
                         $msg = base64_encode(Constants::ERROR_DIFFERENT_PSSWD);
@@ -190,18 +198,13 @@ class Settings
             }
         }
     }
-
-    private function reset_email(){
-
-    }
 }
-
-
-$settings = new Settings();
-$action = !empty($_REQUEST["action"]) ? $_REQUEST["action"] : "index";
 
 //Comprobamos que la sesion esta iniciada
 session_start();
+
+$settings = new Settings();
+$action = !empty($_REQUEST["action"]) ? $_REQUEST["action"] : "index";
 
 //Si no tenemos guardado login 
 if (!Utils::is_logged_in() && (!$action != Constants::RESET_PSSWD || !$action != Constants::RESET_EMAIL)) {

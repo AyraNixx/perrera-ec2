@@ -118,9 +118,16 @@ class Animal extends Model
             $stm->bindParam(":jaulas_id", $this->animal["jaulas_id"], PDO::PARAM_STR);
 
 
-            // Ejecutamos la query           
+            // Ejecutamos la query     
+            $stm->execute();     
+            
+            $query = 'SELECT id FROM perrera.animales ORDER BY id DESC LIMIT 1';    // TO DO --> CAMBIAR LOS IDS POR AI, QUE SINO NO PUEDO UTILIZAR LASTINSERTEDID
+            $stm = $this->conBD->prepare($query);
+            $stm->execute(); 
+            $id = $stm->fetchColumn();
+
             // Devolvemos resultados
-            return $stm->execute();
+            return $id;
             // En caso de excepción, lo guardamos en el log
         } catch (PDOException $e) {
             // Guardamos el error en el log

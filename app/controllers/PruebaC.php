@@ -153,17 +153,6 @@ class AnimalC
         // Mensaje
         $new_msg = $this->getMsg();    
 
-        // echo "<pre>";
-        // var_dump($page);
-        // echo "<h1>-------------------------</h1>";
-        // var_dump($data);
-        // echo "<h1>-------------------------</h1>";
-        // var_dump($data_especies);
-        // echo "<h1>-------------------------</h1>";
-        // var_dump($total_pages);
-        // echo "</pre>";
-
-
         require_once "../views/" . $view;
 
     }

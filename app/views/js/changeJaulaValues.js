@@ -33,7 +33,9 @@ $(function () {
 
   // Evento change para el select #especies_id
   $("#especies_id").change(function () {
+
     id = $(this).val();
+    console.log(id = $(this).val());
     cargarJaulas();
   });
 });

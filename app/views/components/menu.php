@@ -9,7 +9,7 @@
 
             <!-- LOGO DEL MENÚ -->
             <div class="info-user">
-                <h3><?= 'TEST' ?>, <?= $_SESSION["nombre"]; ?></h3>
+                <h3><?= $_SESSION["apellidos"]; ?>, <?= $_SESSION["nombre"]; ?></h3>
                 <h6><?= $_SESSION["rol"]; ?></h6>
             </div>
 
@@ -64,7 +64,7 @@
             <hr>
 
             <div class="logout">
-                <h5><a href="../../../perrera-ec2/app/controllers//LoginC.php?action=logout" class="text-white">Cerrar sesión</a></h5>
+                <h5><a href="../../../perrera-ec2/app/controllers/LoginC.php?action=logout" class="text-white">Cerrar sesión</a></h5>
             </div>
         </div>
     </div>

@@ -7,7 +7,7 @@
                     <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-4" style="max-height:550px; overflow:auto;">
-                    <form action="../controllers/AnimalC.php" method="POST" class="d-flex flex-column w-100">
+                    <form action="../controllers/AnimalC.php" method="POST" class="d-flex flex-column w-100" enctype="multipart/form-data">
                         <div class="row">
                             <div class="col-md-6">
                                 <!-- Contenido de la primera columna -->
@@ -51,8 +51,8 @@
 
                                 <div class="input-group my-4 mb-1" style="position: relative; margin-top:1.7rem !important">
                                     <div class="custom-file flex-grow-1 border border-1 border-primary" style="padding: .3em;border-end-start-radius: 4px;border-start-start-radius: 4px;">
-                                        <input type="file" class="custom-file-input d-none" id="img">
-                                        <label class="custom-file-label" for="img" style="padding: 0;padding-left:.25em;">Subir imagen...</label>
+                                        <input type="file" class="custom-file-input d-none" id="imgs" name="imgs[]" multiple>
+                                        <label class="custom-file-label" for="imgs" style="padding: 0;padding-left:.25em;">Subir imagen...</label>
                                     </div>
                                     <div class="input-group-prepend" id="upload-span">
                                         <span class="input-group-text bg-primary text-white border-0" style="border-end-start-radius: 0;border-start-start-radius: 0;">Upload</span>

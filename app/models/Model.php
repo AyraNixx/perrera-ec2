@@ -321,18 +321,19 @@ class Model
         return null;
     }
 
-    public function queryParam(String $query, Array $params = []) {
+    public function queryParam(String $query, array $params = [])
+    {
         // Rodeamos el código en un try catch para controlar las excepciones
         try {
             $stmt = $this->conBD->prepare($query);
 
-            foreach($params as $key => $value){
+            foreach ($params as $key => $value) {
                 $stmt->bindValue(':' . $key, $value);
             }
             // Ejecutamos la consulta
             $success = $stmt->execute();
-            if($success){
-                if(!str_contains($query, 'SELECT')){
+            if ($success) {
+                if (!str_contains($query, 'SELECT')) {
                     return true;
                 }
                 //Devolvemos las filas resultantes
@@ -346,5 +347,155 @@ class Model
             Utils::save_log_error("Unexpected error caught: " . $e->getMessage());
         }
         return false;
+    }
+
+    public function queryParamSearch(String $query, String $value, String $sort, String $field, int $page, int $amount)
+    {
+
+        try {
+            $query = $query . $field . ' ' . $sort . " LIMIT :amount OFFSET :offset";
+            $stmt = $this->conBD->prepare($query);
+
+            // Calculamos desde que línea se empieza
+            $offset = ($page - 1) * $amount;
+
+            // Vinculamos los parámetros al nombre de la variable especificada
+            $stmt->bindParam(":search_value", $value);
+            $stmt->bindParam(":amount", $amount, PDO::PARAM_INT);
+            $stmt->bindParam(":offset", $offset, PDO::PARAM_INT);
+
+            // Ejecutar la consulta con los parámetros
+            $stmt->execute();
+
+            // Devolver las filas resultantes
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            // Guardar el error en el registro
+            Utils::save_log_error("PDOException caught: " . $e->getMessage());
+        } catch (Exception $e) {
+            // Guardar el error en el registro
+            Utils::save_log_error("Unexpected error caught: " . $e->getMessage());
+        }
+
+        return false;
+    }
+
+    public function save_multiple_imgs(String $animal_id, array $files, String $query)
+    {
+        $values = []; // Array para almacenar los valores de cada registro
+        $params = []; // Array para almacenar los parámetros de cada registro
+        $uploaded_files = []; // Array para almacenar las rutas de los archivos subidos
+        $result = false;
+
+        try {
+            // Recorremos el array de files 
+            foreach ($files['name'] as $key => $filename) {
+                // Creamos un array asociativo para cada archivo individual
+                $file = [
+                    'name' => $files['name'][$key],
+                    'type' => $files['type'][$key],
+                    'tmp_name' => $files['tmp_name'][$key],
+                    'error' => $files['error'][$key],
+                    'size' => $files['size'][$key]
+                ];
+
+                // Llamamos a la función save_img para subir el archivo a la carpeta y guardamos la ruta que nos devuelve
+                $file_path = Utils::save_img($file);
+
+                // Si la subida ha ido bien, agregamos los valores y los parámetros para la consulta
+                if ($file_path !== false) {
+                    // Creamos un array con los valores para cada registro
+                    $values[] = '(?, ?, ?, ?, ?)';
+                    // Guardamos en el array de parámetros los valores de cada registro
+                    $params[] = $animal_id;
+                    $params[] = $file['name'];
+                    $params[] = $file['type'];
+                    $params[] = $file['size'];
+                    $params[] = $file_path;
+                    // Añadimos la ruta a la lista de archivos subidos
+                    $uploaded_files[] = $file_path;
+                }
+            }
+
+            // Si se subieron archivos correctamente
+            if (!empty($values)) {
+                // Concatenamos los valores de los registros para formar la parte VALUES de la consulta
+                $query_values = implode(', ', $values);
+                // Concatenamos la consulta con los valores de los registros
+                $query = $query . $query_values;
+
+                // Preparamos la consulta
+                $stmt = $this->conBD->prepare($query);
+
+                // Asignamos los parámetros usando marcadores de posición
+                for ($i = 0; $i < count($params); $i++) {
+                    $stmt->bindParam($i + 1, $params[$i]);
+                }
+
+                // Ejecutamos la consulta
+                $result = $stmt->execute();
+            }
+        } catch (Exception $e) {
+            // Manejo de errores
+            Utils::save_log_error("Unexpected error caught: " . $e->getMessage());
+        }
+
+        return ($result) ? true : false;
+    }
+
+    public function generatePaginationHTML($page, $amount, $total_pages){
+
+        $html = '<span class="register-amount w-auto text-uppercase p-0" style="letter-spacing: .1em; ">';
+        $html .= 'Filas por página:';
+        $html .= '<select name="amount" id="amount" class="amount px-1 border-0 cursos-pointer" style="outline: none;" data-page="' . $amount . '">';
+        $options = [10, 25, 50];
+        foreach ($options as $option) {
+            $html .= '<option value="' . $option . '" ' . ($amount == $option ? 'selected' : '') . '>' . $option . '</option>';
+        }
+        $html .= '</select>';
+        $html .= '</span>';
+        $html .= '<div class="select-page h-100 w-auto d-flex align-items-center p-0" style="gap:5px;">';
+
+        if ($page != 1) {
+            $html .= '<button class="previous bg-transparent border-0" value="' . ($page - 1) . '" style="outline: none; box-shadow:none;" id="previous">';
+            $html .= '<i class="fa-solid fa-chevron-left" style="font-size: .7em;"></i>';
+            $html .= '</button>';
+        } else {
+            $html .= '<button class="previous bg-transparent border-0" value="' . $page . '" style="outline: none; box-shadow:none;" id="previous" disabled>';
+            $html .= '<i class="fa-solid fa-chevron-left" style="font-size: .7em;"></i>';
+            $html .= '</button>';
+        }
+
+        $html .= '<select name="page" id="page" class="amount px-1 border-0 cursos-pointer" style="outline: none;">';
+        for ($i = 1; $i <= $total_pages; $i++) {
+            $html .= '<option value="' . $i . '" ' . ($i == $page ? 'selected' : '') . '>' . $i . '</option>';
+        }
+        $html .= '</select>';
+        $html .= 'de <span class="me-1" id="total_pages">' . $total_pages . '</span>';
+
+        if ($page != $total_pages) {
+            $html .= '<button class="next bg-transparent border-0" value="' . ($page + 1) . '" style="outline: none; box-shadow:none;" id="next">';
+            $html .= '<i class="fa-solid fa-chevron-right" style="font-size: .7em;"></i>';
+            $html .= '</button>';
+        } else {
+            $html .= '<button class="next bg-transparent border-0" value="' . $page . '" style="outline: none; box-shadow:none;" id="next" disabled>';
+            $html .= '<i class="fa-solid fa-chevron-right" style="font-size: .7em;"></i>';
+            $html .= '</button>';
+        }
+
+        $html .= '</div>';
+        return $html;
+        
+    }
+
+    // Obtiene el valor de post y si no existe, te devuelve el original
+    public function get_value(String $val, String $originalVal)
+    {
+        if (isset($_POST[$val])) {
+            $this->$val = $_POST[$val];
+            return $_POST[$val];
+        } else {
+            return $originalVal;
+        }
     }
 }
