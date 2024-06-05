@@ -114,10 +114,10 @@ class Utils
 
     public static function send_email(array $data) {
         // URL de la API
-        $url = 'https://api.sendinblue.com/v3/smtp/email';
+        $url = '';//'.sendinblue.com/v3/smtp/email';  https://api
 
         // API KEY
-        $apiKey = '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';
+        $apiKey = '';//'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';
 
         // VARIABLES NECESARIAS PARA EL CORREO ELECTRÓNICO
         $subject = $data["subject"]; // ASUNTO
