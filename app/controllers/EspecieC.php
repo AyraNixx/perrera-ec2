@@ -103,7 +103,7 @@ class EspecieC
             $total_pages = $this->especie->total_pages('especies', $this->amount);
         } else {
             $data = $this->especie->pagination_visible('especies', $this->ord, $this->field, $this->page, $this->amount);
-            $total_pages = $this->especie->total_pages_visibles('especie', $this->amount);
+            $total_pages = $this->especie->total_pages_visibles('especies', $this->amount);
         }
         $page = $this->getPage();
         $new_msg = $this->getMsg();
@@ -224,7 +224,7 @@ class EspecieC
 
     private function generate_species_sel()
     {
-        echo json_encode($this->especie->query(Constants::GET_ESPECIE));
+        echo json_encode($this->especie->query(Constants::GET_ESPECIES));
     }
 }
 

@@ -114,8 +114,8 @@
                                                         <label for="tamanio" class="col-12">Tamaño</label>
                                                         <input type="text" name="tamanio" id="tamanio" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?= $data['tamanio'] ?>" readonly>
                                                         <label for="colores" class="col-12">Colores</label>
-                                                        <select name="colores[]" id="colores" class="col-12 px-2 border border-dark-subtle mt-1 mb-3" multiple disabled>
-                                                            <option disabled>Seleccionar color</option> <!-- TO DO!!  HACER QUE EL DISABLED SE CAMBIE CUANDO HAGAMOS CLICK EN EDITAR-->
+                                                        <select name="colores[]" id="colores" class="col-12 px-2 border border-dark-subtle mt-1 mb-3 rounded" multiple disabled>
+                                                            <option value="No especificado" <?= (str_contains($data['colores'], 'No especificado') ? 'selected' : '') ?>>Seleccionar color</option> <!-- TO DO!!  HACER QUE EL DISABLED SE CAMBIE CUANDO HAGAMOS CLICK EN EDITAR-->
                                                             <option value="Negro" <?= (str_contains($data['colores'], 'Negro') ? 'selected' : '') ?>>Negro</option>
                                                             <option value="Blanco" <?= (str_contains($data['colores'], 'Blanco') ? 'selected' : '') ?>>Blanco</option>
                                                             <option value="Marron" <?= (str_contains($data['colores'], 'Marron') ? 'selected' : '') ?>>Marrón</option>
@@ -126,16 +126,16 @@
                                                         <label for="fech_nac" class="col-12">Fecha de nacimiento</label>
                                                         <input type="text" name="fech_nac" id="fech_nac" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?= $data['fech_nac'] ?>" readonly>
                                                         <label for="especies_id" class="col-12">Especie</label>
-                                                        <input type="text" name="especies_id" id="especies_id" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?= $data['especie'] ?>" readonly>
-                                                        <!-- TO DO!!! -->
+                                                        <input type="text" name="especies-form" id="especies-form" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?= $data['especie'] ?>" readonly disabled>
+                                                        <select name="especies_id" id="especies_id" class="col-12 px-2 border border-dark-subtle my-3 rounded" style="display: none;"></select>
                                                         <label for="jaula" class="col-12">Jaula</label>
-                                                        <input type="text" name="jaula" id="jaula" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?= $data['jaula'] ?>" readonly>
-                                                        <!-- TO DO!!! -->
+                                                        <input type="text" name="jaula-form" id="jaula-form" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" data-jaula-id="<?= $data['jaula_id'] ?>" value="<?= $data['jaula'] ?>" readonly disabled>
+                                                        <select name="jaulas_id" id="jaulas_id" class="col-12 px-2 border border-dark-subtle my-3 rounded" style="display: none;"></select>
                                                         <label for="peso" class="col-12">Peso</label>
                                                         <input type="text" name="peso" id="peso" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?= $data['peso'] ?>" readonly>
                                                         <label for="personalidad" class="col-12">Personalidad</label>
-                                                        <select name="personalidad[]" id="personalidad" class="col-12 px-2 border border-dark-subtle mt-1 mb-3" multiple disabled> <!-- TO DO!!  HACER QUE EL DISABLED SE CAMBIE CUANDO HAGAMOS CLICK EN EDITAR-->
-                                                            <option disabled>Seleccionar personalidad</option>
+                                                        <select name="personalidad[]" id="personalidad" class="col-12 px-2 border border-dark-subtle mt-1 mb-3 rounded" multiple disabled> <!-- TO DO!!  HACER QUE EL DISABLED SE CAMBIE CUANDO HAGAMOS CLICK EN EDITAR-->
+                                                            <option value="-" <?= (str_contains($data['colores'], 'No -') ? 'selected' : '') ?>>Seleccionar personalidad</option>
                                                             <option value="Amoroso" <?= (str_contains($data['personalidad'], 'Amoroso') ? 'selected' : '') ?>>Amoroso</option>
                                                             <option value="Curioso" <?= (str_contains($data['personalidad'], 'Curioso') ? 'selected' : '') ?>>Curioso</option>
                                                             <option value="Energetico" <?= (str_contains($data['personalidad'], 'Energetico') ? 'selected' : '') ?>>Energético</option>
@@ -151,7 +151,7 @@
                                                     </div>
                                                     <div class="col-12">
                                                         <label for="estado_adopcion" class="col-12">Estado de la adopción</label>
-                                                        <select name="estado_adopcion" id="estado_adopcion" class="col-12 px-2 border border-dark-subtle mt-1 mb-3" disabled>
+                                                        <select name="estado_adopcion" id="estado_adopcion" class="col-12 px-2 border border-dark-subtle mt-1 mb-3 rounded" disabled>
                                                             <option>Seleccionar estado</option>
                                                             <option value="Disponible" <?= ($data['estado_adopcion'] == 'Disponible' ? 'selected' : '') ?>>Disponible</option>
                                                             <option value="Adoptado" <?= ($data['estado_adopcion'] == 'Adoptado' ? 'selected' : '') ?>>Adoptado</option>
@@ -244,6 +244,7 @@
     <script src="/DES/perrera-ec2/app/views/js/widthMenu.js"></script>
     <script src="/DES/perrera-ec2/app/views/js/changeJaulaValues.js"></script>
     <script src="/DES/perrera-ec2/app/views/js/imgs-record.js"></script>
+    <script src="/DES/perrera-ec2/app/views/js/btns-record-page.js"></script>
     <!-- 
         <script>
             $(document).ready(function() {

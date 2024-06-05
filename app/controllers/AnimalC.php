@@ -167,10 +167,11 @@ class AnimalC
         require_once "../views/" . $view;
     }
 
-    public function show_register()
+    public function show_register($id = '')
     {
-        if (isset($_REQUEST['id'])) {
-            $data = $this->animal->queryParam(Constants::GET_ANIMAL, ['id' => $_REQUEST['id']])[0];
+        if (isset($_REQUEST['id']) && !empty($_REQUEST['id']) || !empty($id)) {
+            $id = isset($_REQUEST['id']) ? htmlspecialchars(trim($_REQUEST['id']), ENT_QUOTES, 'UTF-8') : htmlspecialchars(trim($id), ENT_QUOTES, 'UTF-8');
+            $data = $this->animal->queryParam(Constants::GET_ANIMAL, ['id' => $id])[0];
             // Obtenemos todas las especies     
             $data_especies = $this->especie->get_all("especies");
 
@@ -223,7 +224,7 @@ class AnimalC
             if ($result == false) {
                 $this->setMsg(self::ERROR_INSERT);
             }
-            $this->index();
+            header('Location: ./AnimalC.php?action=show_register&id=' . $result);
         }
     }
 
@@ -256,9 +257,6 @@ class AnimalC
 
     public function update()
     {
-        echo '<pre>';
-        var_dump($_POST);
-        echo '</pre>';
         // Comprobamos que los campos no estén vacíos
         if (
             isset($_REQUEST["nombre"]) && isset($_REQUEST["especies_id"]) && isset($_REQUEST["raza"])
@@ -270,21 +268,21 @@ class AnimalC
             // Creamos un nuevo array
             $new_animal = [];
             // Guardamos los valores del Post
-            $new_animal["id"] = $_REQUEST[" id"];
-            $new_animal["nombre"] = $_REQUEST["nombre"];
-            $new_animal["especies_id"] = $_REQUEST["especies_id"];
-            $new_animal["raza"] = $_REQUEST["raza"];
-            $new_animal["genero"] = $_REQUEST["genero"];
-            $new_animal["tamanio"] = $_REQUEST["tamanio"];
-            $new_animal["peso"] = $_REQUEST["peso"];
-            $new_animal["colores"] = implode(',', $_REQUEST["colores"]);
-            $new_animal["personalidad"] = implode(',', $_REQUEST["personalidad"]);
-            $new_animal["fech_nac"] = $_REQUEST["fech_nac"];
-            $new_animal["estado_adopcion"] = $_REQUEST["estado_adopcion"];
-            $new_animal["estado_salud"] = $_REQUEST["estado_salud"];
-            $new_animal["necesidades_especiales"] = $_REQUEST["necesidades_especiales"];
-            $new_animal["otras_observaciones"] = $_REQUEST["otras_observaciones"];
-            $new_animal["jaulas_id"] = $_REQUEST["jaulas_id"];
+            $new_animal["id"] = htmlspecialchars(trim($_REQUEST["id"]), ENT_QUOTES, 'UTF-8');
+            $new_animal["nombre"] = htmlspecialchars(trim($_REQUEST["nombre"]), ENT_QUOTES, 'UTF-8');
+            $new_animal["especies_id"] = htmlspecialchars(trim($_REQUEST["especies_id"]), ENT_QUOTES, 'UTF-8');
+            $new_animal["raza"] = htmlspecialchars(trim($_REQUEST["raza"]), ENT_QUOTES, 'UTF-8');
+            $new_animal["genero"] = htmlspecialchars(trim($_REQUEST["genero"]), ENT_QUOTES, 'UTF-8');
+            $new_animal["tamanio"] = htmlspecialchars(trim($_REQUEST["tamanio"]), ENT_QUOTES, 'UTF-8');
+            $new_animal["peso"] = htmlspecialchars(trim($_REQUEST["peso"]), ENT_QUOTES, 'UTF-8');
+            $new_animal["colores"] = htmlspecialchars(trim(implode(',', $_REQUEST["colores"])), ENT_QUOTES, 'UTF-8');
+            $new_animal["personalidad"] = htmlspecialchars(trim(implode(',', $_REQUEST["personalidad"])), ENT_QUOTES, 'UTF-8');
+            $new_animal["fech_nac"] = htmlspecialchars(trim($_REQUEST["fech_nac"]), ENT_QUOTES, 'UTF-8');
+            $new_animal["estado_adopcion"] = htmlspecialchars(trim($_REQUEST["estado_adopcion"]), ENT_QUOTES, 'UTF-8');
+            $new_animal["estado_salud"] = htmlspecialchars(trim($_REQUEST["estado_salud"]), ENT_QUOTES, 'UTF-8');
+            $new_animal["necesidades_especiales"] = htmlspecialchars(trim($_REQUEST["necesidades_especiales"]), ENT_QUOTES, 'UTF-8');
+            $new_animal["otras_observaciones"] = htmlspecialchars(trim($_REQUEST["otras_observaciones"]), ENT_QUOTES, 'UTF-8');
+            $new_animal["jaulas_id"] = htmlspecialchars(trim($_REQUEST["jaulas_id"]), ENT_QUOTES, 'UTF-8');
 
             // Le pasamos el array como valor para el atributo privado del modelo Animal
             $this->animal->setAnimal($new_animal);
@@ -296,7 +294,8 @@ class AnimalC
             if ($result == null) {
                 $this->setMsg(Constants::ERROR_UPDATE);
             }
-            $this->index();
+            // $this->index();
+            $this->show_register();
         }
     }
 

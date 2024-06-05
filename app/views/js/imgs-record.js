@@ -1,4 +1,5 @@
-$(document).ready(function () {
+$(document).ready(function () {  
+  const id = new URLSearchParams(window.location.search).get("id");
   // Eventos
   $(document).on("click", '[data-toggle="lightbox"]', open_ekko_modal);
   $(document).on("click", 'button[data-modal-footer="delete"]', delete_img);
@@ -54,15 +55,15 @@ $(document).ready(function () {
     });
   }
 
-  function getParameterByName(name) {
-    let url = window.location.href;
-    let regex = new RegExp(
-      "[?&]" + name.replace(/[\[\]]/g, "\\$&") + "(=([^&#]*)|&|#|$)"
-    );
-    let results = regex.exec(url);
-    if (!results) return null;
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
-  }
+  // function getParameterByName(name) {
+  //   let url = window.location.href;
+  //   let regex = new RegExp(
+  //     "[?&]" + name.replace(/[\[\]]/g, "\\$&") + "(=([^&#]*)|&|#|$)"
+  //   );
+  //   let results = regex.exec(url);
+  //   if (!results) return null;
+  //   return decodeURIComponent(results[2].replace(/\+/g, " "));
+  // }
 
   function delete_img(e) {
     e.preventDefault();
@@ -173,7 +174,6 @@ $(document).ready(function () {
 
   function handle_file_input_change() {
     let files = $(this).prop("files");
-    let id = getParameterByName("id");
     let data = new FormData();
     data.append("id", id);
     data.append("action", "record_imgs");
@@ -186,7 +186,6 @@ $(document).ready(function () {
 
   function handle_submit(e) {
     e.preventDefault();
-    let id = getParameterByName("id");
     let data = new FormData(this);
     data.append("id", id);
     data.append("action", "record_imgs");
@@ -195,9 +194,10 @@ $(document).ready(function () {
   }
 
   function handle_tab_click(e) {
+    console.log('entramos');
     if (!$(this).hasClass("active")) {
-      let id = getParameterByName("id");
       let data = { id, action: "record_imgs", action_img: "get" };
+      console.log('data: ', data);
       callControllerImg(data);
     }
   }
@@ -210,12 +210,13 @@ $(document).ready(function () {
       data,
       dataType: "json",
       success: function (res) {
+        console.log('res', res);
         if ((res && Array.isArray(res) && res.length > 0) || res.res === true) {
           if (data.action_img === "get") {
             show_imgs(res);
           } else {
             callControllerImg({
-              id: getParameterByName("id"),
+              id: id,
               action_img: "get",
               action: "record_imgs",
             });

@@ -13,7 +13,7 @@ class Constants
     const GET_USER_TOKEN_PSSWD_SELECT = 'SELECT * FROM perrera.empleados WHERE reset_token_psswd_hash = :reset_token';
     const GET_USER_TOKEN_EMAIL_SELECT = 'SELECT * FROM perrera.empleados WHERE reset_token_email_hash = :reset_token';
     const GET_ROWS_SEARCH = 'SELECT * FROM :name_table WHERE ';
-    const GET_ANIMAL = "SELECT a.id, a.nombre, a.especies_id, a.raza, a.genero, a.tamanio, a.peso, a.colores, a.personalidad, a.fech_nac, a.estado_adopcion, a.estado_salud, a.necesidades_especiales, a.otras_observaciones, a.jaulas_id, e.nombre as especie, j.ubicacion as jaula, GROUP_CONCAT(i.id SEPARATOR ',') as img_ids, GROUP_CONCAT(i.id_animal SEPARATOR ',') as img_id_animals, GROUP_CONCAT(i.ruta SEPARATOR ',') as img_paths, GROUP_CONCAT(i.disponible SEPARATOR ',') as img_actives FROM perrera.animales a JOIN perrera.especies e ON a.especies_id = e.id JOIN perrera.jaulas j ON a.jaulas_id = j.id LEFT JOIN perrera.imgs i ON a.id = i.id_animal WHERE a.id = :id GROUP BY a.id, a.nombre, a.especies_id, a.raza, a.genero, a.tamanio, a.peso, a.colores, a.personalidad, a.fech_nac, a.estado_adopcion, a.estado_salud, a.necesidades_especiales, a.otras_observaciones, a.jaulas_id, e.nombre, j.ubicacion";
+    const GET_ANIMAL = "SELECT a.id, a.nombre, a.especies_id, a.raza, a.genero, a.tamanio, a.peso, a.colores, a.personalidad, a.fech_nac, a.estado_adopcion, a.estado_salud, a.necesidades_especiales, a.otras_observaciones, a.jaulas_id, e.nombre as especie, j.ubicacion as jaula, j.id as jaula_id, GROUP_CONCAT(i.id SEPARATOR ',') as img_ids, GROUP_CONCAT(i.id_animal SEPARATOR ',') as img_id_animals, GROUP_CONCAT(i.ruta SEPARATOR ',') as img_paths, GROUP_CONCAT(i.disponible SEPARATOR ',') as img_actives FROM perrera.animales a JOIN perrera.especies e ON a.especies_id = e.id JOIN perrera.jaulas j ON a.jaulas_id = j.id LEFT JOIN perrera.imgs i ON a.id = i.id_animal WHERE a.id = :id GROUP BY a.id, a.nombre, a.especies_id, a.raza, a.genero, a.tamanio, a.peso, a.colores, a.personalidad, a.fech_nac, a.estado_adopcion, a.estado_salud, a.necesidades_especiales, a.otras_observaciones, a.jaulas_id, e.nombre, j.ubicacion";
     const GET_IMGS_ANIMAL = "SELECT * FROM perrera.imgs WHERE id_animal = :id_animal";
     const UPDT_UNDELETE_ANIMALES = 'UPDATE perrera.animales SET disponible = 1 WHERE id = :id LIMIT 1';    
     const INSERT_ANIMALES_PHOTOS = 'INSERT INTO perrera.imgs (id_animal, nombre, tipo, tamanio, ruta) VALUES ';
@@ -21,16 +21,22 @@ class Constants
     const SEARCH_ANIMALES_TABLE = 'SELECT a.*, e.nombre as nombre_especie, j.ubicacion as ubicacion FROM perrera.animales a JOIN perrera.especies e ON  a.especies_id = e.id JOIN perrera.jaulas j ON a.jaulas_id = j.id WHERE a.nombre LIKE :search_value OR a.raza LIKE :search_value OR e.nombre LIKE :search_value ORDER BY a.';
     const SEARCH_ANIMALES_TABLE_TOTAL_PAGES = 'SELECT a.Id FROM perrera.animales a JOIN perrera.especies e ON  a.especies_id = e.id JOIN perrera.jaulas j ON a.jaulas_id = j.id WHERE a.nombre LIKE :search_value OR a.raza LIKE :search_value OR e.nombre LIKE :search_value ORDER BY a.nombre';
     const SEARCH_ESPECIES_TABLE = 'SELECT id, nombre, descripcion, disponible FROM perrera.especies WHERE nombre LIKE :search_value OR descripcion LIKE :search_value ORDER BY ';
+    const SEARCH_JAULAS_TABLE = 'SELECT j.*, e.nombre as nombre_especie FROM perrera.jaulas j JOIN perrera.especies e ON j.especies_id = e.id WHERE j.nombre LIKE :search_value OR j.descripcion LIKE :search_value OR e.nombre LIKE :search_value ORDER BY j.';
     const SEARCH_ESPECIES_TABLE_TOTAL_PAGES = 'SELECT Id FROM perrera.especies WHERE nombre LIKE :search_value OR descripcion LIKE :search_value ORDER BY nombre ';
+    const SEARCH_JAULAS_TABLE_TOTAL_PAGES = 'SELECT j.Id FROM perrera.jaulas j JOIN perrera.especies e ON j.especies_id = e.id WHERE j.nombre LIKE :search_value OR j.descripcion LIKE :search_value OR e.nombre LIKE :search_value ORDER BY j.ubicacion ';
     const DELETE_IMG_QUERY = 'DELETE FROM perrera.imgs WHERE Id = :id';
     const DELETE_IMGS_ANIMAL_QUERY = 'DELETE FROM perrera.imgs WHERE id_animal = :id';
     const GET_IMGS_ANIMAL_QUERY = 'SELECT * FROM perrera.imgs WHERE id_animal = :id';
     const GET_IMGS_EMPLOYEE_QUERY = 'SELECT * FROM perrera.imgs WHERE id_empleado = :id';
     const GET_IMG_QUERY = 'SELECT * FROM perrera.imgs WHERE id = :id';
     const GET_ESPECIES = 'SELECT * FROM perrera.especies';
+    const GET_JAULAS_BY_ESPECIE_AVAILABLE = 'SELECT j.*, e.id as especie_id, e.nombre as nombre_especie FROM perrera.jaulas j JOIN perrera.especies e ON j.especies_id = e.id WHERE j.especies_id = :id AND j.disponible = 1 AND (((SELECT (j.tamanio - COUNT(a.id)) FROM perrera.animales a WHERE a.jaulas_id = j.id) > 0 ) OR (j.id = :jaula_id))';
     const GET_ESPECIE = 'SELECT * FROM perrera.especies WHERE id = :id';
+    const GET_JAULA = 'SELECT j.*, e.nombre as nombre_especie FROM perrera.jaulas j JOIN perrera.especies e ON j.especies_id = e.id WHERE j.id = :id';
     const UPDT_ESPECIE = 'UPDATE perrera.especies SET nombre = :nombre, descripcion = :descripcion WHERE id = :id';
+    const UPDT_JAULA = 'UPDATE perrera.jaulas SET ubicacion = :ubicacion, tamanio = :tamanio, ocupada = :ocupada, estado_comida = :estado_comida, estado_limpieza = :estado_limpieza, otros_comentarios = :otros_comentarios, descripcion = :descripcion, especies_id = :especies_id WHERE id = :id';
     const DELETE_ESPECIE = 'UPDATE perrera.especies SET disponible = 0 WHERE id = :id';
+    const DELETE_JAULA = 'UPDATE perrera.jaulas SET disponible = 0 WHERE id = :id';
 
     // ACTIONS
     const UPDT_PROFILE_STR = 'CHANGE_PROFILE';
@@ -54,6 +60,7 @@ class Constants
     const VIEW_LOGIN = 'http://localhost/DES/perrera-ec2/public/Login.php';
     const VIEW_ANIMAL = '../views/V_AnimalVer.php';
     const VIEW_ESPECIE = '../views/V_EspecieVer.php';
+    const VIEW_JAULA = '../views/V_JaulaVer.php';
 
     // CONTROLLERS
     const CONTROLLER_SETTINGS = 'http://localhost/DES/perrera-ec2/app/controllers/SettingsC.php';

@@ -238,85 +238,153 @@ $('[data-form="form-settings"]').on("input", function (event) {
 //
 //
 //------------------------------------------    BOTONES DE LA RECORD PAGE    ---------------------------------------------------------------------
-$(document).ready(function () {
-  let default_controller = $("*[data-controller]").first().data("controller");
+// $(document).ready(function () {
+//   let default_controller = $("*[data-controller]").first().data("controller");
 
-  $('[data-action="sdelete"]').click(function () {
-    let urlParams = new URLSearchParams(window.location.search);
-    let id = urlParams.get("id");
-    // Crear un formulario dinámicamente
-    let form = $("<form></form>");
-    form.attr("method", "POST");
-    form.attr("action", "../../app/controllers/".default_controller);
+//   $('[data-action="sdelete"]').click(function () {
+//     let urlParams = new URLSearchParams(window.location.search);
+//     let id = urlParams.get("id");
+//     // Crear un formulario dinámicamente
+//     let form = $("<form></form>");
+//     form.attr("method", "POST");
+//     form.attr("action", "../../app/controllers/".default_controller);
 
-    // Agregar campos ocultos al formulario
-    let id_val = $("<input/>")
-      .attr("type", "hidden")
-      .attr("name", "id")
-      .val(id);
-    let action_val = $("<input/>")
-      .attr("type", "hidden")
-      .attr("name", "action")
-      .val("sdelete");
-    form.append(id_val);
-    form.append(action_val);
+//     // Agregar campos ocultos al formulario
+//     let id_val = $("<input/>")
+//       .attr("type", "hidden")
+//       .attr("name", "id")
+//       .val(id);
+//     let action_val = $("<input/>")
+//       .attr("type", "hidden")
+//       .attr("name", "action")
+//       .val("sdelete");
+//     form.append(id_val);
+//     form.append(action_val);
 
-    // Adjuntar el formulario al cuerpo del documento y enviarlo
-    $(document.body).append(form);
-    form.submit();
-  });
+//     // Adjuntar el formulario al cuerpo del documento y enviarlo
+//     $(document.body).append(form);
+//     form.submit();
+//   });
 
-  $('[data-action="update"]').click(function () {
-    let id = getIdUrl("id");
-    // Remove readonly attribute from inputs
-    $("input").attr("readonly", false);
-    $("textarea").attr("readonly", false);
-    $("select").attr("disabled", false);
-    // Show the submit button
-    $(".btn-hidden-register").removeClass("hidden");
-  });
+//   $('[data-action="update"]').click(function () {
+//     let id = getIdUrl("id");
+//     // Remove readonly attribute from inputs
+//     $("input").attr("readonly", false);
+//     $("textarea").attr("readonly", false);
+//     $("select").attr("disabled", false);
 
-  $(document).on("submit", ".form-register", handle_submit);
-  function handle_submit(e) {
-    e.preventDefault();
-    let id = getIdUrl("id");
-    if ($(this).find('input[name="id"]').length === 0) {
-        $('<input>').attr({
-            type: 'hidden',
-            name: 'id',
-            value: id
-        }).appendTo(this);
-    }
-    if ($(this).find('input[name="action"]').length === 0) {
-        $('<input>').attr({
-            type: 'hidden',
-            name: 'action',
-            value: 'update'
-        }).appendTo(this);
-    }
-    console.log(this);
+//     // Comprobamos si existe un input de tipo texto con el name especies
+//     if ($('input[type="text"][name="especies-form"]')) {
+//       let specie = $('input[type="text"][name="especies-form"]').val();
+//       $('input[type="text"][name="especies-form"]').hide();
+//       $.ajax({
+//         type: "POST",
+//         url: `../../app/controllers/EspecieC.php`,
+//         data: { action: "generate_species_sel" },
+//         dataType: "json",
+//         success: function (res) {
+//           $('select[name="especies_id"]').empty();
+//           res.forEach((e) => {
+//             let option = $("<option>")
+//               .attr({ value: e.id })
+//               .text(e.nombre)
+//               .appendTo('select[name="especies_id"]');
+//             if (e.nombre === specie) {
+//               option.attr("selected", "selected");
+//             }
+//           });
+//           $('select[name="especies_id"]').show();
 
-    this.submit();
-}
+//           if ($('input[type="text"][name="jaulas-form"]')) {
+//             console.log($('select[name="especies_id"]').val());
+//             generate_cages($('select[name="especies_id"]').val());
+//             $('input[type="text"][name="jaula-form"]').hide();
+//           }
+//         },
+//         error: function (xhr, status, error) {
+//           console.error("Error al obtener los datos - imgs:", error);
+//         },
+//       });
+//       $('input[type="text"][name="jaulas-form"]').hide();
+//     }
+//     // Show the submit button
+//     $(".btn-hidden-register").removeClass("hidden");
+//   });
 
-  $("#cancel_register").click(function () {
-    // Remove readonly attribute from inputs
-    $("input").attr("readonly", true);
-    $("textarea").attr("readonly", true);
-    // Show the submit button
-    $(".btn-hidden-register").addClass("hidden");
-    var form = $(".form-register")[0];
-    // Reset the form
-    form.reset();
-  });
-});
+//   function generate_cages(id) {
+//     $.ajax({
+//       type: "POST",
+//       url: `../../app/controllers/JaulaC.php`,
+//       data: { action: "generate_cages_sel", id },
+//       dataType: "json",
+//       success: function (res) {
+//         $('select[name="jaulas_id"]').empty();
+//         res.forEach((e) => {
+//           let option = $("<option>")
+//             .attr({ value: e.id })
+//             .text(e.ubicacion)
+//             .appendTo('select[name="jaulas_id"]');
+//           if (e.nombre === $('input[type="text"][name="jaula-form"]').val()) {
+//             option.attr("selected", "selected");
+//           }
+//         });
+//         $('select[name="jaulas_id"]').show();
+//       },
+//       error: function (xhr, status, error) {
+//         console.error("Error al obtener los datos - imgs:", error);
+//       },
+//     });
+//   }
 
-function getIdUrl(name) {
-  let url = window.location.href;
-  let regex = new RegExp(
-    "[?&]" + name.replace(/[\[\]]/g, "\\$&") + "(=([^&#]*)|&|#|$)"
-  );
-  let results = regex.exec(url);
-  if (!results) return null;
-  return decodeURIComponent(results[2].replace(/\+/g, " "));
-}
+//   $(document).on("submit", ".form-register", handle_submit);
+//   function handle_submit(e) {
+//     e.preventDefault();
+//     let id = getIdUrl("id");
+//     if ($(this).find('input[name="id"]').length === 0) {
+//       $("<input>")
+//         .attr({
+//           type: "hidden",
+//           name: "id",
+//           value: id,
+//         })
+//         .appendTo(this);
+//     }
+//     if ($(this).find('input[name="action"]').length === 0) {
+//       $("<input>")
+//         .attr({
+//           type: "hidden",
+//           name: "action",
+//           value: "update",
+//         })
+//         .appendTo(this);
+//     }
+//     console.log(this);
+
+//     this.submit();
+//   }
+
+//   $("#cancel_register").click(function () {
+//     // Remove readonly attribute from inputs
+//     $("input").attr("readonly", true);
+//     $("textarea").attr("readonly", true);
+//     // Show the submit button
+//     $(".btn-hidden-register").addClass("hidden");
+//     if ($('input[type="text"][name="especies"]')) {
+//       $('input[type="text"][name="especies"]').show();
+//       $('select[name="especies_id"]').hide();
+//     }
+//     var form = $(".form-register")[0];
+//     // Reset the form
+//     form.reset();
+//   });
+// });
+
+// function getIdUrl(name) {
+//   let url = window.location.href;
+//   let regex = new RegExp(
+//     "[?&]" + name.replace(/[\[\]]/g, "\\$&") + "(=([^&#]*)|&|#|$)"
+//   );
+//   let results = regex.exec(url);
+//   if (!results) return null;
+//   return decodeURIComponent(results[2].replace(/\+/g, " "));
+// }

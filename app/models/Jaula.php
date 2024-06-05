@@ -116,6 +116,37 @@ class Jaula extends Model
             Utils::save_log_error("Unexpected error caught: " . $e->getMessage());
         }
     }
+
+    public function pagination_more_info(string $ord, string $field, int $page, int $amount){
+        // Rodeamos el código en un try catch para controlar las excepciones
+        try {
+            // Calculamos desde que línea se empieza
+            $offset = ($page - 1) * $amount;
+
+            // Consulta
+            $query = "SELECT j.*, e.nombre as nombre_especie
+                        FROM perrera.jaulas j
+                            INNER JOIN especies e ON j.especies_id = e.id
+                                ORDER BY $field $ord LIMIT :amount OFFSET :offset";
+            // Preparamos la consulta para su ejecución
+            $statement = $this->conBD->prepare($query);
+            // Vinculamos los parámetros al nombre de la variable especificada
+            $statement->bindParam(":amount", $amount, PDO::PARAM_INT);
+            $statement->bindParam(":offset", $offset, PDO::PARAM_INT);
+            // Ejecutamos la consulta
+            $statement->execute();
+            //Devolvemos las filas resultantes
+            return $statement->fetchAll();
+        } catch (PDOException $e) {
+            // Guardamos el error en el log
+            Utils::save_log_error("PDOException caught: " . $e->getMessage());
+        } catch (Exception $e) {
+            // Guardamos el error en el log
+            Utils::save_log_error("Unexpected error caught: " . $e->getMessage());
+        }
+        return null;
+
+    }
 }
 
 // $jaula = new Jaula();
