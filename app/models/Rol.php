@@ -1,7 +1,12 @@
 <?php
 
+namespace model;
+
 use \model\Model;
 use \utils\Utils;
+use \PDO;
+use \PDOException;
+use \Exception;
 
 require_once "Model.php";
 
@@ -37,7 +42,14 @@ class Rol extends Model
 
             // Ejecutamos la query           
             // Devolvemos resultados
-            return $stm->execute();
+            if($stm->execute()){
+                $query = "SELECT id FROM perrera.roles ORDER BY id DESC LIMIT 1";
+                $stm = $this->conBD->prepare($query);
+                $stm->execute();
+                return $stm->fetch()['id'];
+            }else{
+                return false;
+            }
             // En caso de excepción, lo guardamos en el log
         } catch (PDOException $e) {
             echo "todo mal";

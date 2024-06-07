@@ -1,7 +1,12 @@
 <?php
 
+namespace model;
+
 use \model\Model;
 use \utils\Utils;
+use \PDO;
+use \PDOException;
+use \Exception;
 
 require_once "Model.php";
 
@@ -28,8 +33,10 @@ class Veterinario extends Model
         try {
             // Consulta
             $query = "INSERT INTO veterinarios (nombre, apellidos, correo, telf, 
-            horarios, otra_informacion) VALUE(:nombre, :apellidos, :correo, :telf, 
-            :horarios, :otra_informacion)";
+            direccion, especialidad, nombre_clinica, direccion_clinica, telf_clinica,
+            correo_clinica, hora_apertura, hora_cierre, otra_informacion) VALUE(:nombre, :apellidos, :correo, :telf, 
+            :direccion, :especialidad, :nombre_clinica, :direccion_clinica, :telf_clinica,
+            :correo_clinica, :hora_apertura, :hora_cierre, :otra_informacion)";
 
             //Preparamos la query
             $stm = $this->conBD->prepare($query);
@@ -38,13 +45,26 @@ class Veterinario extends Model
             $stm->bindParam(":apellidos", $veterinario["apellidos"], PDO::PARAM_STR);
             $stm->bindParam(":correo", $veterinario["correo"], PDO::PARAM_STR);
             $stm->bindParam(":telf", $veterinario["telf"], PDO::PARAM_STR);
-            $stm->bindParam(":horarios", $veterinario["horarios"], PDO::PARAM_STR);
+            $stm->bindParam(":direccion", $veterinario["direccion"], PDO::PARAM_STR);
+            $stm->bindParam(":especialidad", $veterinario["especialidad"], PDO::PARAM_STR);
+            $stm->bindParam(":nombre_clinica", $veterinario["nombre_clinica"], PDO::PARAM_STR);
+            $stm->bindParam(":direccion_clinica", $veterinario["direccion_clinica"], PDO::PARAM_STR);
+            $stm->bindParam(":telf_clinica", $veterinario["telf_clinica"], PDO::PARAM_STR);
+            $stm->bindParam(":correo_clinica", $veterinario["correo_clinica"], PDO::PARAM_STR);
+            $stm->bindParam(":hora_apertura", $veterinario["hora_apertura"], PDO::PARAM_STR);
+            $stm->bindParam(":hora_cierre", $veterinario["hora_cierre"], PDO::PARAM_STR);
             $stm->bindParam(":otra_informacion", $veterinario["otra_informacion"], PDO::PARAM_STR);
             
             // Ejecutamos la query           
-            // Devolvemos resultados
-            return $stm->execute();
-            // En caso de excepción, lo guardamos en el log
+            // Devolvemos resultados 
+            if($stm->execute()){
+                $query = "SELECT id FROM perrera.veterinarios ORDER BY id DESC LIMIT 1";
+                $stm = $this->conBD->prepare($query);
+                $stm->execute();
+                return $stm->fetch()['id'];
+            }else{
+                return false;
+            }
         } catch (PDOException $e) {
             echo "todo mal";
             // Guardamos el error en el log

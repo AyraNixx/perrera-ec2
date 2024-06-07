@@ -127,6 +127,10 @@ class JaulaC
                 break;
             case "generate_cages_sel":
                 $this->generate_cages_sel();
+                break;
+            case "get_last_cage_number":
+                $this->get_last_cage_number();
+                break;
         }
     }
 
@@ -158,20 +162,24 @@ class JaulaC
     {
         if (
             isset($_REQUEST['ubicacion']) && isset($_REQUEST['descripcion']) && isset($_REQUEST['tamanio'])
-            && isset($_REQUEST['otros_comentarios']) && isset($_REQUEST['especies_id'])
+            && isset($_REQUEST['otros_comentarios']) && isset($_REQUEST['especies_id'] ) && isset($_REQUEST['estado_comida'])
+            && isset($_REQUEST['estado_limpieza'])
         ) {
             $ubicacion = htmlspecialchars(trim($_REQUEST['ubicacion']), ENT_QUOTES, 'UTF-8');
             $desc = htmlspecialchars(trim($_REQUEST['descripcion']), ENT_QUOTES, 'UTF-8');
             $tamanio = htmlspecialchars(trim($_REQUEST['tamanio']), ENT_QUOTES, 'UTF-8');
             $otros_comentarios = htmlspecialchars(trim($_REQUEST['otros_comentarios']), ENT_QUOTES, 'UTF-8');
             $especies_id = htmlspecialchars(trim($_REQUEST['especies_id']), ENT_QUOTES, 'UTF-8');
+            $estado_limpieza = htmlspecialchars(trim($_REQUEST['estado_limpieza']), ENT_QUOTES, 'UTF-8');
+            $estado_comida = htmlspecialchars(trim($_REQUEST['estado_comida']), ENT_QUOTES, 'UTF-8');
 
-            $result = $this->jaula->insert(['ubicacion' => $ubicacion, 'tamanio' => $tamanio, 'ocupada' => 0, 'estado_comida' => 0, 'estado_limpieza' => 1, 'descripcion' => $desc, 'otros_comentarios' => $otros_comentarios, 'especies_id' => $especies_id]);
+
+            $result = $this->jaula->insert(['ubicacion' => $ubicacion, 'tamanio' => $tamanio, 'ocupada' => 0, 'estado_comida' => $estado_comida, 'estado_limpieza' => $estado_limpieza, 'descripcion' => $desc, 'otros_comentarios' => $otros_comentarios, 'especies_id' => $especies_id]);
 
             if ($result == false) {
                 $this->setMsg(Constants::ERROR_INSERT);
+                // $this->index();
             }
-            // $this->index();
             $this->show_register($result);
         } else {
             $this->setMsg(Constants::ERROR_INSERT);
@@ -199,7 +207,7 @@ class JaulaC
             if ($result == false) {
                 $this->setMsg(Constants::ERROR_UPDATE);
             }
-            // $this->index();  // TO DO!!!!!
+            //$this->index();  // TO DO!!!!!
             $this->show_register($result);
         } else {
             $this->setMsg(Constants::ERROR_UPDATE);
@@ -283,11 +291,18 @@ class JaulaC
         if ((isset($_REQUEST['id']) && !empty($_REQUEST['id'])) || !empty($id)) {
             $id = htmlspecialchars(trim($_REQUEST['id']), ENT_QUOTES, 'UTF-8');
 
-            if(isset($_REQUEST['jaula_id']) && !empty($_REQUEST['jaula_id']))
-            {
+            if (isset($_REQUEST['jaula_id']) && !empty($_REQUEST['jaula_id'])) {
                 $jaula_id = htmlspecialchars(trim($_REQUEST['jaula_id']), ENT_QUOTES, 'UTF-8');
                 echo json_encode($this->jaula->queryParam(Constants::GET_JAULAS_BY_ESPECIE_AVAILABLE, ['id' => $id, 'jaula_id' => $jaula_id]));
             }
+        }
+    }
+
+    private function get_last_cage_number()
+    {
+        if (isset($_REQUEST['letter_cage'])) {
+            $letter_cage = htmlspecialchars(trim($_REQUEST['letter_cage']), ENT_QUOTES, 'UTF-8');
+            echo json_encode($this->jaula->queryParam(Constants::GET_LAST_JAULA_NUMBER, ['letter_cage' => $letter_cage]));
         }
     }
 }

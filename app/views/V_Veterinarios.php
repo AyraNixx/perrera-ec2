@@ -19,7 +19,7 @@ $user_profile = $_SESSION["rol"];
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jaulas</title>
+    <title>Veterinarios</title>
     <link rel="shortcut icon" href="../../public/imgs/logos/logo1.png" type="image/x-icon">
     <script src="https://kit.fontawesome.com/8d125d2b91.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../views/css/sass.css">
@@ -47,8 +47,8 @@ $user_profile = $_SESSION["rol"];
         <!-- MODAL ALERTA -->
         <?php include_once "../views/components/modalAlert.php"; ?>
 
-        <!-- MODAL Jaula -->
-        <?php include_once "../views/components/insertJaula.php"; ?>
+        <!-- MODAL ANIMAL -->
+        <?php include_once "../views/components/insertVeterinario.php"; ?>
 
         <!-- HEADER -->
         <?php include_once "../views/components/header.php"; ?>
@@ -57,9 +57,9 @@ $user_profile = $_SESSION["rol"];
         <!-- CONTENEDOR PRINCIPAL -->
         <!-- <main class="mt-5 d-flex flex-column justify-content-center align-content-center p-3"> -->
         <main class="mt-5 d-flex flex-column justify-content-center align-content-center p-3" id="main">            
-            <?php include_once "../views/components/filterJaula.php"; ?>
+            <?php include_once "../views/components/filterVeterinario.php"; ?>
 
-            <?php include_once "../views/components/jaulaList.php"; ?>
+            <?php include_once "../views/components/veterinarioList.php"; ?>
 
             <?php include_once "../views/components/pagination.php"; ?>
         </main>
@@ -70,10 +70,6 @@ $user_profile = $_SESSION["rol"];
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <script src="/DES/perrera-ec2/app/views/js/Utils.js"></script>
-    <script src="/DES/perrera-ec2/app/views/js/widthMenu.js"></script>
-    <script src="/DES/perrera-ec2/app/views/js/pagination.js"></script>
-    <script src="/DES/perrera-ec2/app/views/js/create-jaulas.js"></script>
     <?php
 
     if ($new_msg != null) { ?>
@@ -92,6 +88,13 @@ $user_profile = $_SESSION["rol"];
             $("#aviso").modal("hide");
         }
     </script>
+    <!-- <script src="../views/js/widthMenu.js"></script>
+    <script src="../views/js/filteredTable.js"></script>
+    <script src="../views/js/changeJaulaValues.js"></script>
+    <script src="../views/js/pagination.js"></script> -->
+    <script src="/DES/perrera-ec2/app/views/js/Utils.js"></script>
+    <script src="/DES/perrera-ec2/app/views/js/widthMenu.js"></script>
+    <script src="/DES/perrera-ec2/app/views/js/pagination.js"></script>
 </body>
 
 </html>

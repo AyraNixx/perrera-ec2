@@ -47,8 +47,8 @@ class Jaula extends Model
     {
         try {
             // Consulta
-            $query = "INSERT INTO jaulas (ubicacion, tamanio, ocupada, estado_comida, estado_limpieza, descripcion, otros_comentarios) 
-            VALUE(:ubicacion, :tamanio, :ocupada, :estado_comida, :estado_limpieza, :descripcion, :otros_comentarios)";
+            $query = "INSERT INTO jaulas (ubicacion, tamanio, ocupada, estado_comida, estado_limpieza, descripcion, otros_comentarios, especies_id) 
+            VALUE(:ubicacion, :tamanio, :ocupada, :estado_comida, :estado_limpieza, :descripcion, :otros_comentarios, :especies_id)";
 
             //Preparamos la query
             $stm = $this->conBD->prepare($query);
@@ -61,10 +61,18 @@ class Jaula extends Model
             $stm->bindParam(":estado_limpieza", $jaula["estado_limpieza"], PDO::PARAM_INT);
             $stm->bindParam(":descripcion", $jaula["descripcion"], PDO::PARAM_STR);
             $stm->bindParam(":otros_comentarios", $jaula["otros_comentarios"], PDO::PARAM_STR);
+            $stm->bindParam(":especies_id", $jaula["especies_id"], PDO::PARAM_STR);
 
             // Ejecutamos la query           
             // Devolvemos resultados
-            return $stm->execute();
+            if($stm->execute()){
+                $query = "SELECT id FROM perrera.jaulas ORDER BY id DESC LIMIT 1";
+                $stm = $this->conBD->prepare($query);
+                $stm->execute();
+                return $stm->fetch()['id'];
+            }else{
+                return false;
+            }
             // En caso de excepción, lo guardamos en el log
         } catch (PDOException $e) {
             // Guardamos el error en el log

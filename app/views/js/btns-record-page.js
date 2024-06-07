@@ -14,7 +14,6 @@ $(document).ready(function () {
         .submit();
     });
   
-    // ACTUALIZAR REGISTRO
     $('[data-action="update"]').click(function () {
       $("input, textarea").attr("readonly", false);
       $("select").attr("disabled", false);
@@ -60,7 +59,6 @@ $(document).ready(function () {
   
           let jaula_input = $('input[type="text"][name="jaula-form"]');
           if (jaula_input.length) {
-            console.log(specie_selected.val());
             generate_cages(specie_selected.val());
             $('input[type="text"][name="jaula-form"]').hide();
           }
