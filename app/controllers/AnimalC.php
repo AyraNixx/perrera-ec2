@@ -71,18 +71,54 @@ class AnimalC
     // 
     // -- GETTERS AND SETTERS
     // 
-    public function getMsg() { return $this->msg; }
-    public function setMsg($msg) { return $this->msg = $msg; }
-    public function getField() { return $this->field; }
-    public function setField($field) { return $this->field = $field; }
-    public function getOrd(){ return $this->ord; }
-    public function setOrd($ord) { return $this->ord = $ord; } 
-    public function getAmount() { return $this->amount; } 
-    public function setAmount($amount) { return $this->amount = $amount; } 
-    public function getPage() { return $this->page; } 
-    public function setPage($page) { return $this->page = $page; } 
-    public function getSearch_val() { return $this->search_val; } 
-    public function setSearch_val($search_val) { return $this->search_val = $search_val; }
+    public function getMsg()
+    {
+        return $this->msg;
+    }
+    public function setMsg($msg)
+    {
+        return $this->msg = $msg;
+    }
+    public function getField()
+    {
+        return $this->field;
+    }
+    public function setField($field)
+    {
+        return $this->field = $field;
+    }
+    public function getOrd()
+    {
+        return $this->ord;
+    }
+    public function setOrd($ord)
+    {
+        return $this->ord = $ord;
+    }
+    public function getAmount()
+    {
+        return $this->amount;
+    }
+    public function setAmount($amount)
+    {
+        return $this->amount = $amount;
+    }
+    public function getPage()
+    {
+        return $this->page;
+    }
+    public function setPage($page)
+    {
+        return $this->page = $page;
+    }
+    public function getSearch_val()
+    {
+        return $this->search_val;
+    }
+    public function setSearch_val($search_val)
+    {
+        return $this->search_val = $search_val;
+    }
 
     // 
     // -- MÉTODOS
@@ -135,6 +171,9 @@ class AnimalC
             case "show_cages":
                 $this->show_cages_available();
                 break;
+            case 'search_animal_modal':
+                $this->search_animal_modal();
+                break;
             case "pagination":
                 $this->pagination();
                 break;
@@ -171,7 +210,11 @@ class AnimalC
     {
         if (isset($_REQUEST['id']) && !empty($_REQUEST['id']) || !empty($id)) {
             $id = isset($_REQUEST['id']) ? htmlspecialchars(trim($_REQUEST['id']), ENT_QUOTES, 'UTF-8') : htmlspecialchars(trim($id), ENT_QUOTES, 'UTF-8');
-            $data = $this->animal->queryParam(Constants::GET_ANIMAL, ['id' => $id])[0];
+            $data = $this->animal->queryParam(Constants::GET_ANIMAL, ['id' => $id]);
+            if ($data == null) {
+                $data = $this->animal->queryParam(Constants::GET_ANIMAL2, ['id' => $id]);
+            }
+            $data = $data[0];
             // Obtenemos todas las especies     
             $data_especies = $this->especie->get_all("especies");
 
@@ -217,7 +260,11 @@ class AnimalC
             if (isset($_FILES['imgs'])) {
                 // $this->animal->save_multiple_imgs($result, $_FILES['imgs'], Constants::INSERT_ANIMALES_PHOTOS);
                 $data_imgs = $this->imgM->addImgs($result, $_FILES['imgs']);
-                (!$data_imgs) ?? $this->setMsg(Constants::ADD_IMG_ERROR);
+
+                if (!$data_imgs) {
+                    $this->setMsg(Constants::ADD_IMG_ERROR);
+                    $this->index();
+                }
             }
 
             // Si algo ha ido mal, guardamos mensaje y mostramos la página de Animales
@@ -230,13 +277,13 @@ class AnimalC
 
     public function animal_imgs()
     {
-        if (isset($_POST['action_img']) && isset($_POST['id'])) {
-            $action_img = $_POST['action_img'];
-            $id_animal = $_POST['id'];
+        if (isset($_REQUEST['action_img']) && isset($_REQUEST['id'])) {
+            $action_img = $_REQUEST['action_img'];
+            $id_animal = $_REQUEST['id'];
             switch ($action_img) {
                 case "get":
                     echo json_encode($this->imgM->getImgs($id_animal));
-                    break;                    
+                    break;
                 case "get_one":
                     echo json_encode($this->imgM->getImg($id_animal)); // aunque ponga id_animal es el id de la foto
                     break;
@@ -378,6 +425,10 @@ class AnimalC
             // anterior
             echo (($jaulas == null) ? null : json_encode($jaulas));
         }
+    }
+
+    public function search_animal_modal(){
+        echo json_encode($this->animal->query(Constants::GET_ANIMAL_MODAL));
     }
 
     public function filter_data()
@@ -559,5 +610,4 @@ if (!empty($_POST["page"])) {
 if (!empty($_POST["amount"])) {
     $animal->setAmount($_POST["amount"]);
 }
-
 $animal->run($action);

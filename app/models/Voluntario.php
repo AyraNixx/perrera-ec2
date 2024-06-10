@@ -1,7 +1,12 @@
 <?php
 
+namespace model;
+
 use \model\Model;
 use \utils\Utils;
+use \PDO;
+use \PDOException;
+use \Exception;
 
 require_once "Model.php";
 
@@ -27,27 +32,38 @@ class Voluntario extends Model
     {
         try {
             // Consulta
-            $query = "INSERT INTO voluntarios (nombre, apellidos, fech_nac, NIF, correo, telf, 
-            experiencia_previa, disponibilidad, informacion_relevante) VALUE(:nombre, :apellidos, :fech_nac, :NIF, :correo, :telf, 
-            :experiencia_previa, :disponibilidad, :informacion_relevante)";
+            $query = "INSERT INTO voluntarios (nombre, apellidos, fech_nac, NIF, correo, telf, disponibilidad, experiencia_previa, 
+            comentarios, fecha_inicio, fecha_fin, informacion_relevante) 
+            VALUES (:nombre, :apellidos, :fech_nac, :NIF, :correo, :telf, :disponibilidad, :experiencia_previa, :comentarios, 
+            :fecha_inicio, :fecha_fin, :informacion_relevante)";
 
             //Preparamos la query
             $stm = $this->conBD->prepare($query);
 
+            // Vinculamos los parámetros
             $stm->bindParam(":nombre", $voluntario["nombre"], PDO::PARAM_STR);
             $stm->bindParam(":apellidos", $voluntario["apellidos"], PDO::PARAM_STR);
             $stm->bindParam(":fech_nac", $voluntario["fech_nac"], PDO::PARAM_STR);
             $stm->bindParam(":NIF", $voluntario["NIF"], PDO::PARAM_STR);
             $stm->bindParam(":correo", $voluntario["correo"], PDO::PARAM_STR);
             $stm->bindParam(":telf", $voluntario["telf"], PDO::PARAM_STR);
-            $stm->bindParam(":experiencia_previa", $voluntario["experiencia_previa"], PDO::PARAM_BOOL);
-            $stm->bindParam(":disponibilidad", $voluntario["disponibilidad"], PDO::PARAM_BOOL);
+            $stm->bindParam(":disponibilidad", $voluntario["disponibilidad"], PDO::PARAM_INT);
+            $stm->bindParam(":experiencia_previa", $voluntario["experiencia_previa"], PDO::PARAM_INT);
+            $stm->bindParam(":comentarios", $voluntario["comentarios"], PDO::PARAM_STR);
+            $stm->bindParam(":fecha_inicio", $voluntario["fecha_inicio"], PDO::PARAM_STR);
+            $stm->bindParam(":fecha_fin", $voluntario["fecha_fin"], PDO::PARAM_STR);
             $stm->bindParam(":informacion_relevante", $voluntario["informacion_relevante"], PDO::PARAM_STR);
-
             // Ejecutamos la query           
-            // Devolvemos resultados
-            return $stm->execute();
-            // En caso de excepción, lo guardamos en el log
+
+            // Devolvemos resultados 
+            if ($stm->execute()) {
+                $query = "SELECT id FROM perrera.voluntarios ORDER BY id DESC LIMIT 1";
+                $stm = $this->conBD->prepare($query);
+                $stm->execute();
+                return $stm->fetch()['id'];
+            } else {
+                return false;
+            }
         } catch (PDOException $e) {
             echo "todo mal";
             // Guardamos el error en el log

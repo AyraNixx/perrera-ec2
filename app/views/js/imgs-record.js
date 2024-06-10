@@ -55,16 +55,6 @@ $(document).ready(function () {
     });
   }
 
-  // function getParameterByName(name) {
-  //   let url = window.location.href;
-  //   let regex = new RegExp(
-  //     "[?&]" + name.replace(/[\[\]]/g, "\\$&") + "(=([^&#]*)|&|#|$)"
-  //   );
-  //   let results = regex.exec(url);
-  //   if (!results) return null;
-  //   return decodeURIComponent(results[2].replace(/\+/g, " "));
-  // }
-
   function delete_img(e) {
     e.preventDefault();
     let id = $(this).attr("data-id");
@@ -105,7 +95,6 @@ $(document).ready(function () {
       data,
       dataType: "json",
       success: function (res) {
-        console.log(res);
         if ((res && Array.isArray(res) && res.length > 0) || res.res === true) {
           if (data.action_img === "get_one") {
             let modal_text = `<row>
@@ -194,7 +183,6 @@ $(document).ready(function () {
   }
 
   function handle_tab_click(e) {
-    console.log('entramos');
     if (!$(this).hasClass("active")) {
       let data = { id, action: "record_imgs", action_img: "get" };
       console.log('data: ', data);
@@ -210,7 +198,6 @@ $(document).ready(function () {
       data,
       dataType: "json",
       success: function (res) {
-        console.log('res', res);
         if ((res && Array.isArray(res) && res.length > 0) || res.res === true) {
           if (data.action_img === "get") {
             show_imgs(res);
@@ -234,7 +221,7 @@ $(document).ready(function () {
         }
       },
       error: function (xhr, status, error) {
-        console.error("Error al obtener los datos - imgs:", error);
+        console.error("Error al obtener los datos - imgs:", xhr.responseText);
       },
     });
   }

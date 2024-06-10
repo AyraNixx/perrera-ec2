@@ -1,7 +1,12 @@
 <?php
 
+namespace model;
+
 use \model\Model;
 use \utils\Utils;
+use \PDO;
+use \PDOException;
+use \Exception;
 
 require_once "Model.php";
 /*
@@ -41,59 +46,50 @@ class Adoptante extends Model
     {
         try {
             // Consulta
-            $query = "INSERT INTO adoptante (
-            nombre,
-            apellidos,
-            fecha_nacimiento,
-            NIF,
-            correo,
-            telf,
-            direccion,
-            preferencia_adopcion,
-            animales_id,
-            estado_solicitud,
-            fecha_solicitud,
-            tiempo_espera,
-            estado_adopcion,
-            fecha_adopcion)
-
-            VALUE(:nombre,
-            :apellidos,
-            :fecha_nacimiento,
-            :NIF,
-            :correo,
-            :telf,            
-            :direccion,
-            :preferencia_adopcion,
-            :animales_id,
-            :estado_solicitud,
-            :fecha_solicitud,
-            :tiempo_espera,
-            :estado_adopcion,
-            :fecha_adopcion)";
+        $query = "INSERT INTO adoptante ( nombre, apellidos, fech_nac, NIF, correo, telf, direccion, ciudad, codigo_postal,
+            pais, ocupacion, tipo_vivienda, tiene_jardin, preferencia_adopcion, otra_mascota, tipo_otra_mascota, estado_solicitud, fecha_solicitud,
+            tiempo_espera, estado_adopcion, fecha_adopcion, comentarios, animales_id)
+            VALUES ( :nombre, :apellidos, :fech_nac, :NIF, :correo, :telf, :direccion, :ciudad, :codigo_postal,
+            :pais, :ocupacion, :tipo_vivienda, :tiene_jardin, :preferencia_adopcion, :otra_mascota, :tipo_otra_mascota, :estado_solicitud, :fecha_solicitud,
+            :tiempo_espera, :estado_adopcion, :fecha_adopcion, :comentarios, :animales_id)";
 
             //Preparamos la query
             $stm = $this->conBD->prepare($query);
 
             $stm->bindParam(":nombre", $adoptante["nombre"], PDO::PARAM_STR);
             $stm->bindParam(":apellidos", $adoptante["apellidos"], PDO::PARAM_STR);
-            $stm->bindParam(":fecha_nacimiento", $adoptante["fecha_nacimiento"], PDO::PARAM_STR);
+            $stm->bindParam(":fech_nac", $adoptante["fech_nac"], PDO::PARAM_STR);
             $stm->bindParam(":NIF", $adoptante["NIF"], PDO::PARAM_STR);
             $stm->bindParam(":correo", $adoptante["correo"], PDO::PARAM_STR);
             $stm->bindParam(":telf", $adoptante["telf"], PDO::PARAM_STR);
             $stm->bindParam(":direccion", $adoptante["direccion"], PDO::PARAM_STR);
-            $stm->bindParam(":preferencia_adopcion", $adoptante["preferencia_adopcion"], PDO::PARAM_BOOL);
-            $stm->bindParam(":animales_id", $adoptante["animales_id"], PDO::PARAM_INT);
-            $stm->bindParam(":estado_solicitud", $adoptante["estado_solicitud"], PDO::PARAM_INT);
+            $stm->bindParam(":ciudad", $adoptante["ciudad"], PDO::PARAM_STR);
+            $stm->bindParam(":codigo_postal", $adoptante["codigo_postal"], PDO::PARAM_STR);
+            $stm->bindParam(":pais", $adoptante["pais"], PDO::PARAM_STR);
+            $stm->bindParam(":ocupacion", $adoptante["ocupacion"], PDO::PARAM_STR);
+            $stm->bindParam(":tipo_vivienda", $adoptante["tipo_vivienda"], PDO::PARAM_STR);
+            $stm->bindParam(":tiene_jardin", $adoptante["tiene_jardin"], PDO::PARAM_BOOL);
+            $stm->bindParam(":preferencia_adopcion", $adoptante["preferencia_adopcion"], PDO::PARAM_STR);
+            $stm->bindParam(":otra_mascota", $adoptante["otra_mascota"], PDO::PARAM_BOOL);
+            $stm->bindParam(":tipo_otra_mascota", $adoptante["tipo_otra_mascota"], PDO::PARAM_STR);
+            $stm->bindParam(":estado_solicitud", $adoptante["estado_solicitud"], PDO::PARAM_STR);
             $stm->bindParam(":fecha_solicitud", $adoptante["fecha_solicitud"], PDO::PARAM_STR);
             $stm->bindParam(":tiempo_espera", $adoptante["tiempo_espera"], PDO::PARAM_INT);
-            $stm->bindParam(":estado_adopcion", $adoptante["estado_adopcion"], PDO::PARAM_INT);
+            $stm->bindParam(":estado_adopcion", $adoptante["estado_adopcion"], PDO::PARAM_STR);
             $stm->bindParam(":fecha_adopcion", $adoptante["fecha_adopcion"], PDO::PARAM_STR);
-
+            $stm->bindParam(":comentarios", $adoptante["comentarios"], PDO::PARAM_STR);
+            $stm->bindParam(":animales_id", $adoptante["animales_id"], PDO::PARAM_STR);
+    
             // Ejecutamos la query           
-            // Devolvemos resultados
-            return $stm->execute();
-            // En caso de excepción, lo guardamos en el log
+            // Devolvemos resultados 
+            if($stm->execute()){
+                $query = "SELECT id FROM perrera.adoptante ORDER BY id DESC LIMIT 1";
+                $stm = $this->conBD->prepare($query);
+                $stm->execute();
+                return $stm->fetch()['id'];
+            }else{
+                return false;
+            }
         } catch (PDOException $e) {
             echo "todo mal";
             // Guardamos el error en el log

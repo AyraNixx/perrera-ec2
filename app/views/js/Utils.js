@@ -1,3 +1,85 @@
+$(document).ready(function () {
+  if ($('select[name="ocupacion"]').length) {
+    let ocupacion_text = '';
+    if ($('input[name="ocupacion_text"]').length) {
+      ocupacion_text = $('input[name="ocupacion_text"]').val();
+    }
+    $.getJSON("../views/js/Utils.json", function (data) {
+      $.each(data.ocupaciones, function (k, v) { 
+        let option = $('<option></option>').attr('value', v.value).text(v.text);
+        if(ocupacion_text != '' && v.text == ocupacion_text){
+          option.prop('selected', true);
+        }
+        $('select[name="ocupacion"]').append(option);
+      });
+    });
+  }
+
+  if ($('select[name="pais"]').length) {
+    let pais_text = '';
+    if ($('input[name="pais_text"]').length) {
+      pais_text = $('input[name="pais_text"]').val();
+    }
+    $.getJSON("../views/js/Utils.json", function (data) {
+      $.each(data.paises, function (k, v) { 
+        let option = $('<option></option>').attr('value', v.value).text(v.text);
+        if(pais_text != '' && v.text == pais_text){
+          option.prop('selected', true);
+        }
+        $('select[name="pais"]').append(option);
+      });
+    });
+  }
+  
+  if ($('select[name="estado_solicitud"]').length) {
+    let estado_solicitud_text = '';
+    if ($('input[name="estado_solicitud_text"]').length) {
+      estado_solicitud_text = $('input[name="estado_solicitud_text"]').val();
+    }
+    $.getJSON("../views/js/Utils.json", function (data) {
+      $.each(data.estado_solicitud, function (k, v) { 
+        let option = $('<option></option>').attr('value', v.estado).text(v.estado);
+        if(estado_solicitud != '' && v.estado == estado_solicitud){
+          option.prop('selected', true);
+        }
+        $('select[name="estado_solicitud"]').append(option);
+      });
+    });
+  }
+
+  if ($('select[name="estado_adopcion"]').length) {
+    let estado_adopcion_text = '';
+    if ($('input[name="estado_adopcion_text"]').length) {
+      estado_adopcion_text = $('input[name="estado_adopcion_text"]').val();
+    }
+    $.getJSON("../views/js/Utils.json", function (data) {
+      $.each(data.estado_solicitud, function (k, v) { 
+        let option = $('<option></option>').attr('value', v.estado).text(v.estado);
+        if(estado_adopcion != '' && v.estado == estado_adopcion){
+          option.prop('selected', true);
+        }
+        $('select[name="estado_adopcion"]').append(option);
+      });
+    });
+  }
+
+  if ($('select[name="tipo_vivienda"]').length) {
+    let tipo_vivienda_text = '';
+    if ($('input[name="tipo_vivienda_text"]').length) {
+      tipo_vivienda_text = $('input[name="tipo_vivienda_text"]').val();
+    }
+    $.getJSON("../views/js/Utils.json", function (data) {
+      $.each(data.tipos_vivienda, function (k, v) { 
+        let option = $('<option></option>').attr('value', v.value).text(v.text);
+        if(tipo_vivienda_text != '' && v.text == tipo_vivienda_text){
+          option.prop('selected', true);
+        }
+        $('select[name="tipo_vivienda"]').append(option);
+      });
+    });
+  }
+});
+
 //------------------------------     DROPDOWN BUTTON    ------------------------------
 //
 //
@@ -72,7 +154,7 @@ let email_val = $("p.hide-str[input_type=email]").text(); // Guardar el valor de
 let tlf_val = $("p.hide-str[input_type=tlf]").text(); // Guardar el valor del telefono
 let name_val = $("#name").val();
 let lname_val = $("#lname").val();
-let fechnac_val = $("#fechnac").val(); // Guardar el valor del telefono
+let fechnac_val = $("#fech_nac").val(); // Guardar el valor del telefono
 
 $(".show-text").on("click", function (event) {
   // Funcion para mostrar cadenas "ocultas"

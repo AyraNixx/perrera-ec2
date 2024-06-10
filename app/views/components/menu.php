@@ -32,26 +32,25 @@
                     <summary>
                         <h5>Usuarios</h5>
                     </summary>
-                    <a href="#">Empleados</a><br />
-                    <a href="#">Voluntarios</a><br />
-                    <a href="#">Perfiles</a>
+                    <a href="../../app/controllers/EmpleadoC.php">Empleados</a><br />
+                    <a href="../../app/controllers/RolC.php">Perfiles</a>
+                </details>
+
+                <details>
+                    <summary>
+                        <h5>Tareas</h5>
+                    </summary>
+                    <a href="../../app/controllers/EmpleadoC.php">Tareas</a><br />
                 </details>
 
                 <details>
                     <summary>
                         <h5>Personas</h5>
                     </summary>
-                    <a href="#">Dueños</a>
-                    <a href="#">Adoptantes</a>
-                    <a href="#">Veterinarios</a>
-                </details>
-
-                <details>
-                    <summary>
-                        <h5>Suministros</h5>
-                    </summary>
-                    <a href="#">Almacén</a><br />
-                    <a href="#">Proveedores</a><br />
+                    <a href="../../app/controllers/VeterinarioC.php">Veterinarios</a>
+                    <a href="../../app/controllers/VoluntarioC.php">Voluntarios</a><br />
+                    <a href="../../app/controllers/AdoptanteC.php">Adoptantes</a>
+                    <a href="../../app/controllers/DuenioC.php">Dueños</a>
                 </details>
             </div>
 

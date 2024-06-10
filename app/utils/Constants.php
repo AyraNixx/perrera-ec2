@@ -7,57 +7,87 @@ class Constants
     const UPDT_EMAIL_SELECT = 'UPDATE perrera.empleados SET correo = :new_email WHERE id = :id LIMIT 1';
     const UPDT_TLF_SELECT = 'UPDATE perrera.empleados SET telf = :new_tlf WHERE id = :id LIMIT 1';
     const UPDT_REST_PSSWD_VALUE_SELECT = 'UPDATE perrera.empleados SET reset_token_psswd_hash = :reset_token_psswd_hash, t_reset_token_psswd_expires_at = :t_reset_token_psswd_expires_at WHERE id = :id';
-    const UPDT_PROFILE_SELECT = 'UPDATE perrera.empleados SET nombre = :name, apellidos = :surname, fechnac = :fechnac WHERE id = :id';
+    const UPDT_PROFILE_SELECT = 'UPDATE perrera.empleados SET nombre = :name, apellidos = :surname, fech_nac = :fech_nac WHERE id = :id';
     const UPDT_REST_EMAIL_VALUE_SELECT = 'UPDATE perrera.empleados SET reset_token_email_hash = :reset_token_email_hash, t_reset_token_email_expires_at = :t_reset_token_email_expires_at WHERE id = :id';
     const UPDT_IMG = 'UPDATE perrera.imgs SET ruta = :ruta, nombre = :nombre, tipo = :tipo, tamanio = :tamanio WHERE id = :id LIMIT 1';
-    const GET_USER_TOKEN_PSSWD_SELECT = 'SELECT * FROM perrera.empleados WHERE reset_token_psswd_hash = :reset_token';
-    const GET_USER_TOKEN_EMAIL_SELECT = 'SELECT * FROM perrera.empleados WHERE reset_token_email_hash = :reset_token';
-    const GET_ROWS_SEARCH = 'SELECT * FROM :name_table WHERE ';
-    const GET_ANIMAL = "SELECT a.id, a.nombre, a.especies_id, a.raza, a.genero, a.tamanio, a.peso, a.colores, a.personalidad, a.fech_nac, a.estado_adopcion, a.estado_salud, a.necesidades_especiales, a.otras_observaciones, a.jaulas_id, e.nombre as especie, j.ubicacion as jaula, j.id as jaula_id, GROUP_CONCAT(i.id SEPARATOR ',') as img_ids, GROUP_CONCAT(i.id_animal SEPARATOR ',') as img_id_animals, GROUP_CONCAT(i.ruta SEPARATOR ',') as img_paths, GROUP_CONCAT(i.disponible SEPARATOR ',') as img_actives FROM perrera.animales a JOIN perrera.especies e ON a.especies_id = e.id JOIN perrera.jaulas j ON a.jaulas_id = j.id LEFT JOIN perrera.imgs i ON a.id = i.id_animal WHERE a.id = :id GROUP BY a.id, a.nombre, a.especies_id, a.raza, a.genero, a.tamanio, a.peso, a.colores, a.personalidad, a.fech_nac, a.estado_adopcion, a.estado_salud, a.necesidades_especiales, a.otras_observaciones, a.jaulas_id, e.nombre, j.ubicacion";
-    const GET_IMGS_ANIMAL = "SELECT * FROM perrera.imgs WHERE id_animal = :id_animal";
+
+    
+    // UNDELETES
     const UPDT_UNDELETE_ANIMALES = 'UPDATE perrera.animales SET disponible = 1 WHERE id = :id LIMIT 1';    
     const UPDT_UNDELETE_ROLES = 'UPDATE perrera.roles SET disponible = 1 WHERE id = :id LIMIT 1';  
     const UPDT_UNDELETE_JAULAS = 'UPDATE perrera.jaulas SET disponible = 1 WHERE id = :id LIMIT 1'; 
     const UPDT_UNDELETE_ESPECIES = 'UPDATE perrera.especies SET disponible = 1 WHERE id = :id LIMIT 1'; 
     const UPDT_UNDELETE_EMPLEADOS = 'UPDATE perrera.empleados SET disponible = 1 WHERE id = :id LIMIT 1'; 
-    const UPDT_UNDELETE_ADOPTANTES = 'UPDATE perrera.adoptantes SET disponible = 1 WHERE id = :id LIMIT 1'; 
+    const UPDT_UNDELETE_ADOPTANTES = 'UPDATE perrera.adoptante SET disponible = 1 WHERE id = :id LIMIT 1'; 
     const UPDT_UNDELETE_VETERINARIOS = 'UPDATE perrera.veterinarios SET disponible = 1 WHERE id = :id LIMIT 1';  
     const UPDT_UNDELETE_DUENIOS = 'UPDATE perrera.duenios SET disponible = 1 WHERE id = :id LIMIT 1';
     const UPDT_UNDELETE_VOLUNTARIOS = 'UPDATE perrera.voluntarios SET disponible = 1 WHERE id = :id LIMIT 1';
     const UPDT_UNDELETE_TAREAS = 'UPDATE perrera.tareas SET disponible = 1 WHERE id = :id LIMIT 1';
-    const INSERT_ANIMALES_PHOTOS = 'INSERT INTO perrera.imgs (id_animal, nombre, tipo, tamanio, ruta) VALUES ';
+    
+    // INSERTS
+    const INSERT_ANIMALES_PHOTOS = 'INSERT INTO perrera.imgs (animales_id, nombre, tipo, tamanio, ruta) VALUES ';
     const INSERT_EMPLEADOS_PHOTOS = 'INSERT INTO perrera.imgs (empleado_id, nombre, ruta) VALUES ';
     const SEARCH_ANIMALES_TABLE = 'SELECT a.*, e.nombre as nombre_especie, j.ubicacion as ubicacion FROM perrera.animales a JOIN perrera.especies e ON  a.especies_id = e.id JOIN perrera.jaulas j ON a.jaulas_id = j.id WHERE a.nombre LIKE :search_value OR a.raza LIKE :search_value OR e.nombre LIKE :search_value ORDER BY a.';
     const SEARCH_ANIMALES_TABLE_TOTAL_PAGES = 'SELECT a.Id FROM perrera.animales a JOIN perrera.especies e ON  a.especies_id = e.id JOIN perrera.jaulas j ON a.jaulas_id = j.id WHERE a.nombre LIKE :search_value OR a.raza LIKE :search_value OR e.nombre LIKE :search_value ORDER BY a.nombre';
     const SEARCH_ESPECIES_TABLE = 'SELECT id, nombre, descripcion, disponible FROM perrera.especies WHERE nombre LIKE :search_value OR descripcion LIKE :search_value ORDER BY ';
     const SEARCH_ROLES_TABLE = 'SELECT id, rol, descripcion, disponible FROM perrera.roles WHERE rol LIKE :search_value OR descripcion LIKE :search_value ORDER BY ';
     const SEARCH_VETERINARIOS_TABLE = 'SELECT * FROM perrera.veterinarios WHERE nombre LIKE :search_value OR apellidos LIKE :search_value OR correo LIKE :search_value OR especialidad LIKE :search_value OR nombre_clinica LIKE :search_value ORDER BY ';
+    const SEARCH_ADOPTANTES_TABLE = 'SELECT * FROM perrera.adoptante WHERE nombre LIKE :search_value OR apellidos LIKE :search_value OR NIF LIKE :search_value OR correo LIKE :search_value OR estado_solicitud LIKE :search_value ORDER BY ';
+    const SEARCH_VOLUNTARIOS_TABLE = 'SELECT * FROM perrera.voluntarios WHERE nombre LIKE :search_value OR apellidos LIKE :search_value OR NIF LIKE :search_value OR correo LIKE :search_value OR telf LIKE :search_value ORDER BY ';
     const SEARCH_JAULAS_TABLE = 'SELECT j.*, e.nombre as nombre_especie FROM perrera.jaulas j JOIN perrera.especies e ON j.especies_id = e.id WHERE j.nombre LIKE :search_value OR j.descripcion LIKE :search_value OR e.nombre LIKE :search_value ORDER BY j.';
     const SEARCH_ESPECIES_TABLE_TOTAL_PAGES = 'SELECT Id FROM perrera.especies WHERE nombre LIKE :search_value OR descripcion LIKE :search_value ORDER BY nombre ';
     const SEARCH_ROLES_TABLE_TOTAL_PAGES = 'SELECT Id FROM perrera.roles WHERE rol LIKE :search_value OR descripcion LIKE :search_value ORDER BY rol ';
     const SEARCH_JAULAS_TABLE_TOTAL_PAGES = 'SELECT j.Id FROM perrera.jaulas j JOIN perrera.especies e ON j.especies_id = e.id WHERE j.nombre LIKE :search_value OR j.descripcion LIKE :search_value OR e.nombre LIKE :search_value ORDER BY j.ubicacion ';
     const SEARCH_VETERINARIOS_TABLE_TOTAL_PAGES = 'SELECT Id FROM perrera.veterinarios WHERE nombre LIKE :search_value OR apellidos LIKE :search_value OR correo LIKE :search_value OR especialidad LIKE :search_value OR nombre_clinica LIKE :search_value ORDER BY nombre';
-    const DELETE_IMG_QUERY = 'DELETE FROM perrera.imgs WHERE Id = :id';
-    const DELETE_IMGS_ANIMAL_QUERY = 'DELETE FROM perrera.imgs WHERE id_animal = :id';
-    const GET_IMGS_ANIMAL_QUERY = 'SELECT * FROM perrera.imgs WHERE id_animal = :id';
+    const SEARCH_ADOPTANTES_TABLE_TOTAL_PAGES = 'SELECT Id FROM perrera.adoptante WHERE nombre LIKE :search_value OR apellidos LIKE :search_value OR NIF LIKE :search_value OR correo LIKE :search_value OR estado_solicitud LIKE :search_value ORDER BY';
+    const SEARCH_VOLUNTARIOS_TABLE_TOTAL_PAGES = 'SELECT Id FROM perrera.voluntarios WHERE nombre LIKE :search_value OR apellidos LIKE :search_value OR NIF LIKE :search_value OR correo LIKE :search_value OR telf LIKE :search_value ORDER BY nombre';
+    
+    // GETTERS
+    const GET_IMGS_ANIMAL_QUERY = 'SELECT * FROM perrera.imgs WHERE animales_id = :id';
     const GET_IMGS_EMPLOYEE_QUERY = 'SELECT * FROM perrera.imgs WHERE id_empleado = :id';
-    const GET_IMG_QUERY = 'SELECT * FROM perrera.imgs WHERE id = :id';
+    const GET_IMG_QUERY = 'SELECT * FROM perrera.imgs WHERE id = :id LIMIT 1';
     const GET_ESPECIES = 'SELECT * FROM perrera.especies WHERE disponible = 1';
+    const GET_VETERINARIOS = 'SELECT * FROM perrera.veterinarios WHERE disponible = 1';
+    const GET_JAULAS = 'SELECT * FROM perrera.jaulas WHERE disponible = 1';
+    const GET_VOLUNTARIOS = 'SELECT * FROM perrera.voluntarios WHERE disponible = 1';
     const GET_ROLES = 'SELECT * FROM perrera.roles WHERE disponible = 1';
     const GET_JAULAS_BY_ESPECIE_AVAILABLE = 'SELECT j.*, e.id as especie_id, e.nombre as nombre_especie FROM perrera.jaulas j JOIN perrera.especies e ON j.especies_id = e.id WHERE j.especies_id = :id AND j.disponible = 1 AND (((SELECT (j.tamanio - COUNT(a.id)) FROM perrera.animales a WHERE a.jaulas_id = j.id) > 0 ) OR (j.id = :jaula_id))';
     const GET_LAST_JAULA_NUMBER = 'SELECT LPAD(MAX(SUBSTRING_INDEX(ubicacion, "-", -1)) + 1, 2, "0") AS ultimo_num FROM perrera.jaulas WHERE LEFT(ubicacion, 1) = :letter_cage';
     const GET_ESPECIE = 'SELECT * FROM perrera.especies WHERE id = :id';
     const GET_ROL = 'SELECT * FROM perrera.roles WHERE id = :id';
+    const GET_VOLUNTARIO = 'SELECT * FROM perrera.voluntarios WHERE id = :id';
+    const GET_ADOPTANTE = 'SELECT * FROM perrera.adoptante WHERE id = :id';
+    const GET_DUENIO = 'SELECT * FROM perrera.duenios WHERE id = :id';
     const GET_JAULA = 'SELECT j.*, e.nombre as nombre_especie FROM perrera.jaulas j JOIN perrera.especies e ON j.especies_id = e.id WHERE j.id = :id';
-    const GET_VETERINARIO = 'SELECT * FROM perrera.veterinarios WHERE id = :id';
+    const GET_VETERINARIO = 'SELECT * FROM perrera.veterinarios WHERE id = :id';    const GET_USER_TOKEN_PSSWD_SELECT = 'SELECT * FROM perrera.empleados WHERE reset_token_psswd_hash = :reset_token';
+    const GET_USER_TOKEN_EMAIL_SELECT = 'SELECT * FROM perrera.empleados WHERE reset_token_email_hash = :reset_token';
+    const GET_ROWS_SEARCH = 'SELECT * FROM :name_table WHERE ';
+    const GET_ANIMAL = "SELECT a.id, a.nombre, a.especies_id, a.raza, a.genero, a.tamanio, a.peso, a.colores, a.personalidad, a.fech_nac, a.estado_adopcion, a.estado_salud, a.necesidades_especiales, a.otras_observaciones, a.jaulas_id, e.nombre as especie, j.ubicacion as jaula, j.id as jaula_id, GROUP_CONCAT(i.id SEPARATOR ',') as img_ids, GROUP_CONCAT(i.animales_id SEPARATOR ',') as img_id_animals, GROUP_CONCAT(i.ruta SEPARATOR ',') as img_paths, GROUP_CONCAT(i.disponible SEPARATOR ',') as img_actives FROM perrera.animales a JOIN perrera.especies e ON a.especies_id = e.id JOIN perrera.jaulas j ON a.jaulas_id = j.id LEFT JOIN perrera.imgs i ON a.id = i.animales_id WHERE a.id = :id GROUP BY a.id, a.nombre, a.especies_id, a.raza, a.genero, a.tamanio, a.peso, a.colores, a.personalidad, a.fech_nac, a.estado_adopcion, a.estado_salud, a.necesidades_especiales, a.otras_observaciones, a.jaulas_id, e.nombre, j.ubicacion";
+    const GET_ANIMAL2 = "SELECT a.id, a.nombre, a.especies_id, a.raza, a.genero, a.tamanio, a.peso, a.colores, a.personalidad, a.fech_nac, a.estado_adopcion, a.estado_salud, a.necesidades_especiales, a.otras_observaciones, a.jaulas_id, e.nombre as especie, j.ubicacion as jaula, j.id as jaula_id FROM perrera.animales a JOIN perrera.especies e ON a.especies_id = e.id JOIN perrera.jaulas j ON a.jaulas_id = j.id WHERE a.id = :id";
+    const GET_ANIMAL_MODAL = "SELECT a.id, a.nombre, e.nombre as especie, j.ubicacion as jaula FROM perrera.animales a JOIN perrera.especies e ON a.especies_id = e.id JOIN perrera.jaulas j ON a.jaulas_id = j.id ORDER BY a.nombre";
+    const GET_IMGS_ANIMAL = "SELECT * FROM perrera.imgs WHERE animales_id = :id_animal";
+    
+    // UPDATES
     const UPDT_ESPECIE = 'UPDATE perrera.especies SET nombre = :nombre, descripcion = :descripcion WHERE id = :id';
     const UPDT_ROL = 'UPDATE perrera.roles SET rol = :rol, descripcion = :descripcion WHERE id = :id';
     const UPDT_JAULA = 'UPDATE perrera.jaulas SET ubicacion = :ubicacion, tamanio = :tamanio, ocupada = :ocupada, estado_comida = :estado_comida, estado_limpieza = :estado_limpieza, otros_comentarios = :otros_comentarios, descripcion = :descripcion, especies_id = :especies_id WHERE id = :id';
     const UPDT_VETERINARIO = 'UPDATE veterinarios SET nombre = :nombre, apellidos = :apellidos, correo = :correo, telf = :telf, direccion = :direccion, especialidad = :especialidad, nombre_clinica = :nombre_clinica, direccion_clinica = :direccion_clinica, telf_clinica = :telf_clinica, correo_clinica = :correo_clinica, hora_apertura = :hora_apertura, hora_cierre = :hora_cierre, otra_informacion = :otra_informacion WHERE id = :id;';
+    const UPDT_VOLUNTARIO = 'UPDATE voluntarios SET nombre = :nombre, apellidos = :apellidos, fech_nac = :fech_nac, NIF = :NIF, correo = :correo, telf = :telf, disponibilidad = :disponibilidad, experiencia_previa = :experiencia_previa, comentarios = :comentarios, fecha_inicio = :fecha_inicio, fecha_fin = :fecha_fin, informacion_relevante = :informacion_relevante WHERE id = :id;';
+    const UPDT_ADOPTANTE = 'UPDATE adoptante SET nombre = :nombre, apellidos = :apellidos, fech_nac = :fech_nac, NIF = :NIF, correo = :correo, telf = :telf, direccion = :direccion, ciudad = :ciudad, codigo_postal = :codigo_postal, pais = :pais, ocupacion = :ocupacion, tipo_vivienda = :tipo_vivienda, tiene_jardin = :tiene_jardin, preferencia_adopcion = :preferencia_adopcion, otra_mascota = :otra_mascota, tipo_otra_mascota = :tipo_otra_mascota, estado_solicitud = :estado_solicitud, fecha_solicitud = :fecha_solicitud, tiempo_espera = :tiempo_espera, estado_adopcion = :estado_adopcion, fecha_adopcion = :fecha_adopcion, comentarios = :comentarios, animales_id = :animales_id WHERE id = :id';
+    const UPDT_DUENIO = 'UPDATE duenios SET nombre = :nombre, apellidos = :apellidos, fech_nac = :fech_nac, NIF = :NIF, correo = :correo, telf = :telf, direccion = :direccion, ciudad = :ciudad, codigo_postal = :codigo_postal, pais = :pais, permiso_visita = :permiso_visita, fecha_ultima_visita = :fecha_ultima_visita, observaciones = :observaciones WHERE id = :id';
+
+    //  DELETES
     const DELETE_ESPECIE = 'UPDATE perrera.especies SET disponible = 0 WHERE id = :id';
     const DELETE_ROL = 'UPDATE perrera.roles SET disponible = 0 WHERE id = :id';
     const DELETE_JAULA = 'UPDATE perrera.jaulas SET disponible = 0 WHERE id = :id';
     const DELETE_VETERINARIO = 'UPDATE perrera.veterinarios SET disponible = 0 WHERE id = :id';
+    const DELETE_VOLUNTARIO = 'UPDATE perrera.jaulas SET disponible = 0 WHERE id = :id';
+    const DELETE_EMPLEADO = 'UPDATE perrera.jaulas SET disponible = 0 WHERE id = :id';
+    const DELETE_DUENIO = 'UPDATE perrera.jaulas SET disponible = 0 WHERE id = :id';
+    const DELETE_TAREA = 'UPDATE perrera.jaulas SET disponible = 0 WHERE id = :id';
+    const DELETE_ADOPTANTE = 'UPDATE perrera.jaulas SET disponible = 0 WHERE id = :id';
+    const DELETE_IMG_QUERY = 'DELETE FROM perrera.imgs WHERE Id = :id';
+    const DELETE_IMGS_ANIMAL_QUERY = 'DELETE FROM perrera.imgs WHERE animales_id = :id';
 
     // ACTIONS
     const UPDT_PROFILE_STR = 'CHANGE_PROFILE';
@@ -84,6 +114,10 @@ class Constants
     const VIEW_JAULA = '../views/V_JaulaVer.php';
     const VIEW_ROL = '../views/V_RolVer.php';
     const VIEW_VETERINARIO = '../views/V_VeterinarioVer.php';
+    const VIEW_VOLUNTARIO = '../views/V_VoluntarioVer.php';
+    const VIEW_DUENIO = '../views/V_DuenioVer.php';
+    const VIEW_ADOPTANTE = '../views/V_AdoptanteVer.php';
+    const VIEW_TAREA = '../views/V_TareaVer.php';
 
     // CONTROLLERS
     const CONTROLLER_SETTINGS = 'http://localhost/DES/perrera-ec2/app/controllers/SettingsC.php';

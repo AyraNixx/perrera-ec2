@@ -128,7 +128,8 @@ class Empleado extends Model
     }
 }
 
-// $empleado = new Empleado();
+$empleado = new Empleado();
 // var_dump($empleado->user_found($_SESSION['correo']));
 // var_dump($empleado->get_all("empleados"));
-// var_dump($empleado->insert(["nombre"=>"Prueba", "apellidos"=>"Apellido", "NIF"=>"12345678B", "correo" =>"correo@ejemplo.com", "passwd" => '$2y$10$R3df5klmB4465I67XRSaUuZT/FYme6cpyZL1v8fw6Zlr/cjMcc66O', "salt" => "12385753","telf"=>"123456789", "roles_id"=>"001100321890425372672"]));
+// var_dump(password_hash('paula123',PASSWORD_DEFAULT));
+// var_dump($empleado->insert(["nombre"=>"Prueba", "apellidos"=>"Apellido", "NIF"=>"12345678B", "correo" =>"thejokerjune@gmail.com", "passwd" => '$2y$10$yyYAn7DhMmkyArnf5a9jSOANF74Y/8k5kNbPEM34aTwGEPFXM3YMq', "salt" => "12385753","telf"=>"123456789", "roles_id"=>"001100879583489818908"]));

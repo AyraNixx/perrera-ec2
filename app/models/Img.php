@@ -25,7 +25,8 @@ class Img
     public function getImgs(String $id)
     {
         $query = ($this->table_name == Constants::ANIMAL_TABLE) ? Constants::GET_IMGS_ANIMAL_QUERY : Constants::GET_IMGS_EMPLOYEE_QUERY;
-        return $this->img->queryParam($query, ['id' => $id]);
+        $r = $this->img->queryParam($query, ['id' => $id]);
+        return $r;
     }
 
     public function getImg(String $id)
@@ -45,8 +46,11 @@ class Img
     }
 
     public function deleteImg(String $id) {
-        $url_img = $this->getImg($id);
-        Utils::delete_img($url_img['ruta']);
+        $url_imgs = $this->getImg($id);
+        if(!empty($url_imgs)){
+            $url_img = $url_imgs[0]; 
+            Utils::delete_img($url_img['ruta']);
+        }
         return $this->img->queryParam(Constants::DELETE_IMG_QUERY, ['id' => $id]);
     }
 

@@ -31,7 +31,8 @@
 
         <!-- CONTENEDOR PRINCIPAL -->
         <main class="mx-4 mt-5 mb-5">
-            <br />
+            <br /><button type="button" class="btn btn-primary" id="openModalBtn">Añadir Animal</button>
+
             <!-- Split dropup button -->
             <div class="mb-4 w-100 bg-secondary bg-opacity-75 " style="border-radius:5px;">
                 <div class="button-option-container d-flex justify-content-between align-content-center w-100 bg-primary p-3">
@@ -233,7 +234,6 @@
                 <br>
             </div>
         </main>
-
     </section>
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -245,6 +245,7 @@
     <script src="/DES/perrera-ec2/app/views/js/changeJaulaValues.js"></script>
     <script src="/DES/perrera-ec2/app/views/js/imgs-record.js"></script>
     <script src="/DES/perrera-ec2/app/views/js/btns-record-page.js"></script>
+
     <!-- 
         <script>
             $(document).ready(function() {

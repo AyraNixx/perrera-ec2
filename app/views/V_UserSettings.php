@@ -204,8 +204,8 @@
                                                     <h5 class="h5 pb-1 text-uppercase text-primary" style="font-size:.9rem">Fecha de Nacimiento</h5>
                                                 </div>
                                                 <div class="col-sm-12 col-md-9">
-                                                    <label for="fechnac" hidden></label>
-                                                    <input type="date" class="form-control px-3 border border-1 border-primary-subtle rounded bg-transparent" style="font-size: .8rem;" name="fechnac" id="fechnac" value="1900-01-01">
+                                                    <label for="fech_nac" hidden></label>
+                                                    <input type="date" class="form-control px-3 border border-1 border-primary-subtle rounded bg-transparent" style="font-size: .8rem;" name="fech_nac" id="fech_nac" value="1900-01-01">
                                                 </div>
                                             </div>
                                         </div>

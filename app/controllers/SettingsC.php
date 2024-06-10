@@ -64,7 +64,6 @@ class Settings
         $new_msg = $this->getMsg();
         $data = $this->data;
         $alert = $this->alert;
-
         require_once Constants::VIEW_PROFILE;
     }
 
@@ -147,7 +146,7 @@ class Settings
 
     private function updt_profile(){
         if(isset($_POST)){
-            $params = ["name" => $_POST["name"], "surname" => $_POST["lname"], "fechnac" => $_POST["fechnac"], "id" => $this->data["id"]];
+            $params = ["name" => $_POST["name"], "surname" => $_POST["lname"], "fech_nac" => $_POST["fech_nac"], "id" => $this->data["id"]];
         }
         $result = $this->empleado->queryParam(Constants::UPDT_PROFILE_SELECT, $params);
         if ($result == null) {
@@ -155,7 +154,7 @@ class Settings
         }
         $this->data['nombre'] = $_POST["name"];
         $this->data['apellidos'] = $_POST["lname"];
-        $this->data['fechnac'] = $_POST["fechnac"];
+        $this->data['fech_nac'] = $_POST["fech_nac"];
         $this->index();
     }
     
