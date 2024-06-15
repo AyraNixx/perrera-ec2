@@ -34,22 +34,6 @@
                         </button>
                     </div>
                 </th>
-                <th style="width:12em; z-index:301;">
-                    <div class="d-flex align-items-center justify-content-space-between">
-                        <span>Última visita</span>
-                        <button class="btn btn-link sort-btn p-0" data-field="fecha_ultima_visita" data-ord="asc">
-                            <i class="fas fa-sort"></i>
-                        </button>
-                    </div>
-                </th>
-                <th>
-                    <div class="d-flex align-items-center justify-content-space-between">
-                        <span style="width: max-content;">ELIMINADO</span>
-                        <button class="btn btn-link sort-btn p-0" data-field="disponible" data-ord="asc">
-                            <i class="fas fa-sort"></i>
-                        </button>
-                    </div>
-                </th>
 
                 <th class='text-center'></th>
                 <!-- <th class='text-center' colspan="2"></th> -->
@@ -64,15 +48,13 @@
             use utils\Constants;
 
             foreach ($data as $show_data) {
-                $url = "DuenioC.php"; //URL destino
+                $url = "EmpleadoC.php"; //URL destino
 
                 echo "<tr>";
                 echo "<td class='sticky-column' id='showRegister' value='" . $show_data["id"] . "'> <a href='?id=" . $show_data["id"] . "&action=show_register'>" . $show_data["nombre"] . "</a> </td>";;
                 echo "<td>" . $show_data["apellidos"] . "</td>";
                 echo "<td>" . $show_data["NIF"] . "</td>";
                 echo "<td>" . $show_data["correo"] . "</td>";
-                echo "<td>" . $show_data["fecha_ultima_visita"] . "</td>";
-                echo "<td>" . (($show_data["disponible"] == '0') ? 'SI' : 'NO') . "</td>";
                 echo "<td class='ps-4 pe-2'>";
             ?>
                 <div class="btn-group dropdown d-block" style="position:relative">
@@ -83,21 +65,14 @@
                     <div class="btn-dropdown-options w-auto position-absolute start-0">
                         <ul class="list-unstyled m-0">
                             <li>
-                            <a href=<?="../controllers/DuenioC.php?action=show_register&id=". $show_data["id"]?>>Ver</a>
+                            <a href=<?="../controllers/EmpleadoC.php?action=show_register&id=". $show_data["id"]?>>Ver</a>
                             </li>
                             <li>
-                            <a href=<?="../controllers/DuenioC.php?action=update_modal&id=". $show_data["id"]?>>Editar</a>
+                            <a href=<?="../controllers/EmpleadoC.php?action=update_modal&id=". $show_data["id"]?>>Editar</a>
                             </li>
                             <li>
-                                <a href=<?="../controllers/DuenioC.php?action=sdelete&id=". $show_data["id"]?>>Borrar</a>                                
-                            </li>                                                       
-                            <?php
-                                if($_SESSION["rol"] == Constants::ROL_ADMIN && $show_data["disponible"] == '0'){
-                            ?>
-                            <li>
-                                <a href=<?="../controllers/DuenioC.php?action=undelete&id=". $show_data["id"]?>>Recuperar registro</a>                                
+                                <a href=<?="../controllers/EmpleadoC.php?action=sdelete&id=". $show_data["id"]?>>Borrar</a>                                
                             </li>
-                            <?php } ?>
                         </ul>
                     </div>
                 </div>

@@ -439,6 +439,9 @@ header {
             color: $info;
             font-size: .85rem;
             overflow: inherit;
+            word-wrap: break-word;
+            word-break: break-all;
+            white-space: pre-line;
         }
     }
 

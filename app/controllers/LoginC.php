@@ -114,7 +114,7 @@ class LoginC
 
             // Comprobamos si se trata de una cuenta activa, si es una cuenta activa, habrá cambiado
             // la contraseña de default 
-            if ($data_user["passwd"] == "pato123") { 
+            if ($data_user["code"] != "" || $data_user["code"] != null) { 
                 $msg = self::USER_NOT_ACTIVATE;
                 // Mostramos la página de login
                 require_once(self::VIEW_NOT_ACTIVATE);
@@ -168,8 +168,6 @@ class LoginC
             Utils::save_log_error("Unexpected error caught: " . $e->getMessage());
         }
     }
-
-
 
     /**
      * Cierra la sesión

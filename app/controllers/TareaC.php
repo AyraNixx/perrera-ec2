@@ -161,7 +161,7 @@ class TareaC
         if (isset($_REQUEST['id'])) {
             $id = htmlspecialchars(trim($_REQUEST['id']), ENT_QUOTES, 'UTF-8');
             $result = $this->tarea->queryParam(Constants::DELETE_TAREA, ['id' => $id]);
-            $this->setMsg("Registro borrado con éxito.");
+            $this->setMsg(base64_encode("Registro borrado con éxito."));
             if ($result == false) {
                 $this->setMsg(Constants::ERROR_DELETE);
             }

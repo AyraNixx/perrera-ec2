@@ -284,8 +284,8 @@ CREATE TABLE IF NOT EXISTS `perrera`.`empleados` (
   `codigo_postal` VARCHAR(45) NOT NULL,
   `telf` VARCHAR(15) NOT NULL DEFAULT 'No especificado',
   `correo` VARCHAR(150) NOT NULL DEFAULT 'No especificado',
-  `passwd` VARCHAR(255) NOT NULL DEFAULT 'No especificado',
-  `salt` VARCHAR(40) NOT NULL DEFAULT 'No especificado',
+  `passwd` VARCHAR(255) NULL,
+  `code` VARCHAR(255) NULL,
   `reset_token_psswd_hash` VARCHAR(255) NULL,
   `t_reset_token_psswd_expires_at` DATETIME NULL,
   `reset_token_email_hash` VARCHAR(255) NULL,
@@ -307,28 +307,28 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `perrera`.`encargados_animales`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `perrera`.`encargados_animales` ;
+-- DROP TABLE IF EXISTS `perrera`.`encargados_animales` ;
 
-CREATE TABLE IF NOT EXISTS `perrera`.`encargados_animales` (
-  `animales_id` VARCHAR(22) NOT NULL,
-  `empleados_id` VARCHAR(22) NOT NULL,
-  `fecha_asignacion` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-  `fecha_desasignacion` TIMESTAMP NULL DEFAULT NULL,
-  `disponible` TINYINT(4) NOT NULL DEFAULT 1,
-  PRIMARY KEY (`animales_id`, `empleados_id`),
-  INDEX `fk_encargados_animales_empleados1_idx` (`empleados_id` ASC) ,
-  CONSTRAINT `fk_encargados_animales_animales1`
-    FOREIGN KEY (`animales_id`)
-    REFERENCES `perrera`.`animales` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE,
-  CONSTRAINT `fk_encargados_animales_empleados1`
-    FOREIGN KEY (`empleados_id`)
-    REFERENCES `perrera`.`empleados` (`id`)
-    ON DELETE CASCADE
-    ON UPDATE CASCADE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+-- CREATE TABLE IF NOT EXISTS `perrera`.`encargados_animales` (
+--   `animales_id` VARCHAR(22) NOT NULL,
+--   `empleados_id` VARCHAR(22) NOT NULL,
+  -- `fecha_asignacion` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+  -- `fecha_desasignacion` TIMESTAMP NULL DEFAULT NULL,
+  -- `disponible` TINYINT(4) NOT NULL DEFAULT 1,
+  -- PRIMARY KEY (`animales_id`, `empleados_id`),
+  -- INDEX `fk_encargados_animales_empleados1_idx` (`empleados_id` ASC) ,
+  -- CONSTRAINT `fk_encargados_animales_animales1`
+    -- FOREIGN KEY (`animales_id`)
+    -- REFERENCES `perrera`.`animales` (`id`)
+    -- ON DELETE CASCADE
+    -- ON UPDATE CASCADE,
+  -- CONSTRAINT `fk_encargados_animales_empleados1`
+    -- FOREIGN KEY (`empleados_id`)
+    -- REFERENCES `perrera`.`empleados` (`id`)
+    -- ON DELETE CASCADE
+    -- ON UPDATE CASCADE)
+-- ENGINE = InnoDB
+-- DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------

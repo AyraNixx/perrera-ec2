@@ -36,6 +36,7 @@ class Img
 
     public function addImgs(String $id, array $params)
     {
+        var_dump($params);
         $query = ($this->table_name == Constants::ANIMAL_TABLE) ? Constants::INSERT_ANIMALES_PHOTOS : Constants::INSERT_EMPLEADOS_PHOTOS;
         return $this->img->save_multiple_imgs($id, $params, $query);
     }

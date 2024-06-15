@@ -62,24 +62,37 @@ class Empleado extends Model
     public function insert(array $empleado)
     {
         try {
-            // Consulta
-            $query = "INSERT INTO empleados (nombre, apellidos, NIF, correo, passwd, salt, telf, roles_id) VALUE(:nombre, :apellidos, :NIF, :correo, :passwd, :salt, :telf, :roles_id)";
-
-            //Preparamos la query
-            $stm = $this->conBD->prepare($query);            
-
+            $query = "INSERT INTO empleados (nombre, apellidos, NIF, fech_nac, direccion, ciudad, pais, codigo_postal, telf, correo, passwd, code, roles_id) 
+            VALUES (:nombre, :apellidos, :NIF, :fech_nac, :direccion, :ciudad, :pais, :codigo_postal, :telf, :correo, :passwd, :code, :roles_id)";
+    
+            // Preparamos la query
+            $stm = $this->conBD->prepare($query);
+    
             $stm->bindParam(":nombre", $empleado["nombre"], PDO::PARAM_STR);
             $stm->bindParam(":apellidos", $empleado["apellidos"], PDO::PARAM_STR);
             $stm->bindParam(":NIF", $empleado["NIF"], PDO::PARAM_STR);
+            $stm->bindParam(":fech_nac", $empleado["fech_nac"], PDO::PARAM_STR);
+            $stm->bindParam(":direccion", $empleado["direccion"], PDO::PARAM_STR);
+            $stm->bindParam(":ciudad", $empleado["ciudad"], PDO::PARAM_STR);
+            $stm->bindParam(":pais", $empleado["pais"], PDO::PARAM_STR);
+            $stm->bindParam(":codigo_postal", $empleado["codigo_postal"], PDO::PARAM_STR);
+            $stm->bindParam(":telf", $empleado["telf"], PDO::PARAM_STR);
             $stm->bindParam(":correo", $empleado["correo"], PDO::PARAM_STR);
             $stm->bindParam(":passwd", $empleado["passwd"], PDO::PARAM_STR);
-            $stm->bindParam(":salt", $empleado["salt"], PDO::PARAM_STR);
-            $stm->bindParam(":telf", $empleado["telf"], PDO::PARAM_STR);
+            $stm->bindParam(":code", $empleado["code"], PDO::PARAM_STR);
             $stm->bindParam(":roles_id", $empleado["roles_id"], PDO::PARAM_STR);
-
-            // Ejecutamos la query           
-            // Devolvemos resultados
-            return $stm->execute();
+    
+            // Ejecutamos la query      
+            if($stm->execute()){
+                $query = "SELECT id FROM empleados ORDER BY id DESC LIMIT 1";
+                $stm = $this->conBD->prepare($query);
+                $stm->execute();
+    
+                $id = $stm->fetch()['id']; // Guardamos id
+                return $id;
+            } else {
+                return false;
+            }
             // En caso de excepción, lo guardamos en el log
         } catch (PDOException $e) {
             // Guardamos el error en el log
@@ -128,7 +141,7 @@ class Empleado extends Model
     }
 }
 
-$empleado = new Empleado();
+// $empleado = new Empleado();
 // var_dump($empleado->user_found($_SESSION['correo']));
 // var_dump($empleado->get_all("empleados"));
 // var_dump(password_hash('paula123',PASSWORD_DEFAULT));

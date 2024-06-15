@@ -532,7 +532,7 @@ class AnimalC
             $html_var .= "<td>" . $show_data["nombre_especie"] . "</td>";
             $html_var .= "<td>" . $show_data["raza"] . "</td>";
             $html_var .= "<td>" . $show_data["fech_nac"] . "</td>";
-            $html_var .= "<td>" . $show_data["estado_adopcion"] . "</td>";
+            $html_var .= "<td style='white-space:normal'>" . $show_data["estado_adopcion"] . "</td>";
             $html_var .= "<td>" . $show_data["ubicacion"] . "</td>";
             $html_var .= "<td>" . (($show_data["disponible"] == '0') ? 'SI' : 'NO') . "</td>";
             $html_var .= "<td class='ps-4 pe-2'>";

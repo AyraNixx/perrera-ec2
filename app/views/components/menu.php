@@ -1,6 +1,6 @@
-<section id="menu" class="bg-primary text-white pt-5" style="z-index:999;">
+<section id="menu" class="bg-primary text-white pt-5" style="z-index:400;">
     <div>
-        <div class="menu-container">
+        <div class="menu-container overflow-hidden">
             <div class="d-flex justify-content-end">
                 <button class="border-0 text-uppercase text-primary bg-secondary" type="button" id="close-btn">
                     Cerrar
@@ -16,7 +16,7 @@
             <hr>
 
             <!-- ENLANCES DEL MENÚ -->
-            <div class="menu-items mt-4 over">
+            <div class="menu-items mt-4">
 
                 <h5><a href="/app/controllers/C_Home.php" class="text-white">Inicio</a></h5>
 

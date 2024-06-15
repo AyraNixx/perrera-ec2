@@ -10,7 +10,7 @@
                         </button>
                     </div>
                 </th>
-                <th style="width:12em; z-index:301;">
+                <th style="width:fit-content; z-index:301;">
                     <div class="d-flex align-items-center justify-content-space-between">
                         <span>Apellidos</span>
                         <button class="btn btn-link sort-btn p-0" data-field="apellidos" data-ord="asc">
@@ -26,7 +26,7 @@
                         </button>
                     </div>
                 </th>
-                <th style="width:12em; z-index:301;">
+                <th style="width:fit-content; z-index:301;">
                     <div class="d-flex align-items-center justify-content-space-between">
                         <span>Email</span>
                         <button class="btn btn-link sort-btn p-0" data-field="correo" data-ord="asc">

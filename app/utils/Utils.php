@@ -114,10 +114,10 @@ class Utils
 
     public static function send_email(array $data) {
         // URL de la API
-        $url = '';//'.sendinblue.com/v3/smtp/email';  https://api
+        $url = 'https://api.sendinblue.com/v3/smtp/email'; 
 
         // API KEY
-        $apiKey = '';//
+        $apiKey = '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';
 
         // VARIABLES NECESARIAS PARA EL CORREO ELECTRÓNICO
         $subject = $data["subject"]; // ASUNTO
@@ -154,12 +154,14 @@ class Utils
         $result = json_decode($response, true);
     }
 
-    public static function content_email(array $data) {        
-        if ($data["subject"] == 1) {
+    public static function content_email(array $data) {     
+        var_dump($data);
+        $msg = '';
+        if ($data["subject"] == Constants::SEND_WELCOME_EMAIL_SUBJECT) {
             $msg = '<p class="message">Estimado ' . $data["name"] . ',</p>
                 <p class="message">Te damos la bienvenida a ¡Patas arriba! Esperamos que disfrutes de tu experiencia.</p>
                 <p class="message">Para comenzar en nuestra plataforma, necestiamos que verifiques tu cuenta mediante el código de acceso proporcionado:</p>
-                <span style="display:inline-block; width:100%; text-align:center; color:#426081; text-weight:bold; margin-top:25px;">PaTasARRiba2023</span>
+                <span style="display:inline-block; width:100%; text-align:center; color:#426081; text-weight:bold; margin-top:25px;">' . $data['code'] . '</span>
                 <p class="message">Por favor, ingresa este código en la plataforma para completar tu registro.</p>
                 <p class="message">¡Gracias por unirte a nosotros!</p>';
             } elseif ($data["subject"] == Constants::SEND_RESET_PSSWD_SUBJECT) {
@@ -310,7 +312,7 @@ class Utils
                 <div class="content">
                     ' . $msg .
                     ((isset($data["link"])) ? '<div class="button-container">
-                        <a href="' . $data["link"] . '" class="button"> Restablecer </a>
+                        <a href="' . $data["link"] . '" class="button">' . (($data["subject"] == Constants::SEND_WELCOME_EMAIL_SUBJECT) ? "ACTIVAR" : "RESTABLECER") . '</a>
                     </div>' : "")
                     . (($data["subject"] != null) ? "<i class='message fst-italic'>Por favor, ignora este mensaje si has realizado la acción.</i>" : "") .
                     '<p class="message">Atentamente, </p>
@@ -432,6 +434,17 @@ class Utils
             }
         }
         return false;
+    }
+
+
+    
+    /***********************************************************************
+     *                                                                     *
+     *                               GENERATE_CODE                         *
+     *                                                                     *
+     ***********************************************************************/
+    public static function generate_code(){
+        return bin2hex(random_bytes(6));
     }
 }
 

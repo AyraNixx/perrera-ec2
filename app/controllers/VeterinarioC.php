@@ -308,7 +308,6 @@ class VeterinarioC
             $html_var .= "<td class='sticky-column' id='showRegister' value='" . $show_data["id"] . "'> <a href='?id=" . $show_data["id"] . "&action=show_register'>" . $show_data["nombre"] . "</a> </td>";
             $html_var .= "<td>" . $show_data["apellidos"] . "</td>";
             $html_var .= "<td>" . $show_data["correo"] . "</td>";
-            $html_var .= "<td>" . $show_data["especialidad"] . "</td>";
             $html_var .= "<td>" . $show_data["nombre_clinica"] . "</td>";
             $html_var .= "<td>" . $show_data["hora_apertura"] . " - " . $show_data["hora_cierre"] . "</td>";
             $html_var .= "<td>" . (($show_data["disponible"] == '0') ? 'SI' : 'NO') . "</td>";

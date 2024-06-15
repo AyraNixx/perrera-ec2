@@ -256,7 +256,7 @@ class Model
             $offset = ($page - 1) * $amount;
 
             // Consulta
-            $query = "SELECT * FROM $table WHERE disponible = 1 ORDER BY $field $ord LIMIT :amount OFFSET :offset";            
+            $query = "SELECT * FROM $table WHERE disponible = 1 ORDER BY $field $ord LIMIT :amount OFFSET :offset";
             // Preparamos la consulta para su ejecución
             $statement = $this->conBD->prepare($query);
             // Vinculamos los parámetros al nombre de la variable especificada
@@ -382,27 +382,22 @@ class Model
 
     public function save_multiple_imgs(String $animal_id, array $files, String $query)
     {
-        $values = []; // Array para almacenar los valores de cada registro
-        $params = []; // Array para almacenar los parámetros de cada registro
-        $uploaded_files = []; // Array para almacenar las rutas de los archivos subidos
+        $values = [];
+        $params = [];
+        $uploaded_files = [];
         $result = false;
 
         try {
-            // Recorremos el array de files 
-            foreach ($files['name'] as $key => $filename) {
-                // Creamos un array asociativo para cada archivo individual
+            if (!is_array($files['name'])) {
                 $file = [
-                    'name' => $files['name'][$key],
-                    'type' => $files['type'][$key],
-                    'tmp_name' => $files['tmp_name'][$key],
-                    'error' => $files['error'][$key],
-                    'size' => $files['size'][$key]
+                    'name' => $files['name'],
+                    'type' => $files['type'],
+                    'tmp_name' => $files['tmp_name'],
+                    'error' => $files['error'],
+                    'size' => $files['size']
                 ];
-
-                // Llamamos a la función save_img para subir el archivo a la carpeta y guardamos la ruta que nos devuelve
                 $file_path = Utils::save_img($file);
 
-                // Si la subida ha ido bien, agregamos los valores y los parámetros para la consulta
                 if ($file_path !== false) {
                     // Creamos un array con los valores para cada registro
                     $values[] = '(?, ?, ?, ?, ?)';
@@ -412,27 +407,48 @@ class Model
                     $params[] = $file['type'];
                     $params[] = $file['size'];
                     $params[] = $file_path;
-                    // Añadimos la ruta a la lista de archivos subidos
                     $uploaded_files[] = $file_path;
+                }
+            } else {
+                // Recorremos el array de files 
+                foreach ($files['name'] as $key => $filename) {
+                    $file = [
+                        'name' => $files['name'][$key],
+                        'type' => $files['type'][$key],
+                        'tmp_name' => $files['tmp_name'][$key],
+                        'error' => $files['error'][$key],
+                        'size' => $files['size'][$key]
+                    ];
+
+                    // Llamamos a la función save_img para subir el archivo a la carpeta y guardamos la ruta que nos devuelve
+                    $file_path = Utils::save_img($file);
+
+                    // Si la subida ha ido bien, agregamos los valores y los parámetros para la consulta
+                    if ($file_path !== false) {
+                        // Creamos un array con los valores para cada registro
+                        $values[] = '(?, ?, ?, ?, ?)';
+                        // Guardamos en el array de parámetros los valores de cada registro
+                        $params[] = $animal_id;
+                        $params[] = $file['name'];
+                        $params[] = $file['type'];
+                        $params[] = $file['size'];
+                        $params[] = $file_path;
+                        // Añadimos la ruta a la lista de archivos subidos
+                        $uploaded_files[] = $file_path;
+                    }
                 }
             }
 
-            // Si se subieron archivos correctamente
             if (!empty($values)) {
-                // Concatenamos los valores de los registros para formar la parte VALUES de la consulta
                 $query_values = implode(', ', $values);
-                // Concatenamos la consulta con los valores de los registros
                 $query = $query . $query_values;
 
-                // Preparamos la consulta
                 $stmt = $this->conBD->prepare($query);
 
-                // Asignamos los parámetros usando marcadores de posición
                 for ($i = 0; $i < count($params); $i++) {
                     $stmt->bindParam($i + 1, $params[$i]);
                 }
 
-                // Ejecutamos la consulta
                 $result = $stmt->execute();
             }
         } catch (Exception $e) {
@@ -443,7 +459,8 @@ class Model
         return ($result) ? true : false;
     }
 
-    public function generatePaginationHTML($page, $amount, $total_pages){
+    public function generatePaginationHTML($page, $amount, $total_pages)
+    {
 
         $html = '<span class="register-amount w-auto text-uppercase p-0" style="letter-spacing: .1em; ">';
         $html .= 'Filas por página:';
@@ -485,7 +502,6 @@ class Model
 
         $html .= '</div>';
         return $html;
-        
     }
 
     // Obtiene el valor de post y si no existe, te devuelve el original

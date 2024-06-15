@@ -67,7 +67,7 @@
                 echo "<td>" . $show_data["nombre_especie"] . "</td>";
                 echo "<td>" . $show_data["raza"] . "</td>";
                 echo "<td>" . $show_data["fech_nac"] . "</td>";
-                echo "<td>" . $show_data["estado_adopcion"] . "</td>";
+                echo "<td style='white-space:normal'>" . $show_data["estado_adopcion"] . "</td>";
                 echo "<td>" . $show_data["ubicacion"] . "</td>";
                 echo "<td>" . (($show_data["disponible"] == '0') ? 'SI' : 'NO') . "</td>";
                 echo "<td class='ps-4 pe-2'>";

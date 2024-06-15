@@ -2,7 +2,7 @@
     <table id="list-container" class="table table-striped mb-0" style="vertical-align:middle">
         <thead>
             <tr>
-                <th style="width:12em; z-index:301;">
+                <th style="width:fit-content; z-index:301;">
                     <div class="d-flex align-items-center justify-content-space-between">
                         <span>Asunto</span>
                         <button class="btn btn-link sort-btn p-0" data-field="asunto" data-ord="asc">
@@ -56,7 +56,7 @@
                                 <a href=<?= "../controllers/TareaC.php?action=sdelete&id=" . $show_data["id"] ?>>Borrar</a>
                             </li>
                             <?php
-                            if ($_SESSION["asunto"] == Constants::ROL_ADMIN && $show_data["disponible"] == '0') {
+                            if ($_SESSION["rol"] == Constants::ROL_ADMIN && $show_data["disponible"] == '0') {
                             ?>
                                 <li>
                                     <a href=<?= "../controllers/TareaC.php?action=undelete&id=" . $show_data["id"] ?>>Recuperar registro</a>

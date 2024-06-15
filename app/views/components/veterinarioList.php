@@ -10,7 +10,7 @@
                         </button>
                     </div>
                 </th>
-                <th style="width:12em; z-index:301;">
+                <th style="width:fit-content; z-index:301;">
                     <div class="d-flex align-items-center justify-content-space-between">
                         <span>Apellidos</span>
                         <button class="btn btn-link sort-btn p-0" data-field="apellidos" data-ord="asc">
@@ -18,7 +18,7 @@
                         </button>
                     </div>
                 </th>
-                <th style="width:12em; z-index:301;">
+                <th style="width:fit-content; z-index:301;">
                     <div class="d-flex align-items-center justify-content-space-between">
                         <span>Email</span>
                         <button class="btn btn-link sort-btn p-0" data-field="correo" data-ord="asc">
@@ -26,15 +26,7 @@
                         </button>
                     </div>
                 </th>
-                <th style="width:12em; z-index:301;">
-                    <div class="d-flex align-items-center justify-content-space-between">
-                        <span>Especialidad</span>
-                        <button class="btn btn-link sort-btn p-0" data-field="especialidad" data-ord="asc">
-                            <i class="fas fa-sort"></i>
-                        </button>
-                    </div>
-                </th>
-                <th style="width:12em; z-index:301;">
+                <th style="width:fit-content; z-index:301;">
                     <div class="d-flex align-items-center justify-content-space-between">
                         <span>Clínica</span>
                         <button class="btn btn-link sort-btn p-0" data-field="nombre_clinica" data-ord="asc">
@@ -71,7 +63,6 @@
                 echo "<td class='sticky-column' id='showRegister' value='" . $show_data["id"] . "'> <a href='?id=" . $show_data["id"] . "&action=show_register'>" . $show_data["nombre"] . "</a> </td>";;
                 echo "<td>" . $show_data["apellidos"] . "</td>";
                 echo "<td>" . $show_data["correo"] . "</td>";
-                echo "<td>" . $show_data["especialidad"] . "</td>";
                 echo "<td>" . $show_data["nombre_clinica"] . "</td>";
                 echo "<td>" . $show_data["hora_apertura"] . " - " . $show_data["hora_cierre"] . "</td>";
                 echo "<td>" . (($show_data["disponible"] == '0') ? 'SI' : 'NO') . "</td>";

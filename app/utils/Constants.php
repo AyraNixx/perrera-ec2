@@ -26,7 +26,7 @@ class Constants
     
     // INSERTS
     const INSERT_ANIMALES_PHOTOS = 'INSERT INTO perrera.imgs (animales_id, nombre, tipo, tamanio, ruta) VALUES ';
-    const INSERT_EMPLEADOS_PHOTOS = 'INSERT INTO perrera.imgs (empleado_id, nombre, ruta) VALUES ';
+    const INSERT_EMPLEADOS_PHOTOS = 'INSERT INTO perrera.imgs (empleados_id, nombre, tipo, tamanio, ruta) VALUES ';
     const SEARCH_ANIMALES_TABLE = 'SELECT a.*, e.nombre as nombre_especie, j.ubicacion as ubicacion FROM perrera.animales a JOIN perrera.especies e ON  a.especies_id = e.id JOIN perrera.jaulas j ON a.jaulas_id = j.id WHERE a.nombre LIKE :search_value OR a.raza LIKE :search_value OR e.nombre LIKE :search_value ORDER BY a.';
 
     // SEARCH
@@ -36,6 +36,7 @@ class Constants
     const SEARCH_TAREAS_TABLE = 'SELECT id, asunto, descripcion, disponible FROM perrera.tareas WHERE asunto LIKE :search_value OR descripcion LIKE :search_value ORDER BY ';
     const SEARCH_VETERINARIOS_TABLE = 'SELECT * FROM perrera.veterinarios WHERE nombre LIKE :search_value OR apellidos LIKE :search_value OR correo LIKE :search_value OR especialidad LIKE :search_value OR nombre_clinica LIKE :search_value ORDER BY ';
     const SEARCH_ADOPTANTES_TABLE = 'SELECT * FROM perrera.adoptante WHERE nombre LIKE :search_value OR apellidos LIKE :search_value OR NIF LIKE :search_value OR correo LIKE :search_value OR estado_solicitud LIKE :search_value ORDER BY ';
+    const SEARCH_EMPLEADOS_TABLE = 'SELECT * FROM perrera.empleados WHERE nombre LIKE :search_value OR apellidos LIKE :search_value OR NIF LIKE :search_value OR correo LIKE :search_value ORDER BY ';
     const SEARCH_DUENIOS_TABLE = 'SELECT * FROM perrera.duenios WHERE nombre LIKE :search_value OR apellidos LIKE :search_value OR NIF LIKE :search_value OR correo LIKE :search_value ORDER BY ';
     const SEARCH_VOLUNTARIOS_TABLE = 'SELECT * FROM perrera.voluntarios WHERE nombre LIKE :search_value OR apellidos LIKE :search_value OR NIF LIKE :search_value OR correo LIKE :search_value OR telf LIKE :search_value ORDER BY ';
     const SEARCH_JAULAS_TABLE = 'SELECT j.*, e.nombre as nombre_especie FROM perrera.jaulas j JOIN perrera.especies e ON j.especies_id = e.id WHERE j.nombre LIKE :search_value OR j.descripcion LIKE :search_value OR e.nombre LIKE :search_value ORDER BY j.';
@@ -45,6 +46,7 @@ class Constants
     const SEARCH_JAULAS_TABLE_TOTAL_PAGES = 'SELECT j.Id FROM perrera.jaulas j JOIN perrera.especies e ON j.especies_id = e.id WHERE j.nombre LIKE :search_value OR j.descripcion LIKE :search_value OR e.nombre LIKE :search_value ORDER BY j.ubicacion ';
     const SEARCH_VETERINARIOS_TABLE_TOTAL_PAGES = 'SELECT Id FROM perrera.veterinarios WHERE nombre LIKE :search_value OR apellidos LIKE :search_value OR correo LIKE :search_value OR especialidad LIKE :search_value OR nombre_clinica LIKE :search_value ORDER BY nombre';
     const SEARCH_ADOPTANTES_TABLE_TOTAL_PAGES = 'SELECT Id FROM perrera.adoptante WHERE nombre LIKE :search_value OR apellidos LIKE :search_value OR NIF LIKE :search_value OR correo LIKE :search_value OR estado_solicitud LIKE :search_value ORDER BY';
+    const SEARCH_EMPLEADOS_TABLE_TOTAL_PAGES = 'SELECT Id FROM perrera.empleados WHERE nombre LIKE :search_value OR apellidos LIKE :search_value OR NIF LIKE :search_value OR correo LIKE :search_value ORDER BY';
     const SEARCH_VOLUNTARIOS_TABLE_TOTAL_PAGES = 'SELECT Id FROM perrera.voluntarios WHERE nombre LIKE :search_value OR apellidos LIKE :search_value OR NIF LIKE :search_value OR correo LIKE :search_value OR telf LIKE :search_value ORDER BY nombre';
     const SEARCH_DUENIOS_TABLE_TOTAL_PAGES = 'SELECT Id FROM perrera.duenios WHERE nombre LIKE :search_value OR apellidos LIKE :search_value OR NIF LIKE :search_value OR correo LIKE :search_value ORDER BY nombre';
     
@@ -62,6 +64,8 @@ class Constants
     const GET_ESPECIE = 'SELECT * FROM perrera.especies WHERE id = :id';
     const GET_ROL = 'SELECT * FROM perrera.roles WHERE id = :id';
     const GET_TAREA = 'SELECT * FROM perrera.tareas WHERE id = :id';
+    const GET_EMPLEADO = 'SELECT * FROM perrera.empleados WHERE id = :id';
+    const GET_EMPLEADOS_INACTIVE = 'SELECT * FROM perrera.empleados WHERE disponible = 0';
     const GET_VOLUNTARIO = 'SELECT * FROM perrera.voluntarios WHERE id = :id';
     const GET_ADOPTANTE = 'SELECT a.*, GROUP_CONCAT(al.id SEPARATOR ",") AS animal_ids, GROUP_CONCAT(al.nombre SEPARATOR ",") AS animal_nombres, GROUP_CONCAT(e.nombre SEPARATOR ",") AS nombre_especies FROM perrera.adoptante a LEFT JOIN animales al ON a.id = al.adoptante_id LEFT JOIN especies e ON al.especies_id = e.id WHERE a.id = :id GROUP BY a.id';
     const GET_JAULA = 'SELECT j.*,  e.nombre AS nombre_especie, GROUP_CONCAT(a.id SEPARATOR ",") AS animal_ids, GROUP_CONCAT(a.nombre SEPARATOR ",") AS animal_nombres, GROUP_CONCAT(a.estado_adopcion SEPARATOR ",") AS animal_estados_adopcion FROM jaulas j JOIN perrera.especies e ON j.especies_id = e.id LEFT JOIN animales a ON j.id = a.jaulas_id WHERE j.id = :id GROUP BY j.id, e.nombre';
@@ -134,10 +138,12 @@ class Constants
     const VIEW_DUENIO = '../views/V_DuenioVer.php';
     const VIEW_ADOPTANTE = '../views/V_AdoptanteVer.php';
     const VIEW_TAREA = '../views/V_TareaVer.php';
+    const VIEW_EMPLEADO = '../views/V_EmpleadoVer.php';
 
     // CONTROLLERS
     const CONTROLLER_SETTINGS = 'http://localhost/DES/perrera-ec2/app/controllers/SettingsC.php';
     const CONTROLLER_LOGIN = 'http://localhost/DES/perrera-ec2/app/controllers/LoginC.php';
+    const CONTROLLER_EMPLOYEE = 'http://localhost/DES/perrera-ec2/app/controllers/EmpleadoC.php';
 
     // TABLES' NAME
     const ANIMAL_TABLE = 'animales';
@@ -158,7 +164,13 @@ class Constants
     const ERROR_PROFILE = "No se ha podido cambiar los datos del usuario.";
     const ERROR_SEND_MSG_PSSWD = 'No se ha podido enviar el mensaje de confirmación';
     const ERROR_SEND_MSG_EMAIL = 'No se ha enviado el email.';
+    const ERROR_SEND_MSG_WELCOME = 'No se ha podido enviar el correo de bienvenida. Comunique al empleado su clave.';
     const ERROR_ADD_IMG = 'No se han podido añadir las imágenes.';
+    const ERROR_FIELDS_EMPLOYEE = 'No se ha podido insertar el empleado. Por favor, inténtelo de nuevo.';
+    const ERROR_EXIST_EMPLOYEE = 'Ya existe un empleado con este correo.';
+    const ERROR_EXIST_EMPLOYEE_INACTIVE = 'Existe un empleado inactivo con este correo. Utilice otro correo o contacte con un empleado para reactivar la cuenta';
+    const ERROR_ROW_NOT_FOUND = 'Registro no encontrado.';
+    const ERROR_ROW_NOT_INACTIVE = 'El registro no está inactivo, por lo que no se puede recuperar.';
 
     // MSGs
     const ADD_IMG_SUCCESS = 'La/s imagen/es han sido añadidas con éxito.';
@@ -167,6 +179,8 @@ class Constants
 
     // OK
     const PSSWD_CHANGED = 'Contraseña modificada con éxito.';
+    const DELETE_ROW = 'Registro borrado con éxito.';
+    const UNDELETE_ROW = 'Registro recuperado con éxito.';
 
     // ROL
     const ROL_ADMIN = 'Administrador'; // TO DO
