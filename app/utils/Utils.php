@@ -117,7 +117,7 @@ class Utils
         $url = '';//'.sendinblue.com/v3/smtp/email';  https://api
 
         // API KEY
-        $apiKey = '';//'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';
+        $apiKey = '';//
 
         // VARIABLES NECESARIAS PARA EL CORREO ELECTRÓNICO
         $subject = $data["subject"]; // ASUNTO
