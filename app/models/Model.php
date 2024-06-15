@@ -256,7 +256,7 @@ class Model
             $offset = ($page - 1) * $amount;
 
             // Consulta
-            $query = "SELECT * FROM $table WHERE disponible = 1 ORDER BY $field $ord LIMIT :amount OFFSET :offset";
+            $query = "SELECT * FROM $table WHERE disponible = 1 ORDER BY $field $ord LIMIT :amount OFFSET :offset";            
             // Preparamos la consulta para su ejecución
             $statement = $this->conBD->prepare($query);
             // Vinculamos los parámetros al nombre de la variable especificada

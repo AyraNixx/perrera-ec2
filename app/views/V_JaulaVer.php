@@ -96,7 +96,7 @@
                                 <div class="col-md-12 col-lg-7 mb-4">
                                     <div class="card" role="tab" style="position: unset;">
                                         <div class="card-header bg-primary" id="info" data-toggle="collapse" href="#info-show" aria-expanded="true" aria-controls="infoJaula-show">
-                                            <h5 class="d-inline-flex align-items-center text-secondary"><i class="fa-solid fa-dog text-secondary"></i>&nbsp;&nbsp;Información de la Jaula</h5>
+                                            <h5 class="d-inline-flex align-items-center text-secondary"><i class="fa-solid fa-house-circle-exclamation"></i>&nbsp;&nbsp;Información de la Jaula</h5>
                                         </div>
 
                                         <div class="collapse show" role="tabpanel" aria-labelledby="info" data-parent="#accordion">
@@ -129,7 +129,7 @@
                                 <div class="col-md-12 col-lg-5 mb-4">
                                     <div class="card" role="tab" style="position: unset;">
                                         <div class="card-header bg-primary" id="info" data-toggle="collapse" href="#info-show" aria-expanded="true" aria-controls="infoJaula-show">
-                                            <h5 class="d-inline-flex align-items-center text-secondary"><i class="fa-solid fa-dog text-secondary"></i>&nbsp;&nbsp;Estado de la Jaula</h5>
+                                            <h5 class="d-inline-flex align-items-center text-secondary"><i class="fa-regular fa-circle-check"></i>&nbsp;&nbsp;Estado de la Jaula</h5>
                                         </div>
 
                                         <div class="collapse show" role="tabpanel" aria-labelledby="info" data-parent="#accordion">
@@ -164,7 +164,53 @@
                                         </div>
 
                                     </div>
+
+
+
+
+
+                                    <div class="card mt-3" role="tab" style="position: unset;">
+                                        <div class="card-header bg-primary" id="info" data-toggle="collapse" href="#info-show" aria-expanded="true" aria-controls="infoJaula-show">
+                                            <h5 class="d-inline-flex align-items-center text-secondary"><i class="fa-solid fa-dog text-secondary"></i>&nbsp;&nbsp;Animales</h5>
+                                        </div>
+
+                                        <div class="collapse show" role="tabpanel" aria-labelledby="info" data-parent="#accordion">
+                                            <div class="card-body" style="max-height:350px; overflow-y:auto;">
+                                                <?php
+                                                if (!empty($data['animal_nombres'])) {
+                                                    $ids = explode(',', $data['animal_ids']);
+                                                    $animal_estados_adopcion = explode(',', $data['animal_estados_adopcion']);
+                                                    foreach (explode(',', $data['animal_nombres']) as $i => $nombre) {
+                                                        echo "<div class='row mb-2'>";
+                                                        echo "<div class='col-6'>";
+                                                        echo "<span class='d-block'><strong class='text-primary'>Nombre: </strong>$nombre</span>";
+                                                        echo "<span class='d-block'><strong class='text-primary'>Especie: </strong>" . $data['nombre_especie'] . "</span>";
+                                                        echo "</div>";
+                                                        echo "<div class='col-6 align-self-center text-end'>";
+                                                        echo "<a href='../controllers/AnimalC.php?action=show_register&id=" . $ids[$i] . "' class='btn btn-primary btn-sm'>Ver</a>";
+                                                        echo "<button class='ms-2 btn btn-secondary btn-sm' data-delete_animal='delete_animal'>Eliminar</button>";
+                                                        echo "</div>";
+                                                        echo "</div>";
+                                                        if ($i < count($ids) - 1) {
+                                                            echo "<hr class='mt-3 text-secondary'>";
+                                                        }
+                                                    }
+                                                } else {
+                                                    echo "<div class='row mb-2'>";
+                                                    echo "<div class='col-6'>No hay animales asociados";
+                                                    echo "</div>";
+                                                    echo "</div>";
+                                                }
+                                                ?>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 </div>
+
+
+
+
                             </div>
                             <div class="form-group p-3 text-center bg-info bg-opacity-25 hidden btn-hidden-register">
                                 <button type="submit" class="btn btn-primary" id="submit_register" name="action" value="update">Guardar Cambios</button>

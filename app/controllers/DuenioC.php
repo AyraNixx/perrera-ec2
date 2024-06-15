@@ -49,23 +49,25 @@ class DuenioC
     // 
     // -- GETTERS AND SETTERS
     // 
-    public function getMsg() { return $this->msg; }
-    public function setMsg($msg) { return $this->msg = $msg; }
-    public function getField() { return $this->field; }
-    public function setField($field) { return $this->field = $field; }
-    public function getOrd(){ return $this->ord; }
-    public function setOrd($ord) { return $this->ord = $ord; } 
-    public function getAmount() { return $this->amount; } 
-    public function setAmount($amount) { return $this->amount = $amount; } 
-    public function getPage() { return $this->page; } 
-    public function setPage($page) { return $this->page = $page; } 
-    public function getSearch_val() { return $this->search_val; } 
-    public function setSearch_val($search_val) { return $this->search_val = $search_val; }
+    public function getMsg(){return $this->msg;}
+    public function setMsg($msg){return $this->msg = $msg;}
+    public function getField(){return $this->field;}
+    public function setField($field){return $this->field = $field;}
+    public function getOrd(){return $this->ord;}
+    public function setOrd($ord){return $this->ord = $ord;}
+    public function getAmount(){return $this->amount;}
+    public function setAmount($amount){return $this->amount = $amount;}
+    public function getPage(){return $this->page;}
+    public function setPage($page){return $this->page = $page;}
+    public function getSearch_val(){return $this->search_val;}
+    public function setSearch_val($search_val){return $this->search_val = $search_val;}
 
 
     // 
     // -- MÉTODOS
     // 
+
+
     public function run(String $action = "index")
     {
         switch ($action) {
@@ -90,6 +92,12 @@ class DuenioC
             case "pagination":
                 $this->pagination();
                 break;
+            case "search_duenio_modal":
+                $this->search_duenio_modal();
+                break;
+            case "delete_animal_from_list":
+                $this->delete_animal_from_list();
+                break;
             default:
                 $this->index();
                 break;
@@ -99,11 +107,11 @@ class DuenioC
     private function index($view = 'V_Duenios.php')
     {
         if (strtoupper($_SESSION["rol"]) == USER_ROL_ADMIN) {
-            $data = $this->duenio->pagination_all('duenio', $this->ord, $this->field, $this->page, $this->amount);
-            $total_pages = $this->duenio->total_pages('duenio', $this->amount);
+            $data = $this->duenio->pagination_all('duenios', $this->ord, $this->field, $this->page, $this->amount);
+            $total_pages = $this->duenio->total_pages('duenios', $this->amount);
         } else {
-            $data = $this->duenio->pagination_visible('duenio', $this->ord, $this->field, $this->page, $this->amount); // TO DO --> Necesito modificarlo un poco para que no se visualicen las que tienen disponible = 0
-            $total_pages = $this->duenio->total_pages_visibles('duenio', $this->amount);
+            $data = $this->duenio->pagination_visible('duenios', $this->ord, $this->field, $this->page, $this->amount); // TO DO --> Necesito modificarlo un poco para que no se visualicen las que tienen disponible = 0
+            $total_pages = $this->duenio->total_pages_visibles('duenios', $this->amount);
         }
         $page = $this->getPage();
         $new_msg = $this->getMsg();
@@ -120,17 +128,13 @@ class DuenioC
     }
 
     private function add()
-    {        
+    {
         if (
             isset($_REQUEST['nombre']) && isset($_REQUEST['apellidos']) && isset($_REQUEST['fech_nac'])
             && isset($_REQUEST['NIF']) && isset($_REQUEST['correo']) && isset($_REQUEST['telf'])
-            && isset($_REQUEST['direccion']) && isset($_REQUEST['ciudad']) && isset($_REQUEST['codigo_postal'])
-            && isset($_REQUEST['pais']) && isset($_REQUEST['ocupacion']) && isset($_REQUEST['tipo_vivienda'])
-            && isset($_REQUEST['tiene_jardin']) && isset($_REQUEST['preferencia_adopcion'])
-            && isset($_REQUEST['otra_mascota']) && isset($_REQUEST['tipo_otra_mascota'])
-            && isset($_REQUEST['estado_solicitud']) && isset($_REQUEST['fecha_solicitud'])
-            && isset($_REQUEST['estado_adopcion']) && isset($_REQUEST['fecha_adopcion']) 
-            && isset($_REQUEST['comentarios']) && isset($_REQUEST['animales_id'])
+            && isset($_REQUEST['ocupacion']) && isset($_REQUEST['direccion']) && isset($_REQUEST['ciudad'])
+            && isset($_REQUEST['codigo_postal']) && isset($_REQUEST['pais']) && isset($_REQUEST['permiso_visita'])
+            && isset($_REQUEST['fecha_ultima_visita']) && isset($_REQUEST['observaciones']) && isset($_REQUEST['animales_id'])
         ) {
             $nombre = htmlspecialchars(trim($_REQUEST['nombre']), ENT_QUOTES, 'UTF-8');
             $apellidos = htmlspecialchars(trim($_REQUEST['apellidos']), ENT_QUOTES, 'UTF-8');
@@ -138,28 +142,23 @@ class DuenioC
             $NIF = htmlspecialchars(trim($_REQUEST['NIF']), ENT_QUOTES, 'UTF-8');
             $correo = htmlspecialchars(trim($_REQUEST['correo']), ENT_QUOTES, 'UTF-8');
             $telf = htmlspecialchars(trim($_REQUEST['telf']), ENT_QUOTES, 'UTF-8');
+            $ocupacion = htmlspecialchars(trim($_REQUEST['ocupacion']), ENT_QUOTES, 'UTF-8');
             $direccion = htmlspecialchars(trim($_REQUEST['direccion']), ENT_QUOTES, 'UTF-8');
             $ciudad = htmlspecialchars(trim($_REQUEST['ciudad']), ENT_QUOTES, 'UTF-8');
             $codigo_postal = htmlspecialchars(trim($_REQUEST['codigo_postal']), ENT_QUOTES, 'UTF-8');
             $pais = htmlspecialchars(trim($_REQUEST['pais']), ENT_QUOTES, 'UTF-8');
-            $ocupacion = htmlspecialchars(trim($_REQUEST['ocupacion']), ENT_QUOTES, 'UTF-8');
-            $tipo_vivienda = htmlspecialchars(trim($_REQUEST['tipo_vivienda']), ENT_QUOTES, 'UTF-8');
-            $tiene_jardin = htmlspecialchars(trim($_REQUEST['tiene_jardin']), ENT_QUOTES, 'UTF-8');
-            $preferencia_adopcion = htmlspecialchars(trim($_REQUEST['preferencia_adopcion']), ENT_QUOTES, 'UTF-8');
-            $otra_mascota = htmlspecialchars(trim($_REQUEST['otra_mascota']), ENT_QUOTES, 'UTF-8');
-            $tipo_otra_mascota = htmlspecialchars(trim($_REQUEST['tipo_otra_mascota']), ENT_QUOTES, 'UTF-8');
-            $estado_solicitud = htmlspecialchars(trim($_REQUEST['estado_solicitud']), ENT_QUOTES, 'UTF-8');
-            $fecha_solicitud = htmlspecialchars(trim($_REQUEST['fecha_solicitud']), ENT_QUOTES, 'UTF-8');
-            $estado_adopcion = htmlspecialchars(trim($_REQUEST['estado_adopcion']), ENT_QUOTES, 'UTF-8');
-            $fecha_adopcion = htmlspecialchars(trim($_REQUEST['fecha_adopcion']), ENT_QUOTES, 'UTF-8');
-            $comentarios = htmlspecialchars(trim($_REQUEST['comentarios']), ENT_QUOTES, 'UTF-8');
+            $permiso_visita = htmlspecialchars(trim($_REQUEST['permiso_visita']), ENT_QUOTES, 'UTF-8');
+            $fecha_ultima_visita = htmlspecialchars(trim($_REQUEST['fecha_ultima_visita']), ENT_QUOTES, 'UTF-8');
+            $observaciones = htmlspecialchars(trim($_REQUEST['observaciones']), ENT_QUOTES, 'UTF-8');
             $animales_id = htmlspecialchars(trim($_REQUEST['animales_id']), ENT_QUOTES, 'UTF-8');
-    
-            
-            $result = $this->duenio->insert([ 'nombre' => $nombre, 'apellidos' => $apellidos, 'fech_nac' => $fech_nac, 'NIF' => $NIF, 'correo' => $correo, 'telf' => $telf, 'direccion' => $direccion, 'ciudad' => $ciudad, 'codigo_postal' => $codigo_postal,
-            'pais' => $pais, 'ocupacion' => $ocupacion, 'tipo_vivienda' => $tipo_vivienda, 'tiene_jardin' => $tiene_jardin, 'preferencia_adopcion' => $preferencia_adopcion, 'otra_mascota' => $otra_mascota,
-            'tipo_otra_mascota' => $tipo_otra_mascota, 'estado_solicitud' => $estado_solicitud, 'fecha_solicitud' => $fecha_solicitud, 'estado_adopcion' => $estado_adopcion, 'fecha_adopcion' => $fecha_adopcion,
-            'comentarios' => $comentarios, 'animales_id' => $animales_id]);
+
+            $result = $this->duenio->insert([
+                'nombre' => $nombre, 'apellidos' => $apellidos, 'fech_nac' => $fech_nac, 'NIF' => $NIF,
+                'correo' => $correo, 'telf' => $telf, 'ocupacion' => $ocupacion, 'direccion' => $direccion,
+                'ciudad' => $ciudad, 'codigo_postal' => $codigo_postal, 'pais' => $pais,
+                'permiso_visita' => $permiso_visita, 'fecha_ultima_visita' => $fecha_ultima_visita,
+                'observaciones' => $observaciones, 'animales_id' => $animales_id
+            ]);
 
             if ($result == false) {
                 $this->setMsg(Constants::ERROR_INSERT);
@@ -173,18 +172,12 @@ class DuenioC
     private function update()
     {
         if (
-            isset($_REQUEST['id']) && isset($_REQUEST['nombre']) && isset($_REQUEST['apellidos'])
-            && isset($_REQUEST['fech_nac']) && isset($_REQUEST['NIF']) && isset($_REQUEST['correo'])
-            && isset($_REQUEST['telf']) && isset($_REQUEST['direccion']) && isset($_REQUEST['ciudad'])
-            && isset($_REQUEST['codigo_postal']) && isset($_REQUEST['pais']) && isset($_REQUEST['ocupacion'])
-            && isset($_REQUEST['tipo_vivienda']) && isset($_REQUEST['tiene_jardin']) && isset($_REQUEST['preferencia_adopcion'])
-            && isset($_REQUEST['otra_mascota']) && isset($_REQUEST['tipo_otra_mascota'])
-            && isset($_REQUEST['estado_solicitud']) && isset($_REQUEST['fecha_solicitud'])
-            && isset($_REQUEST['tiempo_espera']) && isset($_REQUEST['estado_adopcion'])
-            && isset($_REQUEST['fecha_adopcion']) && isset($_REQUEST['comentarios'])
-            && isset($_REQUEST['animales_id'])
+            isset($_REQUEST['id']) && isset($_REQUEST['nombre']) && isset($_REQUEST['apellidos']) && isset($_REQUEST['fech_nac'])
+            && isset($_REQUEST['NIF']) && isset($_REQUEST['correo']) && isset($_REQUEST['telf'])
+            && isset($_REQUEST['ocupacion']) && isset($_REQUEST['direccion']) && isset($_REQUEST['ciudad'])
+            && isset($_REQUEST['codigo_postal']) && isset($_REQUEST['pais']) && isset($_REQUEST['permiso_visita'])
+            && isset($_REQUEST['fecha_ultima_visita']) && isset($_REQUEST['observaciones'])
         ) {
-            $
             $id = htmlspecialchars(trim($_REQUEST['id']), ENT_QUOTES, 'UTF-8');
             $nombre = htmlspecialchars(trim($_REQUEST['nombre']), ENT_QUOTES, 'UTF-8');
             $apellidos = htmlspecialchars(trim($_REQUEST['apellidos']), ENT_QUOTES, 'UTF-8');
@@ -192,29 +185,22 @@ class DuenioC
             $NIF = htmlspecialchars(trim($_REQUEST['NIF']), ENT_QUOTES, 'UTF-8');
             $correo = htmlspecialchars(trim($_REQUEST['correo']), ENT_QUOTES, 'UTF-8');
             $telf = htmlspecialchars(trim($_REQUEST['telf']), ENT_QUOTES, 'UTF-8');
+            $ocupacion = htmlspecialchars(trim($_REQUEST['ocupacion']), ENT_QUOTES, 'UTF-8');
             $direccion = htmlspecialchars(trim($_REQUEST['direccion']), ENT_QUOTES, 'UTF-8');
             $ciudad = htmlspecialchars(trim($_REQUEST['ciudad']), ENT_QUOTES, 'UTF-8');
             $codigo_postal = htmlspecialchars(trim($_REQUEST['codigo_postal']), ENT_QUOTES, 'UTF-8');
             $pais = htmlspecialchars(trim($_REQUEST['pais']), ENT_QUOTES, 'UTF-8');
-            $ocupacion = htmlspecialchars(trim($_REQUEST['ocupacion']), ENT_QUOTES, 'UTF-8');
-            $tipo_vivienda = htmlspecialchars(trim($_REQUEST['tipo_vivienda']), ENT_QUOTES, 'UTF-8');
-            $tiene_jardin = htmlspecialchars(trim($_REQUEST['tiene_jardin']), ENT_QUOTES, 'UTF-8');
-            $preferencia_adopcion = htmlspecialchars(trim($_REQUEST['preferencia_adopcion']), ENT_QUOTES, 'UTF-8');
-            $otra_mascota = htmlspecialchars(trim($_REQUEST['otra_mascota']), ENT_QUOTES, 'UTF-8');
-            $tipo_otra_mascota = htmlspecialchars(trim($_REQUEST['tipo_otra_mascota']), ENT_QUOTES, 'UTF-8');
-            $estado_solicitud = htmlspecialchars(trim($_REQUEST['estado_solicitud']), ENT_QUOTES, 'UTF-8');
-            $fecha_solicitud = htmlspecialchars(trim($_REQUEST['fecha_solicitud']), ENT_QUOTES, 'UTF-8');
-            $tiempo_espera = htmlspecialchars(trim($_REQUEST['tiempo_espera']), ENT_QUOTES, 'UTF-8');
-            $estado_adopcion = htmlspecialchars(trim($_REQUEST['estado_adopcion']), ENT_QUOTES, 'UTF-8');
-            $fecha_adopcion = htmlspecialchars(trim($_REQUEST['fecha_adopcion']), ENT_QUOTES, 'UTF-8');
-            $comentarios = htmlspecialchars(trim($_REQUEST['comentarios']), ENT_QUOTES, 'UTF-8');
-            $animales_id = htmlspecialchars(trim($_REQUEST['animales_id']), ENT_QUOTES, 'UTF-8');
-    
+            $permiso_visita = htmlspecialchars(trim($_REQUEST['permiso_visita']), ENT_QUOTES, 'UTF-8');
+            $fecha_ultima_visita = htmlspecialchars(trim($_REQUEST['fecha_ultima_visita']), ENT_QUOTES, 'UTF-8');
+            $observaciones = htmlspecialchars(trim($_REQUEST['observaciones']), ENT_QUOTES, 'UTF-8');
+
             $result = $this->duenio->queryParam(Constants::UPDT_DUENIO, [
-            'id' => $id, 'nombre' => $nombre, 'apellidos' => $apellidos, 'fech_nac' => $fech_nac, 'NIF' => $NIF, 'correo' => $correo, 'telf' => $telf, 'direccion' => $direccion, 'ciudad' => $ciudad,
-            'codigo_postal' => $codigo_postal, 'pais' => $pais, 'ocupacion' => $ocupacion, 'tipo_vivienda' => $tipo_vivienda, 'tiene_jardin' => $tiene_jardin, 'preferencia_adopcion' => $preferencia_adopcion,
-            'otra_mascota' => $otra_mascota, 'tipo_otra_mascota' => $tipo_otra_mascota, 'estado_solicitud' => $estado_solicitud, 'fecha_solicitud' => $fecha_solicitud, 'tiempo_espera' => $tiempo_espera, 'estado_adopcion' => $estado_adopcion,
-            'fecha_adopcion' => $fecha_adopcion, 'comentarios' => $comentarios, 'animales_id' => $animales_id]);
+                'id' => $id, 'nombre' => $nombre, 'apellidos' => $apellidos, 'fech_nac' => $fech_nac, 'NIF' => $NIF,
+                'correo' => $correo, 'telf' => $telf, 'ocupacion' => $ocupacion, 'direccion' => $direccion,
+                'ciudad' => $ciudad, 'codigo_postal' => $codigo_postal, 'pais' => $pais,
+                'permiso_visita' => $permiso_visita, 'fecha_ultima_visita' => $fecha_ultima_visita,
+                'observaciones' => $observaciones
+            ]);
 
             if ($result == false) {
                 $this->setMsg(Constants::ERROR_UPDATE);
@@ -227,7 +213,8 @@ class DuenioC
         }
     }
 
-    private function sdelete() {
+    private function sdelete()
+    {
         if (isset($_REQUEST['id'])) {
             $id = htmlspecialchars(trim($_REQUEST['id']), ENT_QUOTES, 'UTF-8');
             $result = $this->duenio->queryParam(Constants::DELETE_DUENIO, ['id' => $id]);
@@ -241,7 +228,8 @@ class DuenioC
         }
     }
 
-    private function undelete() {
+    private function undelete()
+    {
         if (isset($_REQUEST['id'])) {
             $id = htmlspecialchars(trim($_REQUEST['id']), ENT_QUOTES, 'UTF-8');
             $result = $this->duenio->queryParam(Constants::UPDT_UNDELETE_DUENIOS, ['id' => $id]);
@@ -258,58 +246,77 @@ class DuenioC
     private function pagination()
     {
         // Obtenemos los valores nuevos (si es que hay)
-        // $this->ord = $this->duenio->get_value("ord", $this->ord);
-        // $this->field = $this->duenio->get_value("field", $this->field);
-        // $this->amount = $this->duenio->get_value("amount", $this->amount);
-        // $this->page = $this->duenio->get_value("page", $this->page);
-        // $this->search_val = (isset($_POST['search_value']) && !empty($_POST['search_value']) && $_POST['search_value'] != '' && $_POST['search_value'] != null) ? ('%' . $this->duenio->get_value("search_value", $_POST['search_value']) . '%') : false;
+        $this->ord = $this->duenio->get_value("ord", $this->ord);
+        $this->field = $this->duenio->get_value("field", $this->field);
+        $this->amount = $this->duenio->get_value("amount", $this->amount);
+        $this->page = $this->duenio->get_value("page", $this->page);
+        $this->search_val = (isset($_POST['search_value']) && !empty($_POST['search_value']) && $_POST['search_value'] != '' && $_POST['search_value'] != null) ? ('%' . $this->duenio->get_value("search_value", $_POST['search_value']) . '%') : false;
 
-        // $data = ($this->search_val) ? ($this->duenio->queryParamSearch(Constants::SEARCH_DUENIOS_TABLE, $this->search_val, $this->ord, $this->field, $this->page, $this->amount)) : ($this->duenio->pagination_all('duenio', $this->ord, $this->field, $this->page, $this->amount));
-        // $total_pages = ($this->search_val) ? ceil(count($this->duenio->queryParam(Constants::SEARCH_DUENIOS_TABLE_TOTAL_PAGES, ['search_value' => $this->search_val])) / $this->amount) : ((strtoupper($_SESSION["rol"]) == USER_ROL_ADMIN)  ? $this->duenio->total_pages("duenio", $this->amount) : $this->duenio->total_pages_visibles("duenio", $this->amount));
-        // $total_pages = ($total_pages == 0) ? 1 : $total_pages;
+        $data = ($this->search_val) ? ($this->duenio->queryParamSearch(Constants::SEARCH_DUENIOS_TABLE, $this->search_val, $this->ord, $this->field, $this->page, $this->amount)) : ($this->duenio->pagination_all('duenios', $this->ord, $this->field, $this->page, $this->amount));
+        $total_pages = ($this->search_val) ? ceil(count($this->duenio->queryParam(Constants::SEARCH_DUENIOS_TABLE_TOTAL_PAGES, ['search_value' => $this->search_val])) / $this->amount) : ((strtoupper($_SESSION["rol"]) == USER_ROL_ADMIN)  ? $this->duenio->total_pages("duenio", $this->amount) : $this->duenio->total_pages_visibles("duenio", $this->amount));
+        $total_pages = ($total_pages == 0) ? 1 : $total_pages;
 
-        // // La página actual
-        // $page = $this->getPage();
-        // $html_var = '';
+        // La página actual
+        $page = $this->getPage();
+        $html_var = '';
 
-        // // Recorremos el array data y concatenamos el HTML generado dinámicamente
-        // foreach ($data as $show_data) {
-        //     $url = "DuenioC.php"; //URL destino
+        // Recorremos el array data y concatenamos el HTML generado dinámicamente
+        foreach ($data as $show_data) {
+            $url = "DuenioC.php"; //URL destino
 
-        //     // Concatenamos el HTML generado dinámicamente
-        //     $html_var .= "<tr>";
-        //     $html_var .= "<td class='sticky-column' id='showRegister' value='" . $show_data["id"] . "'> <a href='?id=" . $show_data["id"] . "&action=show_register'>" . $show_data["nombre"] . "</a> </td>";
-        //     $html_var .= "<td>" . $show_data["apellidos"] . "</td>";
-        //     $html_var .= "<td>" . $show_data["NIF"] . "</td>";
-        //     $html_var .= "<td>" . $show_data["correo"] . "</td>";
-        //     $html_var .= "<td>" . $show_data["estado_solicitud"] . "</td>";
-        //     $html_var .= "<td>" . (($show_data["disponible"] == '0') ? 'SI' : 'NO') . "</td>";
-        //     $html_var .= "<td class='ps-4 pe-2'>";
-        //     $html_var .= "<div class='btn-group dropdown d-block' style='position:relative'>";
-        //     $html_var .= "<button type='button' onclick='show_btn_options(event)' id='add' class='button-dropdown rounded' style='padding: .8em;width: 1.3em;height: 1.3em;'>";
-        //     $html_var .= "<i class='fa-solid fa-caret-down text-primary'></i>";
-        //     $html_var .= "</button>";
-        //     $html_var .= "<div class='btn-dropdown-options w-auto position-absolute start-0'>";
-        //     $html_var .= "<ul class='list-unstyled m-0'>";
-        //     $html_var .= "<li>";
-        //     $html_var .= "<a href='../controllers/DuenioC.php?action=add_or_update&id=" . $show_data["id"] . "'>Editar</a>";
-        //     $html_var .= "</li>";
-        //     $html_var .= "<li>";
-        //     $html_var .= "<a href='../controllers/DuenioC.php?action=sdelete&id=" . $show_data["id"] . "'>Borrar</a>";
-        //     $html_var .= "</li>";
-        //     if ($_SESSION["rol"] == Constants::ROL_ADMIN && $show_data["disponible"] == '0') {
-        //         $html_var .= "<li>";
-        //         $html_var .= "<a href='../controllers/DuenioC.php?action=undelete&id=" . $show_data["id"] . "'>Recuperar registro</a>";
-        //         $html_var .= "</li>";
-        //     }
-        //     $html_var .= "</ul>";
-        //     $html_var .= "</div>";
-        //     $html_var .= "</div>";
-        //     $html_var .= "</td>";
-        //     $html_var .= "</tr>";
-        // }
+            // Concatenamos el HTML generado dinámicamente
+            $html_var .= "<tr>";
+            $html_var .= "<td class='sticky-column' id='showRegister' value='" . $show_data["id"] . "'> <a href='?id=" . $show_data["id"] . "&action=show_register'>" . $show_data["nombre"] . "</a> </td>";
+            $html_var .= "<td>" . $show_data["apellidos"] . "</td>";
+            $html_var .= "<td>" . $show_data["NIF"] . "</td>";
+            $html_var .= "<td>" . $show_data["correo"] . "</td>";
+            $html_var .= "<td>" . $show_data["estado_solicitud"] . "</td>";
+            $html_var .= "<td>" . (($show_data["disponible"] == '0') ? 'SI' : 'NO') . "</td>";
+            $html_var .= "<td class='ps-4 pe-2'>";
+            $html_var .= "<div class='btn-group dropdown d-block' style='position:relative'>";
+            $html_var .= "<button type='button' onclick='show_btn_options(event)' id='add' class='button-dropdown rounded' style='padding: .8em;width: 1.3em;height: 1.3em;'>";
+            $html_var .= "<i class='fa-solid fa-caret-down text-primary'></i>";
+            $html_var .= "</button>";
+            $html_var .= "<div class='btn-dropdown-options w-auto position-absolute start-0'>";
+            $html_var .= "<ul class='list-unstyled m-0'>";
+            $html_var .= "<li>";
+            $html_var .= "<a href='../controllers/DuenioC.php?action=add_or_update&id=" . $show_data["id"] . "'>Editar</a>";
+            $html_var .= "</li>";
+            $html_var .= "<li>";
+            $html_var .= "<a href='../controllers/DuenioC.php?action=sdelete&id=" . $show_data["id"] . "'>Borrar</a>";
+            $html_var .= "</li>";
+            if ($_SESSION["rol"] == Constants::ROL_ADMIN && $show_data["disponible"] == '0') {
+                $html_var .= "<li>";
+                $html_var .= "<a href='../controllers/DuenioC.php?action=undelete&id=" . $show_data["id"] . "'>Recuperar registro</a>";
+                $html_var .= "</li>";
+            }
+            $html_var .= "</ul>";
+            $html_var .= "</div>";
+            $html_var .= "</div>";
+            $html_var .= "</td>";
+            $html_var .= "</tr>";
+        }
 
-        // echo json_encode(array("total_pages" => $total_pages, "rows" => $html_var, 'pagination' => $this->duenio->generatePaginationHTML($page, $this->amount, $total_pages)));
+        echo json_encode(array("total_pages" => $total_pages, "rows" => $html_var, 'pagination' => $this->duenio->generatePaginationHTML($page, $this->amount, $total_pages)));
+    }
+
+    public function search_duenio_modal()
+    {
+        $data = $this->duenio->query(Constants::GET_DUENIO_MODAL);
+
+        if(isset($_REQUEST["search_animal_modal"])){
+            $data['animal_list'] = '';
+        }
+        echo json_encode($data);
+    }
+
+    public function delete_animal_from_list()
+    {
+        if (isset($_REQUEST['id']) &&  isset($_REQUEST['animal_id'])) {
+            $id = htmlspecialchars(trim($_REQUEST['id']), ENT_QUOTES, 'UTF-8');
+            $animal_id = htmlspecialchars(trim($_REQUEST['animal_id']), ENT_QUOTES, 'UTF-8');
+            echo json_encode($this->duenio->queryParam(Constants::DELETE_ANIMAL_DUENIO, ['id' => $id, 'animal_id' => $animal_id]));
+        }
     }
 }
 
@@ -335,4 +342,3 @@ if (!empty($_POST["amount"])) {
     $especie->setAmount($_POST["amount"]);
 }
 $especie->run($action);
-

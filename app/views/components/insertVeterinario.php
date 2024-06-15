@@ -29,15 +29,9 @@
 
                                 <input type="tel" name="telf" id="telf" value="">
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-md-9 mb-3">
                                 <label for="especialidad">Especialidad</label>
-
                                 <input type="text" name="especialidad" id="especialidad" value="">
-                            </div>
-                            <div class="col-12 mb-3">
-                                <label for="direccion">Dirección</label>
-
-                                <input type="text" name="direccion" id="direccion" value="">
                             </div>
                         </div>
 

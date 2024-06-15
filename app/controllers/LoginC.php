@@ -121,8 +121,7 @@ class LoginC
                 return;
             }
 
-            // Guardamos el rol
-            // var_dump($data_user["roles_id"]);
+            
             $rol = $this->empleado->get_rol($data_user["roles_id"]);
             // $rol = $rol["rol"];
             // $rol = 'prueba';
@@ -145,7 +144,6 @@ class LoginC
                 $time = time() + (60*60*4); // Durará 4 h
                 $token_key = hash('sha256', $time . $data_user['nombre']);
                 $token_value = hash('sha256', 'remember_me:' . $time . 'yusdf&&b1yuisg/cw!·$5!euiahcqwe');
-                //setcookie('key', 'value', 'expireDate', 'puedes especificar en qué paginas quieres que funcione');
                 setcookie('remem', $token_key .':'.$token_value, $time, '/', null, false);
 
                 $this->empleado->query("UPDATE perrera.empleados SET token_key = '$token_key', token_value = '$token_value' WHERE id = " . $data_user['id'] . " LIMIT 1");

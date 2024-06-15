@@ -49,18 +49,54 @@ class VeterinarioC
     // 
     // -- GETTERS AND SETTERS
     // 
-    public function getMsg() { return $this->msg; }
-    public function setMsg($msg) { return $this->msg = $msg; }
-    public function getField() { return $this->field; }
-    public function setField($field) { return $this->field = $field; }
-    public function getOrd(){ return $this->ord; }
-    public function setOrd($ord) { return $this->ord = $ord; } 
-    public function getAmount() { return $this->amount; } 
-    public function setAmount($amount) { return $this->amount = $amount; } 
-    public function getPage() { return $this->page; } 
-    public function setPage($page) { return $this->page = $page; } 
-    public function getSearch_val() { return $this->search_val; } 
-    public function setSearch_val($search_val) { return $this->search_val = $search_val; }
+    public function getMsg()
+    {
+        return $this->msg;
+    }
+    public function setMsg($msg)
+    {
+        return $this->msg = $msg;
+    }
+    public function getField()
+    {
+        return $this->field;
+    }
+    public function setField($field)
+    {
+        return $this->field = $field;
+    }
+    public function getOrd()
+    {
+        return $this->ord;
+    }
+    public function setOrd($ord)
+    {
+        return $this->ord = $ord;
+    }
+    public function getAmount()
+    {
+        return $this->amount;
+    }
+    public function setAmount($amount)
+    {
+        return $this->amount = $amount;
+    }
+    public function getPage()
+    {
+        return $this->page;
+    }
+    public function setPage($page)
+    {
+        return $this->page = $page;
+    }
+    public function getSearch_val()
+    {
+        return $this->search_val;
+    }
+    public function setSearch_val($search_val)
+    {
+        return $this->search_val = $search_val;
+    }
 
 
     // 
@@ -100,16 +136,21 @@ class VeterinarioC
 
     private function index($view = 'V_Veterinarios.php')
     {
-        if (strtoupper($_SESSION["rol"]) == USER_ROL_ADMIN) {
-            $data = $this->veterinario->pagination_all('veterinarios', $this->ord, $this->field, $this->page, $this->amount);
-            $total_pages = $this->veterinario->total_pages('veterinarios', $this->amount);
+        if (!isset($_REQUEST['id'])) {
+            if (strtoupper($_SESSION["rol"]) == USER_ROL_ADMIN) {
+                $data = $this->veterinario->pagination_all('veterinarios', $this->ord, $this->field, $this->page, $this->amount);
+                $total_pages = $this->veterinario->total_pages('veterinarios', $this->amount);
+            } else {
+                $data = $this->veterinario->pagination_visible('veterinarios', $this->ord, $this->field, $this->page, $this->amount); // TO DO --> Necesito modificarlo un poco para que no se visualicen las que tienen disponible = 0
+                $total_pages = $this->veterinario->total_pages_visibles('veterinarios', $this->amount);
+            }
+            $page = $this->getPage();
+            $new_msg = $this->getMsg();
+            require_once "../views/" . $view;
         } else {
-            $data = $this->veterinario->pagination_visible('veterinarios', $this->ord, $this->field, $this->page, $this->amount); // TO DO --> Necesito modificarlo un poco para que no se visualicen las que tienen disponible = 0
-            $total_pages = $this->veterinario->total_pages_visibles('veterinarios', $this->amount);
+            $id = htmlspecialchars(trim($_REQUEST['id']), ENT_QUOTES, 'UTF-8');
+            $this->show_register($id);
         }
-        $page = $this->getPage();
-        $new_msg = $this->getMsg();
-        require_once "../views/" . $view;
     }
 
     public function show_register($id = '')
@@ -126,7 +167,7 @@ class VeterinarioC
         if (
             isset($_REQUEST['nombre']) && isset($_REQUEST['apellidos'])
             && isset($_REQUEST['correo']) && isset($_REQUEST['telf'])
-            && isset($_REQUEST['direccion']) && isset($_REQUEST['especialidad'])
+            && isset($_REQUEST['especialidad'])
             && isset($_REQUEST['nombre_clinica']) && isset($_REQUEST['direccion_clinica'])
             && isset($_REQUEST['telf_clinica']) && isset($_REQUEST['correo_clinica'])
             && isset($_REQUEST['hora_apertura']) && isset($_REQUEST['hora_cierre'])
@@ -136,7 +177,6 @@ class VeterinarioC
             $apellidos = htmlspecialchars(trim($_REQUEST['apellidos']), ENT_QUOTES, 'UTF-8');
             $correo = htmlspecialchars(trim($_REQUEST['correo']), ENT_QUOTES, 'UTF-8');
             $telf = htmlspecialchars(trim($_REQUEST['telf']), ENT_QUOTES, 'UTF-8');
-            $direccion = htmlspecialchars(trim($_REQUEST['direccion']), ENT_QUOTES, 'UTF-8');
             $especialidad = htmlspecialchars(trim($_REQUEST['especialidad']), ENT_QUOTES, 'UTF-8');
             $nombre_clinica = htmlspecialchars(trim($_REQUEST['nombre_clinica']), ENT_QUOTES, 'UTF-8');
             $direccion_clinica = htmlspecialchars(trim($_REQUEST['direccion_clinica']), ENT_QUOTES, 'UTF-8');
@@ -148,17 +188,21 @@ class VeterinarioC
 
             $result = $this->veterinario->insert([
                 'nombre' => $nombre, 'apellidos' => $apellidos, 'correo' => $correo,
-                'telf' => $telf, 'direccion' => $direccion, 'especialidad' => $especialidad,
+                'telf' => $telf, 'especialidad' => $especialidad,
                 'nombre_clinica' => $nombre_clinica, 'direccion_clinica' => $direccion_clinica,
                 'telf_clinica' => $telf_clinica, 'correo_clinica' => $correo_clinica,
                 'hora_apertura' => $hora_apertura, 'hora_cierre' => $hora_cierre,
                 'otra_informacion' => $otra_informacion
             ]);
 
+            // if ($result == false) {
+            //     $this->setMsg(Constants::ERROR_INSERT);
+            // }
             if ($result == false) {
-                $this->setMsg(Constants::ERROR_INSERT);
+                header('Location: VeterinarioC.php?msg=' . base64_encode(Constants::ERROR_INSERT));
+            } else {
+                header('Location: VeterinarioC.php?id=' . $result);
             }
-            $this->show_register($result);
         } else {
             $this->setMsg(Constants::ERROR_INSERT);
         }
@@ -168,7 +212,7 @@ class VeterinarioC
     {
         if (
             isset($_REQUEST['id']) && isset($_REQUEST['nombre']) && isset($_REQUEST['apellidos'])
-            && isset($_REQUEST['correo']) && isset($_REQUEST['telf']) && isset($_REQUEST['direccion'])
+            && isset($_REQUEST['correo']) && isset($_REQUEST['telf'])
             && isset($_REQUEST['especialidad']) && isset($_REQUEST['nombre_clinica'])
             && isset($_REQUEST['direccion_clinica']) && isset($_REQUEST['telf_clinica'])
             && isset($_REQUEST['correo_clinica']) && isset($_REQUEST['hora_apertura'])
@@ -179,7 +223,6 @@ class VeterinarioC
             $apellidos = htmlspecialchars(trim($_REQUEST['apellidos']), ENT_QUOTES, 'UTF-8');
             $correo = htmlspecialchars(trim($_REQUEST['correo']), ENT_QUOTES, 'UTF-8');
             $telf = htmlspecialchars(trim($_REQUEST['telf']), ENT_QUOTES, 'UTF-8');
-            $direccion = htmlspecialchars(trim($_REQUEST['direccion']), ENT_QUOTES, 'UTF-8');
             $especialidad = htmlspecialchars(trim($_REQUEST['especialidad']), ENT_QUOTES, 'UTF-8');
             $nombre_clinica = htmlspecialchars(trim($_REQUEST['nombre_clinica']), ENT_QUOTES, 'UTF-8');
             $direccion_clinica = htmlspecialchars(trim($_REQUEST['direccion_clinica']), ENT_QUOTES, 'UTF-8');
@@ -191,7 +234,7 @@ class VeterinarioC
 
             $result = $this->veterinario->queryParam(Constants::UPDT_VETERINARIO, [
                 'id' => $id, 'nombre' => $nombre, 'apellidos' => $apellidos, 'correo' => $correo,
-                'telf' => $telf, 'direccion' => $direccion, 'especialidad' => $especialidad,
+                'telf' => $telf, 'especialidad' => $especialidad,
                 'nombre_clinica' => $nombre_clinica, 'direccion_clinica' => $direccion_clinica,
                 'telf_clinica' => $telf_clinica, 'correo_clinica' => $correo_clinica,
                 'hora_apertura' => $hora_apertura, 'hora_cierre' => $hora_cierre,
@@ -308,6 +351,10 @@ if (!Utils::is_logged_in()) {
 $especie = new VeterinarioC();
 
 $action = !empty($_REQUEST["action"]) ? $_REQUEST["action"] : "index";
+
+if(!empty($_REQUEST["msg"])){    
+    $especie->setMsg($_REQUEST["msg"]);
+}
 if (!empty($_POST["field"])) {
     $especie->setField($_POST["field"]);
 }

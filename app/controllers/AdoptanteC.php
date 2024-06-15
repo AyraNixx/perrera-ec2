@@ -2,6 +2,7 @@
 
 use utils\Utils;
 use \model\Adoptante;
+use \model\Animal;
 use utils\Constants;
 
 // use \Exception;
@@ -9,6 +10,7 @@ use utils\Constants;
 require_once "../utils/Utils.php";
 require_once "../utils/Constants.php";
 require_once "../models/Adoptante.php";
+require_once "../models/Animal.php";
 
 class AdoptanteC
 {
@@ -16,6 +18,7 @@ class AdoptanteC
     // -- ATRIBUTOS
     // 
     private $adoptante;
+    private $animal;
     private $msg;
 
     //
@@ -38,6 +41,7 @@ class AdoptanteC
     function __construct()
     {
         $this->adoptante = new Adoptante();
+        $this->animal = new Animal();
         $this->msg = null;
 
         $this->field = "nombre";
@@ -49,18 +53,54 @@ class AdoptanteC
     // 
     // -- GETTERS AND SETTERS
     // 
-    public function getMsg() { return $this->msg; }
-    public function setMsg($msg) { return $this->msg = $msg; }
-    public function getField() { return $this->field; }
-    public function setField($field) { return $this->field = $field; }
-    public function getOrd(){ return $this->ord; }
-    public function setOrd($ord) { return $this->ord = $ord; } 
-    public function getAmount() { return $this->amount; } 
-    public function setAmount($amount) { return $this->amount = $amount; } 
-    public function getPage() { return $this->page; } 
-    public function setPage($page) { return $this->page = $page; } 
-    public function getSearch_val() { return $this->search_val; } 
-    public function setSearch_val($search_val) { return $this->search_val = $search_val; }
+    public function getMsg()
+    {
+        return $this->msg;
+    }
+    public function setMsg($msg)
+    {
+        return $this->msg = $msg;
+    }
+    public function getField()
+    {
+        return $this->field;
+    }
+    public function setField($field)
+    {
+        return $this->field = $field;
+    }
+    public function getOrd()
+    {
+        return $this->ord;
+    }
+    public function setOrd($ord)
+    {
+        return $this->ord = $ord;
+    }
+    public function getAmount()
+    {
+        return $this->amount;
+    }
+    public function setAmount($amount)
+    {
+        return $this->amount = $amount;
+    }
+    public function getPage()
+    {
+        return $this->page;
+    }
+    public function setPage($page)
+    {
+        return $this->page = $page;
+    }
+    public function getSearch_val()
+    {
+        return $this->search_val;
+    }
+    public function setSearch_val($search_val)
+    {
+        return $this->search_val = $search_val;
+    }
 
 
     // 
@@ -89,6 +129,9 @@ class AdoptanteC
             case "undelete":
                 $this->undelete();
                 break;
+            case "delete_animal_from_list":
+                $this->delete_animal_from_list();
+                break;
             case "pagination":
                 $this->pagination();
                 break;
@@ -100,16 +143,21 @@ class AdoptanteC
 
     private function index($view = 'V_Adoptantes.php')
     {
-        if (strtoupper($_SESSION["rol"]) == USER_ROL_ADMIN) {
-            $data = $this->adoptante->pagination_all('adoptante', $this->ord, $this->field, $this->page, $this->amount);
-            $total_pages = $this->adoptante->total_pages('adoptante', $this->amount);
-        } else {
-            $data = $this->adoptante->pagination_visible('adoptante', $this->ord, $this->field, $this->page, $this->amount); // TO DO --> Necesito modificarlo un poco para que no se visualicen las que tienen disponible = 0
-            $total_pages = $this->adoptante->total_pages_visibles('adoptante', $this->amount);
+        if(!isset($_REQUEST['id'])){
+            if (strtoupper($_SESSION["rol"]) == USER_ROL_ADMIN) {
+                $data = $this->adoptante->pagination_all('adoptante', $this->ord, $this->field, $this->page, $this->amount);
+                $total_pages = $this->adoptante->total_pages('adoptante', $this->amount);
+            } else {
+                $data = $this->adoptante->pagination_visible('adoptante', $this->ord, $this->field, $this->page, $this->amount); // TO DO --> Necesito modificarlo un poco para que no se visualicen las que tienen disponible = 0
+                $total_pages = $this->adoptante->total_pages_visibles('adoptante', $this->amount);
+            }
+            $page = $this->getPage();
+            $new_msg = $this->getMsg();
+            require_once "../views/" . $view;
+        }else{
+            $id = htmlspecialchars(trim($_REQUEST['id']), ENT_QUOTES, 'UTF-8');
+            $this->show_register($id);
         }
-        $page = $this->getPage();
-        $new_msg = $this->getMsg();
-        require_once "../views/" . $view;
     }
 
     public function show_register($id = '')
@@ -122,7 +170,7 @@ class AdoptanteC
     }
 
     private function add()
-    {        
+    {
         if (
             isset($_REQUEST['nombre']) && isset($_REQUEST['apellidos']) && isset($_REQUEST['fech_nac'])
             && isset($_REQUEST['NIF']) && isset($_REQUEST['correo']) && isset($_REQUEST['telf'])
@@ -131,7 +179,6 @@ class AdoptanteC
             && isset($_REQUEST['tiene_jardin']) && isset($_REQUEST['preferencia_adopcion'])
             && isset($_REQUEST['otra_mascota']) && isset($_REQUEST['tipo_otra_mascota'])
             && isset($_REQUEST['estado_solicitud']) && isset($_REQUEST['fecha_solicitud'])
-            && isset($_REQUEST['estado_adopcion']) && isset($_REQUEST['fecha_adopcion']) 
             && isset($_REQUEST['comentarios']) && isset($_REQUEST['animales_id'])
         ) {
             $nombre = htmlspecialchars(trim($_REQUEST['nombre']), ENT_QUOTES, 'UTF-8');
@@ -152,21 +199,24 @@ class AdoptanteC
             $tipo_otra_mascota = htmlspecialchars(trim($_REQUEST['tipo_otra_mascota']), ENT_QUOTES, 'UTF-8');
             $estado_solicitud = htmlspecialchars(trim($_REQUEST['estado_solicitud']), ENT_QUOTES, 'UTF-8');
             $fecha_solicitud = htmlspecialchars(trim($_REQUEST['fecha_solicitud']), ENT_QUOTES, 'UTF-8');
-            $estado_adopcion = htmlspecialchars(trim($_REQUEST['estado_adopcion']), ENT_QUOTES, 'UTF-8');
-            $fecha_adopcion = htmlspecialchars(trim($_REQUEST['fecha_adopcion']), ENT_QUOTES, 'UTF-8');
             $comentarios = htmlspecialchars(trim($_REQUEST['comentarios']), ENT_QUOTES, 'UTF-8');
             $animales_id = htmlspecialchars(trim($_REQUEST['animales_id']), ENT_QUOTES, 'UTF-8');
-    
-            
-            $result = $this->adoptante->insert([ 'nombre' => $nombre, 'apellidos' => $apellidos, 'fech_nac' => $fech_nac, 'NIF' => $NIF, 'correo' => $correo, 'telf' => $telf, 'direccion' => $direccion, 'ciudad' => $ciudad, 'codigo_postal' => $codigo_postal,
-            'pais' => $pais, 'ocupacion' => $ocupacion, 'tipo_vivienda' => $tipo_vivienda, 'tiene_jardin' => $tiene_jardin, 'preferencia_adopcion' => $preferencia_adopcion, 'otra_mascota' => $otra_mascota,
-            'tipo_otra_mascota' => $tipo_otra_mascota, 'estado_solicitud' => $estado_solicitud, 'fecha_solicitud' => $fecha_solicitud, 'estado_adopcion' => $estado_adopcion, 'fecha_adopcion' => $fecha_adopcion,
-            'comentarios' => $comentarios, 'animales_id' => $animales_id]);
+
+
+            $result = $this->adoptante->insert([
+                'nombre' => $nombre, 'apellidos' => $apellidos, 'fech_nac' => $fech_nac, 'NIF' => $NIF, 'correo' => $correo, 'telf' => $telf, 'direccion' => $direccion, 'ciudad' => $ciudad, 'codigo_postal' => $codigo_postal,
+                'pais' => $pais, 'ocupacion' => $ocupacion, 'tipo_vivienda' => $tipo_vivienda, 'tiene_jardin' => $tiene_jardin, 'preferencia_adopcion' => $preferencia_adopcion, 'otra_mascota' => $otra_mascota,
+                'tipo_otra_mascota' => $tipo_otra_mascota, 'estado_solicitud' => $estado_solicitud, 'fecha_solicitud' => $fecha_solicitud, 'comentarios' => $comentarios, 'animales_id' => $animales_id
+            ]);
 
             if ($result == false) {
                 $this->setMsg(Constants::ERROR_INSERT);
+                $this->index($result);
+            } else {
+                $estado_adopcion = $this->get_estado_adopcion($estado_solicitud);
+                $this->animal->update_adopter(['adoptante_id' => $result, 'id' => $animales_id]);
+                header('Location: AdoptanteC.php?id='. $result);
             }
-            $this->show_register($result);
         } else {
             $this->setMsg(Constants::ERROR_INSERT);
         }
@@ -181,12 +231,9 @@ class AdoptanteC
             && isset($_REQUEST['codigo_postal']) && isset($_REQUEST['pais']) && isset($_REQUEST['ocupacion'])
             && isset($_REQUEST['tipo_vivienda']) && isset($_REQUEST['tiene_jardin']) && isset($_REQUEST['preferencia_adopcion'])
             && isset($_REQUEST['otra_mascota']) && isset($_REQUEST['tipo_otra_mascota'])
-            && isset($_REQUEST['estado_solicitud']) && isset($_REQUEST['fecha_solicitud'])
-            && isset($_REQUEST['tiempo_espera']) && isset($_REQUEST['estado_adopcion'])
-            && isset($_REQUEST['fecha_adopcion']) && isset($_REQUEST['comentarios'])
+            && isset($_REQUEST['estado_solicitud']) && isset($_REQUEST['fecha_solicitud']) && isset($_REQUEST['comentarios'])
             && isset($_REQUEST['animales_id'])
         ) {
-            $
             $id = htmlspecialchars(trim($_REQUEST['id']), ENT_QUOTES, 'UTF-8');
             $nombre = htmlspecialchars(trim($_REQUEST['nombre']), ENT_QUOTES, 'UTF-8');
             $apellidos = htmlspecialchars(trim($_REQUEST['apellidos']), ENT_QUOTES, 'UTF-8');
@@ -206,30 +253,31 @@ class AdoptanteC
             $tipo_otra_mascota = htmlspecialchars(trim($_REQUEST['tipo_otra_mascota']), ENT_QUOTES, 'UTF-8');
             $estado_solicitud = htmlspecialchars(trim($_REQUEST['estado_solicitud']), ENT_QUOTES, 'UTF-8');
             $fecha_solicitud = htmlspecialchars(trim($_REQUEST['fecha_solicitud']), ENT_QUOTES, 'UTF-8');
-            $tiempo_espera = htmlspecialchars(trim($_REQUEST['tiempo_espera']), ENT_QUOTES, 'UTF-8');
-            $estado_adopcion = htmlspecialchars(trim($_REQUEST['estado_adopcion']), ENT_QUOTES, 'UTF-8');
-            $fecha_adopcion = htmlspecialchars(trim($_REQUEST['fecha_adopcion']), ENT_QUOTES, 'UTF-8');
             $comentarios = htmlspecialchars(trim($_REQUEST['comentarios']), ENT_QUOTES, 'UTF-8');
             $animales_id = htmlspecialchars(trim($_REQUEST['animales_id']), ENT_QUOTES, 'UTF-8');
-    
+
             $result = $this->adoptante->queryParam(Constants::UPDT_ADOPTANTE, [
-            'id' => $id, 'nombre' => $nombre, 'apellidos' => $apellidos, 'fech_nac' => $fech_nac, 'NIF' => $NIF, 'correo' => $correo, 'telf' => $telf, 'direccion' => $direccion, 'ciudad' => $ciudad,
-            'codigo_postal' => $codigo_postal, 'pais' => $pais, 'ocupacion' => $ocupacion, 'tipo_vivienda' => $tipo_vivienda, 'tiene_jardin' => $tiene_jardin, 'preferencia_adopcion' => $preferencia_adopcion,
-            'otra_mascota' => $otra_mascota, 'tipo_otra_mascota' => $tipo_otra_mascota, 'estado_solicitud' => $estado_solicitud, 'fecha_solicitud' => $fecha_solicitud, 'tiempo_espera' => $tiempo_espera, 'estado_adopcion' => $estado_adopcion,
-            'fecha_adopcion' => $fecha_adopcion, 'comentarios' => $comentarios, 'animales_id' => $animales_id]);
+                'id' => $id, 'nombre' => $nombre, 'apellidos' => $apellidos, 'fech_nac' => $fech_nac, 'NIF' => $NIF, 'correo' => $correo, 'telf' => $telf, 'direccion' => $direccion, 'ciudad' => $ciudad,
+                'codigo_postal' => $codigo_postal, 'pais' => $pais, 'ocupacion' => $ocupacion, 'tipo_vivienda' => $tipo_vivienda, 'tiene_jardin' => $tiene_jardin, 'preferencia_adopcion' => $preferencia_adopcion,
+                'otra_mascota' => $otra_mascota, 'tipo_otra_mascota' => $tipo_otra_mascota, 'estado_solicitud' => $estado_solicitud, 'fecha_solicitud' => $fecha_solicitud, 'comentarios' => $comentarios, 'animales_id' => $animales_id
+            ]);
 
             if ($result == false) {
                 $this->setMsg(Constants::ERROR_UPDATE);
+                $this->index($result);
+            } else {
+                $estado_adopcion = $this->get_estado_adopcion($estado_solicitud);
+                $this->animal->update_owner(['adoptante_id' => $id, 'estado_adopcion' => $estado_adopcion, 'id' => $animales_id]);
+                $this->show_register($result);
             }
-            //$this->index();  // TO DO!!!!!
-            $this->show_register($result);
         } else {
             $this->setMsg(Constants::ERROR_UPDATE);
             $this->index();  // TO DO!!!!!
         }
     }
 
-    private function sdelete() {
+    private function sdelete()
+    {
         if (isset($_REQUEST['id'])) {
             $id = htmlspecialchars(trim($_REQUEST['id']), ENT_QUOTES, 'UTF-8');
             $result = $this->adoptante->queryParam(Constants::DELETE_ADOPTANTE, ['id' => $id]);
@@ -243,7 +291,8 @@ class AdoptanteC
         }
     }
 
-    private function undelete() {
+    private function undelete()
+    {
         if (isset($_REQUEST['id'])) {
             $id = htmlspecialchars(trim($_REQUEST['id']), ENT_QUOTES, 'UTF-8');
             $result = $this->adoptante->queryParam(Constants::UPDT_UNDELETE_ADOPTANTES, ['id' => $id]);
@@ -254,6 +303,14 @@ class AdoptanteC
             $this->index();  // TO DO!!!!!
         } else {
             $this->setMsg(Constants::ERROR_DELETE);
+        }
+    }
+
+    private function delete_animal_from_list()
+    {
+        if (isset($_REQUEST['animal_id'])) {
+            $id = htmlspecialchars(trim($_REQUEST['animal_id']), ENT_QUOTES, 'UTF-8');
+            echo json_encode($this->adoptante->queryParam(Constants::DELETE_ANIMAL_ADOPTANTE, ['id' => $id, 'estado_adopcion' => 'Disponible para adopcion']));
         }
     }
 
@@ -313,6 +370,27 @@ class AdoptanteC
 
         echo json_encode(array("total_pages" => $total_pages, "rows" => $html_var, 'pagination' => $this->adoptante->generatePaginationHTML($page, $this->amount, $total_pages)));
     }
+
+    private function get_estado_adopcion(String $estado_solicitud)
+    {
+        switch ($estado_solicitud) {
+            case 'En proceso':
+                return 'Iniciado proceso de adopción';
+                break;
+            case 'En revisión':
+                return 'En proceso de adopcion';
+                break;
+            case 'Aprobado':
+                return 'Aprobado para adopcion';
+                break;
+            case 'Rechazado':
+                return 'Cancelado';
+                break;
+            case 'Finalizado':
+                return 'Adoptado';
+                break;
+        }
+    }
 }
 
 //Comprobamos que la sesion esta iniciada
@@ -337,4 +415,3 @@ if (!empty($_POST["amount"])) {
     $especie->setAmount($_POST["amount"]);
 }
 $especie->run($action);
-

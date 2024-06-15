@@ -67,8 +67,6 @@ CREATE TABLE IF NOT EXISTS `perrera`.`adoptante` (
   `tipo_otra_mascota` VARCHAR(45) NULL,
   `estado_solicitud` VARCHAR(255) NOT NULL DEFAULT 1,
   `fecha_solicitud` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-  `estado_adopcion` VARCHAR(255) NULL,
-  `fecha_adopcion` TIMESTAMP NULL,
   `comentarios` TEXT NULL,
   `disponible` TINYINT(4) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`),
@@ -137,6 +135,7 @@ CREATE TABLE IF NOT EXISTS `perrera`.`animales` (
   `personalidad` VARCHAR(45) NOT NULL DEFAULT '-',
   `fech_nac` DATE NOT NULL DEFAULT '1800-01-01',
   `estado_adopcion` VARCHAR(50) NOT NULL DEFAULT 'Disponible',
+  `fecha_adopcion` TIMESTAMP NULL,
   `estado_salud` VARCHAR(50) NOT NULL DEFAULT 'Bien',
   `necesidades_especiales` CHAR(2) NOT NULL DEFAULT 'NO',
   `otras_observaciones` VARCHAR(255) NOT NULL DEFAULT '-',
@@ -160,7 +159,7 @@ CREATE TABLE IF NOT EXISTS `perrera`.`animales` (
   CONSTRAINT `fk_animales_adoptante1`
     FOREIGN KEY (`adoptante_id`)
     REFERENCES `perrera`.`adoptante` (`id`)
-    ON DELETE NO ACTION
+	ON DELETE SET NULL
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -177,7 +176,6 @@ CREATE TABLE IF NOT EXISTS `perrera`.`veterinarios` (
   `apellidos` VARCHAR(120) NOT NULL DEFAULT 'No especificado',
   `correo` VARCHAR(150) NOT NULL DEFAULT 'No especificado',
   `telf` VARCHAR(15) NOT NULL DEFAULT 'No especificado',
-  `direccion` VARCHAR(45) NOT NULL,
   `especialidad` VARCHAR(45) NOT NULL,
   `nombre_clinica` VARCHAR(255) NOT NULL,
   `direccion_clinica` VARCHAR(255) NOT NULL,
@@ -195,22 +193,23 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `perrera`.`animales_atendidos_veterinarios`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `perrera`.`animales_atendidos_veterinarios` ;
+DROP TABLE IF EXISTS `perrera`.`animales_atendidos_veterinarios`;
 
 CREATE TABLE IF NOT EXISTS `perrera`.`animales_atendidos_veterinarios` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `animales_id` VARCHAR(22) NOT NULL,
   `veterinarios_id` VARCHAR(22) NOT NULL,
-  `motivo` VARCHAR(150) NOT NULL DEFAULT 'No especificado',
+  `motivo` TEXT NOT NULL DEFAULT 'No especificado',
   `fecha_atencion` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-  `diagnostico` VARCHAR(200) NOT NULL DEFAULT 'No especificado',
+  `diagnostico` TEXT NOT NULL DEFAULT 'No especificado',
   `procedimientos` VARCHAR(200) NOT NULL DEFAULT 'No especificado',
   `medicamentos` VARCHAR(200) NOT NULL DEFAULT 'No especificado',
-  `comentarios` VARCHAR(255) NULL DEFAULT NULL,
+  `comentarios` TEXT NULL DEFAULT NULL,
   `coste` DECIMAL(7,2) NOT NULL DEFAULT 0.00,
   `disponible` TINYINT(4) NOT NULL DEFAULT 1,
-  PRIMARY KEY (`animales_id`, `veterinarios_id`),
-  INDEX `fk_animales_has_veterinarios_veterinarios1_idx` (`veterinarios_id` ASC) ,
-  INDEX `fk_animales_has_veterinarios_animales1_idx` (`animales_id` ASC) ,
+  PRIMARY KEY (`id`),
+  INDEX `fk_animales_has_veterinarios_veterinarios1_idx` (`veterinarios_id` ASC),
+  INDEX `fk_animales_has_veterinarios_animales1_idx` (`animales_id` ASC),
   CONSTRAINT `fk_animales_has_veterinarios_animales1`
     FOREIGN KEY (`animales_id`)
     REFERENCES `perrera`.`animales` (`id`)
@@ -238,6 +237,7 @@ CREATE TABLE IF NOT EXISTS `perrera`.`duenios` (
   `NIF` VARCHAR(15) NOT NULL DEFAULT 'No especificado',
   `correo` VARCHAR(150) NOT NULL DEFAULT 'No especificado',
   `telf` VARCHAR(15) NOT NULL DEFAULT 'No especificado',
+  `ocupacion` VARCHAR(255) NOT NULL,
   `direccion` VARCHAR(255) NOT NULL DEFAULT 'No especificado',
   `ciudad` VARCHAR(255) NOT NULL,
   `codigo_postal` VARCHAR(45) NOT NULL,
@@ -369,11 +369,8 @@ DROP TABLE IF EXISTS `perrera`.`tareas` ;
 
 CREATE TABLE IF NOT EXISTS `perrera`.`tareas` (
   `id` VARCHAR(22) NOT NULL,
-  `nombre` VARCHAR(100) NOT NULL DEFAULT 'No especificado',
-  `descripcion` VARCHAR(100) NULL DEFAULT NULL,
-  `fecha_creacion` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
-  `fecha_finalizacion` TIMESTAMP NULL DEFAULT NULL,
-  `estado` TINYINT(4) NOT NULL DEFAULT 1,
+  `asunto` VARCHAR(100) NOT NULL DEFAULT 'No especificado',
+  `descripcion` VARCHAR(100) NOT NULL,
   `disponible` TINYINT(4) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
@@ -425,13 +422,17 @@ DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
--- Table `perrera`.`animales_con_duenios`
+-- Table `perrera`.`historial_animal_duenio`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `perrera`.`animales_con_duenios` ;
+DROP TABLE IF EXISTS `perrera`.`historial_animal_duenio` ;
 
-CREATE TABLE IF NOT EXISTS `perrera`.`animales_con_duenios` (
+CREATE TABLE IF NOT EXISTS `perrera`.`historial_animal_duenio` (
   `duenios_id` VARCHAR(22) NOT NULL,
   `animales_id` VARCHAR(22) NOT NULL,
+  `fech_registro` DATE NOT NULL,
+  `fech_finalizacion` TIMESTAMP,
+  `estado_actual` VARCHAR(255) NOT NULL DEFAULT 1,
+  `disponible` TINYINT(4) NOT NULL DEFAULT 1,
   PRIMARY KEY (`duenios_id`, `animales_id`),
   INDEX `fk_duenios_has_animales_animales1_idx` (`animales_id` ASC) ,
   INDEX `fk_duenios_has_animales_duenios1_idx` (`duenios_id` ASC) ,

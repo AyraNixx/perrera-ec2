@@ -100,7 +100,7 @@ class Animal extends Model
                 :jaulas_id)";
 
             //Preparamos la query
-            $stm = $this->conBD->prepare($query);                        
+            $stm = $this->conBD->prepare($query);
 
             $stm->bindParam(":nombre", $this->animal["nombre"], PDO::PARAM_STR);
             $stm->bindParam(":especies_id", $this->animal["especies_id"], PDO::PARAM_STR);
@@ -119,11 +119,11 @@ class Animal extends Model
 
 
             // Ejecutamos la query     
-            $stm->execute();     
-            
+            $stm->execute();
+
             $query = 'SELECT id FROM perrera.animales ORDER BY id DESC LIMIT 1';    // TO DO --> CAMBIAR LOS IDS POR AI, QUE SINO NO PUEDO UTILIZAR LASTINSERTEDID
             $stm = $this->conBD->prepare($query);
-            $stm->execute(); 
+            $stm->execute();
             $id = $stm->fetchColumn();
 
             // Devolvemos resultados
@@ -335,6 +335,155 @@ class Animal extends Model
         }
     }
 
+
+    public function clear_adopter(array $params)
+    {
+        try {
+            // Consulta
+            $query = 'UPDATE animales SET adoptante_id = NULL,  estado_adopcion = "No especificado" WHERE id = :id';
+            $stm = $this->conBD->prepare($query);
+            $stm->bindParam(":id", $params["id"], PDO::PARAM_STR);
+            return $stm->execute();
+            // En caso de excepción, lo guardamos en el log
+        } catch (PDOException $e) {
+            // Guardamos el error en el log
+            Utils::save_log_error("PDOException caught: " . $e->getMessage());
+        } catch (Exception $e) {
+            // Guardamos el error en el log
+            Utils::save_log_error("Unexpected error caught: " . $e->getMessage());
+        }
+    }
+
+    public function clear_owner(array $params)
+    {
+        try {
+            // Convierte la cadena en un array
+            $id_array = explode(',', $params["id"]);
+
+            // Se crean marcadores de posicion
+            $id_i = implode(',', array_fill(0, count($id_array), '?'));
+
+            $query = 'UPDATE historial_animal_duenio SET disponible = 0, fech_finalizacion = NOW(), estado_actual = "Terminado" WHERE duenios_id = ? AND animales_id IN (' . $id_i . ')';
+
+            $stm = $this->conBD->prepare($query);
+
+            // Vincula los valores de adoptante_id y estado_adopcion
+            $stm->bindValue(1, $params["duenios_id"], PDO::PARAM_STR);
+
+            // Vincula los valores de los id
+            foreach ($id_array as $key => $id) {
+                $stm->bindValue($key + 3, $id, PDO::PARAM_STR);  // +3 porque los primeros dos parámetros ya están ocupados
+            }
+            return $stm->execute();
+            // En caso de excepción, lo guardamos en el log
+        } catch (PDOException $e) {
+            // Guardamos el error en el log
+            Utils::save_log_error("PDOException caught: " . $e->getMessage());
+        } catch (Exception $e) {
+            // Guardamos el error en el log
+            Utils::save_log_error("Unexpected error caught: " . $e->getMessage());
+        }
+    }
+
+
+    public function update_adopter(array $params)
+    {
+        try {
+            $query = 'SELECT estado_solicitud FROM adoptante WHERE id = ?';
+            $stm = $this->conBD->prepare($query);
+            $stm->bindValue(1, $params["adoptante_id"], PDO::PARAM_STR);
+            $stm->execute();
+            $estado_solicitud = $stm->fetchColumn();
+    
+            $nuevo_estado_adopcion = '';
+            switch ($estado_solicitud) {
+                case 'En proceso':
+                    $nuevo_estado_adopcion = 'Iniciado proceso de adopción';
+                    break;
+                case 'En revisión':
+                    $nuevo_estado_adopcion = 'En proceso de adopcion';
+                    break;
+                case 'Aprobado':
+                    $nuevo_estado_adopcion = 'Aprobado para adopcion';
+                    break;
+                case 'Rechazado':
+                    $nuevo_estado_adopcion = 'Cancelado';
+                    break;
+                case 'Finalizado':
+                    $nuevo_estado_adopcion = 'Adoptado';
+                    break;
+            }
+    
+            $id_array = explode(',', $params["id"]);
+    
+            $id_placeholders = implode(',', array_fill(0, count($id_array), '?'));
+    
+            $query = 'UPDATE animales SET adoptante_id = ?, estado_adopcion = ? WHERE id IN (' . $id_placeholders . ')';
+            $stm = $this->conBD->prepare($query);
+    
+            $stm->bindValue(1, $params["adoptante_id"], PDO::PARAM_STR);
+            $stm->bindValue(2, $nuevo_estado_adopcion, PDO::PARAM_STR);
+    
+            foreach ($id_array as $key => $id) {
+                $stm->bindValue($key + 3, $id, PDO::PARAM_STR);  // +3 porque los primeros dos parámetros ya están ocupados
+            }
+    
+            $res = $stm->execute();
+            return $res;
+        } catch (PDOException $e) {
+            Utils::save_log_error("PDOException caught aaaaa: " . $e->getMessage());
+        } catch (Exception $e) {
+            Utils::save_log_error("Unexpected error caught aaaa: " . $e->getMessage());
+        }
+    }
+    
+
+    public function update_owner(array $params)
+    {
+        try {
+            // Convierte la cadena en un array
+            $id_array = explode(',', $params["id"]);
+
+            // Se crean marcadores de posicion
+            $id_i = implode(',', array_fill(0, count($id_array), '?'));
+
+            // $query = 'INSERT INTO historial_animal_duenio (duenios_id, animales_id, fech_registro, disponible)
+            //             SELECT ?, a.id, NOW(), 1
+            //             FROM animales a
+            //             WHERE a.id IN (' . $id_i . ')
+            //             ON DUPLICATE KEY UPDATE
+            //             duenios_id = duenios_id';
+            $query = '
+            INSERT INTO historial_animal_duenio (duenios_id, animales_id, fech_registro, disponible)
+            SELECT ?, a.id, NOW(), 1
+            FROM animales a
+            LEFT JOIN historial_animal_duenio h ON h.animales_id = a.id AND h.disponible = 1
+            WHERE a.id IN (' . $id_i . ') AND h.animales_id IS NULL
+            ON DUPLICATE KEY UPDATE
+            duenios_id = VALUES(duenios_id),
+            fech_registro = VALUES(fech_registro),
+            disponible = VALUES(disponible)';
+
+
+            $stm = $this->conBD->prepare($query);
+
+            // Vincula los valores de adoptante_id y duenio_id
+            $stm->bindValue(1, $params["duenios_id"], PDO::PARAM_STR);
+
+            // Vincula los valores de los id
+            foreach ($id_array as $key => $id) {
+                $stm->bindValue($key + 2, $id, PDO::PARAM_STR);
+            }
+            return $stm->execute();
+            // En caso de excepción, lo guardamos en el log
+        } catch (PDOException $e) {
+            // Guardamos el error en el log
+            Utils::save_log_error("PDOException caught: " . $e->getMessage());
+        } catch (Exception $e) {
+            // Guardamos el error en el log
+            Utils::save_log_error("Unexpected error caught: " . $e->getMessage());
+        }
+    }
 }
 
 // $animal = new Animal();

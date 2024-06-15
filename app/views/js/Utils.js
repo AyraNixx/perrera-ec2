@@ -1,85 +1,248 @@
+var controller_val = $("[data-controller]").attr("data-controller");
+var url_params = new URLSearchParams(window.location.search);
+var id_page = url_params.has("id") ? url_params.get("id") : false;
+
 $(document).ready(function () {
-  if ($('select[name="ocupacion"]').length) {
-    let ocupacion_text = '';
+  generate_values_details();
+  generate_values_inserts();
+  $('input[type="checkbox"]').on("click", function () {
+    if ($(this).val() == "0") {
+      $(this).val("1");
+      $(this).prop("checked", true);
+    } else if ($(this).val() == "1") {
+      $(this).val("0");
+      $(this).prop("checked", false);
+    }
+  });
+});
+
+function generate_values_details() {
+  if ($('#details select[name="ocupacion"]').length) {
+    let ocupacion_text = "";
     if ($('input[name="ocupacion_text"]').length) {
       ocupacion_text = $('input[name="ocupacion_text"]').val();
     }
+    $('#details select[name="ocupacion"]').empty();
     $.getJSON("../views/js/Utils.json", function (data) {
-      $.each(data.ocupaciones, function (k, v) { 
-        let option = $('<option></option>').attr('value', v.value).text(v.text);
-        if(ocupacion_text != '' && v.text == ocupacion_text){
-          option.prop('selected', true);
+      $.each(data.ocupaciones, function (k, v) {
+        let option = $("<option></option>").attr("value", v.value).text(v.text);
+        if (ocupacion_text != "" && v.text == ocupacion_text) {
+          option.prop("selected", true);
         }
-        $('select[name="ocupacion"]').append(option);
+        $('#details select[name="ocupacion"]').append(option);
       });
     });
   }
 
-  if ($('select[name="pais"]').length) {
-    let pais_text = '';
+  if ($('#details select[name="pais"]').length) {
+    let pais_text = "";
     if ($('input[name="pais_text"]').length) {
       pais_text = $('input[name="pais_text"]').val();
     }
+    $('#details select[name="pais"]').empty();
     $.getJSON("../views/js/Utils.json", function (data) {
-      $.each(data.paises, function (k, v) { 
-        let option = $('<option></option>').attr('value', v.value).text(v.text);
-        if(pais_text != '' && v.text == pais_text){
-          option.prop('selected', true);
+      $.each(data.paises, function (k, v) {
+        let option = $("<option></option>").attr("value", v.value).text(v.text);
+        if (pais_text != "" && v.text == pais_text) {
+          option.prop("selected", true);
         }
-        $('select[name="pais"]').append(option);
+        $('#details select[name="pais"]').append(option);
       });
     });
   }
-  
-  if ($('select[name="estado_solicitud"]').length) {
-    let estado_solicitud_text = '';
+
+  if ($('#details select[name="estado_solicitud"]').length) {
+    let estado_solicitud_text = "";
     if ($('input[name="estado_solicitud_text"]').length) {
       estado_solicitud_text = $('input[name="estado_solicitud_text"]').val();
     }
+    $('#details select[name="estado_solicitud"]').empty();
     $.getJSON("../views/js/Utils.json", function (data) {
-      $.each(data.estado_solicitud, function (k, v) { 
-        let option = $('<option></option>').attr('value', v.estado).text(v.estado);
-        if(estado_solicitud != '' && v.estado == estado_solicitud){
-          option.prop('selected', true);
+      $.each(data.estado_solicitud, function (k, v) {
+        let option = $("<option></option>")
+          .attr("value", v.estado)
+          .text(v.estado);
+        if (estado_solicitud != "" && v.estado == estado_solicitud) {
+          option.prop("selected", true);
         }
-        $('select[name="estado_solicitud"]').append(option);
+        $('#details select[name="estado_solicitud"]').append(option);
       });
     });
   }
 
-  if ($('select[name="estado_adopcion"]').length) {
-    let estado_adopcion_text = '';
+  if ($('#details select[name="estado_adopcion"]').length) {
+    let estado_adopcion_text = "";
     if ($('input[name="estado_adopcion_text"]').length) {
       estado_adopcion_text = $('input[name="estado_adopcion_text"]').val();
     }
+    $('#details select[name="estado_adopcion"]').empty();
     $.getJSON("../views/js/Utils.json", function (data) {
-      $.each(data.estado_solicitud, function (k, v) { 
-        let option = $('<option></option>').attr('value', v.estado).text(v.estado);
-        if(estado_adopcion != '' && v.estado == estado_adopcion){
-          option.prop('selected', true);
+      console.log(data.estado_adopcion);
+      $.each(data.estado_adopcion, function (k, v) {
+        let option = $("<option></option>").attr("value", v.value).text(v.text);
+        if (estado_adopcion != "" && v.text == estado_adopcion) {
+          option.prop("selected", true);
         }
-        $('select[name="estado_adopcion"]').append(option);
+        $('#details select[name="estado_adopcion"]').append(option);
       });
     });
   }
 
-  if ($('select[name="tipo_vivienda"]').length) {
-    let tipo_vivienda_text = '';
+  if ($('#details select[name="tipo_vivienda"]').length) {
+    let tipo_vivienda_text = "";
     if ($('input[name="tipo_vivienda_text"]').length) {
       tipo_vivienda_text = $('input[name="tipo_vivienda_text"]').val();
     }
+    $('#details select[name="tipo_vivienda"]').empty();
     $.getJSON("../views/js/Utils.json", function (data) {
-      $.each(data.tipos_vivienda, function (k, v) { 
-        let option = $('<option></option>').attr('value', v.value).text(v.text);
-        if(tipo_vivienda_text != '' && v.text == tipo_vivienda_text){
-          option.prop('selected', true);
+      $.each(data.tipos_vivienda, function (k, v) {
+        let option = $("<option></option>").attr("value", v.value).text(v.text);
+        if (tipo_vivienda_text != "" && v.text == tipo_vivienda_text) {
+          option.prop("selected", true);
         }
-        $('select[name="tipo_vivienda"]').append(option);
+        $('#details select[name="tipo_vivienda"]').append(option);
       });
     });
   }
-});
 
+  if ($('#details select[name="personalidad[]"]').length) {
+    let personalidad_text = "";
+    if ($('input[name="personalidad_text"]').length) {
+      personalidad_text = $('input[name="personalidad_text"]').val();
+      console.log(personalidad_text);
+    }
+    $('#details select[name="personalidad[]"]').empty();
+    $.getJSON("../views/js/Utils.json", function (data) {
+      $.each(data.personalidad, function (k, v) {
+        let option = $("<option></option>").attr("value", v.value).text(v.text);
+        if (personalidad_text != "" && personalidad_text.includes(v.value)) {
+          option.prop("selected", true);
+        }
+        $('#details select[name="personalidad[]"]').append(option);
+      });
+    });
+  }
+
+  if ($('#details select[name="colores[]"]').length) {
+    let colores_text = "";
+    if ($('#details input[name="colores_text"]').length) {
+      colores_text = $('#details input[name="colores_text"]').val();
+    }
+    $('#details select[name="colores[]"]').empty();
+    $.getJSON("../views/js/Utils.json", function (data) {
+      console.log(data);
+      $.each(data.colores, function (k, v) {
+        let option = $("<option></option>").attr("value", v.value).text(v.text);
+        if (colores_text != "" && colores_text.includes(v.value)) {
+          option.prop("selected", true);
+        }
+        $('#details select[name="colores[]"]').append(option);
+      });
+    });
+  }
+
+  if ($('#details select[name="estado_salud"]').length) {
+    let estado_salud_text = "";
+    if ($('#details input[name="estado_salud_text"]').length) {
+      estado_salud_text = $('#details input[name="estado_salud_text"]').val();
+    }
+    $('#details select[name="estado_salud"]').empty();
+    $.getJSON("../views/js/Utils.json", function (data) {
+      $.each(data.estado_salud, function (k, v) {
+        let option = $("<option></option>").attr("value", v.value).text(v.text);
+        if (estado_salud_text != "" && estado_salud_text.includes(v.value)) {
+          option.prop("selected", true);
+        }
+        $('#details select[name="estado_salud"]').append(option);
+      });
+    });
+  }
+}
+
+function generate_values_inserts() {
+  if ($('#insert select[name="ocupacion"]').length) { console.log('entra 1');
+    $('#insert select[name="ocupacion"]').empty();
+    $.getJSON("../views/js/Utils.json", function (data) {
+      $.each(data.ocupaciones, function (k, v) {
+        let option = $("<option></option>").attr("value", v.value).text(v.text);
+        $('#insert select[name="ocupacion"]').append(option);
+      });
+    });
+  }
+
+  if ($('#insert select[name="pais"]').length) { console.log('entra 2');
+    $('#insert select[name="pais"]').empty();
+    $.getJSON("../views/js/Utils.json", function (data) {
+      $.each(data.paises, function (k, v) {
+        let option = $("<option></option>").attr("value", v.value).text(v.text);
+        $('#insert select[name="pais"]').append(option);
+      });
+    });
+  }
+
+  if ($('#insert select[name="estado_solicitud"]').length) { console.log('entra 3');
+    $('#insert select[name="estado_solicitud"]').empty();
+    $.getJSON("../views/js/Utils.json", function (data) {
+      $.each(data.estado_solicitud, function (k, v) {
+        let option = $("<option></option>")
+          .attr("value", v.estado)
+          .text(v.estado);
+        $('#insert select[name="estado_solicitud"]').append(option);
+      });
+    });
+  }
+
+  if ($('#insert select[name="estado_adopcion"]').length) { console.log('entra 4');
+    $('#insert select[name="estado_adopcion"]').empty();
+    $.getJSON("../views/js/Utils.json", function (data) {
+      $.each(data.estado_adopcion, function (k, v) {
+        let option = $("<option></option>").attr("value", v.value).text(v.text);
+        $('#insert select[name="estado_adopcion"]').append(option);
+      });
+    });
+  }
+
+  if ($('#insert select[name="tipo_vivienda"]').length) { console.log('entra 5');
+    $('#insert select[name="tipo_vivienda"]').empty();
+    $.getJSON("../views/js/Utils.json", function (data) {
+      $.each(data.tipos_vivienda, function (k, v) {
+        let option = $("<option></option>").attr("value", v.value).text(v.text);
+        $('#insert select[name="tipo_vivienda"]').append(option);
+      });
+    });
+  }
+
+  if ($('#insert select[name="personalidad[]"]').length) { console.log('entra 6');
+    $('#insert select[name="personalidad[]"]').empty();
+    $.getJSON("../views/js/Utils.json", function (data) {
+      $.each(data.personalidad, function (k, v) {
+        let option = $("<option></option>").attr("value", v.value).text(v.text);
+        $('#insert select[name="personalidad[]"]').append(option);
+      });
+    });
+  }
+
+  if ($('#insert select[name="colores[]"]').length) { console.log('entra 7');
+    $('#insert select[name="colores[]"]').empty();
+    $.getJSON("../views/js/Utils.json", function (data) {
+      console.log(data);
+      $.each(data.colores, function (k, v) {
+        let option = $("<option></option>").attr("value", v.value).text(v.text);
+        $('#insert select[name="colores[]"]').append(option);
+      });
+    });
+  }
+
+  if ($('#insert select[name="estado_salud"]').length) { console.log('entra 9');
+    $('#insert select[name="estado_salud"]').empty();
+    $.getJSON("../views/js/Utils.json", function (data) {
+      $.each(data.estados_salud, function (k, v) {
+        let option = $("<option></option>").attr("value", v.value).text(v.text);
+        $('#insert select[name="estado_salud"]').append(option);
+      });
+    });
+  }
+}
 //------------------------------     DROPDOWN BUTTON    ------------------------------
 //
 //

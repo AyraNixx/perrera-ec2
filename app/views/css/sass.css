@@ -12076,10 +12076,6 @@ h5, .h5 {
 #menu #close-btn {
   display: none;
 }
-#menu > div {
-  max-height: 700px;
-  overflow-y: auto;
-}
 #menu > div::-webkit-scrollbar-thumb {
   background-color: transparent;
 }

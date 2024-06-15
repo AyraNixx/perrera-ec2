@@ -174,6 +174,9 @@ class AnimalC
             case 'search_animal_modal':
                 $this->search_animal_modal();
                 break;
+            case 'getList_animal':
+                $this->getList_animal();
+                break;
             case "pagination":
                 $this->pagination();
                 break;
@@ -427,8 +430,54 @@ class AnimalC
         }
     }
 
-    public function search_animal_modal(){
-        echo json_encode($this->animal->query(Constants::GET_ANIMAL_MODAL));
+    public function search_animal_modal()
+    {
+        if (isset($_REQUEST['controller'])) {
+            $controller = htmlspecialchars(trim($_REQUEST["controller"]), ENT_QUOTES, 'UTF-8');
+            switch ($controller) {
+                case 'DuenioC.php':
+                    echo json_encode($this->animal->query(Constants::GET_ANIMAL_MODAL_DUENIO));
+                    break;
+                case 'AdoptanteC.php':
+                    echo json_encode($this->animal->query(Constants::GET_ANIMAL_MODAL_ADOPTANTE));
+                    break;
+            }
+        }
+    }
+
+    public function getList_animal()
+    {
+        if (isset($_REQUEST['controller'])) {
+            $controller = htmlspecialchars(trim($_REQUEST["controller"]), ENT_QUOTES, 'UTF-8');
+            switch ($controller) {
+                case 'DuenioC.php':
+                    if (isset($_REQUEST['register_id']) && isset($_REQUEST['id'])) {
+                        $id = htmlspecialchars(trim($_REQUEST["id"]), ENT_QUOTES, 'UTF-8');
+                        $duenio_id = htmlspecialchars(trim($_REQUEST["register_id"]), ENT_QUOTES, 'UTF-8');
+                        $res = $this->animal->update_owner(['id' => $id, 'duenios_id' => $duenio_id]);
+                        if ($res) {
+                            echo json_encode($this->animal->queryParam(Constants::GET_ANIMAL_LIST_DUENIO, ['id' => $duenio_id]));
+                        }
+                    } else if(isset($_REQUEST['register_id']) ){
+                        $duenio_id = htmlspecialchars(trim($_REQUEST["register_id"]), ENT_QUOTES, 'UTF-8');
+                        echo json_encode($this->animal->queryParam(Constants::GET_ANIMAL_LIST_DUENIO, ['id' => $duenio_id]));
+                    }
+                    break;
+                case 'AdoptanteC.php':
+                    if (isset($_REQUEST['register_id']) && isset($_REQUEST['id'])) {
+                        $id = htmlspecialchars(trim($_REQUEST["id"]), ENT_QUOTES, 'UTF-8');
+                        $adoptante_id = htmlspecialchars(trim($_REQUEST["register_id"]), ENT_QUOTES, 'UTF-8');
+                        $res = $this->animal->update_adopter(['id' => $id, 'adoptante_id' => $adoptante_id]);
+                        if ($res) {
+                            echo json_encode($this->animal->queryParam(Constants::GET_ANIMAL_LIST_ADOPTANTE, ['adoptante_id' => $adoptante_id]));
+                        }
+                    } else if(isset($_REQUEST['register_id']) ){
+                        $adoptante_id = htmlspecialchars(trim($_REQUEST["register_id"]), ENT_QUOTES, 'UTF-8');
+                        echo json_encode($this->animal->queryParam(Constants::GET_ANIMAL_LIST_ADOPTANTE, ['adoptante_id' => $adoptante_id]));
+                    }
+                    break;
+            }
+        }
     }
 
     public function filter_data()
@@ -610,4 +659,5 @@ if (!empty($_POST["page"])) {
 if (!empty($_POST["amount"])) {
     $animal->setAmount($_POST["amount"]);
 }
+// var_dump($_REQUEST);
 $animal->run($action);

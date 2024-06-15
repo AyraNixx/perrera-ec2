@@ -3,11 +3,11 @@
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title px-2">AÑADIR NUEVO ADOPTANTE</h5>
+                    <h5 class="modal-title px-2">AÑADIR NUEVO DUEÑO</h5>
                     <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-4" style="max-height:550px; overflow:auto;">
-                    <form action="../controllers/AdoptanteC.php" method="POST" class="d-flex flex-column w-100" enctype="multipart/form-data">
+                    <form action="../controllers/DuenioC.php" method="POST" class="d-flex flex-column w-100" enctype="multipart/form-data">
                         <h5 class="mx-1">DATOS PERSONALES</h5>
                         <div class="row border border-1 border-secondary mx-1 p-2">
                             <div class="col-md-6">
@@ -61,46 +61,25 @@
                             </div>
                         </div>
 
-                        <h5 class="mx-1 mt-4">DATOS RELEVANTES DE LA VIVIENDA</h5>
+                        <h5 class="mx-1 mt-4">INFORMACIÓN ADICIONAL</h5>
                         <div class="row border border-1 border-secondary mx-1 p-2">
-                            <div class="col-md-8">
-                                <label for="tipo_vivienda">Tipo de vivienda</label>
-                                <select name="tipo_vivienda" id="tipo_vivienda"></select>
-                            </div>
-                            <div class="col-md-4 d-flex align-self-end">
-                                <label for="tiene_jardin" class="d-flex align-self-center">¿Tiene Jardín?<input type="checkbox" name="tiene_jardin" id="tiene_jardin" class="ms-3" style="width: fit-content;" value="0"></label>
-                            </div>
-                            <div class="col-md-4 d-flex align-self-end mb-3">
-                                <label for="otra_mascota" class="d-flex align-self-center">¿Tiene mascota/s?<input type="checkbox" name="otra_mascota" id="otra_mascota" class="ms-3" style="width: fit-content;" value="0"></label>
-                            </div>
-                            <div class="col-md-8 mb-3">
-                                <label for="tipo_otra_mascota">En caso de tener mascota, indicar especie</label>
-                                <input type="text" name="tipo_otra_mascota" id="tipo_otra_mascota" value="">
-                            </div>
-                        </div>
-                        <div class="row p-2">
-                            <div class="col-md-8">
-                                <label for="estado_solicitud">Estado de la solicitud</label>
-                                <select name="estado_solicitud" id="estado_solicitud"></select>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="fecha_solicitud">Inicio de la solicitud</label>
-                                <input type="date" name="fecha_solicitud" id="fecha_solicitud" value="">
-                            </div>
-                            <div class="col-md-12">
-                                <label for="animals_selected">Animal/es al que se quiere adoptar</label>
+                            <div class="col-md-12 mb-3">
+                                <label for="animals_selected">Animales</label>
                                 <input type="hidden" name="animales_id" id="animales_id" value="">
                                 <input type="text" value="" id="animals_selected">
                             </div>
-                            <div class="col-md-4 ">
-                                <label for="preferencia_adopcion" class="d-flex align-self-center">Preferencia
-                                    <input type="checkbox" name="preferencia_adopcion" id="preferencia_adopcion" class="ms-3" style="width: fit-content;" value="0">
-                                </label>
+                            <div class="col-md-4 d-flex align-self-end mb-3">
+                                <input type="hidden" name="permiso_visita" value="0">
+                                <label for="permiso_visita_chk" class="d-flex align-self-center">Permiso de visita<input type="checkbox" name="permiso_visita_chk" id="permiso_visita_chk" class="ms-3" style="width: fit-content;" value="0"></label>
+                            </div>
+                            <div class="col-md-8 mb-3">
+                                <label for="fecha_ultima_visita">Última visita realizada</label>
+                                <input type="datetime-local" name="fecha_ultima_visita" id="fecha_ultima_visita" value="">
                             </div>
                         </div>
                         <div class="textarea-container mx-1 mt-3">
-                            <h5><label for="comentarios">Otros datos de interés</label></h5>
-                            <textarea class="form-textarea" name="comentarios" id="comentarios" cols="30" rows="10" style="resize: none;"></textarea>
+                            <h5><label for="observaciones">Otros datos de interés</label></h5>
+                            <textarea class="form-textarea" name="observaciones" id="observaciones" cols="30" rows="10" style="resize: none;"></textarea>
                         </div>
                 </div>
                 <div class="modal-footer align-items-center justify-content-center">

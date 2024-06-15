@@ -35,19 +35,13 @@
                                     <!-- Opciones del select -->
                                 </select>
 
+                                <label for="jaulas_id">Jaulas disponibles</label>
+                                <select name="jaulas_id" id="jaulas_id">
+                                    <option>Seleccionar jaula</option>
+                                </select>
+
                                 <label for="raza">Raza</label>
                                 <input type="text" name="raza" id="raza" value="">
-
-                                <label for="estado_adopcion">Estado adopción</label>
-                                <select name="estado_adopcion" id="estado_adopcion">
-                                    <option>Seleccionar estado</option>
-                                    <option value="Disponible">Disponible</option>
-                                    <option value="Adoptado">Adoptado</option>
-                                    <option value="En_proceso">En proceso</option>
-                                    <option value="Reservado">Reservado</option>
-                                    <option value="Pendiente">Pendiente</option>
-                                    <option value="Devuelto">Devuelto</option>
-                                </select>                                
 
                                 <div class="input-group my-4 mb-1" style="position: relative; margin-top:1.7rem !important">
                                     <div class="custom-file flex-grow-1 border border-1 border-primary" style="padding: .3em;border-end-start-radius: 4px;border-start-start-radius: 4px;">
@@ -66,12 +60,12 @@
                                     <option value="N">No</option>
                                 </select>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 mb-3">
                                 <!-- Contenido de la segunda columna -->
 
                                 <label for="tamanio">Tamaño</label>
                                 <select name="tamanio" id="tamanio">
-                                    <option selected>Seleccionar tamaño</option>
+                                    <option disabled>Seleccionar tamaño</option>
                                     <option value="Cachorro">Cachorro</option>
                                     <option value="Pequenio">Pequeño</option>
                                     <option value="Mediano">Mediano</option>
@@ -83,47 +77,40 @@
 
                                 <label for="colores">Colores</label>
                                 <select name="colores[]" id="colores" multiple>
-                                    <option selected>Seleccionar color</option>
-                                    <option value="Negro">Negro</option>
-                                    <option value="Blanco">Blanco</option>
-                                    <option value="Marron">Marrón</option>
-                                    <option value="Otros">Otros. Especificar en comentarios</option>
+                                    <option disabled>Seleccionar color</option>
                                 </select>
 
                                 <label for="personalidad">Personalidad</label>
-                                <select name="personalidad[]" id="personalidad" multiple>
-                                    <option selected>Seleccionar personalidad</option>
-                                    <option value="Amoroso">Amoroso</option>
-                                    <option value="Curioso">Curioso</option>
-                                    <option value="Energetico">Energético</option>
-                                    <option value="Independiente">Independiente</option>
-                                    <option value="Inteligente">Inteligente</option>
-                                    <option value="Jugueton">Juguetón</option>
-                                    <option value="Protector">Protector</option>
-                                    <option value="Sociable">Sociable</option>
-                                    <option value="Timido">Tímido</option>
-                                    <option value="Tranquilo">Tranquilo</option>
-                                    <option value="Otros">Otros. Especificar en comentarios</option>
-                                </select>
+                                <select name="personalidad[]" id="personalidad" multiple></select>
 
                                 <label for="estado_salud">Estado salud</label>
                                 <select name="estado_salud" id="estado_salud">
-                                    <option>Seleccionar estado</option>
-                                    <option value="Control_veterinario">Control veterinario</option>
-                                    <option value="Enfermo">Enfermo</option>
-                                    <option value="Recuperacion">Recuperación</option>
-                                    <option value="Saludable">Saludable</option>
-                                </select>
-
-                                <label for="jaulas_id">Jaulas disponibles</label>
-                                <select name="jaulas_id" id="jaulas_id">
-                                    <option>Seleccionar jaula</option>
+                                    <option disabled>Seleccionar estado</option>
                                 </select>
                             </div>
-                            <div class="textarea-container">
-                                <label for="otras_observaciones">Otras observaciones</label>
-                                <textarea class="form-textarea" name="otras_observaciones" id="otras_observaciones" cols="30" rows="10"></textarea>
+                        </div>
+                        <h5 class="mx-1 mt-4">INFORMACIÓN RELEVANTE</h5>
+                        <div class="row border border border-1 border-secondary mx-1 p-2">
+                            <div class="col-md-6">
+                                <label for="estado_adopcion">Estado adopción</label>
+                                <select name="estado_adopcion" id="estado_adopcion">
+                                    <option value="">Seleccionar estado</option>
+                                </select>
                             </div>
+                            <div class="col-md-6">
+                                <label for="adoptante_id_text">Adoptante</label>
+                                <input type="hidden" name="adoptante_id" id="adoptante_id" value=""/>
+                                <input type="text" name="adoptante_id_text" id="adoptante_id_text"/>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="duenio_id_text">Dueño</label>
+                                <input type="hidden" name="duenio_id" id="duenio_id" value=""/>
+                                <input type="text" name="duenio_id_text" id="duenio_id_text"/>
+                            </div>
+                        </div>
+                        <div class="textarea-container">
+                            <label for="otras_observaciones">Otras observaciones</label>
+                            <textarea class="form-textarea" name="otras_observaciones" id="otras_observaciones" cols="30" rows="10"></textarea>
                         </div>
                 </div>
                 <div class="modal-footer align-items-center justify-content-center">

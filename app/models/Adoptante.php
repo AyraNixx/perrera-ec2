@@ -9,30 +9,14 @@ use \PDOException;
 use \Exception;
 
 require_once "Model.php";
-/*
 
 
-
-
-    // Aquí necesitaría hacer algo para ir actualizando el tiempo de espera, 
-    // MIRAR SI SE PUEDEN REALIZAR AUTOMATIZACIONES EN MYSQL
-
-
-
-
-
-
-
-*/
 class Adoptante extends Model
 {
-
 
     // --
     // -- MÉTODOS --------------------
     // --
-
-
 
 
     /**
@@ -46,12 +30,10 @@ class Adoptante extends Model
     {
         try {
             // Consulta
-        $query = "INSERT INTO adoptante ( nombre, apellidos, fech_nac, NIF, correo, telf, direccion, ciudad, codigo_postal,
-            pais, ocupacion, tipo_vivienda, tiene_jardin, preferencia_adopcion, otra_mascota, tipo_otra_mascota, estado_solicitud, fecha_solicitud,
-            tiempo_espera, estado_adopcion, fecha_adopcion, comentarios, animales_id)
-            VALUES ( :nombre, :apellidos, :fech_nac, :NIF, :correo, :telf, :direccion, :ciudad, :codigo_postal,
-            :pais, :ocupacion, :tipo_vivienda, :tiene_jardin, :preferencia_adopcion, :otra_mascota, :tipo_otra_mascota, :estado_solicitud, :fecha_solicitud,
-            :tiempo_espera, :estado_adopcion, :fecha_adopcion, :comentarios, :animales_id)";
+            $query = "INSERT INTO adoptante ( nombre, apellidos, fech_nac, NIF, correo, telf, direccion, ciudad, codigo_postal,
+            pais, ocupacion, tipo_vivienda, tiene_jardin, preferencia_adopcion, fecha_solicitud, estado_solicitud, otra_mascota, tipo_otra_mascota, comentarios)
+            VALUES (:nombre, :apellidos, :fech_nac, :NIF, :correo, :telf, :direccion, :ciudad, :codigo_postal,
+            :pais, :ocupacion, :tipo_vivienda, :tiene_jardin, :preferencia_adopcion, :fecha_solicitud, :estado_solicitud, :otra_mascota, :tipo_otra_mascota, :comentarios)";
 
             //Preparamos la query
             $stm = $this->conBD->prepare($query);
@@ -74,28 +56,37 @@ class Adoptante extends Model
             $stm->bindParam(":tipo_otra_mascota", $adoptante["tipo_otra_mascota"], PDO::PARAM_STR);
             $stm->bindParam(":estado_solicitud", $adoptante["estado_solicitud"], PDO::PARAM_STR);
             $stm->bindParam(":fecha_solicitud", $adoptante["fecha_solicitud"], PDO::PARAM_STR);
-            $stm->bindParam(":tiempo_espera", $adoptante["tiempo_espera"], PDO::PARAM_INT);
-            $stm->bindParam(":estado_adopcion", $adoptante["estado_adopcion"], PDO::PARAM_STR);
-            $stm->bindParam(":fecha_adopcion", $adoptante["fecha_adopcion"], PDO::PARAM_STR);
             $stm->bindParam(":comentarios", $adoptante["comentarios"], PDO::PARAM_STR);
-            $stm->bindParam(":animales_id", $adoptante["animales_id"], PDO::PARAM_STR);
-    
+
             // Ejecutamos la query           
             // Devolvemos resultados 
-            if($stm->execute()){
+            if ($stm->execute()) {
                 $query = "SELECT id FROM perrera.adoptante ORDER BY id DESC LIMIT 1";
                 $stm = $this->conBD->prepare($query);
                 $stm->execute();
-                return $stm->fetch()['id'];
-            }else{
+                $id_adoptante = $stm->fetch()['id'];
+
+                echo $id_adoptante;
+                // if (isset($adoptante['animales_id']) && $id_adoptante != null) {   // Si existen animales seleccionados
+                //     $animals = explode(',', $adoptante['animales_id']); // Convertimos la cadena en array
+                //     $in = str_repeat('?,', count($animals) - 1) . '?'; // Ponemos un ? por cada valor del array
+                //     $query = 'UPDATE perrera.animales SET adoptante_id = ?, estado_adopcion = "En proceso" WHERE id IN (' . $in . ')';
+                //     $stm = $this->conBD->prepare($query);
+                //     // Concatenamos los valores de los animales al array de id_adoptante
+                //     $values = array_merge([$id_adoptante], $animals);
+                //     foreach ($values as $k => $value) { // Asignamos los valores
+                //         $stm->bindValue($k + 1, $value, PDO::PARAM_STR);
+                //     }
+                //     $stm->execute();
+                // }
+                return $id_adoptante;
+            } else {
                 return false;
             }
         } catch (PDOException $e) {
-            echo "todo mal";
             // Guardamos el error en el log
             Utils::save_log_error("PDOException caught: " . $e->getMessage());
         } catch (Exception $e) {
-            echo "todo mal";
             // Guardamos el error en el log
             Utils::save_log_error("Unexpected error caught: " . $e->getMessage());
         }

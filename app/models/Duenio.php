@@ -12,11 +12,6 @@ require_once "Model.php";
 
 class Duenio extends Model
 {
-    private $duenio;
-    function __construct()
-    {
-        $duenio = new Model();
-    }
 
     // --
     // -- MÉTODOS --------------------
@@ -35,27 +30,28 @@ class Duenio extends Model
     public function insert(array $duenio)
     {
         try {
-            $query = "INSERT INTO duenios (nombre, apellidos, fech_nac, NIF, correo, telf, 
+            $query = "INSERT INTO duenios (nombre, apellidos, fech_nac, NIF, correo, telf, ocupacion,
             direccion, ciudad, codigo_postal, pais, permiso_visita, fecha_ultima_visita, observaciones) 
-            VALUES (:nombre, :apellidos, :fech_nac, :NIF, :correo, :telf, :direccion, :ciudad, 
+            VALUES (:nombre, :apellidos, :fech_nac, :NIF, :correo, :telf, :ocupacion, :direccion, :ciudad, 
             :codigo_postal, :pais, :permiso_visita, :fecha_ultima_visita, :observaciones)";
-
+    
             //Preparamos la query
             $stm = $this->conBD->prepare($query);
-
+    
             $stm->bindParam(":nombre", $duenio["nombre"], PDO::PARAM_STR);
             $stm->bindParam(":apellidos", $duenio["apellidos"], PDO::PARAM_STR);
-            $stm->bindParam(":fech_nac", $duenio["fecha_nacimiento"], PDO::PARAM_STR);
+            $stm->bindParam(":fech_nac", $duenio["fech_nac"], PDO::PARAM_STR);
             $stm->bindParam(":NIF", $duenio["NIF"], PDO::PARAM_STR);
             $stm->bindParam(":correo", $duenio["correo"], PDO::PARAM_STR);
             $stm->bindParam(":telf", $duenio["telf"], PDO::PARAM_STR);
+            $stm->bindParam(":ocupacion", $duenio["ocupacion"], PDO::PARAM_STR);
             $stm->bindParam(":direccion", $duenio["direccion"], PDO::PARAM_STR);
             $stm->bindParam(":ciudad", $duenio["ciudad"], PDO::PARAM_STR);
             $stm->bindParam(":codigo_postal", $duenio["codigo_postal"], PDO::PARAM_STR);
             $stm->bindParam(":pais", $duenio["pais"], PDO::PARAM_STR);
             $stm->bindParam(":permiso_visita", $duenio["permiso_visita"], PDO::PARAM_INT);
             $stm->bindParam(":fecha_ultima_visita", $duenio["fecha_ultima_visita"], PDO::PARAM_STR);
-            $stm->bindParam(":observaciones", $duenio["observaciones"], PDO::PARAM_STR);
+            $stm->bindParam(":observaciones", $duenio["observaciones"], PDO::PARAM_STR);    
     
             // Ejecutamos la query   
             if($stm->execute()){
@@ -89,21 +85,4 @@ class Duenio extends Model
         }
     }
 
-
-    public function update(String $query, array $duenio){
-        try {
-            $old_animal = $this->duenio->queryParam('SELECT id FROM perrera.animales WHERE duenios_id = :id LIMIT 1', ['id' => $duenio['id']])['id'];
-            if($old_animal !== $duenio['animales_id'])
-            $this->duenio->queryParam($query, $duenio); // Actualizamos duenio
-            // En caso de excepción, lo guardamos en el log
-        } catch (PDOException $e) {
-            echo "todo mal";
-            // Guardamos el error en el log
-            Utils::save_log_error("PDOException caught: " . $e->getMessage());
-        } catch (Exception $e) {
-            echo "todo mal";
-            // Guardamos el error en el log
-            Utils::save_log_error("Unexpected error caught: " . $e->getMessage());
-        }
-    }
 }

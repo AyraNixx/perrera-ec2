@@ -32,10 +32,10 @@ class Veterinario extends Model
     {
         try {
             // Consulta
-            $query = "INSERT INTO veterinarios (nombre, apellidos, correo, telf, 
-            direccion, especialidad, nombre_clinica, direccion_clinica, telf_clinica,
+            $query = "INSERT INTO veterinarios (nombre, apellidos, correo, telf, especialidad, 
+            nombre_clinica, direccion_clinica, telf_clinica,
             correo_clinica, hora_apertura, hora_cierre, otra_informacion) VALUE(:nombre, :apellidos, :correo, :telf, 
-            :direccion, :especialidad, :nombre_clinica, :direccion_clinica, :telf_clinica,
+            :especialidad, :nombre_clinica, :direccion_clinica, :telf_clinica,
             :correo_clinica, :hora_apertura, :hora_cierre, :otra_informacion)";
 
             //Preparamos la query
@@ -45,7 +45,6 @@ class Veterinario extends Model
             $stm->bindParam(":apellidos", $veterinario["apellidos"], PDO::PARAM_STR);
             $stm->bindParam(":correo", $veterinario["correo"], PDO::PARAM_STR);
             $stm->bindParam(":telf", $veterinario["telf"], PDO::PARAM_STR);
-            $stm->bindParam(":direccion", $veterinario["direccion"], PDO::PARAM_STR);
             $stm->bindParam(":especialidad", $veterinario["especialidad"], PDO::PARAM_STR);
             $stm->bindParam(":nombre_clinica", $veterinario["nombre_clinica"], PDO::PARAM_STR);
             $stm->bindParam(":direccion_clinica", $veterinario["direccion_clinica"], PDO::PARAM_STR);

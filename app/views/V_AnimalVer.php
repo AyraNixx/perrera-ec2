@@ -25,14 +25,18 @@
         <!-- MODAL ANIMAL -->
         <?php include_once "../views/components/insertAnimal.php"; ?>
 
+        <!-- MODAL DUEÑO -->
+        <?php include_once "../views/components/searchDuenio.php"; ?>
+
+        <!-- MODAL ATENCION VETERINARIA -->
+        <?php include_once "../views/components/insertAtencionVeterinaria.php"; ?>
+
         <!-- HEADER -->
         <?php include_once "../views/components/header.php"; ?>
 
 
         <!-- CONTENEDOR PRINCIPAL -->
         <main class="mx-4 mt-5 mb-5">
-            <br /><button type="button" class="btn btn-primary" id="openModalBtn">Añadir Animal</button>
-
             <!-- Split dropup button -->
             <div class="mb-4 w-100 bg-secondary bg-opacity-75 " style="border-radius:5px;">
                 <div class="button-option-container d-flex justify-content-between align-content-center w-100 bg-primary p-3">
@@ -44,6 +48,8 @@
                         <button class="button-dropdown" data-toggle="modal" data-target="#insert">Añadir</button>
                         <button class="button-dropdown" data-action="update">Editar</button>
                         <button class="button-dropdown" data-action="sdelete">Eliminar</button>
+                        <button class="button-dropdown" data-action="atvet">Atención veterinaria</button>
+                        <button class="button-dropdown" data-action="changeowner">Cambiar dueño</button>
                     </div>
                     <div class="btn-group dropdown" style="position:relative">
                         <button type="button" class="button-dropdown" data-toggle="modal" data-target="#insert">
@@ -59,6 +65,12 @@
                                 </li>
                                 <li data-action="sdelete">
                                     Borrar
+                                </li>
+                                <li data-action="atvet">
+                                    Atención veterinaria
+                                </li>
+                                <li data-action="changeowner">
+                                    Cambiar dueño
                                 </li>
                             </ul>
                         </div>
@@ -115,13 +127,8 @@
                                                         <label for="tamanio" class="col-12">Tamaño</label>
                                                         <input type="text" name="tamanio" id="tamanio" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?= $data['tamanio'] ?>" readonly>
                                                         <label for="colores" class="col-12">Colores</label>
-                                                        <select name="colores[]" id="colores" class="col-12 px-2 border border-dark-subtle mt-1 mb-3 rounded" multiple disabled>
-                                                            <option value="No especificado" <?= (str_contains($data['colores'], 'No especificado') ? 'selected' : '') ?>>Seleccionar color</option> <!-- TO DO!!  HACER QUE EL DISABLED SE CAMBIE CUANDO HAGAMOS CLICK EN EDITAR-->
-                                                            <option value="Negro" <?= (str_contains($data['colores'], 'Negro') ? 'selected' : '') ?>>Negro</option>
-                                                            <option value="Blanco" <?= (str_contains($data['colores'], 'Blanco') ? 'selected' : '') ?>>Blanco</option>
-                                                            <option value="Marron" <?= (str_contains($data['colores'], 'Marron') ? 'selected' : '') ?>>Marrón</option>
-                                                            <option value="Otros" <?= (str_contains($data['colores'], 'Otros') ? 'selected' : '') ?>>Otros</option>
-                                                        </select>
+                                                        <input type="hidden" name="colores_text" value="<?= $data['colores'] ?>">
+                                                        <select name="colores[]" id="colores" class="col-12 px-2 border border-dark-subtle mt-1 mb-3 rounded" multiple disabled></select>
                                                     </div>
                                                     <div class="col-12 col-lg-6">
                                                         <label for="fech_nac" class="col-12">Fecha de nacimiento</label>
@@ -129,37 +136,20 @@
                                                         <label for="especies_id" class="col-12">Especie</label>
                                                         <input type="text" name="especies-form" id="especies-form" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?= $data['especie'] ?>" readonly disabled>
                                                         <select name="especies_id" id="especies_id" class="col-12 px-2 border border-dark-subtle my-3 rounded" style="display: none;"></select>
-                                                        <label for="jaula" class="col-12">Jaula</label>
+                                                        <label for="jaula-form" class="col-12">Jaula</label>
                                                         <input type="text" name="jaula-form" id="jaula-form" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" data-jaula-id="<?= $data['jaula_id'] ?>" value="<?= $data['jaula'] ?>" readonly disabled>
                                                         <select name="jaulas_id" id="jaulas_id" class="col-12 px-2 border border-dark-subtle my-3 rounded" style="display: none;"></select>
                                                         <label for="peso" class="col-12">Peso</label>
                                                         <input type="text" name="peso" id="peso" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?= $data['peso'] ?>" readonly>
                                                         <label for="personalidad" class="col-12">Personalidad</label>
-                                                        <select name="personalidad[]" id="personalidad" class="col-12 px-2 border border-dark-subtle mt-1 mb-3 rounded" multiple disabled> <!-- TO DO!!  HACER QUE EL DISABLED SE CAMBIE CUANDO HAGAMOS CLICK EN EDITAR-->
-                                                            <option value="-" <?= (str_contains($data['colores'], 'No -') ? 'selected' : '') ?>>Seleccionar personalidad</option>
-                                                            <option value="Amoroso" <?= (str_contains($data['personalidad'], 'Amoroso') ? 'selected' : '') ?>>Amoroso</option>
-                                                            <option value="Curioso" <?= (str_contains($data['personalidad'], 'Curioso') ? 'selected' : '') ?>>Curioso</option>
-                                                            <option value="Energetico" <?= (str_contains($data['personalidad'], 'Energetico') ? 'selected' : '') ?>>Energético</option>
-                                                            <option value="Independiente" <?= (str_contains($data['personalidad'], 'Independiente') ? 'selected' : '') ?>>Independiente</option>
-                                                            <option value="Inteligente" <?= (str_contains($data['personalidad'], 'Inteligente') ? 'selected' : '') ?>>Inteligente</option>
-                                                            <option value="Jugueton" <?= (str_contains($data['personalidad'], 'Jugueton') ? 'selected' : '') ?>>Juguetón</option>
-                                                            <option value="Protector" <?= (str_contains($data['personalidad'], 'Protector') ? 'selected' : '') ?>>Protector</option>
-                                                            <option value="Sociable" <?= (str_contains($data['personalidad'], 'Sociable') ? 'selected' : '') ?>>Sociable</option>
-                                                            <option value="Timido" <?= (str_contains($data['personalidad'], 'Timido') ? 'selected' : '') ?>>Tímido</option>
-                                                            <option value="Tranquilo" <?= (str_contains($data['personalidad'], 'Tranquilo') ? 'selected' : '') ?>>Tranquilo</option>
-                                                            <option value="Otros" <?= (str_contains($data['personalidad'], 'Otros') ? 'selected' : '') ?>>Otros. Especificar en comentarios</option>
-                                                        </select>
+                                                        <input type="hidden" name="personalidad_text" value="<?= $data['personalidad'] ?>">
+                                                        <select name="personalidad[]" id="personalidad" class="col-12 px-2 border border-dark-subtle mt-1 mb-3 rounded" multiple disabled></select>
                                                     </div>
                                                     <div class="col-12">
                                                         <label for="estado_adopcion" class="col-12">Estado de la adopción</label>
+                                                        <input type="hidden" name="estado_adopcion_text" value="<?= $data['estado_adopcion'] ?>">
                                                         <select name="estado_adopcion" id="estado_adopcion" class="col-12 px-2 border border-dark-subtle mt-1 mb-3 rounded" disabled>
                                                             <option>Seleccionar estado</option>
-                                                            <option value="Disponible" <?= ($data['estado_adopcion'] == 'Disponible' ? 'selected' : '') ?>>Disponible</option>
-                                                            <option value="Adoptado" <?= ($data['estado_adopcion'] == 'Adoptado' ? 'selected' : '') ?>>Adoptado</option>
-                                                            <option value="En_proceso" <?= ($data['estado_adopcion'] == 'En_proceso' ? 'selected' : '') ?>>En proceso</option>
-                                                            <option value="Reservado" <?= ($data['estado_adopcion'] == 'Reservado' ? 'selected' : '') ?>>Reservado</option>
-                                                            <option value="Pendiente" <?= ($data['estado_adopcion'] == 'Pendiente' ? 'selected' : '') ?>>Pendiente</option>
-                                                            <option value="Devuelto" <?= ($data['estado_adopcion'] == 'Devuelto' ? 'selected' : '') ?>>Devuelto</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -245,6 +235,7 @@
     <script src="/DES/perrera-ec2/app/views/js/changeJaulaValues.js"></script>
     <script src="/DES/perrera-ec2/app/views/js/imgs-record.js"></script>
     <script src="/DES/perrera-ec2/app/views/js/btns-record-page.js"></script>
+    <script src="/DES/perrera-ec2/app/views/js/searchDuenioModal.js"></script>
 
     <!-- 
         <script>

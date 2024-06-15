@@ -74,6 +74,14 @@
         { "estado": "En proceso" },
         { "estado": "Finalizado" }
     ],
+    "estado_adopcion":[
+        {"value": "Iniciado proceso de adopcion", "text": "Iniciado proceso de adopcion"},
+        {"value": "Disponible para adopcion", "text": "Disponible para adopción"},
+        {"value": "En proceso de adopcion", "text": "En proceso de adopción"},
+        {"value": "Aprobado para adopcion", "text": "Aprobado para adopción"},
+        {"value": "Adoptado", "text": "Adoptado"},
+        {"value": "Cancelado", "text": "Cancelado"}
+    ],    
     "tipos_vivienda": [
         { "value": "apartamento", "text": "Apartamento" },
         { "value": "atico", "text": "Ático" },
@@ -88,5 +96,33 @@
         { "value": "pareada", "text": "Casa Pareada" },
         { "value": "independiente", "text": "Casa Independiente" },
         { "value": "unifamiliar", "text": "Casa Unifamiliar" }
-    ]
+    ],
+    "personalidad": [
+        {"value": "-", "text": "Seleccionar personalidad"},
+        {"value": "Amoroso", "text": "Amoroso"},
+        {"value": "Curioso", "text": "Curioso"},
+        {"value": "Energetico", "text": "Energético"},
+        {"value": "Independiente", "text": "Independiente"},
+        {"value": "Inteligente", "text": "Inteligente"},
+        {"value": "Jugueton", "text": "Juguetón"},
+        {"value": "Protector", "text": "Protector"},
+        {"value": "Sociable", "text": "Sociable"},
+        {"value": "Timido", "text": "Tímido"},
+        {"value": "Tranquilo", "text": "Tranquilo"},
+        {"value": "Otros", "text": "Otros. Especificar en comentarios"}
+    ],
+    "colores": [
+      { "value": "No especificado", "text": "Seleccionar color" },
+      { "value": "Negro", "text": "Negro" },
+      { "value": "Blanco", "text": "Blanco" },
+      { "value": "Marron", "text": "Marrón" },
+      { "value": "Otros", "text": "Otros" }
+    ], 
+    "estados_salud": [
+        { "value": "Control_veterinario", "text": "Control veterinario" },
+        { "value": "Enfermo", "text": "Enfermo" },
+        { "value": "Recuperacion", "text": "Recuperación" },
+        { "value": "Saludable", "text": "Saludable" }
+      ]
+      
 }
