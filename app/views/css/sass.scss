@@ -1,0 +1,933 @@
+/*********************************************************/
+
+//                        COLORES
+
+/*********************************************************/
+
+//-- Colores fondos
+$bg_white: #FBFBFB;
+$bg_light-gray: #F5F5F5; // Se usa también para las filas de las tablas
+$bg-gray: #E0E0E0;
+$bg_darker-gray: #9FA0A1;
+$bg_dark-blue: #425C81;
+$darker_gray: #696969;
+$bg-light_gray: #ececec;
+
+//-- Colores filas tablas
+$bg_light-blue: #a8b9e099;
+
+//-- Colores letras
+$font_dark-blue: #7A8BB0;
+
+//-- Colores bordes
+$border_light-blue: #A8B9E0; // Lo he usado en el mockup para el botón de agregar
+$border_light-blue-opacity: #a8b9e0a1;
+
+$bg-striped-table: #BDC7DE;
+
+
+$blue-menu: #7182a8d1;
+
+
+//--ERROR-LABEL
+$red: #6a1313;
+$green: #69a264;
+
+
+
+/*********************************************************/
+
+//                        COLORES BOOTSTRAP
+
+/*********************************************************/
+$white: $bg_white;
+$primary: $bg_dark-blue;
+$secondary: $border_light-blue-opacity;
+$success: $green;
+$info: $darker_gray;
+$danger: $red;
+
+
+
+
+/*********************************************************/
+
+//                        FORM
+
+/*********************************************************/
+
+$input-disabled-bg: true;
+$input-placeholder-color: $bg_dark-blue;
+$form-text-color: $bg_dark-blue;
+
+
+@import "../../../bootstrap/scss/bootstrap.scss";
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    /* Forma de controlar como se calcula el tamaño total de un elemento en relación 
+    con su contenido y sus bordes. En este caso, indica que para calcular el tamñ total
+    se incluyan los bordes, los rellenos y el contenido */
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+body {
+    display: flex;
+
+    width: 100%;
+
+    position: relative;
+
+    background: $white;
+
+    font-family: 'Poppins', sans-serif !important;
+}
+
+a {
+    text-decoration: none;
+}
+
+h5 {
+    font-size: 1em;
+    font-weight: 300;
+
+    text-transform: uppercase;
+    letter-spacing: .2em;
+}
+
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #7182a8d1;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #425C81;
+}
+
+::-webkit-scrollbar-thumb:active {
+    background-color: #425C81;
+}
+
+::-webkit-scrollbar-track:hover,
+::-webkit-scrollbar-track:active,
+::-webkit-scrollbar-track {
+    background-color: #b8bbbe;
+}
+
+//////////////////////////////////////////////////////////////////////////////////////
+/// 
+///                 LOGIN  
+/// 
+/// /////////////////////////////////////////////////////////////////////////////////
+
+.login {
+
+
+    .form-control {
+        border-radius: 0;
+        border: 0;
+        border-bottom: 1px solid #425C81;
+
+        padding-left: 0;
+
+        color: $font_dark-blue;
+
+        &:focus {
+            outline: 0;
+            box-shadow: none;
+        }
+
+        &:focus {
+            outline: 0;
+            box-shadow: none;
+        }
+    }
+
+    .form-check {
+        &:focus {
+            border: 0;
+            outline: 0;
+            box-shadow: none;
+        }
+
+        &:checked {
+            background-color: #425C81;
+        }
+    }
+
+
+
+}
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////
+/// 
+///                 MENU  
+/// 
+/// /////////////////////////////////////////////////////////////////////////////////
+
+.show-menu {
+    width: 100% !important;
+    transition: width .3s ease-in-out;
+}
+
+.close-menu {
+    opacity: 1;
+    width: 0;
+    transition: width .2s ease-in-out;
+}
+
+#menu {
+    display: block;
+    min-height: 100%;
+    width: 17em;
+    position: fixed;
+    top: 0;
+
+    #close-btn {
+        display: none;
+    }
+
+    &>div {
+        max-height: 700px;
+        overflow-y: auto;
+
+        &::-webkit-scrollbar-thumb {
+            background-color: transparent;
+        }
+
+        &::-webkit-scrollbar-track:hover,
+        &::-webkit-scrollbar-track:active,
+        &::-webkit-scrollbar-track {
+            background-color: #7182a8d1;
+            border-radius: 5px;
+        }
+
+        hr {
+            margin: 0;
+        }
+
+        .info-user {
+            padding: 20px;
+
+            h3,
+            h6 {
+                font-weight: 400;
+                color: $border_light-blue;
+            }
+
+            h6 {
+                font-weight: 300;
+            }
+        }
+
+        .settings,
+        .logout {
+            padding: 20px 0;
+        }
+
+        .settings:hover,
+        .logout:hover {
+            background: $blue-menu;
+
+            border-left: 5px solid $white;
+            transition: border-left .2s ease-in-out;
+        }
+
+        .menu-items>h5,
+        .menu-items>details,
+        .settings h5 a,
+        .logout h5 a {
+            padding: 20px;
+            margin: 0;
+        }
+
+        .menu-items {
+
+            h5:hover:not(details h5),
+            details:hover,
+            .settings:hover,
+            .logout:hover {
+                background: $blue-menu;
+
+                border-left: 5px solid $white;
+                transition: border-left .2s ease-in-out;
+            }
+
+            details {
+                summary:first-of-type {
+                    display: list-item;
+                    list-style: inside disclosure-closed;
+
+                    h5 {
+                        display: inline-block;
+                    }
+                }
+
+                &[open]>summary:first-of-type {
+                    list-style: inside disclosure-open;
+                }
+
+                a {
+                    display: inline-block;
+                    width: 100%;
+                }
+
+                &>a {
+                    padding: 10px 0;
+                    padding-left: 16px;
+
+                    color: $white;
+                }
+
+                &>*:hover:not(summary) {
+                    background: $bg_dark-blue;
+                }
+            }
+        }
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////
+/// 
+///                 HEADER  
+/// 
+/// /////////////////////////////////////////////////////////////////////////////////
+
+header {
+    height: 57px;
+
+    button {
+        visibility: hidden;
+        width: 80px;
+
+        font-size: 28px;
+
+        cursor: pointer;
+
+        .hamburguer-inner {
+            width: 40px;
+            height: 20px;
+
+            transform: translate(-50%, 50%);
+
+            &>span {
+                height: 4px;
+
+                background-color: $bg_dark-blue;
+
+                border: 0;
+
+                position: absolute;
+
+                &:nth-of-type(2) {
+                    width: calc(100% - 10px);
+                }
+
+                &:last-of-type {
+                    width: calc(100% - 20px);
+                }
+            }
+        }
+    }
+}
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////
+/// 
+///                 CONTENT  
+/// 
+/// /////////////////////////////////////////////////////////////////////////////////
+
+
+//
+//
+// CONTENT
+//
+//
+#content {
+    width: calc(100% - 17em);
+    position: relative;
+    left: 17em;
+}
+
+///
+/// 
+/// TASKS
+///
+/// 
+.home-tasks {
+    height: 400px;
+    overflow-y: scroll;
+    background-color: $bg-light_gray;
+    border-radius: 5px;
+
+    .task-header {
+
+        h5,
+        select {
+            font-weight: 500;
+        }
+
+        select {
+            font-size: .75em;
+            outline: none;
+            box-shadow: none;
+            cursor: pointer;
+
+            &>option {
+                text-transform: capitalize;
+            }
+        }
+    }
+
+    .task-table {
+        width: 100%;
+        overflow: auto;
+    }
+}
+
+.table-striped {
+    overflow-x: auto;
+    max-width: 100%;
+    table-layout: fixed;
+
+    thead {
+        tr>* {
+            width: 150px;
+            background: $white;
+
+            font-size: .87rem;
+            font-weight: 300;
+            text-transform: uppercase;
+
+            vertical-align: middle;
+            table-layout: fixed;
+
+            position: sticky;
+            top: 0;
+            left: 0;
+            z-index: 300;
+        }
+    }
+
+    tbody {
+        tr:nth-of-type(odd) {
+            background-color: $bg-striped-table;
+
+            &>* {
+                color: $bg_dark-blue;
+            }
+        }
+
+        tr>* {
+            color: $info;
+            font-size: .85rem;
+            overflow: inherit;
+        }
+    }
+
+    tbody tr>td:first-child,
+    thead tr>th:first-child {
+        position: sticky;
+        left: 0;
+
+        z-index: 300;
+    }
+
+    tbody tr>td:first-child {
+        background: $white;
+    }
+
+    tbody tr:nth-of-type(odd)>td:first-child {
+        background: $bg-striped-table;
+    }
+}
+
+//
+// PAGINATION
+//
+//
+.pagination {
+    select {
+        border: 1px solid $bg_darker-gray;
+        border-radius: 2px;
+        text-align: center;
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        cursor: pointer;
+        outline: 0;
+    }
+}
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////
+/// 
+///                 LOADER  
+/// 
+/// /////////////////////////////////////////////////////////////////////////////////
+#overlay {
+    .loader {
+        border: 8px solid #f3f3f3;
+        border-top: 8px solid $secondary;
+        border-radius: 50%;
+        width: 70px;
+        height: 70px;
+        margin: 0 auto;
+        animation: spin 2s linear infinite;
+    }
+
+    .loanding {
+        border-right: 2px solid $secondary;
+        white-space: nowrap;
+        letter-spacing: .1em;
+        overflow: hidden;
+        animation: typing 4s steps(30, end) infinite, blink .5s step-end infinite;
+    }
+}
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////
+/// 
+///                 MODAL   
+/// 
+/// /////////////////////////////////////////////////////////////////////////////////
+#insert {
+    .modal-body {
+        label {
+            display: block;
+            padding: 1em 0 .5em;
+        }
+
+        form {
+
+            input,
+            select,
+            textarea {
+
+                box-sizing: border-box;
+                width: 100%;
+                padding: .3em;
+                border: 1px solid #425C81;
+                border-radius: 4px;
+                outline: none;
+                box-shadow: none;
+            }
+
+            .form-textarea {
+                resize: vertical;
+                height: 6em;
+                padding: 0.375rem 0.75rem;
+            }
+        }
+    }
+
+}
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////
+/// 
+///                 FONDOS  
+/// 
+/// /////////////////////////////////////////////////////////////////////////////////
+
+.bg-1,
+.bg-2 {
+
+    position: absolute;
+    z-index: -1;
+}
+
+.bg-2 {
+    right: 0;
+}
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////
+/// 
+///                     BOTONES CON DROPDOWN
+/// 
+///  ////////////////////////////////////////////////////////////////////////////////
+.btn-group.dropdown {
+    display: none;
+}
+
+.button-dropdown {
+    box-sizing: border-box;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 2em;
+    padding: 1.1em;
+
+    background: #fefefe;
+    border: 1px solid #dbdbdb;
+    border-radius: .2em;
+
+    font-size: .9rem;
+    line-height: 1.5;
+    text-align: center;
+    color: #363636;
+
+    position: relative;
+    vertical-align: top;
+
+    box-shadow: none !important;
+    outline: none !important;
+
+    white-space: nowrap;
+    touch-action: manipulation;
+    cursor: pointer;
+
+    &:hover {
+        background: #efefef;
+    }
+
+    &:active {
+        background: #dddddd;
+    }
+
+    .btn-group & {
+        padding-left: 1em;
+        padding-right: 1em;
+
+        &:first-of-type {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        &:last-of-type {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-left: none;
+        }
+
+        &:not(:first-of-type):not(:last-of-type) {
+            border-radius: 0%;
+            border-left: none;
+        }
+    }
+}
+
+.btn-dropdown-options {
+    display: none;
+    border: 1px solid black;
+    border: 1px solid #dbdbdb;
+    border-top: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: .2em;
+    border-bottom-right-radius: .2em;
+    background: #fefefe;
+    top: 91%;
+    z-index: 100;
+
+    ul li {
+        padding: 6.5px 1em;
+        font-size: .8em;
+        cursor: pointer;
+
+        &:hover {
+            background: #efefef;
+        }
+    
+        &:active {
+            background: #dddddd;
+        }
+    }
+}
+
+.show-block {
+    display: block;
+}
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////
+/// 
+///                 KEYFRAMES  
+/// 
+/// /////////////////////////////////////////////////////////////////////////////////
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes typing {
+
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100%;
+    }
+}
+
+@keyframes blink {
+
+    from,
+    to {
+        border-color: transparent;
+    }
+
+    50% {
+        border-color: $secondary;
+    }
+}
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////
+/// 
+///                 MEADIA  
+/// 
+/// /////////////////////////////////////////////////////////////////////////////////
+
+// LUEGO LO CAMBIO Y PONGO TODO JUNTO EN CADA MEDIA
+@media (max-width: 768px) {
+    #menu {
+        width: 0;
+
+        #close-btn {
+            display: inline-block;
+            width: 5rem;
+            height: 30px;
+            outline: none;
+
+            &:hover {
+                background: #7A8BB0;
+                color: white;
+            }
+        }
+    }
+
+    #content {
+        width: 100%;
+        left: 0;
+
+        main {
+            display: flex;
+
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            padding: 1rem;
+
+            .date {
+                padding-top: 1rem !important;
+                padding-bottom: 0 !important;
+                text-align: center !important;
+            }
+
+            .home-tasks {
+                width: 100%;
+
+                .task-header {
+                    border-bottom: 2px solid $primary;
+                }
+
+                .task-table {
+                    padding-top: 1rem;
+                }
+            }
+        }
+    }
+
+    header {
+        #header-btn {
+            visibility: visible;
+        }
+    }
+
+    .btn-group.dropdown {
+        display: inline-flex;
+    }
+
+    .btn-group {
+        display: none;
+    }
+}
+
+
+
+
+
+
+
+@media (max-width: 576px) {
+    .bg-1 {
+        max-width: 220px;
+        top: 23rem;
+    }
+
+    .bg-2 {
+        max-width: 200px;
+        top: 10rem;
+    }
+
+    form {
+        position: relative;
+        padding: 30px;
+    }
+
+    form::before {
+        content: "";
+
+        width: 100%;
+        height: 100%;
+
+        background: linear-gradient(286deg, $bg_darker-gray 0%, $bg-gray 50%, $bg_light-gray 100%);
+
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        filter: blur(100px);
+        clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0);
+
+        z-index: -1;
+    }
+}
+
+@media (min-width: 576px) {
+
+    .bg-1 {
+        max-width: 220px;
+        top: 23rem;
+    }
+
+    .bg-2 {
+        max-width: 200px;
+        top: 10rem;
+    }
+
+    form {
+        position: relative;
+        padding: 30px;
+    }
+
+    form::before {
+        content: "";
+
+        width: 100%;
+        height: 100%;
+
+        background: linear-gradient(286deg, $bg_darker-gray 0%, $bg-gray 50%, $bg_light-gray 100%);
+
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        filter: blur(100px);
+        clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0);
+
+        z-index: -1;
+    }
+
+}
+
+@media (max-width: 767.98px) {
+    .col-md-6 {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .modal-body form,
+    .modal-body {
+        padding: 1em !important;
+    }
+}
+
+@media (min-width: 768px) {
+
+    .bg-1 {
+        max-width: 280px;
+        top: 19rem;
+    }
+
+    .bg-2 {
+        max-width: 230px;
+        top: 5rem;
+    }
+
+    form {
+        padding: 0;
+    }
+
+    form::before {
+        display: none;
+    }
+}
+
+@media (min-width: 992px) {
+
+    .bg-1 {
+        max-width: 320px;
+        top: 17rem;
+    }
+
+    .bg-2 {
+        max-width: 250px;
+    }
+}
+
+@media (min-width: 1200px) {
+
+    .bg-1 {
+        max-width: 350px;
+        top: 15rem;
+    }
+
+    .bg-2 {
+        max-width: 270px;
+    }
+}
+
+@media (min-width: 1400px) {
+    .bg-1 {
+        max-width: 400px;
+        top: 12rem;
+    }
+
+    .bg-2 {
+        max-width: 300px;
+    }
+}
