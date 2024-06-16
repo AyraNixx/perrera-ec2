@@ -25,9 +25,6 @@
         <!-- MODAL ANIMAL -->
         <?php include_once "../views/components/insertAnimal.php"; ?>
 
-        <!-- MODAL DUEÑO -->
-        <?php include_once "../views/components/searchDuenio.php"; ?>
-
         <!-- MODAL ATENCION VETERINARIA -->
         <?php include_once "../views/components/insertAtencionVeterinaria.php"; ?>
 
@@ -235,7 +232,6 @@
     <script src="/DES/perrera-ec2/app/views/js/changeJaulaValues.js"></script>
     <script src="/DES/perrera-ec2/app/views/js/imgs-record.js"></script>
     <script src="/DES/perrera-ec2/app/views/js/btns-record-page.js"></script>
-    <script src="/DES/perrera-ec2/app/views/js/searchDuenioModal.js"></script>
 
     <!-- 
         <script>

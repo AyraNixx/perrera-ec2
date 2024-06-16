@@ -9,6 +9,7 @@
     <link rel="shortcut icon" href="../../public/imgs/logos/logo1.png" type="image/x-icon">
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css'>
     <script src="https://kit.fontawesome.com/8d125d2b91.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css">
     <link rel="stylesheet" href="../views/css/sass.css">
 </head>
 
@@ -31,7 +32,6 @@
 
         <!-- CONTENEDOR PRINCIPAL -->
         <main class="mx-4 mt-5 mb-5">
-            <br />
             <!-- Split dropup button -->
             <div class="mb-4 w-100 bg-secondary bg-opacity-75 " style="border-radius:5px;">
                 <div class="button-option-container d-flex justify-content-between align-content-center w-100 bg-primary p-3">
@@ -123,6 +123,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js"></script>
 
     <script src="/DES/perrera-ec2/app/views/js/Utils.js"></script>
     <script src="/DES/perrera-ec2/app/views/js/widthMenu.js"></script>

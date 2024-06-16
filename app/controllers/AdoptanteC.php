@@ -132,6 +132,9 @@ class AdoptanteC
             case "delete_animal_from_list":
                 $this->delete_animal_from_list();
                 break;
+            case "get_rows_availables":
+                $this->get_rows_availables();
+                break;
             case "pagination":
                 $this->pagination();
                 break;
@@ -312,6 +315,11 @@ class AdoptanteC
             $id = htmlspecialchars(trim($_REQUEST['animal_id']), ENT_QUOTES, 'UTF-8');
             echo json_encode($this->adoptante->queryParam(Constants::DELETE_ANIMAL_ADOPTANTE, ['id' => $id, 'estado_adopcion' => 'Disponible para adopcion']));
         }
+    }
+    private function get_rows_availables()
+    {
+        echo json_encode($this->adoptante->query(Constants::GET_ADOPTANTE_SELECT));
+        
     }
 
     private function pagination()

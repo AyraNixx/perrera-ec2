@@ -82,6 +82,8 @@ class Constants
     const GET_DUENIO = 'SELECT d.*, GROUP_CONCAT(a.id SEPARATOR ",") AS animal_ids, GROUP_CONCAT(a.nombre SEPARATOR ",") AS animal_nombres, GROUP_CONCAT(e.nombre SEPARATOR ",") AS nombre_especies, GROUP_CONCAT(ha.fech_registro SEPARATOR ",") AS fechas_registro FROM duenios d LEFT JOIN (SELECT duenios_id, animales_id, fech_registro FROM historial_animal_duenio WHERE disponible = 1) ha ON d.id = ha.duenios_id LEFT JOIN animales a ON ha.animales_id = a.id LEFT JOIN especies e ON a.especies_id = e.id WHERE d.id = :id GROUP BY d.id';
     const GET_ANIMAL_LIST_DUENIO = 'SELECT GROUP_CONCAT(a.id SEPARATOR ",") AS animal_ids, GROUP_CONCAT(a.nombre SEPARATOR ",") AS animal_nombres, GROUP_CONCAT(e.nombre SEPARATOR ",") AS nombre_especies, GROUP_CONCAT(ha.fech_registro SEPARATOR ",") AS fechas_registro FROM historial_animal_duenio ha LEFT JOIN animales a ON ha.animales_id = a.id LEFT JOIN especies e ON a.especies_id = e.id WHERE ha.duenios_id = :id AND ha.disponible = 1';
     const GET_ANIMAL_LIST_ADOPTANTE = 'SELECT GROUP_CONCAT(a.id SEPARATOR ",") AS animal_ids, GROUP_CONCAT(a.nombre SEPARATOR ",") AS animal_nombres, GROUP_CONCAT(e.nombre SEPARATOR ",") AS nombre_especies FROM animales a LEFT JOIN especies e ON a.especies_id = e.id WHERE a.adoptante_id = :adoptante_id AND a.disponible = 1';
+    const GET_ADOPTANTE_SELECT = 'SELECT * FROM perrera.adoptante WHERE disponible = 1 ORDER BY nombre';
+    const GET_DUENIO_SELECT = 'SELECT * FROM perrera.duenios WHERE disponible = 1 ORDER BY nombre';
 
     // UPDATES
     const UPDT_ESPECIE = 'UPDATE perrera.especies SET nombre = :nombre, descripcion = :descripcion WHERE id = :id';

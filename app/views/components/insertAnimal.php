@@ -97,15 +97,14 @@
                                     <option value="">Seleccionar estado</option>
                                 </select>
                             </div>
+
                             <div class="col-md-6">
-                                <label for="adoptante_id_text">Adoptante</label>
-                                <input type="hidden" name="adoptante_id" id="adoptante_id" value=""/>
-                                <input type="text" name="adoptante_id_text" id="adoptante_id_text"/>
+                                <label for="adoptante_id">Adoptante</label>
+                                <select class="selectpicker w-100 border border-1 border-primary rounded-1" data-live-search="true" id="adoptante_id" name="adoptante_id" title="Seleccionar adoptante"></select>
                             </div>
                             <div class="col-md-6 mb-3">
-                                <label for="duenio_id_text">Dueño</label>
-                                <input type="hidden" name="duenio_id" id="duenio_id" value=""/>
-                                <input type="text" name="duenio_id_text" id="duenio_id_text"/>
+                                <label for="duenios_id">Dueño</label>
+                                <select class="selectpicker w-100 border border-1 border-primary rounded-1" data-live-search="true" id="duenios_id" name="duenios_id" title="Seleccionar adoptante"></select>                                
                             </div>
                         </div>
                         <div class="textarea-container">

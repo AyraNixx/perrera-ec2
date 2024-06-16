@@ -17,6 +17,19 @@ $(document).ready(function () {
 });
 
 function generate_values_details() {
+
+  if ($('#details select[name="adoptante_id"]').length) {
+    generate_options_select("adoptante_id", "AdoptanteC.php");
+  }
+
+  if ($('#details select[name="duenios_id"]').length) {
+    generate_options_select("duenios_id", "DuenioC.php");
+  }
+
+  if ($('#details select[name="veterinarios_id"]').length) {
+    generate_options_select("veterinarios_id", "VeterinarioC.php");
+  }
+
   if ($('#details select[name="ocupacion"]').length) {
     let ocupacion_text = "";
     if ($('input[name="ocupacion_text"]').length) {
@@ -160,6 +173,19 @@ function generate_values_details() {
 }
 
 function generate_values_inserts() {
+
+  if ($('#insert select[name="adoptante_id"]').length) {
+    generate_options_select("adoptante_id", "AdoptanteC.php");
+  }
+
+  if ($('#insert select[name="duenios_id"]').length) {
+    generate_options_select("duenios_id", "DuenioC.php");
+  }
+
+  if ($('#insert select[name="veterinarios_id"]').length) {
+    generate_options_select("veterinarios_id", "VeterinarioC.php");
+  }
+
   if ($('#insert select[name="ocupacion"]').length) { console.log('entra 1');
     $('#insert select[name="ocupacion"]').empty();
     $.getJSON("../views/js/Utils.json", function (data) {
@@ -242,6 +268,38 @@ function generate_values_inserts() {
       });
     });
   }
+}
+
+function generate_options_select(sname, c) {
+  $.ajax({
+    type: "POST",
+    url: `../../app/controllers/${c}`,
+    data: {
+      action: "get_rows_availables",
+    },
+    dataType: "json",
+    success: function (res) {
+      let s = $(`select[name="${sname}"]`);
+      s.empty();
+      res.forEach((r) => {
+        let option = $("<option></option>")
+          .val(r.id)
+          .text(r.nombre + " " + r.apellidos)
+          .attr("data-tokens", r.nombre + " " + r.apellidos);
+
+        if ($(`input[name="${sname}_text"]`).length) {
+          let hi = $(`input[name="${sname}_text"]`).val();
+          if (hi == r.id) {
+            option.attr("selected", "selected");
+          }
+        }
+        s.append(option);
+      });
+    },
+    error: function (xhr, status, error) {
+      console.error("Error fetching dueño data:", xhr.responseText);
+    },
+  });
 }
 //------------------------------     DROPDOWN BUTTON    ------------------------------
 //

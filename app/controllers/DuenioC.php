@@ -92,8 +92,8 @@ class DuenioC
             case "pagination":
                 $this->pagination();
                 break;
-            case "search_duenio_modal":
-                $this->search_duenio_modal();
+            case "get_rows_availables":
+                $this->get_rows_availables();
                 break;
             case "delete_animal_from_list":
                 $this->delete_animal_from_list();
@@ -300,14 +300,9 @@ class DuenioC
         echo json_encode(array("total_pages" => $total_pages, "rows" => $html_var, 'pagination' => $this->duenio->generatePaginationHTML($page, $this->amount, $total_pages)));
     }
 
-    public function search_duenio_modal()
+    private function get_rows_availables()
     {
-        $data = $this->duenio->query(Constants::GET_DUENIO_MODAL);
-
-        if(isset($_REQUEST["search_animal_modal"])){
-            $data['animal_list'] = '';
-        }
-        echo json_encode($data);
+        echo json_encode($this->duenio->query(Constants::GET_DUENIO_SELECT));        
     }
 
     public function delete_animal_from_list()

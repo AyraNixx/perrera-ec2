@@ -380,32 +380,34 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `perrera`.`tareas_asignadas`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `perrera`.`tareas_asignadas` ;
+DROP TABLE IF EXISTS `perrera`.`tareas_asignadas`;
 
 CREATE TABLE IF NOT EXISTS `perrera`.`tareas_asignadas` (
-  `id` VARCHAR(22) NOT NULL,
-  `estado_asignacion` TINYINT(4) NOT NULL DEFAULT 0,
+  `id` VARCHAR(225) NOT NULL,
+  `asunto` VARCHAR(225) NOT NULL,
+  `estado_asignacion` VARCHAR(255) NOT NULL DEFAULT 'Iniciada',
+  `prioridad` VARCHAR(225) NOT NULL,
   `fecha_asignacion` TIMESTAMP NULL DEFAULT NULL,
   `fecha_finalizacion` TIMESTAMP NULL DEFAULT NULL,
-  `disponible` TINYINT(4) NOT NULL DEFAULT 1,
-  `jaulas_id` VARCHAR(22) NOT NULL,
-  `empleados_id` VARCHAR(22) NOT NULL,
+  `jaulas_id` VARCHAR(22) NULL DEFAULT NULL,
+  `empleados_id` VARCHAR(22) NULL DEFAULT NULL,
   `tareas_id1` VARCHAR(22) NOT NULL,
-  `voluntarios_id` VARCHAR(22) NOT NULL,
+  `voluntarios_id` VARCHAR(22) NULL DEFAULT NULL,
+  `disponible` TINYINT(4) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`),
-  INDEX `fk_tareas_asignadas_jaulas1_idx` (`jaulas_id` ASC) ,
-  INDEX `fk_tareas_asignadas_empleados1_idx` (`empleados_id` ASC) ,
-  INDEX `fk_tareas_asignadas_tareas2_idx` (`tareas_id1` ASC) ,
-  INDEX `fk_tareas_asignadas_voluntarios1_idx` (`voluntarios_id` ASC) ,
+  INDEX `fk_tareas_asignadas_jaulas1_idx` (`jaulas_id` ASC),
+  INDEX `fk_tareas_asignadas_empleados1_idx` (`empleados_id` ASC),
+  INDEX `fk_tareas_asignadas_tareas2_idx` (`tareas_id1` ASC),
+  INDEX `fk_tareas_asignadas_voluntarios1_idx` (`voluntarios_id` ASC),
   CONSTRAINT `fk_tareas_asignadas_jaulas1`
     FOREIGN KEY (`jaulas_id`)
     REFERENCES `perrera`.`jaulas` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE SET NULL
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_tareas_asignadas_empleados1`
     FOREIGN KEY (`empleados_id`)
     REFERENCES `perrera`.`empleados` (`id`)
-    ON DELETE NO ACTION
+    ON DELETE SET NULL
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_tareas_asignadas_tareas2`
     FOREIGN KEY (`tareas_id1`)
@@ -415,9 +417,9 @@ CREATE TABLE IF NOT EXISTS `perrera`.`tareas_asignadas` (
   CONSTRAINT `fk_tareas_asignadas_voluntarios1`
     FOREIGN KEY (`voluntarios_id`)
     REFERENCES `perrera`.`voluntarios` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
+    ON DELETE SET NULL
+    ON UPDATE NO ACTION
+) ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 
