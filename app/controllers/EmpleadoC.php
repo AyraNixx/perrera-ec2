@@ -94,6 +94,9 @@ class EmpleadoC
             case "show_delete_rows":
                 $this->show_delete_rows();
                 break;
+            case "get_rows_availables":
+                $this->get_rows_availables();
+                break;
             case "pagination":
                 $this->pagination();
                 break;
@@ -275,6 +278,11 @@ class EmpleadoC
 
     private function show_delete_rows(){
         echo json_encode($this->empleado->query(Constants::GET_EMPLEADOS_INACTIVE));
+    }    
+
+    private function get_rows_availables()
+    {
+        echo json_encode($this->empleado->query(Constants::GET_EMPLEADO_SELECT));        
     }
 
 

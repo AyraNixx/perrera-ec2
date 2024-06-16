@@ -41,7 +41,7 @@ function listCallBack() {
     },
     error: function (xhr, status) {
       console.error("Error fetching data:", xhr.responseText);
-    },
+    }
   });
 }
 

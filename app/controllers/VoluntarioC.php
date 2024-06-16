@@ -89,6 +89,12 @@ class VoluntarioC
             case "undelete":
                 $this->undelete();
                 break;
+            case "show_delete_rows":
+                $this->show_delete_rows();
+                break;
+            case "get_rows_availables":
+                $this->get_rows_availables();
+                break;
             case "pagination":
                 $this->pagination();
                 break;
@@ -228,6 +234,16 @@ class VoluntarioC
         } else {
             $this->setMsg(Constants::ERROR_DELETE);
         }
+    }
+
+
+    private function show_delete_rows(){
+        echo json_encode($this->voluntario->query(Constants::GET_VOLUNTARIOS_INACTIVE));
+    }    
+
+    private function get_rows_availables()
+    {
+        echo json_encode($this->voluntario->query(Constants::GET_VOLUNTARIO_SELECT));        
     }
 
     private function pagination()

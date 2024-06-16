@@ -261,7 +261,7 @@ CREATE TABLE IF NOT EXISTS `perrera`.`roles` (
   `id` VARCHAR(22) NOT NULL,
   `rol` VARCHAR(45) NOT NULL DEFAULT 'admin',
   `descripcion` VARCHAR(150) NOT NULL DEFAULT '-',
-  `disponible` TINYINT(4) NOT NULL DEFAULT 0,
+  `disponible` TINYINT(4) NOT NULL DEFAULT 1,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -383,7 +383,7 @@ DEFAULT CHARACTER SET = utf8;
 DROP TABLE IF EXISTS `perrera`.`tareas_asignadas`;
 
 CREATE TABLE IF NOT EXISTS `perrera`.`tareas_asignadas` (
-  `id` VARCHAR(225) NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `asunto` VARCHAR(225) NOT NULL,
   `estado_asignacion` VARCHAR(255) NOT NULL DEFAULT 'Iniciada',
   `prioridad` VARCHAR(225) NOT NULL,

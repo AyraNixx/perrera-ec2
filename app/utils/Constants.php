@@ -23,6 +23,7 @@ class Constants
     const UPDT_UNDELETE_DUENIOS = 'UPDATE perrera.duenios SET disponible = 1 WHERE id = :id LIMIT 1';
     const UPDT_UNDELETE_VOLUNTARIOS = 'UPDATE perrera.voluntarios SET disponible = 1 WHERE id = :id LIMIT 1';
     const UPDT_UNDELETE_TAREAS = 'UPDATE perrera.tareas SET disponible = 1 WHERE id = :id LIMIT 1';
+    const UPDT_UNDELETE_TAREA_ASIGNADA = 'UPDATE perrera.tareas_asignadas SET disponible = 1 WHERE id = :id LIMIT 1';
     
     // INSERTS
     const INSERT_ANIMALES_PHOTOS = 'INSERT INTO perrera.imgs (animales_id, nombre, tipo, tamanio, ruta) VALUES ';
@@ -49,6 +50,8 @@ class Constants
     const SEARCH_EMPLEADOS_TABLE_TOTAL_PAGES = 'SELECT Id FROM perrera.empleados WHERE nombre LIKE :search_value OR apellidos LIKE :search_value OR NIF LIKE :search_value OR correo LIKE :search_value ORDER BY';
     const SEARCH_VOLUNTARIOS_TABLE_TOTAL_PAGES = 'SELECT Id FROM perrera.voluntarios WHERE nombre LIKE :search_value OR apellidos LIKE :search_value OR NIF LIKE :search_value OR correo LIKE :search_value OR telf LIKE :search_value ORDER BY nombre';
     const SEARCH_DUENIOS_TABLE_TOTAL_PAGES = 'SELECT Id FROM perrera.duenios WHERE nombre LIKE :search_value OR apellidos LIKE :search_value OR NIF LIKE :search_value OR correo LIKE :search_value ORDER BY nombre';
+    const SEARCH_TAREAS_ASIGNADAS_TABLE = 'SELECT ta.id, ta.asunto, ta.estado_asignacion, ta.prioridad, ta.fecha_asignacion, ta.fecha_finalizacion, j.ubicacion AS ubicacion, j.tamanio AS tamanio, j.ocupada AS ocupada, j.estado_comida AS estado_comida, j.estado_limpieza AS estado_limpieza, e.id AS id_empleado, CONCAT(e.nombre, " ", e.apellidos) AS nombre_empleado, v.id AS id_voluntario, CONCAT(v.nombre, " ", v.apellidos) AS nombre_voluntario, t.asunto AS tarea_asunto, t.descripcion AS tarea_descripcion FROM tareas_asignadas ta LEFT JOIN jaulas j ON ta.jaulas_id = j.id LEFT JOIN empleados e ON ta.empleados_id = e.id LEFT JOIN voluntarios v ON ta.voluntarios_id = v.id LEFT JOIN tareas t ON ta.tareas_id1 = t.id WHERE ta.asunto LIKE :search_value OR ta.estado_asignacion LIKE :search_value OR ta.prioridad LIKE :search_value OR CONCAT(e.nombre, " ", e.apellidos) LIKE :search_value OR CONCAT(v.nombre, " ", v.apellidos) LIKE :search_value ORDER BY ta.';
+    const SEARCH_TAREAS_ASIGNADAS_TABLE_TOTAL_PAGES = 'SELECT ta.id FROM tareas_asignadas ta LEFT JOIN jaulas j ON ta.jaulas_id = j.id LEFT JOIN empleados e ON ta.empleados_id = e.id LEFT JOIN voluntarios v ON ta.voluntarios_id = v.id LEFT JOIN tareas t ON ta.tareas_id1 = t.id WHERE ta.asunto LIKE :search_value OR ta.estado_asignacion LIKE :search_value OR ta.prioridad LIKE :search_value OR CONCAT(e.nombre, " ", e.apellidos) LIKE :search_value OR CONCAT(v.nombre, " ", v.apellidos) LIKE :search_value ORDER BY ta.asunto';
     
     // GETTERS
     const GET_IMGS_ANIMAL_QUERY = 'SELECT * FROM perrera.imgs WHERE animales_id = :id';
@@ -66,6 +69,12 @@ class Constants
     const GET_TAREA = 'SELECT * FROM perrera.tareas WHERE id = :id';
     const GET_EMPLEADO = 'SELECT * FROM perrera.empleados WHERE id = :id';
     const GET_EMPLEADOS_INACTIVE = 'SELECT * FROM perrera.empleados WHERE disponible = 0';
+    const GET_VOLUNTARIOS_INACTIVE = 'SELECT * FROM perrera.voluntarios WHERE disponible = 0';
+    const GET_DUENIOS_INACTIVE = 'SELECT * FROM perrera.duenios WHERE disponible = 0';
+    const GET_ADOPTANTES_INACTIVE = 'SELECT * FROM perrera.adoptante WHERE disponible = 0';
+    const GET_TAREAS_INACTIVE = 'SELECT * FROM perrera.tareas WHERE disponible = 0';
+    const GET_ANIMALES_INACTIVE = 'SELECT * FROM perrera.animales WHERE disponible = 0';
+    const GET_TAREAS_ASIGNADAS_INACTIVE = 'SELECT * FROM perrera.tareas_asignadas WHERE disponible = 0';
     const GET_VOLUNTARIO = 'SELECT * FROM perrera.voluntarios WHERE id = :id';
     const GET_ADOPTANTE = 'SELECT a.*, GROUP_CONCAT(al.id SEPARATOR ",") AS animal_ids, GROUP_CONCAT(al.nombre SEPARATOR ",") AS animal_nombres, GROUP_CONCAT(e.nombre SEPARATOR ",") AS nombre_especies FROM perrera.adoptante a LEFT JOIN animales al ON a.id = al.adoptante_id LEFT JOIN especies e ON al.especies_id = e.id WHERE a.id = :id GROUP BY a.id';
     const GET_JAULA = 'SELECT j.*,  e.nombre AS nombre_especie, GROUP_CONCAT(a.id SEPARATOR ",") AS animal_ids, GROUP_CONCAT(a.nombre SEPARATOR ",") AS animal_nombres, GROUP_CONCAT(a.estado_adopcion SEPARATOR ",") AS animal_estados_adopcion FROM jaulas j JOIN perrera.especies e ON j.especies_id = e.id LEFT JOIN animales a ON j.id = a.jaulas_id WHERE j.id = :id GROUP BY j.id, e.nombre';
@@ -84,6 +93,12 @@ class Constants
     const GET_ANIMAL_LIST_ADOPTANTE = 'SELECT GROUP_CONCAT(a.id SEPARATOR ",") AS animal_ids, GROUP_CONCAT(a.nombre SEPARATOR ",") AS animal_nombres, GROUP_CONCAT(e.nombre SEPARATOR ",") AS nombre_especies FROM animales a LEFT JOIN especies e ON a.especies_id = e.id WHERE a.adoptante_id = :adoptante_id AND a.disponible = 1';
     const GET_ADOPTANTE_SELECT = 'SELECT * FROM perrera.adoptante WHERE disponible = 1 ORDER BY nombre';
     const GET_DUENIO_SELECT = 'SELECT * FROM perrera.duenios WHERE disponible = 1 ORDER BY nombre';
+    const GET_EMPLEADO_SELECT = 'SELECT * FROM perrera.empleados WHERE disponible = 1 ORDER BY nombre';
+    const GET_VOLUNTARIO_SELECT = 'SELECT * FROM perrera.voluntarios WHERE disponible = 1 ORDER BY nombre';
+    const GET_TAREA_SELECT = 'SELECT * FROM perrera.tareas WHERE disponible = 1 ORDER BY asunto';
+    const GET_JAULA_SELECT = 'SELECT j.*, e.nombre AS nombre_especie FROM perrera.jaulas j INNER JOIN perrera.especies e ON j.especies_id = e.id WHERE j.disponible = 1 ORDER BY j.ubicacion';
+    const GET_TAREA_ASIGNADA = 'SELECT ta.id, ta.asunto, ta.estado_asignacion, ta.prioridad, ta.fecha_asignacion, ta.fecha_finalizacion, j.ubicacion AS ubicacion, j.tamanio AS tamanio, j.ocupada AS ocupada, j.estado_comida AS estado_comida, j.estado_limpieza AS estado_limpieza, e.id AS id_empleado, CONCAT(e.nombre, " ", e.apellidos) AS nombre_empleado, v.id AS id_voluntario, CONCAT(v.nombre, " ", v.apellidos) AS nombre_voluntario, t.asunto AS tarea_asunto, t.descripcion AS tarea_descripcion FROM tareas_asignadas ta LEFT JOIN jaulas j ON ta.jaulas_id = j.id LEFT JOIN empleados e ON ta.empleados_id = e.id LEFT JOIN voluntarios v ON ta.voluntarios_id = v.id LEFT JOIN tareas t ON ta.tareas_id1 = t.id WHERE ta.id = :id ';
+    const GET_TAREAS_ASIGNADAS = 'SELECT ta.id, ta.asunto, ta.estado_asignacion, ta.prioridad, ta.fecha_asignacion, ta.fecha_finalizacion, j.ubicacion AS ubicacion, j.tamanio AS tamanio, j.ocupada AS ocupada, j.estado_comida AS estado_comida, j.estado_limpieza AS estado_limpieza, e.id AS id_empleado, CONCAT(e.nombre, " ", e.apellidos) AS nombre_empleado, v.id AS id_voluntario, CONCAT(v.nombre, " ", v.apellidos) AS nombre_voluntario, t.asunto AS tarea_asunto, t.descripcion AS tarea_descripcion, es.nombre AS especie_nombre FROM tareas_asignadas ta LEFT JOIN jaulas j ON ta.jaulas_id = j.id LEFT JOIN empleados e ON ta.empleados_id = e.id LEFT JOIN voluntarios v ON ta.voluntarios_id = v.id LEFT JOIN tareas t ON ta.tareas_id1 = t.id LEFT JOIN especies es ON j.especies_id = es.id ORDER BY ta.asunto';
 
     // UPDATES
     const UPDT_ESPECIE = 'UPDATE perrera.especies SET nombre = :nombre, descripcion = :descripcion WHERE id = :id';
@@ -105,6 +120,7 @@ class Constants
     const DELETE_EMPLEADO = 'UPDATE perrera.empleados SET disponible = 0 WHERE id = :id';
     const DELETE_DUENIO = 'UPDATE perrera.duenios SET disponible = 0 WHERE id = :id';
     const DELETE_TAREA = 'UPDATE perrera.tareas SET disponible = 0 WHERE id = :id';
+    const DELETE_TAREA_ASIGNADA = 'UPDATE perrera.tareas_asignadas SET disponible = 0 WHERE id = :id';
     const DELETE_ADOPTANTE = 'UPDATE perrera.adoptante SET disponible = 0 WHERE id = :id';
     const DELETE_IMG_QUERY = 'DELETE FROM perrera.imgs WHERE Id = :id';
     const DELETE_IMGS_ANIMAL_QUERY = 'DELETE FROM perrera.imgs WHERE animales_id = :id';
@@ -140,6 +156,8 @@ class Constants
     const VIEW_DUENIO = '../views/V_DuenioVer.php';
     const VIEW_ADOPTANTE = '../views/V_AdoptanteVer.php';
     const VIEW_TAREA = '../views/V_TareaVer.php';
+    const VIEW_TAREAS_ASIGNADAS = '../views/V_TareasAsignadas.php';
+    const VIEW_TAREA_ASIGNADA = '../views/V_TareasAsignadasVer.php';
     const VIEW_EMPLEADO = '../views/V_EmpleadoVer.php';
 
     // CONTROLLERS
@@ -173,6 +191,10 @@ class Constants
     const ERROR_EXIST_EMPLOYEE_INACTIVE = 'Existe un empleado inactivo con este correo. Utilice otro correo o contacte con un empleado para reactivar la cuenta';
     const ERROR_ROW_NOT_FOUND = 'Registro no encontrado.';
     const ERROR_ROW_NOT_INACTIVE = 'El registro no está inactivo, por lo que no se puede recuperar.';
+    const ERROR_TAREA_EMPLEADO_VOLUNTARIO = 'Debes seleccionar o un voluntario o un empleado para realizar la tarea.';
+    const ERROR_DONT_EXIST_EMPLOYEE = 'No se ha encontrado el empleado en la bd';
+    const ERROR_DONT_EXIST_VOLUNTEER = 'No se ha encontrado el voluntario en la bd';
+    const ERROR_DONT_EXIST_CAGE = 'No se ha encontrado la jaula en la bd';
 
     // MSGs
     const ADD_IMG_SUCCESS = 'La/s imagen/es han sido añadidas con éxito.';

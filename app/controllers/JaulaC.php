@@ -131,6 +131,9 @@ class JaulaC
             case "get_last_cage_number":
                 $this->get_last_cage_number();
                 break;
+            case "get_rows_availables":
+                $this->get_rows_availables();
+                break;
         }
     }
 
@@ -304,6 +307,11 @@ class JaulaC
             $letter_cage = htmlspecialchars(trim($_REQUEST['letter_cage']), ENT_QUOTES, 'UTF-8');
             echo json_encode($this->jaula->queryParam(Constants::GET_LAST_JAULA_NUMBER, ['letter_cage' => $letter_cage]));
         }
+    }
+    
+    private function get_rows_availables()
+    {
+        echo json_encode($this->jaula->query(Constants::GET_JAULA_SELECT));        
     }
 }
 

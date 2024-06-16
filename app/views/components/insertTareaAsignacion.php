@@ -1,5 +1,5 @@
     <!-- MODAL PARA INSERTAR UN NUEVO REGISTRO-->
-    <div class="modal fade" id="insert" tabindex="-1" aria-labelledby="insert" aria-hidden="true">
+    <div class="modal fade" id="add_tarea_asignada" tabindex="-1" aria-labelledby="add_tarea_asignada" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -7,62 +7,39 @@
                     <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body p-4" style="max-height:550px; overflow:auto;">
-                    <form action="../controllers/AsignarTareaC.php" method="POST" class="d-flex flex-column w-100">
-                        <div class="row border border-1 border-secondary mx-1 p-2">
-                            <div class="col-md-6">
-                                <label for="nombre">Nombre</label>
-                                <input type="text" name="nombre" id="nombre" value="">
+                    <form action="../controllers/AsignarTareasC.php" method="POST" class="d-flex flex-column w-100">
+                        <div class="row border border-1 border-secondary rounded-1 mx-1 p-2 pb-3 mb-3">
+                            <div class="col-md-7">
+                                <label for="tareas_id1">Tarea</label>
+                                <input type="hidden" id="asunto" name="asunto" value="">
+                                <select class="selectpicker w-100 border border-1 border-primary rounded-1" data-live-search="true" id="tareas_id1" name="tareas_id1" title="Seleccionar adoptante"></select>
                             </div>
-                            <div class="col-md-6">
-                                <label for="apellidos">Apellidos</label>
-                                <input type="text" name="apellidos" id="apellidos" value="">
+                            <div class="col-md-5">
+                                <label for="assigned_to">Asignar tarea</label> <!-- TO DO !! MODAL PARA SELECCIONAR ENTRE VOLUNTARIO O EMPLEADO -->
+                                <input type="hidden" name="empleados_id" id="empleados_id">
+                                <input type="hidden" name="voluntarios_id" id="voluntarios_id">
+                                <input class="w-100 border border-1 border-primary rounded-1 px-1" type="text" name="assigned_to" id="assigned_to" style="padding: .38em 0;">
                             </div>
-                            <div class="col-12">
-                                <label for="correo">Email</label>
-
-                                <input type="email" name="correo" id="correo" value="">
+                            <div class="col-12 col-md-6 mt-3">
+                                <label for="fecha_asignacion">Fech. asignación</label>
+                                <input class="p-1 w-100 border border-1 border-primary rounded-1" type="datetime-local" name="fecha_asignacion" id="fecha_asignacion" value="">
                             </div>
-                            <div class="col-md-3">
-                                <label for="telf">Tlf.</label>
-
-                                <input type="tel" name="telf" id="telf" value="">
+                            <div class="col-12 col-md-6 mt-3">
+                                <label for="fecha_finalizacion">Fech. finalización</label>
+                                <input class="p-1 w-100 border border-1 border-primary rounded-1" type="datetime-local" name="fecha_finalizacion" id="fecha_finalizacion" value="">
                             </div>
-                            <div class="col-md-9 mb-3">
-                                <label for="especialidad">Especialidad</label>
-                                <input type="text" name="especialidad" id="especialidad" value="">
+                            <div class="col-12 col-md-6 mt-3">
+                                <label for="prioridad">Prioridad</label>
+                                <select class="p-1 w-100 border border-1 border-primary rounded-1" name="prioridad" id="prioridad"></select>
                             </div>
-                        </div>
-
-                        <h5 class="mx-1 mt-4">DATOS CLÍNICA</h5>
-                        <div class="row border border-1 border-secondary mx-1 p-2">
-                            <div class="col-md-8">
-                                <label for="nombre_clinica">Clínica</label>
-                                <input type="text" name="nombre_clinica" id="nombre_clinica" value="">
+                            <div class="col-12 col-md-6 mt-3">
+                                <label for="estado_asignacion">Estado</label>
+                                <select class="p-1 w-100 border border-1 border-primary rounded-1" name="estado_asignacion" id="estado_asignacion"></select>
                             </div>
-                            <div class="col-md-4">
-                                <label for="telf_clinica">Tlf.</label>
-                                <input type="tel" name="telf_clinica" id="telf_clinica" value="">
+                            <div class="col-12 mb-3 mt-3">
+                                <label for="jaulas_id">Jaula</label>
+                                <select class="selectpicker w-100 border border-1 border-primary rounded-1" data-live-search="true" id="jaulas_id" name="jaulas_id" title="Seleccionar jaula"></select>
                             </div>
-                            <div class="col-12">
-                                <label for="correo_clinica">Email</label>
-                                <input type="email" name="correo_clinica" id="correo_clinica" value="">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="hora_apertura">Hora de apertura</label>
-                                <input type="email" name="hora_apertura" id="hora_apertura" value="">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="hora_cierre">Hora de cierre</label>
-                                <input type="email" name="hora_cierre" id="hora_cierre" value="">
-                            </div>
-                            <div class="col-12 mb-3">
-                                <label for="direccion_clinica">Dirección</label>
-                                <input type="text" name="direccion_clinica" id="direccion_clinica" value="">
-                            </div>
-                        </div>
-                        <div class="textarea-container mx-1 mt-3">
-                            <h5><label for="otra_informacion">Otros datos de interés</label></h5>
-                            <textarea class="form-textarea" name="otra_informacion" id="otra_informacion" cols="30" rows="10" style="resize: none;"></textarea>
                         </div>
                 </div>
                 <div class="modal-footer align-items-center justify-content-center">

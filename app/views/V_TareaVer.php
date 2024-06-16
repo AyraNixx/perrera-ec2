@@ -94,12 +94,14 @@
                                         <div class="collapse show" role="tabpanel" aria-labelledby="info" data-parent="#accordion">
                                             <div class="card-body">
                                                 <div class="form-group row">
-                                                    <div class="col-12 col-lg-6">
+                                                    <div class="col-12">
                                                         <label for="asunto" class="col-12 text-primary">Asunto</label>
                                                         <input type="text" name="asunto" id="asunto" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?= $data['asunto'] ?>" readonly>
-                                                        <label for="descripcion" class="col-12">Descripción</label>
-                                                        <textarea name="descripcion" id="descripcion" class="form-control" cols="30" rows="10" style="resize: none; box-shadow:none;" readonly><?= $data['descripcion'] ?></textarea>
                                                     </div>
+                                                </div>
+                                                <div class="row px-2">
+                                                    <label for="descripcion" class="col-12 p-2 ps-0 ms-0">Descripción</label>
+                                                    <textarea name="descripcion" id="descripcion" class="form-textarea rounded border-dark-subtle" cols="30" rows="10" style="resize: none; box-shadow:none;" readonly><?= $data['descripcion'] ?></textarea>
                                                 </div>
                                             </div>
                                         </div>

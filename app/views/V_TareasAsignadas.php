@@ -1,4 +1,5 @@
 <?php
+
 // //Si no tenemos guardado login 
 if (!isset($_SESSION["login"])) 
 {
@@ -18,9 +19,10 @@ $user_profile = $_SESSION["rol"];
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Empleados</title>
+    <title>AsignarTareases</title>
     <link rel="shortcut icon" href="../../public/imgs/logos/logo1.png" type="image/x-icon">
     <script src="https://kit.fontawesome.com/8d125d2b91.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css">
     <link rel="stylesheet" href="../views/css/sass.css">
     <style>
         #tabla {
@@ -46,11 +48,13 @@ $user_profile = $_SESSION["rol"];
         <!-- MODAL ALERTA -->
         <?php include_once "../views/components/modalAlert.php"; ?>
 
-        <!-- MODAL EMPLEADO -->
-        <?php include_once "../views/components/insertEmpleado.php"; ?>
-        
-        <!-- CHECK ANIMALS -->
-        <?php include_once "../views/components/seeDeleteEmpleados.php"; ?>
+        <!-- MODAL ANIMAL -->
+        <?php include_once "../views/components/insertTareaAsignacion.php"; ?>
+        <!-- Modal para ver las tareas eliminadas -->
+        <?php include_once "../views/components/seeDeleteTareasAsignadas.php"; ?>
+
+        <!-- Modal para elegir quien debe de realizar las tareas -->
+        <?php include_once "../views/components/assignedModal.php"; ?>
 
         <!-- HEADER -->
         <?php include_once "../views/components/header.php"; ?>
@@ -59,18 +63,20 @@ $user_profile = $_SESSION["rol"];
         <!-- CONTENEDOR PRINCIPAL -->
         <!-- <main class="mt-5 d-flex flex-column justify-content-center align-content-center p-3"> -->
         <main class="mt-5 d-flex flex-column justify-content-center align-content-center p-3" id="main">            
-            <?php include_once "../views/components/filterEmpleado.php"; ?>
+            <?php include_once "../views/components/filterAsignarTareas.php"; ?>
 
-            <?php include_once "../views/components/empleadoList.php"; ?>
+            <?php include_once "../views/components/asignarTareasList.php"; ?>
 
             <?php include_once "../views/components/pagination.php"; ?>
         </main>
 
     </section>
     <!-- JQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js"></script>
 
     <?php
 
@@ -92,8 +98,9 @@ $user_profile = $_SESSION["rol"];
     </script>
     <script src="/DES/perrera-ec2/app/views/js/Utils.js"></script>
     <script src="/DES/perrera-ec2/app/views/js/see-delete-rows.js"></script>
-    <script src="/DES/perrera-ec2/app/views/js/pagination.js"></script>
+    <script src="/DES/perrera-ec2/app/views/js/modal-assigned.js"></script>
     <script src="/DES/perrera-ec2/app/views/js/widthMenu.js"></script>
+    <script src="/DES/perrera-ec2/app/views/js/pagination.js"></script>
 </body>
 
 </html>

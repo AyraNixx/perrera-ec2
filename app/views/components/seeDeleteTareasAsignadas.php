@@ -1,8 +1,8 @@
-    <div class="modal fade" id="search_adoptante" tabindex="-1" aria-labelledby="search_adoptante" aria-hidden="true" style="z-index: 20000; background: rgba(0, 0, 0, 0.22);">
+    <div class="modal fade" id="see_delete_modal" tabindex="-1" aria-labelledby="see_delete_modal" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title px-2">Dueños</h5>
+                    <h5 class="modal-title px-2">Traeas asignadas</h5>
                     <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body py-4" style="max-height:550px; overflow:auto;">
@@ -13,7 +13,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text d-inline-block rounded-0 rounded-left" id="basic-addon1"><i class="fas fa-search" aria-hidden="true"></i></span>
                                     </div>
-                                    <input type="text" id="search_adoptante_val" class="form-control" placeholder="Buscar en la tabla..." aria-label="Buscar" aria-describedby="basic-addon1" style="outline: none; box-shadow: none;">
+                                    <input type="text" id="search_val" class="form-control" placeholder="Buscar en la tabla..." aria-label="Buscar" aria-describedby="basic-addon1" style="outline: none; box-shadow: none;">
                                 </div>
                             </div>
                         </div>
@@ -22,11 +22,12 @@
                         <table class="table table-bordered table-hover w-100">
                             <thead class="thead-light">
                                 <tr>
-                                    <th class="" style="position: relative;"></th>
-                                    <th style="position: relative;">Nombre</th>
-                                    <th style="position: relative;">Apellidos</th>
-                                    <th style="position: relative;">NIF</th>
-                                    <th style="position: relative;">Email</th>
+                                    <th style="position: relative;">Asunto</th>
+                                    <th style="position: relative;">Prioridad</th>
+                                    <th style="position: relative;">Jaula</th>
+                                    <th style="position: relative;">Empleado</th>
+                                    <th style="position: relative;">Voluntario</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody></tbody>

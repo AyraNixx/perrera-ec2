@@ -2,11 +2,13 @@
 
 use utils\Utils;
 use utils\Constants;
+use \model\AsignarTarea;
 
 // use \Exception;
 
 require_once "../utils/Utils.php";
 require_once "../utils/Constants.php";
+require_once "../models/AsignarTarea.php";
 
 class AsignarTareasC
 {
@@ -14,7 +16,6 @@ class AsignarTareasC
     // -- ATRIBUTOS
     // 
     private $asignar;
-    private $imgM;
     private $msg;
 
     //
@@ -39,7 +40,7 @@ class AsignarTareasC
         $this->asignar = new AsignarTarea();
         $this->msg = null;
 
-        $this->field = "nombre";
+        $this->field = "asunto";
         $this->ord = "ASC";
         $this->amount = "10";
         $this->page = "1";
@@ -98,10 +99,10 @@ class AsignarTareasC
         }
     }
 
-    private function index($view = 'V_Empleados.php')
+    private function index($view = 'V_TareasAsignadas.php')
     {
         if (!isset($_REQUEST['id'])) {
-            $data = $this->asignar->pagination_visible('tareas_asignadas', $this->ord, $this->field, $this->page, $this->amount);
+            $data = $this->asignar->pagination_tareas_asignadas($this->ord, $this->field, $this->page, $this->amount);
             $total_pages = $this->asignar->total_pages_visibles('tareas_asignadas', $this->amount);
             $page = $this->getPage();
             $new_msg = $this->getMsg();
@@ -117,13 +118,14 @@ class AsignarTareasC
         if ((isset($_REQUEST['id']) && !empty($_REQUEST['id'])) || !empty($id)) {
             $id = isset($_REQUEST['id']) ? htmlspecialchars(trim($_REQUEST['id']), ENT_QUOTES, 'UTF-8') : htmlspecialchars(trim($id), ENT_QUOTES, 'UTF-8');
             $data = $this->asignar->queryParam(Constants::GET_TAREAS_ASIGNADAS, ['id' => $id])[0];
-            require_once Constants::VIEW_TAREAS_ASIGNADAS;
+            require_once Constants::VIEW_TAREA_ASIGNADA;
         }
     }
 
 
     private function add()
     {
+        var_dump($_REQUEST);
         if (
             !isset($_REQUEST['asunto']) || !isset($_REQUEST['estado_asignacion']) || 
             !isset($_REQUEST['prioridad']) || !isset($_REQUEST['fecha_asignacion']) || 
@@ -131,74 +133,75 @@ class AsignarTareasC
         ) {
             header('Location: AsignarTareasC.php?msg=' . base64_encode(Constants::ERROR_INSERT));
             exit();
-        }
-        $asunto = htmlspecialchars(trim($_REQUEST['asunto']), ENT_QUOTES, 'UTF-8');
-        $estado_asignacion = htmlspecialchars(trim($_REQUEST['estado_asignacion']), ENT_QUOTES, 'UTF-8');
-        $prioridad = htmlspecialchars(trim($_REQUEST['prioridad']), ENT_QUOTES, 'UTF-8');
-        $fecha_asignacion = htmlspecialchars(trim($_REQUEST['fecha_asignacion']), ENT_QUOTES, 'UTF-8');
-        $fecha_finalizacion = htmlspecialchars(trim($_REQUEST['fecha_finalizacion']), ENT_QUOTES, 'UTF-8');
-        $tareas_id1 = htmlspecialchars(trim($_REQUEST['tareas_id1']), ENT_QUOTES, 'UTF-8');
+        // }
+        // $asunto = htmlspecialchars(trim($_REQUEST['asunto']), ENT_QUOTES, 'UTF-8');
+        // $estado_asignacion = htmlspecialchars(trim($_REQUEST['estado_asignacion']), ENT_QUOTES, 'UTF-8');
+        // $prioridad = htmlspecialchars(trim($_REQUEST['prioridad']), ENT_QUOTES, 'UTF-8');
+        // $fecha_asignacion = htmlspecialchars(trim($_REQUEST['fecha_asignacion']), ENT_QUOTES, 'UTF-8');
+        // $fecha_finalizacion = htmlspecialchars(trim($_REQUEST['fecha_finalizacion']), ENT_QUOTES, 'UTF-8');
+        // $tareas_id1 = htmlspecialchars(trim($_REQUEST['tareas_id1']), ENT_QUOTES, 'UTF-8');
 
-        // Comprobamos si al menos uno de los campos de empleados_id y voluntarios_id está relleno
-        if(
-            !isset($_REQUEST['empleados_id']) && empty($_REQUEST['empleados_id']) &&
-            !isset($_REQUEST['voluntarios_id']) && empty($_REQUEST['voluntarios_id'])
-        ){
-            header('Location: TareasAsignadasC.php?msg=' . base64_encode(Constants::ERROR_TAREA_EMPLEADO_VOLUNTARIO));
-            exit();
-        }
+        // // Comprobamos si al menos uno de los campos de empleados_id y voluntarios_id está relleno
+        // if(
+        //     !isset($_REQUEST['empleados_id']) && empty($_REQUEST['empleados_id']) &&
+        //     !isset($_REQUEST['voluntarios_id']) && empty($_REQUEST['voluntarios_id'])
+        // ){
+        //     header('Location: AsignarTareasC.php?msg=' . base64_encode(Constants::ERROR_TAREA_EMPLEADO_VOLUNTARIO));
+        //     exit();
+        // }
 
-        // Guardamos los valores de empleados_id y voluntarios_id en variables que luego se usarán en el array
-        $empleados_id = !empty($_REQUEST['empleados_id']) ? htmlspecialchars(trim($_REQUEST['empleados_id']), ENT_QUOTES, 'UTF-8') : NULL;
-        $voluntarios_id = !empty($_REQUEST['voluntarios_id']) ? htmlspecialchars(trim($_REQUEST['voluntarios_id']), ENT_QUOTES, 'UTF-8') : NULL;
+        // // Guardamos los valores de empleados_id y voluntarios_id en variables que luego se usarán en el array
+        // $empleados_id = !empty($_REQUEST['empleados_id']) ? htmlspecialchars(trim($_REQUEST['empleados_id']), ENT_QUOTES, 'UTF-8') : NULL;
+        // $voluntarios_id = !empty($_REQUEST['voluntarios_id']) ? htmlspecialchars(trim($_REQUEST['voluntarios_id']), ENT_QUOTES, 'UTF-8') : NULL;
         
-        // Comprobamos que estos valores existan en la bd
-        if($empleados_id != NULL){
-            $r = $this->asignar->queryparam();
-            if(!$r){
-                header('Location: TareasAsignadasC.php?msg=' . base64_encode(Constants::ERROR_DONT_EXIST_EMPLOYEE));
-                exit();
-            }
-        }
+        // // Comprobamos que estos valores existan en la bd
+        // if($empleados_id != NULL){
+        //     $r = $this->asignar->queryparam(Constants::GET_EMPLEADO, ['id' => $empleados_id]);
+        //     if(!$r){
+        //         header('Location: AsignarTareasC.php?msg=' . base64_encode(Constants::ERROR_DONT_EXIST_EMPLOYEE));
+        //         exit();
+        //     }
+        // }
 
-        // Comprobamos que estos valores existan en la bd
-        if($voluntarios_id != NULL){
-            $r = $this->asignar->queryparam();
-            if(!$r){
-                header('Location: TareasAsignadasC.php?msg=' . base64_encode(Constants::ERROR_DONT_EXIST_VOLUNTEER));
-                exit();
-            }
-        }
+        // // Comprobamos que estos valores existan en la bd
+        // if($voluntarios_id != NULL){
+        //     $r = $this->asignar->queryparam(Constants::GET_VOLUNTARIO, ['id' => $voluntarios_id]);
+        //     if(!$r){
+        //         header('Location: AsignarTareasC.php?msg=' . base64_encode(Constants::ERROR_DONT_EXIST_VOLUNTEER));
+        //         exit();
+        //     }
+        // }
 
-        $jaulas = NULL;
-        // Comprobamos si se ha asignado una jaula
-        if(
-            isset($_REQUEST['jaulas_id']) && empty($_REQUEST['jaulas_id'])
-        ){
-            $jaulas = htmlspecialchars(trim($_REQUEST['jaulas_id']), ENT_QUOTES, 'UTF-8');
-            // Comprobamos que dicha jaula existe en la bd
-            $r = $this->asignar->queryparam();
-            if(!$r){
-                header('Location: TareasAsignadasC.php?msg=' . base64_encode(Constants::ERROR_DONT_EXIST_CAGE));
-                exit();
-            }
-        }
+        // $jaulas = NULL;
+        // // Comprobamos si se ha asignado una jaula
+        // if(
+        //     isset($_REQUEST['jaulas_id']) && empty($_REQUEST['jaulas_id'])
+        // ){
+        //     $jaulas_id = htmlspecialchars(trim($_REQUEST['jaulas_id']), ENT_QUOTES, 'UTF-8');
+        //     // Comprobamos que dicha jaula existe en la bd
+        //     $r = $this->asignar->queryparam(Constants::GET_JAULA, ['id' => $jaulas_id]);
+        //     if(!$r){
+        //         header('Location: AsignarTareasC.php?msg=' . base64_encode(Constants::ERROR_DONT_EXIST_CAGE));
+        //         exit();
+        //     }
+        // }
 
-        // Insertamos la asignación en la bd
-        $result = $this->asignar->insert([
-            'asunto' => $asunto, 'estado_asignacion' => $estado_asignacion, 'prioridad' => $prioridad, 'fecha_asignacion' => $fecha_asignacion, 
-            'fecha_finalizacion' => $fecha_finalizacion, 'tareas_id1' => $tareas_id1
-        ]);
+        // // Insertamos la asignación en la bd
+        // $result = $this->asignar->insert([
+        //     'asunto' => $asunto, 'estado_asignacion' => $estado_asignacion, 'prioridad' => $prioridad, 'fecha_asignacion' => $fecha_asignacion, 
+        //     'fecha_finalizacion' => $fecha_finalizacion, 'tareas_id1' => $tareas_id1
+        // ]);
 
-        if ($result == false) { // Si no se ha podido insertar la asignacion
-            header('Location: TareasAsignadasC.php?msg=' . base64_encode(Constants::ERROR_INSERT));
-            exit();
-        }
+        // if ($result == false) { // Si no se ha podido insertar la asignacion
+        //     header('Location: AsignarTareasC.php?msg=' . base64_encode(Constants::ERROR_INSERT));
+        //     exit();
+        // }
 
-        // Rederigimos a la página del registro
-        header('Location: TareasAsignadasC.php?id=' . $result); //Si todo ha ido bien, se redirige a la página del empleado creado
-        exit();
+        // // Rederigimos a la página del registro
+        // header('Location: AsignarTareasC.php?id=' . $result); //Si todo ha ido bien, se redirige a la página del empleado creado
+        // exit();
     }
+}
 
 
     private function sdelete()
@@ -209,23 +212,23 @@ class AsignarTareasC
             exit();
         }
         $id = htmlspecialchars(trim($_REQUEST['id']), ENT_QUOTES, 'UTF-8'); // Limpiamos la cadena
-        $data_bd = $this->asignar->queryParam(Constants::GET_TAREAS_ASIGNADAS, ['id' => $id]);    // Comprobamos que existe un usuario en la bd con ese id
+        $data_bd = $this->asignar->queryParam(Constants::GET_TAREA_ASIGNADA, ['id' => $id]);    // Comprobamos que existe un usuario en la bd con ese id
 
-        if ($data_bd == null || $data_bd == false) {  // Si no se ha encontrado el usuario, se informa
+        if ($data_bd == null || $data_bd == false) {  // Si no se ha encontrado la tarea asignada, se informa
             $this->setMsg(base64_encode(Constants::ERROR_ROW_NOT_FOUND));
             header('Location: AsignarTareasC.php?msg=' . $this->getMsg());
             exit();
         }
 
-        $result = $this->asignar->queryParam(Constants::DELETE_TAREAS_ASIGNADAS, ['id' => $id]);  // Procedemos con el soft delete        
+        $result = $this->asignar->queryParam(Constants::DELETE_TAREA_ASIGNADA, ['id' => $id]);  // Procedemos con el soft delete        
 
         if ($result == false) { // Si no se ha podido realizar, lo informamos
             $this->setMsg(base64_encode(Constants::ERROR_DELETE));
-            header('Location: AsignarTareasC.php?msg=' . $this->getMsg() . ((isset($_REQUEST['from']) && $_REQUEST['from'] == 'index') ? '' : 'id=' . $id));
+            header('Location: AsignarTareasC.php?msg=' . $this->getMsg()); // TO DO!!!
             exit();
         }
         $this->setMsg(base64_encode(Constants::DELETE_ROW));
-        header('Location: AsignarTareasC.php?msg=' . $this->getMsg() . ((isset($_REQUEST['from']) && $_REQUEST['from'] == 'index') ? '' : 'id=' . $id));
+        header('Location: AsignarTareasC.php?msg=' . $this->getMsg()); // TO DO!!!
         exit();
     }
 
@@ -239,9 +242,9 @@ class AsignarTareasC
         }
 
         $id = htmlspecialchars(trim($_REQUEST['id']), ENT_QUOTES, 'UTF-8'); // Limpiamos la cadena
-        $data_bd = $this->asignar->queryParam(Constants::GET_TAREAS_ASIGNADAS, ['id' => $id]);    // Comprobamos que existe un usuario en la bd con ese id
+        $data_bd = $this->asignar->queryParam(Constants::GET_TAREA_ASIGNADA, ['id' => $id]);    // Comprobamos que existe una asignacion en la bd con ese id
 
-        if ($data_bd == null || $data_bd == false) {  // Si no se ha encontrado el usuario, se informa
+        if ($data_bd == null || $data_bd == false) {  // Si no se ha encontrado, se informa
             $this->setMsg(base64_encode(Constants::ERROR_ROW_NOT_FOUND));
             header('Location: AsignarTareasC.php?msg=' . $this->getMsg());
             exit();
@@ -252,7 +255,7 @@ class AsignarTareasC
             exit();
         }
 
-        $result = $this->asignar->queryParam(Constants::UPDT_UNDELETE_TAREAS_ASIGNADASS, ['id' => $id]);
+        $result = $this->asignar->queryParam(Constants::UPDT_UNDELETE_TAREA_ASIGNADA, ['id' => $id]);
 
         if ($result == false) {
             $this->setMsg(base64_encode(Constants::ERROR_UNDELETE));
@@ -267,7 +270,7 @@ class AsignarTareasC
     }
 
     private function show_delete_rows(){
-        echo json_encode($this->asignar->query(Constants::GET_TAREAS_ASIGNADASS_INACTIVE));
+        echo json_encode($this->asignar->query(Constants::GET_TAREAS_ASIGNADAS_INACTIVE));
     }
 
 
@@ -280,8 +283,8 @@ class AsignarTareasC
         $this->page = $this->asignar->get_value("page", $this->page);
         $this->search_val = (isset($_POST['search_value']) && !empty($_POST['search_value']) && $_POST['search_value'] != '' && $_POST['search_value'] != null) ? ('%' . $this->asignar->get_value("search_value", $_POST['search_value']) . '%') : false;
 
-        $data = ($this->search_val) ? ($this->asignar->queryParamSearch(Constants::SEARCH_TAREAS_ASIGNADASS_TABLE, $this->search_val, $this->ord, $this->field, $this->page, $this->amount)) : ($this->asignar->pagination_visible('tareas_asignadas', $this->ord, $this->field, $this->page, $this->amount));
-        $total_pages = ($this->search_val) ? ceil(count($this->asignar->queryParam(Constants::SEARCH_TAREAS_ASIGNADASS_TABLE_TOTAL_PAGES, ['search_value' => $this->search_val])) / $this->amount) : ($this->asignar->total_pages_visibles("empleados", $this->amount));
+        $data = ($this->search_val) ? ($this->asignar->queryParamSearch(Constants::SEARCH_TAREAS_ASIGNADAS_TABLE, $this->search_val, $this->ord, $this->field, $this->page, $this->amount)) : ($this->asignar->pagination_tareas_asignadas($this->ord, $this->field, $this->page, $this->amount));
+        $total_pages = ($this->search_val) ? ceil(count($this->asignar->queryParam(Constants::SEARCH_TAREAS_ASIGNADAS_TABLE_TOTAL_PAGES, ['search_value' => $this->search_val])) / $this->amount) : ($this->asignar->total_pages_visibles("empleados", $this->amount));
         $total_pages = ($total_pages == 0) ? 1 : $total_pages;
 
         // La página actual
@@ -294,10 +297,12 @@ class AsignarTareasC
 
             // Concatenamos el HTML generado dinámicamente
             $html_var .= "<tr>";
-            $html_var .= "<td class='sticky-column' id='showRegister' value='" . $show_data["id"] . "'> <a href='?id=" . $show_data["id"] . "&action=show_register'>" . $show_data["nombre"] . "</a> </td>";
-            $html_var .= "<td>" . $show_data["apellidos"] . "</td>";
-            $html_var .= "<td>" . $show_data["NIF"] . "</td>";
-            $html_var .= "<td>" . $show_data["correo"] . "</td>";
+            $html_var .= "<td class='sticky-column' id='showRegister' value='" . $show_data["id"] . "'> <a href='?id=" . $show_data["id"] . "&action=show_register'>" . $show_data["asunto"] . "</a> </td>";
+            $html_var .= "<td>" . $show_data["estado_asignacion"] . "</td>";
+            $html_var .= "<td>" . $show_data["prioridad"] . "</td>";
+            $html_var .= "<td>" . $show_data["fecha_finalizacion"] . "</td>";
+            $html_var .= "<td><a href='../controllers/EmpleadoC.php?id=" . $show_data["empleados_id"] . "&action=show_register'>" . $show_data["nombre_empleado"] . "</a></td>";
+            $html_var .= "<td><a href='../controllers/VoluntarioC.php?id=" . $show_data["voluntarios_id"] . "&action=show_register'>" . $show_data["nombre_voluntario"] . "</a></td>";
             $html_var .= "<td class='ps-4 pe-2'>";
             $html_var .= "<div class='btn-group dropdown d-block' style='position:relative'>";
             $html_var .= "<button type='button' onclick='show_btn_options(event)' id='add' class='button-dropdown rounded' style='padding: .8em;width: 1.3em;height: 1.3em;'>";
@@ -306,7 +311,7 @@ class AsignarTareasC
             $html_var .= "<div class='btn-dropdown-options w-auto position-absolute start-0'>";
             $html_var .= "<ul class='list-unstyled m-0'>";
             $html_var .= "<li>";
-            $html_var .= "<a href='../controllers/AsignarTareasC.php?action=add_or_update&id=" . $show_data["id"] . "'>Editar</a>";
+            $html_var .= "<a href='../controllers/AsignarTareasC.php?action=show_register&id=" . $show_data["id"] . "'>Ver</a>";
             $html_var .= "</li>";
             $html_var .= "<li>";
             $html_var .= "<a href='../controllers/AsignarTareasC.php?action=sdelete&id=" . $show_data["id"] . "'>Borrar</a>";

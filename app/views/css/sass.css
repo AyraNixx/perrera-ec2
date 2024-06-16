@@ -12439,6 +12439,15 @@ input[type=file]::after {
   color: #363636;
 }
 
+#assigned_modal #sel_assigned .bootstrap-select:first-of-type {
+  width: -moz-max-content !important;
+  width: max-content !important;
+}
+#assigned_modal #sel_assigned .bootstrap-select:first-of-type button {
+  background-color: #425C81;
+  color: rgba(168, 185, 224, 0.631372549);
+}
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);

@@ -86,6 +86,9 @@ class TareaC
             case "sdelete":
                 $this->sdelete();
                 break;
+            case "get_rows_availables":
+                $this->get_rows_availables();
+                break;
             case "pagination":
                 $this->pagination();
                 break;
@@ -169,6 +172,11 @@ class TareaC
         } else {
             $this->setMsg(Constants::ERROR_DELETE);
         }
+    }
+
+    private function get_rows_availables()
+    {
+        echo json_encode($this->tarea->query(Constants::GET_TAREA_SELECT));        
     }
 
     private function pagination()

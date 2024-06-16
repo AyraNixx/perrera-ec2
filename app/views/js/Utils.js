@@ -17,7 +17,6 @@ $(document).ready(function () {
 });
 
 function generate_values_details() {
-
   if ($('#details select[name="adoptante_id"]').length) {
     generate_options_select("adoptante_id", "AdoptanteC.php");
   }
@@ -173,7 +172,6 @@ function generate_values_details() {
 }
 
 function generate_values_inserts() {
-
   if ($('#insert select[name="adoptante_id"]').length) {
     generate_options_select("adoptante_id", "AdoptanteC.php");
   }
@@ -186,7 +184,8 @@ function generate_values_inserts() {
     generate_options_select("veterinarios_id", "VeterinarioC.php");
   }
 
-  if ($('#insert select[name="ocupacion"]').length) { console.log('entra 1');
+  if ($('#insert select[name="ocupacion"]').length) {
+    console.log("entra 1");
     $('#insert select[name="ocupacion"]').empty();
     $.getJSON("../views/js/Utils.json", function (data) {
       $.each(data.ocupaciones, function (k, v) {
@@ -196,7 +195,8 @@ function generate_values_inserts() {
     });
   }
 
-  if ($('#insert select[name="pais"]').length) { console.log('entra 2');
+  if ($('#insert select[name="pais"]').length) {
+    console.log("entra 2");
     $('#insert select[name="pais"]').empty();
     $.getJSON("../views/js/Utils.json", function (data) {
       $.each(data.paises, function (k, v) {
@@ -206,7 +206,8 @@ function generate_values_inserts() {
     });
   }
 
-  if ($('#insert select[name="estado_solicitud"]').length) { console.log('entra 3');
+  if ($('#insert select[name="estado_solicitud"]').length) {
+    console.log("entra 3");
     $('#insert select[name="estado_solicitud"]').empty();
     $.getJSON("../views/js/Utils.json", function (data) {
       $.each(data.estado_solicitud, function (k, v) {
@@ -218,7 +219,8 @@ function generate_values_inserts() {
     });
   }
 
-  if ($('#insert select[name="estado_adopcion"]').length) { console.log('entra 4');
+  if ($('#insert select[name="estado_adopcion"]').length) {
+    console.log("entra 4");
     $('#insert select[name="estado_adopcion"]').empty();
     $.getJSON("../views/js/Utils.json", function (data) {
       $.each(data.estado_adopcion, function (k, v) {
@@ -228,7 +230,8 @@ function generate_values_inserts() {
     });
   }
 
-  if ($('#insert select[name="tipo_vivienda"]').length) { console.log('entra 5');
+  if ($('#insert select[name="tipo_vivienda"]').length) {
+    console.log("entra 5");
     $('#insert select[name="tipo_vivienda"]').empty();
     $.getJSON("../views/js/Utils.json", function (data) {
       $.each(data.tipos_vivienda, function (k, v) {
@@ -238,7 +241,8 @@ function generate_values_inserts() {
     });
   }
 
-  if ($('#insert select[name="personalidad[]"]').length) { console.log('entra 6');
+  if ($('#insert select[name="personalidad[]"]').length) {
+    console.log("entra 6");
     $('#insert select[name="personalidad[]"]').empty();
     $.getJSON("../views/js/Utils.json", function (data) {
       $.each(data.personalidad, function (k, v) {
@@ -248,7 +252,8 @@ function generate_values_inserts() {
     });
   }
 
-  if ($('#insert select[name="colores[]"]').length) { console.log('entra 7');
+  if ($('#insert select[name="colores[]"]').length) {
+    console.log("entra 7");
     $('#insert select[name="colores[]"]').empty();
     $.getJSON("../views/js/Utils.json", function (data) {
       console.log(data);
@@ -259,12 +264,34 @@ function generate_values_inserts() {
     });
   }
 
-  if ($('#insert select[name="estado_salud"]').length) { console.log('entra 9');
+  if ($('#insert select[name="estado_salud"]').length) {
+    console.log("entra 9");
     $('#insert select[name="estado_salud"]').empty();
     $.getJSON("../views/js/Utils.json", function (data) {
       $.each(data.estados_salud, function (k, v) {
         let option = $("<option></option>").attr("value", v.value).text(v.text);
         $('#insert select[name="estado_salud"]').append(option);
+      });
+    });
+  }
+
+  if ($('#add_tarea_asignada select[name="prioridad"]').length) {
+    $('#add_tarea_asignada select[name="prioridad"]').empty();
+    $.getJSON("../views/js/Utils.json", function (data) {
+      $.each(data.prioridades, function (k, v) {
+        let option = $("<option></option>").attr("value", v.value).text(v.text);
+        $('#add_tarea_asignada select[name="prioridad"]').append(option);
+      });
+    });
+  }
+
+  if ($('#add_tarea_asignada select[name="estado_asignacion"]').length) {
+    $('#add_tarea_asignada select[name="estado_asignacion"]').empty();
+    $.getJSON("../views/js/Utils.json", function (data) {
+      console.log(data);
+      $.each(data.estados_tareas, function (k, v) {
+        let option = $("<option></option>").attr("value", v.value).text(v.text);
+        $('#add_tarea_asignada select[name="estado_asignacion"]').append(option);
       });
     });
   }

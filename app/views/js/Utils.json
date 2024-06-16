@@ -123,6 +123,20 @@
         { "value": "Enfermo", "text": "Enfermo" },
         { "value": "Recuperacion", "text": "Recuperación" },
         { "value": "Saludable", "text": "Saludable" }
-      ]
+    ],
+    "prioridades":[        
+        { "value": "Baja", "text": "Baja" },
+        { "value": "Media", "text": "Media" },
+        { "value": "Alta", "text": "Alta" }
+    ],
+    "estados_tareas": [
+      { "value": "Pendiente", "text": "Pendiente" },
+      { "value": "En Progreso", "text": "En Progreso" },
+      { "value": "Completada", "text": "Completada" },
+      { "value": "Revisar", "text": "Revisar" },
+      { "value": "Cancelada", "text": "Cancelada" },
+      { "value": "Retrasada", "text": "Retrasada" },
+      { "value": "Archivada", "text": "Archivada" }
+    ]
       
 }

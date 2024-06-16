@@ -40,6 +40,8 @@
                     <summary>
                         <h5>Tareas</h5>
                     </summary>
+                    <a href="../../app/controllers/AsignarTareasC.php?action=show_my_tasks">Mis Tareas asignadas</a><br />
+                    <a href="../../app/controllers/AsignarTareasC.php">Asignar Tareas</a><br />
                     <a href="../../app/controllers/TareaC.php">Tareas</a><br />
                 </details>
 
