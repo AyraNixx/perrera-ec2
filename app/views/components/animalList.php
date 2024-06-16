@@ -2,7 +2,7 @@
     <table id="list-container" class="table table-striped mb-0" style="vertical-align:middle">
         <thead>
             <tr>
-                <th style="width:12em; z-index:301;">
+                <th style="z-index:301;">
                     <div class="d-flex align-items-center justify-content-space-between">
                         <span>Nombre</span>
                         <button class="btn btn-link sort-btn p-0" data-field="nombre" data-ord="asc">

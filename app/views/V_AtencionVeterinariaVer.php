@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tarea Asignada</title>
+    <title>Atencion Veterinaria</title>
     <link rel="shortcut icon" href="../../public/imgs/logos/logo1.png" type="image/x-icon">
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css">
@@ -23,7 +23,7 @@
         <!-- MODAL -->
         <?php include_once "../views/components/modalAlert.php"; ?>
         <!-- MODAL PARA INSERTAR UNA NUEVA TAREA -->
-        <?php include_once "../views/components/insertTareaAsignacion.php"; ?>
+        <?php include_once "../views/components/insertAtencionVeterinaria.php"; ?>
         <!-- Modal para elegir quien debe de realizar las tareas -->
         <?php include_once "../views/components/assignedModal.php"; ?>
         <!-- HEADER -->

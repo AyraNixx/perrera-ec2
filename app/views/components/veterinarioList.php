@@ -2,7 +2,7 @@
     <table id="list-container" class="table table-striped mb-0" style="vertical-align:middle">
         <thead>
             <tr>
-                <th style="width:12em; z-index:301;">
+                <th style="z-index:301;">
                     <div class="d-flex align-items-center justify-content-space-between">
                         <span>Nombre</span>
                         <button class="btn btn-link sort-btn p-0" data-field="nombre" data-ord="asc">
@@ -10,7 +10,7 @@
                         </button>
                     </div>
                 </th>
-                <th style="width:fit-content; z-index:301;">
+                <th style="z-index:301;">
                     <div class="d-flex align-items-center justify-content-space-between">
                         <span>Apellidos</span>
                         <button class="btn btn-link sort-btn p-0" data-field="apellidos" data-ord="asc">
@@ -18,7 +18,7 @@
                         </button>
                     </div>
                 </th>
-                <th style="width:fit-content; z-index:301;">
+                <th style="z-index:301;">
                     <div class="d-flex align-items-center justify-content-space-between">
                         <span>Email</span>
                         <button class="btn btn-link sort-btn p-0" data-field="correo" data-ord="asc">
@@ -26,7 +26,7 @@
                         </button>
                     </div>
                 </th>
-                <th style="width:fit-content; z-index:301;">
+                <th style="z-index:301;">
                     <div class="d-flex align-items-center justify-content-space-between">
                         <span>Clínica</span>
                         <button class="btn btn-link sort-btn p-0" data-field="nombre_clinica" data-ord="asc">
@@ -34,7 +34,7 @@
                         </button>
                     </div>
                 </th>
-                <th style="width:12em; z-index:301;"><span>Horario</span></th>
+                <th style="z-index:301;"><span>Horario</span></th>
                 <th>
                     <div class="d-flex align-items-center justify-content-space-between">
                         <span style="width: max-content;">ELIMINADO</span>

@@ -25,6 +25,7 @@
                         <h5>Animales</h5>
                     </summary> 
                     <a href="../../app/controllers/AnimalC.php">Animales</a><br />
+                    <a href="../../app/controllers/AtencionVeterinariaC.php">Asistencia veterinaria</a><br />
                     <a href="../../app/controllers/JaulaC.php">Jaulas</a><br />
                 </details>
 

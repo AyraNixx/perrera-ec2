@@ -12235,7 +12235,7 @@ header button .hamburguer-inner > span:last-of-type {
   overflow: inherit;
   word-wrap: break-word;
   word-break: break-all;
-  white-space: pre-line;
+  white-space: normal;
 }
 .table-striped tbody tr > td:first-child,
 .table-striped thead tr > th:first-child {

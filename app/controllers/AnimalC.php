@@ -177,6 +177,9 @@ class AnimalC
             case 'getList_animal':
                 $this->getList_animal();
                 break;
+            case "get_rows_availables":
+                $this->get_rows_availables();
+                break;
             case "pagination":
                 $this->pagination();
                 break;
@@ -458,7 +461,7 @@ class AnimalC
                         if ($res) {
                             echo json_encode($this->animal->queryParam(Constants::GET_ANIMAL_LIST_DUENIO, ['id' => $duenio_id]));
                         }
-                    } else if(isset($_REQUEST['register_id']) ){
+                    } else if (isset($_REQUEST['register_id'])) {
                         $duenio_id = htmlspecialchars(trim($_REQUEST["register_id"]), ENT_QUOTES, 'UTF-8');
                         echo json_encode($this->animal->queryParam(Constants::GET_ANIMAL_LIST_DUENIO, ['id' => $duenio_id]));
                     }
@@ -471,7 +474,7 @@ class AnimalC
                         if ($res) {
                             echo json_encode($this->animal->queryParam(Constants::GET_ANIMAL_LIST_ADOPTANTE, ['adoptante_id' => $adoptante_id]));
                         }
-                    } else if(isset($_REQUEST['register_id']) ){
+                    } else if (isset($_REQUEST['register_id'])) {
                         $adoptante_id = htmlspecialchars(trim($_REQUEST["register_id"]), ENT_QUOTES, 'UTF-8');
                         echo json_encode($this->animal->queryParam(Constants::GET_ANIMAL_LIST_ADOPTANTE, ['adoptante_id' => $adoptante_id]));
                     }
@@ -500,6 +503,12 @@ class AnimalC
         } else {
             $this->index("/components/animalList.php");
         }
+    }
+
+    
+    private function get_rows_availables()
+    {
+        echo json_encode($this->animal->query(Constants::GET_ANIMAL_SELECT));        
     }
 
     public function pagination()
@@ -532,7 +541,7 @@ class AnimalC
             $html_var .= "<td>" . $show_data["nombre_especie"] . "</td>";
             $html_var .= "<td>" . $show_data["raza"] . "</td>";
             $html_var .= "<td>" . $show_data["fech_nac"] . "</td>";
-            $html_var .= "<td style='white-space:normal'>" . $show_data["estado_adopcion"] . "</td>";
+            $html_var .= "<td>" . $show_data["estado_adopcion"] . "</td>";
             $html_var .= "<td>" . $show_data["ubicacion"] . "</td>";
             $html_var .= "<td>" . (($show_data["disponible"] == '0') ? 'SI' : 'NO') . "</td>";
             $html_var .= "<td class='ps-4 pe-2'>";

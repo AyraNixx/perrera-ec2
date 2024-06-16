@@ -2,7 +2,7 @@
     <table id="list-container" class="table table-striped mb-0" style="vertical-align:middle">
         <thead>
             <tr>
-                <th style="width:fit-content; z-index:301;">
+                <th style="z-index:301;">
                     <div class="d-flex align-items-center justify-content-space-between">
                         <span>Asunto</span>
                         <button class="btn btn-link sort-btn p-0" data-field="asunto" data-ord="asc">
@@ -35,7 +35,7 @@
 
                 echo "<tr>";
                 echo "<td class='sticky-column' id='showRegister' value='" . $show_data["id"] . "'> <a href='?id=" . $show_data["id"] . "&action=show_register'>" . $show_data["asunto"] . "</a> </td>";;
-                echo "<td style='white-space: pre-line;'>" . $show_data["descripcion"] . "</td>";
+                echo "<td style=>" . $show_data["descripcion"] . "</td>";
                 echo "<td>" . (($show_data["disponible"] == '0') ? 'SI' : 'NO') . "</td>";
                 echo "<td class='ps-4 pe-2'>";
             ?>

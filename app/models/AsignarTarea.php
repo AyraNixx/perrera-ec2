@@ -37,7 +37,7 @@ class AsignarTarea extends Model
 
             // Asignamos los valores a los parámetros
             $stm->bindParam(":asunto", $tarea["asunto"], PDO::PARAM_STR);
-            $stm->bindParam(":estado_asignacion", $tarea["estado_asignacion"], PDO::PARAM_INT);
+            $stm->bindParam(":estado_asignacion", $tarea["estado_asignacion"], PDO::PARAM_STR);
             $stm->bindParam(":prioridad", $tarea["prioridad"], PDO::PARAM_STR);
             $stm->bindParam(":fecha_asignacion", $tarea["fecha_asignacion"], PDO::PARAM_STR);
             $stm->bindParam(":fecha_finalizacion", $tarea["fecha_finalizacion"], PDO::PARAM_STR);

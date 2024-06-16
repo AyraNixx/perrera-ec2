@@ -192,7 +192,7 @@ class EspecieC
             // Concatenamos el HTML generado dinámicamente
             $html_var .= "<tr>";
             $html_var .= "<td class='sticky-column' id='showRegister' value='" . $show_data["id"] . "'> <a href='?id=" . $show_data["id"] . "&action=show_register'>" . $show_data["nombre"] . "</a> </td>";
-            $html_var .= "<td style='white-space: pre-line;'>" . $show_data["descripcion"] . "</td>";
+            $html_var .= "<td style=>" . $show_data["descripcion"] . "</td>";
             $html_var .= "<td>" . (($show_data["disponible"] == '0') ? 'SI' : 'NO') . "</td>";
             $html_var .= "<td class='ps-4 pe-2'>";
             $html_var .= "<div class='btn-group dropdown d-block' style='position:relative'>";

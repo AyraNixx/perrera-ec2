@@ -29,6 +29,40 @@ function generate_values_details() {
     generate_options_select("veterinarios_id", "VeterinarioC.php");
   }
 
+  if ($('#details select[name="prioridad"]').length) {
+    let prioridad_text = "";
+    if ($('input[name="prioridad_text"]').length) {
+      prioridad_text = $('input[name="prioridad_text"]').val();
+    }
+    $('#details select[name="prioridad"]').empty();
+    $.getJSON("../views/js/Utils.json", function (data) {
+      $.each(data.prioridades, function (k, v) {
+        let option = $("<option></option>").attr("value", v.value).text(v.text);
+        if (prioridad_text != "" && v.text == prioridad_text) {
+          option.prop("selected", true);
+        }
+        $('#details select[name="prioridad"]').append(option);
+      });
+    });
+  }
+
+  if ($('#details select[name="estado_asignacion"]').length) {
+    let estado_asignacion_text = "";
+    if ($('input[name="estado_asignacion_text"]').length) {
+      estado_asignacion_text = $('input[name="estado_asignacion_text"]').val();
+    }
+    $('#details select[name="estado_asignacion"]').empty();
+    $.getJSON("../views/js/Utils.json", function (data) {
+      $.each(data.estados_tareas, function (k, v) {
+        let option = $("<option></option>").attr("value", v.value).text(v.text);
+        if (estado_asignacion_text != "" && v.text == estado_asignacion_text) {
+          option.prop("selected", true);
+        }
+        $('#details select[name="estado_asignacion"]').append(option);
+      });
+    });
+  }
+
   if ($('#details select[name="ocupacion"]').length) {
     let ocupacion_text = "";
     if ($('input[name="ocupacion_text"]').length) {
@@ -184,6 +218,10 @@ function generate_values_inserts() {
     generate_options_select("veterinarios_id", "VeterinarioC.php");
   }
 
+  if ($('#insert select[name="animales_id"]').length) {
+    generate_options_select("animales_id", "AnimalC.php");
+  }
+
   if ($('#insert select[name="ocupacion"]').length) {
     console.log("entra 1");
     $('#insert select[name="ocupacion"]').empty();
@@ -291,7 +329,9 @@ function generate_values_inserts() {
       console.log(data);
       $.each(data.estados_tareas, function (k, v) {
         let option = $("<option></option>").attr("value", v.value).text(v.text);
-        $('#add_tarea_asignada select[name="estado_asignacion"]').append(option);
+        $('#add_tarea_asignada select[name="estado_asignacion"]').append(
+          option
+        );
       });
     });
   }
@@ -308,11 +348,20 @@ function generate_options_select(sname, c) {
     success: function (res) {
       let s = $(`select[name="${sname}"]`);
       s.empty();
+      console.log(res);
       res.forEach((r) => {
-        let option = $("<option></option>")
-          .val(r.id)
-          .text(r.nombre + " " + r.apellidos)
-          .attr("data-tokens", r.nombre + " " + r.apellidos);
+        let option = '';
+        if (c != "AnimalC.php") {
+          option = $("<option></option>")
+            .val(r.id)
+            .text(r.nombre + " " + r.apellidos)
+            .attr("data-tokens", r.nombre + " " + r.apellidos);
+        } else {
+          option = $("<option></option>")
+            .val(r.id)
+            .text(r.nombre)
+            .attr("data-tokens", r.nombre);
+        }
 
         if ($(`input[name="${sname}_text"]`).length) {
           let hi = $(`input[name="${sname}_text"]`).val();

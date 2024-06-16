@@ -125,6 +125,9 @@ class VeterinarioC
             case "undelete":
                 $this->undelete();
                 break;
+            case "get_rows_availables":
+                $this->get_rows_availables();
+                break;
             case "pagination":
                 $this->pagination();
                 break;
@@ -282,6 +285,11 @@ class VeterinarioC
         }
     }
 
+    private function get_rows_availables()
+    {
+        echo json_encode($this->veterinario->query(Constants::GET_VETERINARIO_SELECT));        
+    }
+
     private function pagination()
     {
         // Obtenemos los valores nuevos (si es que hay)
@@ -351,7 +359,7 @@ $especie = new VeterinarioC();
 
 $action = !empty($_REQUEST["action"]) ? $_REQUEST["action"] : "index";
 
-if(!empty($_REQUEST["msg"])){    
+if (!empty($_REQUEST["msg"])) {
     $especie->setMsg($_REQUEST["msg"]);
 }
 if (!empty($_POST["field"])) {

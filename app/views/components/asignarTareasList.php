@@ -2,7 +2,7 @@
     <table id="list-container" class="table table-striped mb-0" style="vertical-align:middle">
         <thead>
             <tr>
-                <th style="width:12em; z-index:301;">
+                <th style="z-index:301;">
                     <div class="d-flex align-items-center justify-content-space-between">
                         <span>Asunto</span>
                         <button class="btn btn-link sort-btn p-0" data-field="asunto" data-ord="asc">
@@ -10,7 +10,7 @@
                         </button>
                     </div>
                 </th>
-                <th style="width:fit-content; z-index:301;">
+                <th style="z-index:301;">
                     <div class="d-flex align-items-center justify-content-space-between">
                         <span>Estado</span>
                         <button class="btn btn-link sort-btn p-0" data-field="estado_asignacion" data-ord="asc">
@@ -18,7 +18,7 @@
                         </button>
                     </div>
                 </th>
-                <th style="width:fit-content; z-index:301;">
+                <th style="z-index:301;">
                     <div class="d-flex align-items-center justify-content-space-between">
                         <span>Prioridad</span>
                         <button class="btn btn-link sort-btn p-0" data-field="prioridad" data-ord="asc">
@@ -26,7 +26,7 @@
                         </button>
                     </div>
                 </th>
-                <th style="width:12em; z-index:301;">
+                <th style="z-index:301;">
                     <div class="d-flex align-items-center justify-content-space-between">
                         <span>Empleado</span>
                         <button class="btn btn-link sort-btn p-0" data-field="nombre_empleado" data-ord="asc">
@@ -34,7 +34,7 @@
                         </button>
                     </div>
                 </th>
-                <th style="width:fit-content; z-index:301;">
+                <th style="z-index:301;">
                     <div class="d-flex align-items-center justify-content-space-between">
                         <span>Voluntario</span>
                         <button class="btn btn-link sort-btn p-0" data-field="nombre_voluntario" data-ord="asc">
