@@ -77,8 +77,8 @@ $user_profile = $_SESSION["rol"];
 
     <?php
 
-    if ($new_msg != null) { ?>
-
+    if ($new_msg != null) { 
+        $new_msg = base64_decode($new_msg);?>
         <script>
             $(document).ready(function() {
                 $("#aviso").modal("show");

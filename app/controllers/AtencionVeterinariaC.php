@@ -129,9 +129,6 @@ class AtencionVeterinariaC
             case "show_delete_rows":
                 $this->show_delete_rows();
                 break;
-            case "change_assigned_to":
-                $this->change_assigned_to();
-                break;
             case "pagination":
                 $this->pagination();
                 break;
@@ -166,6 +163,7 @@ class AtencionVeterinariaC
 
     private function add()
     {
+        var_dump($_REQUEST);
         if (
             !isset($_REQUEST['animales_id']) || !isset($_REQUEST['veterinarios_id']) ||
             !isset($_REQUEST['motivo']) || !isset($_REQUEST['fecha_atencion']) ||
@@ -173,8 +171,8 @@ class AtencionVeterinariaC
             !isset($_REQUEST['medicamentos']) || !isset($_REQUEST['comentarios']) ||
             !isset($_REQUEST['coste'])
         ) {
-            header('Location: AtencionVeterinariaC.php?msg=' . base64_encode(Constants::ERROR_INSERT));
-            exit();
+            // header('Location: AtencionVeterinariaC.php?msg=' . base64_encode(Constants::ERROR_INSERT));
+            // exit();
         }
 
         $animales_id = htmlspecialchars(trim($_REQUEST['animales_id']), ENT_QUOTES, 'UTF-8');
@@ -193,13 +191,13 @@ class AtencionVeterinariaC
         ]);
 
         if ($result === false) {
-            header('Location: AtencionVeterinariaC.php?msg=' . base64_encode(Constants::ERROR_INSERT));
-            exit();
+            // header('Location: AtencionVeterinariaC.php?msg=' . base64_encode(Constants::ERROR_INSERT));
+            // exit();
         }
 
-        // Redirigimos a la página del registro creado
-        header('Location: AtencionVeterinariaC.php?id=' . $result);
-        exit();
+        // // Redirigimos a la página del registro creado
+        // header('Location: AtencionVeterinariaC.php?id=' . $result);
+        // exit();
     }
 
     private function update()
@@ -362,55 +360,6 @@ class AtencionVeterinariaC
 
         echo json_encode(array("total_pages" => $total_pages, "rows" => $html_var, 'pagination' => $this->atencion->generatePaginationHTML($page, $this->amount, $total_pages)));
     }
-
-    private function change_assigned_to()
-    {
-        // Verificar si se han recibido los parámetros necesarios
-        if (!isset($_REQUEST['id']) || (!isset($_REQUEST['empleados_id']) && !isset($_REQUEST['voluntarios_id']))) {
-            $res = ['msg' => Constants::ERROR_UPDATE];
-            echo json_encode($res);
-        }
-
-        $id = htmlspecialchars(trim($_REQUEST['id']), ENT_QUOTES, 'UTF-8');
-        $empleados_id = !empty($_REQUEST['empleados_id']) ? htmlspecialchars(trim($_REQUEST['empleados_id']), ENT_QUOTES, 'UTF-8') : null;
-        $voluntarios_id = !empty($_REQUEST['voluntarios_id']) ? htmlspecialchars(trim($_REQUEST['voluntarios_id']), ENT_QUOTES, 'UTF-8') : null;
-
-        if (empty($empleados_id) && empty($voluntarios_id)) {
-            $res = ['msg' => Constants::ERROR_DONT_EXIST_EMPLOYEE];
-            echo json_encode($res);
-        }
-
-        $empleado_a = [];
-        $voluntario_a = [];
-        if (!empty($empleados_id)) {
-            $r = $this->atencion->queryparam(Constants::GET_EMPLEADO, ['id' => $empleados_id]);
-            if (!$r) {
-                $res = ['msg' => Constants::ERROR_DONT_EXIST_EMPLOYEE];
-                echo json_encode($res);
-            }
-            $empleado_a = $r;
-        }
-        if (!empty($voluntarios_id)) {
-            $r = $this->atencion->queryparam(Constants::GET_VOLUNTARIO, ['id' => $voluntarios_id]);
-            if (!$r) {
-                $res = ['msg' => Constants::ERROR_DONT_EXIST_VOLUNTEER];
-                echo json_encode($res);
-            }
-            $voluntario_a = $r;
-        }
-
-        $result = $this->atencion->queryParam(Constants::UPDATE_ASSIGNED_TO_TAREA_ASIGNACION, ['id' => $id, 'empleados_id' => $empleados_id, 'voluntarios_id' => $voluntarios_id]);
-
-        // Comprobamos que se ha modificado bien
-        if ($result == false) {
-            $res = ['msg' => Constants::ERROR_UPDATE];
-            echo json_encode($res);
-        }
-
-        // Preparar respuesta de éxito para AJAX
-        $response = ['success' => true, 'msg' => 'Se ha reasignado la tarea', 'empleado' => $empleado_a, 'voluntario' => $voluntario_a];
-        echo json_encode($response);
-    }
 }
 
 //Comprobamos que la sesion esta iniciada
@@ -420,19 +369,18 @@ if (!Utils::is_logged_in()) {
     header("Location:../../public/Login.php");
     die;
 }
-$especie = new AtencionVeterinariaC();
+$atencion = new AtencionVeterinariaC();
 $action = !empty($_REQUEST["action"]) ? $_REQUEST["action"] : "index";
 if (!empty($_POST["field"])) {
-    $especie->setField($_POST["field"]);
+    $atencion->setField($_POST["field"]);
 }
 if (!empty($_POST["ord"])) {
-    $especie->setOrd($_POST["ord"]);
+    $atencion->setOrd($_POST["ord"]);
 }
 if (!empty($_POST["page"])) {
-    $especie->setPage($_POST["page"]);
+    $atencion->setPage($_POST["page"]);
 }
 if (!empty($_POST["amount"])) {
-    $especie->setAmount($_POST["amount"]);
+    $atencion->setAmount($_POST["amount"]);
 }
-
-$especie->run($action);
+$atencion->run($action);
