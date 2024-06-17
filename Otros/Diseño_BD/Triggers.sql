@@ -32,17 +32,12 @@ BEGIN
 
     SELECT COUNT(*) INTO total_animales_jaulas FROM animales WHERE jaulas_id = NEW.jaulas_id;
     SELECT tamanio INTO tamanio_jaula FROM jaulas WHERE id = NEW.jaulas_id;
-
-	/* Al final aquí he tenido que pedir ayuda al chatgpt porque probé varias formas en el condicional
-	   pero me daba error. Al final me dijo de añadir esto IF (NOT EXISTS(SELECT * FROM jaulas WHERE id = NEW.jaulas_id AND ocupada = 1)) THEN
-       y ahora va 
-    */
     IF (total_animales_jaulas > tamanio_jaula) THEN
         UPDATE jaulas SET ocupada = 0 WHERE id = NEW.jaulas_id;
         SIGNAL SQLSTATE '45100' SET MESSAGE_TEXT = 'No hay espacio disponible en esta jaula';
     ELSEIF (total_animales_jaulas = tamanio_jaula) THEN
-        IF (NOT EXISTS(SELECT * FROM jaulas WHERE id = NEW.jaulas_id AND ocupada = 1)) THEN
-            UPDATE jaulas SET ocupada = 0 WHERE id = NEW.jaulas_id;
+        IF (NOT EXISTS(SELECT * FROM jaulas WHERE id = NEW.jaulas_id AND ocupada = 0)) THEN
+            UPDATE jaulas SET ocupada = 1 WHERE id = NEW.jaulas_id;
         END IF;
     END IF;
 END$$

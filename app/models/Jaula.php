@@ -135,6 +135,7 @@ class Jaula extends Model
             $query = "SELECT j.*, e.nombre as nombre_especie
                         FROM perrera.jaulas j
                             INNER JOIN especies e ON j.especies_id = e.id
+                            WHERE j.disponible = 1
                                 ORDER BY $field $ord LIMIT :amount OFFSET :offset";
             // Preparamos la consulta para su ejecución
             $statement = $this->conBD->prepare($query);

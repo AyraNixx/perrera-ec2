@@ -49,6 +49,8 @@ $user_profile = $_SESSION["rol"];
 
         <!-- MODAL Jaula -->
         <?php include_once "../views/components/insertJaula.php"; ?>
+        <!-- MODAL REGISTROS ELIMINADOS -->
+        <?php include_once "../views/components/seeDeletes.php"; ?>
 
         <!-- HEADER -->
         <?php include_once "../views/components/header.php"; ?>
@@ -71,9 +73,10 @@ $user_profile = $_SESSION["rol"];
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script src="/DES/perrera-ec2/app/views/js/Utils.js"></script>
+    <script src="/DES/perrera-ec2/app/views/js/see-delete-rows.js"></script>
     <script src="/DES/perrera-ec2/app/views/js/widthMenu.js"></script>
-    <script src="/DES/perrera-ec2/app/views/js/pagination.js"></script>
     <script src="/DES/perrera-ec2/app/views/js/create-jaulas.js"></script>
+    <script src="/DES/perrera-ec2/app/views/js/pagination.js"></script>
     <?php
 
     if ($new_msg != null) { ?>

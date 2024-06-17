@@ -17,8 +17,8 @@
 
         <div class="col-md-6 col-lg-5 align-self-end">
             <div class="row">
-                
-            <div class="col-lg-10 col-md-12 md-sm-1 mb-1">
+
+                <div class="col-lg-10 col-md-12 md-sm-1 mb-1">
                     <div class="btn-group" role="group">
                         <button class="button-dropdown" id="add" data-toggle="modal" data-target="#insert">Añadir</button>
                         <?php

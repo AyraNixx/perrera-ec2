@@ -104,6 +104,7 @@
                                                 <div class="form-group row">
                                                     <div class="col-12 col-lg-6">
                                                         <label for="ubicacion" class="col-12 text-primary">Ubicación</label>
+                                                        <input type="hidden" name="id_text" data-jaula-id="<?=$data['id']?>">
                                                         <input type="text" name="ubicacion" id="ubicacion" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?= $data['ubicacion'] ?>" readonly>
                                                         <label for="tamanio" class="col-12 text-primary">Tamaño de Jaula</label>
                                                         <input type="num" name="tamanio" id="tamanio" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?= $data['tamanio'] ?>" readonly>

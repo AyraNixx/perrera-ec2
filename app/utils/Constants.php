@@ -41,11 +41,11 @@ class Constants
     const SEARCH_EMPLEADOS_TABLE = 'SELECT * FROM perrera.empleados WHERE nombre LIKE :search_value OR apellidos LIKE :search_value OR NIF LIKE :search_value OR correo LIKE :search_value ORDER BY ';
     const SEARCH_DUENIOS_TABLE = 'SELECT * FROM perrera.duenios WHERE nombre LIKE :search_value OR apellidos LIKE :search_value OR NIF LIKE :search_value OR correo LIKE :search_value ORDER BY ';
     const SEARCH_VOLUNTARIOS_TABLE = 'SELECT * FROM perrera.voluntarios WHERE nombre LIKE :search_value OR apellidos LIKE :search_value OR NIF LIKE :search_value OR correo LIKE :search_value OR telf LIKE :search_value ORDER BY ';
-    const SEARCH_JAULAS_TABLE = 'SELECT j.*, e.nombre as nombre_especie FROM perrera.jaulas j JOIN perrera.especies e ON j.especies_id = e.id WHERE j.nombre LIKE :search_value OR j.descripcion LIKE :search_value OR e.nombre LIKE :search_value ORDER BY j.';
+    const SEARCH_JAULAS_TABLE = 'SELECT j.*, e.nombre as nombre_especie FROM perrera.jaulas j JOIN perrera.especies e ON j.especies_id = e.id WHERE j.ubicacion LIKE :search_value OR j.descripcion LIKE :search_value OR e.nombre LIKE :search_value AND j.disponible = 1 ORDER BY j.';
     const SEARCH_ESPECIES_TABLE_TOTAL_PAGES = 'SELECT Id FROM perrera.especies WHERE nombre LIKE :search_value OR descripcion LIKE :search_value ORDER BY nombre ';
     const SEARCH_ROLES_TABLE_TOTAL_PAGES = 'SELECT Id FROM perrera.roles WHERE rol LIKE :search_value OR descripcion LIKE :search_value ORDER BY rol ';
     const SEARCH_TAREAS_TABLE_TOTAL_PAGES = 'SELECT Id FROM perrera.tareas WHERE asunto LIKE :search_value OR descripcion LIKE :search_value ORDER BY asunto ';
-    const SEARCH_JAULAS_TABLE_TOTAL_PAGES = 'SELECT j.Id FROM perrera.jaulas j JOIN perrera.especies e ON j.especies_id = e.id WHERE j.nombre LIKE :search_value OR j.descripcion LIKE :search_value OR e.nombre LIKE :search_value ORDER BY j.ubicacion ';
+    const SEARCH_JAULAS_TABLE_TOTAL_PAGES = 'SELECT j.Id FROM perrera.jaulas j JOIN perrera.especies e ON j.especies_id = e.id WHERE j.ubicacion LIKE :search_value OR j.descripcion LIKE :search_value OR e.nombre LIKE :search_value AND j.disponible = 1 ORDER BY j.ubicacion ';
     const SEARCH_VETERINARIOS_TABLE_TOTAL_PAGES = 'SELECT Id FROM perrera.veterinarios WHERE nombre LIKE :search_value OR apellidos LIKE :search_value OR correo LIKE :search_value OR especialidad LIKE :search_value OR nombre_clinica LIKE :search_value ORDER BY nombre';
     const SEARCH_ADOPTANTES_TABLE_TOTAL_PAGES = 'SELECT Id FROM perrera.adoptante WHERE nombre LIKE :search_value OR apellidos LIKE :search_value OR NIF LIKE :search_value OR correo LIKE :search_value OR estado_solicitud LIKE :search_value ORDER BY';
     const SEARCH_EMPLEADOS_TABLE_TOTAL_PAGES = 'SELECT Id FROM perrera.empleados WHERE nombre LIKE :search_value OR apellidos LIKE :search_value OR NIF LIKE :search_value OR correo LIKE :search_value ORDER BY';
@@ -70,6 +70,7 @@ class Constants
     const GET_TAREA = 'SELECT * FROM perrera.tareas WHERE id = :id';
     const GET_EMPLEADO = 'SELECT * FROM perrera.empleados WHERE id = :id';
     const GET_EMPLEADOS_INACTIVE = 'SELECT * FROM perrera.empleados WHERE disponible = 0';
+    const GET_JAULAS_INACTIVE = 'SELECT j.*, e.nombre as nombre_especie FROM perrera.jaulas j INNER JOIN perrera.especies e ON j.especies_id = e.id  WHERE j.disponible = 0';
     const GET_VOLUNTARIOS_INACTIVE = 'SELECT * FROM perrera.voluntarios WHERE disponible = 0';
     const GET_ROLES_INACTIVE = 'SELECT * FROM perrera.roles WHERE disponible = 0';
     const GET_DUENIOS_INACTIVE = 'SELECT * FROM perrera.duenios WHERE disponible = 0';

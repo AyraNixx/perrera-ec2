@@ -49,54 +49,18 @@ class RolC
     // 
     // -- GETTERS AND SETTERS
     // 
-    public function getMsg()
-    {
-        return $this->msg;
-    }
-    public function setMsg($msg)
-    {
-        return $this->msg = $msg;
-    }
-    public function getField()
-    {
-        return $this->field;
-    }
-    public function setField($field)
-    {
-        return $this->field = $field;
-    }
-    public function getOrd()
-    {
-        return $this->ord;
-    }
-    public function setOrd($ord)
-    {
-        return $this->ord = $ord;
-    }
-    public function getAmount()
-    {
-        return $this->amount;
-    }
-    public function setAmount($amount)
-    {
-        return $this->amount = $amount;
-    }
-    public function getPage()
-    {
-        return $this->page;
-    }
-    public function setPage($page)
-    {
-        return $this->page = $page;
-    }
-    public function getSearch_val()
-    {
-        return $this->search_val;
-    }
-    public function setSearch_val($search_val)
-    {
-        return $this->search_val = $search_val;
-    }
+    public function getMsg() { return $this->msg; }
+    public function setMsg($msg) { return $this->msg = $msg; }
+    public function getField() { return $this->field; }
+    public function setField($field) { return $this->field = $field; }
+    public function getOrd(){ return $this->ord; }
+    public function setOrd($ord) { return $this->ord = $ord; } 
+    public function getAmount() { return $this->amount; } 
+    public function setAmount($amount) { return $this->amount = $amount; } 
+    public function getPage() { return $this->page; } 
+    public function setPage($page) { return $this->page = $page; } 
+    public function getSearch_val() { return $this->search_val; } 
+    public function setSearch_val($search_val) { return $this->search_val = $search_val; }
 
 
     // 
@@ -197,7 +161,7 @@ class RolC
         $desc = htmlspecialchars(trim($_REQUEST['descripcion']), ENT_QUOTES, 'UTF-8');
 
         $result = $this->rol->queryParam(Constants::UPDT_ROL, ['id' => $id, 'rol' => $rol, 'descripcion' => $desc]);
-        var_dump($result);
+
         if ($result == false) {
             $this->setMsg(Constants::ERROR_UPDATE);
             header('Location: RolC.php?msg=' . Constants::ERROR_UPDATE . '&id=' . $id);

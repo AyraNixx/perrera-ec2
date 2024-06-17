@@ -82,28 +82,28 @@ $(document).ready(function () {
       type: "POST",
       url: `../../app/controllers/JaulaC.php`,
       data: data,
-      dataType: "json",
+      // dataType: "json",
       success: function (res) {
         console.log("Jaulas recibidas:", res);
-        let cages_select = $('select[name="jaulas_id"]');
-        cages_select.empty();
+        // let cages_select = $('select[name="jaulas_id"]');
+        // cages_select.empty();
 
-        res.forEach((e) => {
-          let option = $("<option>", {
-            value: e.id,
-            text: e.ubicacion,
-          }).appendTo(cages_select);
+        // res.forEach((e) => {
+        //   let option = $("<option>", {
+        //     value: e.id,
+        //     text: e.ubicacion,
+        //   }).appendTo(cages_select);
 
-          if (e.nombre === $('input[type="text"][name="jaula-form"]').val()) {
-            option.attr("selected", "selected");
-            $("input[data-jaula-id]").attr("data-jaula-id", e.id);
-          }
-        });
+        //   if (e.nombre === $('input[type="text"][name="jaula-form"]').val()) {
+        //     option.attr("selected", "selected");
+        //     $("input[data-jaula-id]").attr("data-jaula-id", e.id);
+        //   }
+        // });
 
-        cages_select.show();
+        // cages_select.show();
       },
       error: function (xhr, status, error) {
-        console.error("Error al obtener las jaulas:", error);
+        console.error("Error al obtener las jaulas:", xhr);
       },
     });
   }
