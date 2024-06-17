@@ -22,6 +22,7 @@ $user_profile = $_SESSION["rol"];
     <title>Veterinarios</title>
     <link rel="shortcut icon" href="../../public/imgs/logos/logo1.png" type="image/x-icon">
     <script src="https://kit.fontawesome.com/8d125d2b91.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css">
     <link rel="stylesheet" href="../views/css/sass.css">
     <style>
         #tabla {
@@ -49,6 +50,8 @@ $user_profile = $_SESSION["rol"];
 
         <!-- MODAL ANIMAL -->
         <?php include_once "../views/components/insertVeterinario.php"; ?>
+        <!-- MODAL REGISTROS ELIMINADOS -->
+        <?php include_once "../views/components/seeDeletes.php"; ?>
 
         <!-- HEADER -->
         <?php include_once "../views/components/header.php"; ?>
@@ -66,9 +69,11 @@ $user_profile = $_SESSION["rol"];
 
     </section>
     <!-- JQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js"></script>
 
     <?php
 
@@ -88,13 +93,10 @@ $user_profile = $_SESSION["rol"];
             $("#aviso").modal("hide");
         }
     </script>
-    <!-- <script src="../views/js/widthMenu.js"></script>
-    <script src="../views/js/filteredTable.js"></script>
-    <script src="../views/js/changeJaulaValues.js"></script>
-    <script src="../views/js/pagination.js"></script> -->
     <script src="/DES/perrera-ec2/app/views/js/Utils.js"></script>
     <script src="/DES/perrera-ec2/app/views/js/widthMenu.js"></script>
     <script src="/DES/perrera-ec2/app/views/js/pagination.js"></script>
+    <script src="/DES/perrera-ec2/app/views/js/create-jaulas.js"></script>
 </body>
 
 </html>

@@ -164,14 +164,14 @@
                                         </div>
                                         <div class="row textarea-container m-1 p-3 pt-0">
                                             <h5 class="p-0 mt-2"><label for="otra_informacion">Comentarios</label></h5>
-                                            <textarea class="form-textarea rounded border-dark-subtle" name="otra_informacion" id="otra_informacion" cols="30" rows="5" style="resize: none;" readonly><?=$data['otra_informacion']?></textarea>
+                                            <textarea class="form-textarea rounded border-dark-subtle" name="otra_informacion" id="otra_informacion" cols="30" rows="5" style="resize: none;" readonly><?= $data['otra_informacion'] ?></textarea>
                                         </div>
                                     </div>
 
                                     <h5 class="mt-4">ANIMALES RELACIONADOS</h5>
                                     <div class="card mt-3">
                                         <div class="card-header d-inline-flex" style=" align-items: center; justify-content: space-between;">
-                                            <h5 class="mb-0">Animales</h5>                                            
+                                            <h5 class="mb-0">Animales</h5>
                                         </div>
                                         <?php
                                         if (!empty($data['animal_ids'])) {
@@ -209,13 +209,16 @@
                                         <div class="card-footer text-center p-3"></div>
                                     </div>
                                 </div>
-                                <div class="form-group p-3 text-center bg-info bg-opacity-25 hidden btn-hidden-register">
-                                    <button type="submit" class="btn btn-primary" id="submit_register" name="action" value="update">Guardar Cambios</button>
-                                    <button type="button" class="btn btn-primary" id="cancel_register">Descartar</button>
-                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group p-3 text-center bg-info bg-opacity-25 hidden btn-hidden-register">
+                            <button type="submit" class="btn btn-primary" id="submit_register" name="action" value="update">Guardar Cambios</button>
+                            <button type="button" class="btn btn-primary" id="cancel_register">Descartar</button>
+                        </div>
                     </form>
+                    <br>
                 </div>
-                <br>
             </div>
         </main>
 

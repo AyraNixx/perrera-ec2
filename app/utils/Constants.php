@@ -75,6 +75,7 @@ class Constants
     const GET_VOLUNTARIOS_INACTIVE = 'SELECT * FROM perrera.voluntarios WHERE disponible = 0';
     const GET_ROLES_INACTIVE = 'SELECT * FROM perrera.roles WHERE disponible = 0';
     const GET_DUENIOS_INACTIVE = 'SELECT * FROM perrera.duenios WHERE disponible = 0';
+    const GET_VETERINARIOS_INACTIVE = 'SELECT * FROM perrera.veterinarios WHERE disponible = 0';
     const GET_ADOPTANTES_INACTIVE = 'SELECT * FROM perrera.adoptante WHERE disponible = 0';
     const GET_TAREAS_INACTIVE = 'SELECT * FROM perrera.tareas WHERE disponible = 0';
     const GET_ANIMALES_INACTIVE = 'SELECT * FROM perrera.animales a INNER JOIN especies e ON a.especies_id = e.id WHERE a.disponible = 0 AND e.disponible = 1';
@@ -153,6 +154,8 @@ class Constants
     const FIND_NIF_ADOPTANTE_UPD = 'SELECT CASE WHEN EXISTS (SELECT 1 FROM perrera.adoptante WHERE NIF = :NIF AND id <> :id) THEN true ELSE false END AS resultado';
     const FIND_NIF_DUENIO = 'SELECT Id FROM perrera.duenios WHERE NIF = :NIF';
     const FIND_NIF_VOLUNTARIO = 'SELECT Id FROM perrera.voluntarios WHERE NIF = :NIF';
+    const FIND_EMAIL_VETERINARIO = 'SELECT Id FROM perrera.veterinarios WHERE correo = :correo';
+    const FIND_EMAIL_VETERINARIO_UPD = 'SELECT CASE WHEN EXISTS (SELECT 1 FROM perrera.veterinarios WHERE correo = :correo AND id <> :id) THEN true ELSE false END AS resultado';
 
 
     // SOFT-DELETE DE ESPECIES
@@ -169,6 +172,10 @@ class Constants
     const SOFT_UNDEL_ESPECIE_ANIMAL = 'UPDATE perrera.animales SET disponible = 0, adoptante_id = NULL, jaulas_id = NULL WHERE especies_id = :id';
     const SOFT_UNDEL_ESPECIE_ASISTENCIA_VETERINARIA = 'UPDATE perrera.animales_atendidos_veterinarios SET disponible = 0 WHERE animales_id IN (SELECT id FROM perrera.animales WHERE especies_id = :id)';
     
+    const SOFT_DEL_VETERINARIO_VETERINARIO = 'UPDATE perrera.veterinarios SET disponible = 0 WHERE id = :id';
+    const SOFT_DEL_VETERINARIO_ASISTENCIA = 'UPDATE perrera.animales_atendidos_veterinarios SET disponible = 0 WHERE voluntarios_id IN (SELECT Id FROM perrera.voluntarios WHERE id = :id)';
+    const UNDEL_VETERINARIO_VETERINARIO = 'UPDATE perrera.veterinarios SET disponible = 1 WHERE id = :id';
+    const UNDEL_VETERINARIO_ASISTENCIA = 'UPDATE perrera.animales_atendidos_veterinarios aav LEFT JOIN perrera.animales a ON aav.animales_id = a.id SET aav.disponible = 1 WHERE aav.veterinarios_id IN (SELECT Id FROM perrera.veterinarios WHERE id = :id) AND a.disponible = 1';
 
     // ACTIONS
     const UPDT_PROFILE_STR = 'CHANGE_PROFILE';
@@ -240,6 +247,7 @@ class Constants
     const ERROR_DONT_EXIST_VOLUNTEER = 'No se ha encontrado el voluntario en la bd';
     const ERROR_DONT_EXIST_CAGE = 'No se ha encontrado la jaula en la bd';
     const ERROR_NIF = 'Existe un registro con este NIF en la base de datos';
+    const ERROR_EMAIL_EXIST = 'Existe un registro con este correo en la base de datos';
 
     // MSGs
     const ADD_IMG_SUCCESS = 'La/s imagen/es han sido añadidas con éxito.';

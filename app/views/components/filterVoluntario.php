@@ -20,11 +20,6 @@
                     <label for="filter-select" hidden></label>
                     <select id="filter-select" class="form-control border border-0 border-bottom border-primary rounded-0 text-primary shadow-none ps-0" style="font-size: .85rem;">
                         <option value="">Todos los voluntarios</option>
-                        <?php
-                        foreach ($data_especies as $show_one) {
-                            echo "<option value='" . $show_one["id"] . "'>Mostrar " . $show_one["nombre"] . "</option>";
-                        }
-                        ?>
                     </select>
                 </div>
             </div>
@@ -35,7 +30,11 @@
                 <div class="col-lg-10 col-md-12 md-sm-1 mb-1">
                     <div class="btn-group" role="group">
                         <button class="button-dropdown" id="add" data-toggle="modal" data-target="#insert">Añadir</button>
-                        <button class="button-dropdown" id="new_filter">Crear nuevo filtro</button>
+                        <?php
+                        if ($user_profile == 'Administrador') {
+                            echo '<button type="button" id="see_delete" class="button-dropdown " data-toggle="modal" data-target="#see_delete_modal">Ver eliminados</button>';
+                        }
+                        ?>
                     </div>
                     <div class="btn-group dropdown" style="position:relative">
                         <button type="button" id="add" class="button-dropdown " data-toggle="modal" data-target="#insert">
@@ -46,9 +45,11 @@
                         </button>
                         <div class="btn-dropdown-options w-100 position-absolute start-0">
                             <ul class="list-unstyled m-0">
-                                <li>
-                                    Nuevo filtro
-                                </li>
+                                <?php
+                                if ($user_profile == 'Administrador') {
+                                    echo '<li id="see_delete" data-toggle="modal" data-target="#see_delete_modal"> Mostrar eliminados </li>';
+                                }
+                                ?>
                             </ul>
                         </div>
                     </div>

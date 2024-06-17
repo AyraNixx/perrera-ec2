@@ -35,14 +35,6 @@
                     </div>
                 </th>
                 <th style="z-index:301;"><span>Horario</span></th>
-                <th>
-                    <div class="d-flex align-items-center justify-content-space-between">
-                        <span style="width: max-content;">ELIMINADO</span>
-                        <button class="btn btn-link sort-btn p-0" data-field="disponible" data-ord="asc">
-                            <i class="fas fa-sort"></i>
-                        </button>
-                    </div>
-                </th>
 
                 <th class='text-center'></th>
                 <!-- <th class='text-center' colspan="2"></th> -->
@@ -65,7 +57,6 @@
                 echo "<td>" . $show_data["correo"] . "</td>";
                 echo "<td>" . $show_data["nombre_clinica"] . "</td>";
                 echo "<td>" . $show_data["hora_apertura"] . " - " . $show_data["hora_cierre"] . "</td>";
-                echo "<td>" . (($show_data["disponible"] == '0') ? 'SI' : 'NO') . "</td>";
                 echo "<td class='ps-4 pe-2'>";
             ?>
                 <div class="btn-group dropdown d-block" style="position:relative">
@@ -79,18 +70,8 @@
                             <a href=<?="../controllers/VeterinarioC.php?action=show_register&id=". $show_data["id"]?>>Ver</a>
                             </li>
                             <li>
-                            <a href=<?="../controllers/VeterinarioC.php?action=update_modal&id=". $show_data["id"]?>>Editar</a>
-                            </li>
-                            <li>
                                 <a href=<?="../controllers/VeterinarioC.php?action=sdelete&id=". $show_data["id"]?>>Borrar</a>                                
-                            </li>                                                       
-                            <?php
-                                if($_SESSION["rol"] == Constants::ROL_ADMIN && $show_data["disponible"] == '0'){
-                            ?>
-                            <li>
-                                <a href=<?="../controllers/VeterinarioC.php?action=undelete&id=". $show_data["id"]?>>Recuperar registro</a>                                
                             </li>
-                            <?php } ?>
                         </ul>
                     </div>
                 </div>

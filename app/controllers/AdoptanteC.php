@@ -242,7 +242,6 @@ class AdoptanteC
 
     private function update()
     {
-        var_dump($_REQUEST);
         if (
             !isset($_REQUEST['id']) && !isset($_REQUEST['nombre']) && !isset($_REQUEST['apellidos'])
             && !isset($_REQUEST['fech_nac']) && !isset($_REQUEST['NIF']) && !isset($_REQUEST['correo'])
@@ -254,20 +253,20 @@ class AdoptanteC
             header('Location: AdoptanteC.php?msg=' . Constants::ERROR_UPDATE);
             exit();
         }
+        
         $NIF = htmlspecialchars(trim($_REQUEST['NIF']), ENT_QUOTES, 'UTF-8');
+        $id = htmlspecialchars(trim($_REQUEST['id']), ENT_QUOTES, 'UTF-8');
 
-        $exist_nif = $this->adoptante->queryParam(Constants::FIND_NIF_ADOPTANTE_UPD, ['NIF' => $NIF]);
+        $exist_nif = $this->adoptante->queryParam(Constants::FIND_NIF_ADOPTANTE_UPD, ['NIF' => $NIF, 'id' => $id]);
 
         if ($exist_nif) {
             header('Location: AdoptanteC.php?msg=' . Constants::ERROR_NIF);
             exit();
         }
 
-        $id = htmlspecialchars(trim($_REQUEST['id']), ENT_QUOTES, 'UTF-8');
         $nombre = htmlspecialchars(trim($_REQUEST['nombre']), ENT_QUOTES, 'UTF-8');
         $apellidos = htmlspecialchars(trim($_REQUEST['apellidos']), ENT_QUOTES, 'UTF-8');
         $fech_nac = htmlspecialchars(trim($_REQUEST['fech_nac']), ENT_QUOTES, 'UTF-8');
-        $NIF = htmlspecialchars(trim($_REQUEST['NIF']), ENT_QUOTES, 'UTF-8');
         $correo = htmlspecialchars(trim($_REQUEST['correo']), ENT_QUOTES, 'UTF-8');
         $telf = htmlspecialchars(trim($_REQUEST['telf']), ENT_QUOTES, 'UTF-8');
         $direccion = htmlspecialchars(trim($_REQUEST['direccion']), ENT_QUOTES, 'UTF-8');

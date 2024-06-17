@@ -7,6 +7,7 @@ use \utils\Utils;
 use \PDO;
 use \PDOException;
 use \Exception;
+use utils\Constants;
 
 require_once "Model.php";
 
@@ -73,6 +74,46 @@ class Veterinario extends Model
             // Guardamos el error en el log
             Utils::save_log_error("Unexpected error caught: " . $e->getMessage());
         }
+    }
+
+    public function soft_delete_veterinario(String $veterinario_id)
+    {
+        try {
+            $this->conBD->beginTransaction(); // esto es muy chulo porque se supone que ejecuta todo y si algo falla no se realizan 
+            $result = $this->queryParam(Constants::SOFT_DEL_VETERINARIO_VETERINARIO, ['id' => $veterinario_id]);
+            $result = $this->queryParam(Constants::SOFT_DEL_VETERINARIO_ASISTENCIA, ['id' => $veterinario_id]);
+            $this->conBD->commit();
+
+            return $result;
+
+        } catch (PDOException $e) {
+            // Guardamos el error en el log
+            Utils::save_log_error("PDOException caught: " . $e->getMessage());
+        } catch (Exception $e) {
+            // Guardamos el error en el log
+            Utils::save_log_error("Unexpected error caught: " . $e->getMessage());
+        }
+        return false;
+    }
+
+    public function undelete_veterinario(String $veterinario_id)
+    {
+        try {
+            $this->conBD->beginTransaction(); // esto es muy chulo porque se supone que ejecuta todo y si algo falla no se realizan 
+            $result = $this->queryParam(Constants::UNDEL_VETERINARIO_VETERINARIO, ['id' => $veterinario_id]);
+            $result = $this->queryParam(Constants::UNDEL_VETERINARIO_ASISTENCIA, ['id' => $veterinario_id]);
+            $this->conBD->commit();
+
+            return $result;
+
+        } catch (PDOException $e) {
+            // Guardamos el error en el log
+            Utils::save_log_error("PDOException caught: " . $e->getMessage());
+        } catch (Exception $e) {
+            // Guardamos el error en el log
+            Utils::save_log_error("Unexpected error caught: " . $e->getMessage());
+        }
+        return false;
     }
 }
 

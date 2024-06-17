@@ -67,21 +67,13 @@ class Especie extends Model
     {
         try {
             $this->conBD->beginTransaction(); // esto es muy chulo porque se supone que ejecuta todo y si algo falla no se realizan 
-
             $result = $this->queryParam(Constants::SOFT_DEL_ESPECIE_ESPECIE, ['id' => $especie_id]);
-
             $result = $this->queryParam(Constants::SOFT_DEL_ESPECIE_JAULA, ['id' => $especie_id]);
-
             $result = $this->queryParam(Constants::SOFT_DEL_ESPECIE_ANIMAL, ['id' => $especie_id]);
-
             $result = $this->queryParam(Constants::SOFT_DEL_ESPECIE_ASISTENCIA_VETERINARIA, ['id' => $especie_id]);
-
             $result = $this->queryParam(Constants::SOFT_DEL_ESPECIE_IMGS, ['id' => $especie_id]);
-
             $result = $this->queryParam(Constants::SOFT_DEL_ESPECIE_ANIMALES_CON_DUENIO, ['id' => $especie_id]);
-
             $result = $this->queryParam(Constants::SOFT_DEL_ESPECIE_TAREAS_ASIGNADAS, ['id' => $especie_id]);
-
             $this->conBD->commit();
 
             return $result;
