@@ -51,7 +51,7 @@ $user_profile = $_SESSION["rol"];
         <!-- MODAL ANIMAL -->
         <?php include_once "../views/components/insertTareaAsignacion.php"; ?>
         <!-- Modal para ver las tareas eliminadas -->
-        <?php include_once "../views/components/seeDeleteTareasAsignadas.php"; ?>
+        <?php include_once "../views/components/seeDeletes.php"; ?>
 
         <!-- Modal para elegir quien debe de realizar las tareas -->
         <?php include_once "../views/components/assignedModal.php"; ?>

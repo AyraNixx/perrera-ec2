@@ -2,7 +2,7 @@
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title px-2">Empleados</h5>
+                    <h5 class="modal-title px-2">Recuperar registro</h5>
                     <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body py-4" style="max-height:550px; overflow:auto;">
@@ -20,15 +20,7 @@
                     </div>
                     <div class="container mt-3" style="max-height: 300px;overflow: auto;">
                         <table class="table table-bordered table-hover w-100">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th style="position: relative;">Nombre</th>
-                                    <th style="position: relative;">Apellidos</th>
-                                    <th style="position: relative;">NIF</th>
-                                    <th style="position: relative;">Email</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
+                            <thead class="thead-light"><tr></tr></thead>
                             <tbody></tbody>
                         </table>
                     </div>

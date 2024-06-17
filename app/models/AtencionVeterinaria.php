@@ -26,6 +26,7 @@ class AtencionVeterinaria extends Model
      */
     public function insert(array $atencion)
     {
+        var_dump($atencion);
         try {
             $query = "INSERT INTO animales_atendidos_veterinarios 
                       (animales_id, veterinarios_id, motivo, fecha_atencion, diagnostico, procedimientos, medicamentos, comentarios, coste) 
@@ -43,7 +44,6 @@ class AtencionVeterinaria extends Model
             $stm->bindParam(":medicamentos", $atencion["medicamentos"], PDO::PARAM_STR);
             $stm->bindParam(":comentarios", $atencion["comentarios"], PDO::PARAM_STR);
             $stm->bindParam(":coste", $atencion["coste"], PDO::PARAM_STR);
-            $stm->bindParam(":disponible", $atencion["disponible"], PDO::PARAM_INT);
 
             // Ejecutar la consulta
             if ($stm->execute()) {
@@ -76,6 +76,7 @@ class AtencionVeterinaria extends Model
             LEFT JOIN especies e ON a.especies_id = e.id
             LEFT JOIN veterinarios v ON aav.veterinarios_id = v.id
             LEFT JOIN jaulas j ON a.jaulas_id = j.id
+            WHERE aav.disponible = 1
             ORDER BY $field $ord
             LIMIT :amount OFFSET :offset";
 

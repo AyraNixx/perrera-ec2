@@ -47,29 +47,29 @@
                 $url = "AtencionVeterinariaC.php"; // URL destino
 
                 // Concatenamos el HTML generado dinámicamente
-                $html_var .= "<tr>";
-                $html_var .= "<td class='sticky-column' id='showRegister' value='" . $show_data["id"] . "'> <a href='?id=" . $show_data["id"] . "&action=show_register'>" . $show_data["nombre_veterinario"] . ' ' . $show_data["apellidos_veterinario"] . "</a> </td>";
-                $html_var .= "<td>" . $show_data["telf_veterinario"] . "</td>";
-                $html_var .= "<td>" . $show_data["nombre_clinica"] . "</td>";
-                $html_var .= "<td>" . $show_data["nombre_animal"] . "</td>";
-                $html_var .= "<td class='ps-4 pe-2'>";
-                $html_var .= "<div class='btn-group dropdown d-block' style='position:relative'>";
-                $html_var .= "<button type='button' onclick='show_btn_options(event)' id='add' class='button-dropdown rounded' style='padding: .8em;width: 1.3em;height: 1.3em;'>";
-                $html_var .= "<i class='fa-solid fa-caret-down text-primary'></i>";
-                $html_var .= "</button>";
-                $html_var .= "<div class='btn-dropdown-options w-auto position-absolute start-0'>";
-                $html_var .= "<ul class='list-unstyled m-0'>";
-                $html_var .= "<li>";
-                $html_var .= "<a href='../controllers/AtencionVeterinariaC.php?action=show_register&id=" . $show_data["id"] . "'>Ver</a>";
-                $html_var .= "</li>";
-                $html_var .= "<li>";
-                $html_var .= "<a href='../controllers/AtencionVeterinariaC.php?action=sdelete&id=" . $show_data["id"] . "'>Borrar</a>";
-                $html_var .= "</li>";
-                $html_var .= "</ul>";
-                $html_var .= "</div>";
-                $html_var .= "</div>";
-                $html_var .= "</td>";
-                $html_var .= "</tr>";
+                echo "<tr>";
+                echo "<td class='sticky-column' id='showRegister' value='" . $show_data["id"] . "'> <a href='?id=" . $show_data["id"] . "&action=show_register'>" . $show_data["nombre_veterinario"] . ' ' . $show_data["apellidos_veterinario"] . "</a> </td>";
+                echo "<td>" . $show_data["telf_veterinario"] . "</td>";
+                echo "<td>" . $show_data["nombre_clinica"] . "</td>";
+                echo "<td>" . $show_data["nombre_animal"] . "</td>";
+                echo "<td class='ps-4 pe-2'>";
+                echo "<div class='btn-group dropdown d-block' style='position:relative'>";
+                echo "<button type='button' onclick='show_btn_options(event)' id='add' class='button-dropdown rounded' style='padding: .8em;width: 1.3em;height: 1.3em;'>";
+                echo "<i class='fa-solid fa-caret-down text-primary'></i>";
+                echo "</button>";
+                echo "<div class='btn-dropdown-options w-auto position-absolute start-0'>";
+                echo "<ul class='list-unstyled m-0'>";
+                echo "<li>";
+                echo "<a href='../controllers/AtencionVeterinariaC.php?action=show_register&id=" . $show_data["id"] . "'>Ver</a>";
+                echo "</li>";
+                echo "<li>";
+                echo "<a href='../controllers/AtencionVeterinariaC.php?action=sdelete&id=" . $show_data["id"] . "'>Borrar</a>";
+                echo "</li>";
+                echo "</ul>";
+                echo "</div>";
+                echo "</div>";
+                echo "</td>";
+                echo "</tr>";
             }
             ?>
 

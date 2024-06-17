@@ -23,7 +23,7 @@
         <!-- MODAL -->
         <?php include_once "../views/components/modalAlert.php"; ?>
 
-        <!-- MODAL ROL -->
+        <!-- MODAL TAREA -->
         <?php include_once "../views/components/insertTarea.php"; ?>
 
         <!-- HEADER -->
@@ -32,12 +32,13 @@
 
         <!-- CONTENEDOR PRINCIPAL -->
         <main class="mx-4 mt-5 mb-5">
+            <br/>
             <!-- Split dropup button -->
             <div class="mb-4 w-100 bg-secondary bg-opacity-75 " style="border-radius:5px;">
                 <div class="button-option-container d-flex justify-content-between align-content-center w-100 bg-primary p-3">
                     <h1 style="font-size: x-large;" class="pt-2 text-secondary text-uppercase font-weight-light mb-0 d-inline" data-controller="TareaC.php">
                         <i class="fa-solid fa-paw"></i>
-                        ROL
+                        TAREA
                     </h1>
                     <div class="btn-group" role="group">
                         <button class="button-dropdown" data-toggle="modal" data-target="#insert">Añadir</button>

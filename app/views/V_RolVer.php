@@ -9,6 +9,7 @@
     <link rel="shortcut icon" href="../../public/imgs/logos/logo1.png" type="image/x-icon">
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css'>
     <script src="https://kit.fontawesome.com/8d125d2b91.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css">
     <link rel="stylesheet" href="../views/css/sass.css">
 </head>
 
@@ -94,12 +95,14 @@
                                         <div class="collapse show" role="tabpanel" aria-labelledby="info" data-parent="#accordion">
                                             <div class="card-body">
                                                 <div class="form-group row">
-                                                    <div class="col-12 col-lg-6">
+                                                    <div class="col-12">
                                                         <label for="rol" class="col-12 text-primary">Rol</label>
-                                                        <input type="text" name="rol" id="rol" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?= $data['rol'] ?>" readonly>                                                        
-                                                        <label for="descripcion" class="col-12">Descripción</label>
-                                                        <textarea name="descripcion" id="descripcion" class="form-control" cols="30" rows="10" style="resize: none; box-shadow:none;" readonly><?= $data['descripcion'] ?></textarea>
+                                                        <input type="text" name="rol" id="rol" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?= $data['rol'] ?>" readonly>
                                                     </div>
+                                                </div>
+                                                <div class="row px-2">
+                                                    <label for="descripcion" class="col-12 p-2 ps-0 ms-0">Descripción</label>
+                                                    <textarea name="descripcion" id="descripcion" class="form-textarea rounded border-dark-subtle" cols="30" rows="10" style="resize: none; box-shadow:none;" readonly><?= $data['descripcion'] ?></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -123,6 +126,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js"></script>
 
     <script src="/DES/perrera-ec2/app/views/js/Utils.js"></script>
     <script src="/DES/perrera-ec2/app/views/js/widthMenu.js"></script>

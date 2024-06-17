@@ -51,7 +51,7 @@ $user_profile = $_SESSION["rol"];
         <!-- MODAL ANIMAL -->
         <?php include_once "../views/components/insertAtencionVeterinaria.php"; ?>
         <!-- Modal para ver las tareas eliminadas -->
-        <?php include_once "../views/components/seeDeleteAtencionVeterinaria.php"; ?>
+        <?php include_once "../views/components/seeDeletes.php"; ?>
 
         <!-- HEADER -->
         <?php include_once "../views/components/header.php"; ?>

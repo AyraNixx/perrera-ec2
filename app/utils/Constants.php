@@ -71,12 +71,13 @@ class Constants
     const GET_EMPLEADO = 'SELECT * FROM perrera.empleados WHERE id = :id';
     const GET_EMPLEADOS_INACTIVE = 'SELECT * FROM perrera.empleados WHERE disponible = 0';
     const GET_VOLUNTARIOS_INACTIVE = 'SELECT * FROM perrera.voluntarios WHERE disponible = 0';
+    const GET_ROLES_INACTIVE = 'SELECT * FROM perrera.roles WHERE disponible = 0';
     const GET_DUENIOS_INACTIVE = 'SELECT * FROM perrera.duenios WHERE disponible = 0';
     const GET_ADOPTANTES_INACTIVE = 'SELECT * FROM perrera.adoptante WHERE disponible = 0';
     const GET_TAREAS_INACTIVE = 'SELECT * FROM perrera.tareas WHERE disponible = 0';
     const GET_ANIMALES_INACTIVE = 'SELECT * FROM perrera.animales WHERE disponible = 0';
     const GET_TAREAS_ASIGNADAS_INACTIVE = 'SELECT * FROM perrera.tareas_asignadas WHERE disponible = 0';
-    const GET_ATENCION_VETERINARIA_INACTIVE = 'SELECT * FROM perrera.animales_atendidos_veterinarios WHERE disponible = 0';
+    const GET_ATENCION_VETERINARIA_INACTIVE = 'SELECT aav.*, an.nombre as nombre_animal, j.ubicacion, e.nombre AS nombre_especie, CONCAT(v.nombre, " ", v.apellidos) AS nombre_completo_veterinario FROM perrera.animales_atendidos_veterinarios aav JOIN perrera.animales an ON aav.animales_id = an.id JOIN perrera.especies e ON an.especies_id = e.id JOIN perrera.jaulas j ON an.jaulas_id = j.id JOIN perrera.veterinarios v ON aav.veterinarios_id = v.id WHERE aav.disponible = 0';
     const GET_VOLUNTARIO = 'SELECT * FROM perrera.voluntarios WHERE id = :id';
     const GET_ADOPTANTE = 'SELECT a.*, GROUP_CONCAT(al.id SEPARATOR ",") AS animal_ids, GROUP_CONCAT(al.nombre SEPARATOR ",") AS animal_nombres, GROUP_CONCAT(e.nombre SEPARATOR ",") AS nombre_especies FROM perrera.adoptante a LEFT JOIN animales al ON a.id = al.adoptante_id LEFT JOIN especies e ON al.especies_id = e.id WHERE a.id = :id GROUP BY a.id';
     const GET_JAULA = 'SELECT j.*,  e.nombre AS nombre_especie, GROUP_CONCAT(a.id SEPARATOR ",") AS animal_ids, GROUP_CONCAT(a.nombre SEPARATOR ",") AS animal_nombres, GROUP_CONCAT(a.estado_adopcion SEPARATOR ",") AS animal_estados_adopcion FROM jaulas j JOIN perrera.especies e ON j.especies_id = e.id LEFT JOIN animales a ON j.id = a.jaulas_id WHERE j.id = :id GROUP BY j.id, e.nombre';
@@ -94,6 +95,7 @@ class Constants
     const GET_ANIMAL_LIST_DUENIO = 'SELECT GROUP_CONCAT(a.id SEPARATOR ",") AS animal_ids, GROUP_CONCAT(a.nombre SEPARATOR ",") AS animal_nombres, GROUP_CONCAT(e.nombre SEPARATOR ",") AS nombre_especies, GROUP_CONCAT(ha.fech_registro SEPARATOR ",") AS fechas_registro FROM historial_animal_duenio ha LEFT JOIN animales a ON ha.animales_id = a.id LEFT JOIN especies e ON a.especies_id = e.id WHERE ha.duenios_id = :id AND ha.disponible = 1';
     const GET_ANIMAL_LIST_ADOPTANTE = 'SELECT GROUP_CONCAT(a.id SEPARATOR ",") AS animal_ids, GROUP_CONCAT(a.nombre SEPARATOR ",") AS animal_nombres, GROUP_CONCAT(e.nombre SEPARATOR ",") AS nombre_especies FROM animales a LEFT JOIN especies e ON a.especies_id = e.id WHERE a.adoptante_id = :adoptante_id AND a.disponible = 1';
     const GET_ADOPTANTE_SELECT = 'SELECT * FROM perrera.adoptante WHERE disponible = 1 ORDER BY nombre';
+    const GET_ROL_SELECT = 'SELECT * FROM perrera.roles WHERE disponible = 1 ORDER BY rol';
     const GET_DUENIO_SELECT = 'SELECT * FROM perrera.duenios WHERE disponible = 1 ORDER BY nombre';
     const GET_EMPLEADO_SELECT = 'SELECT * FROM perrera.empleados WHERE disponible = 1 ORDER BY nombre';
     const GET_VOLUNTARIO_SELECT = 'SELECT * FROM perrera.voluntarios WHERE disponible = 1 ORDER BY nombre';
@@ -167,10 +169,10 @@ class Constants
     const VIEW_VOLUNTARIO = '../views/V_VoluntarioVer.php';
     const VIEW_DUENIO = '../views/V_DuenioVer.php';
     const VIEW_ADOPTANTE = '../views/V_AdoptanteVer.php';
-    const VIEW_TAREA = '../views/V_TareaVer.php';
+    const VIEW_TAREA = '../views/V_TareasVer.php';
     const VIEW_TAREAS_ASIGNADAS = '../views/V_TareasAsignadas.php';
     const VIEW_TAREA_ASIGNADA = '../views/V_TareasAsignadasVer.php';
-    const VIEW_ATENCION_VETERINARIA = '../views/V_AtencionVeterinaria.php';
+    const VIEW_ATENCION_VETERINARIA = '../views/V_AtencionVeterinariaVer.php';
     const VIEW_EMPLEADO = '../views/V_EmpleadoVer.php';
 
     // CONTROLLERS

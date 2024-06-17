@@ -49,6 +49,8 @@ $user_profile = $_SESSION["rol"];
 
         <!-- MODAL ANIMAL -->
         <?php include_once "../views/components/insertRol.php"; ?>
+        <!-- MODAL REGISTROS ELIMINADOS -->
+        <?php include_once "../views/components/seeDeletes.php"; ?>
 
         <!-- HEADER -->
         <?php include_once "../views/components/header.php"; ?>
@@ -93,8 +95,8 @@ $user_profile = $_SESSION["rol"];
     <script src="../views/js/changeJaulaValues.js"></script>
     <script src="../views/js/pagination.js"></script> -->
     <script src="/DES/perrera-ec2/app/views/js/Utils.js"></script>
+    <script src="/DES/perrera-ec2/app/views/js/see-delete-rows.js"></script>
     <script src="/DES/perrera-ec2/app/views/js/widthMenu.js"></script>
-    <script src="/DES/perrera-ec2/app/views/js/changeJaulaValues.js"></script>
     <script src="/DES/perrera-ec2/app/views/js/pagination.js"></script>
 </body>
 

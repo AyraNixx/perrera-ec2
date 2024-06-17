@@ -163,7 +163,6 @@ class AtencionVeterinariaC
 
     private function add()
     {
-        var_dump($_REQUEST);
         if (
             !isset($_REQUEST['animales_id']) || !isset($_REQUEST['veterinarios_id']) ||
             !isset($_REQUEST['motivo']) || !isset($_REQUEST['fecha_atencion']) ||
@@ -171,8 +170,8 @@ class AtencionVeterinariaC
             !isset($_REQUEST['medicamentos']) || !isset($_REQUEST['comentarios']) ||
             !isset($_REQUEST['coste'])
         ) {
-            // header('Location: AtencionVeterinariaC.php?msg=' . base64_encode(Constants::ERROR_INSERT));
-            // exit();
+            header('Location: AtencionVeterinariaC.php?msg=' . base64_encode(Constants::ERROR_INSERT));
+            exit();
         }
 
         $animales_id = htmlspecialchars(trim($_REQUEST['animales_id']), ENT_QUOTES, 'UTF-8');
@@ -189,15 +188,14 @@ class AtencionVeterinariaC
         $result = $this->atencion->insert([ 'animales_id' => $animales_id, 'veterinarios_id' => $veterinarios_id, 'motivo' => $motivo, 'fecha_atencion' => $fecha_atencion, 'diagnostico' => $diagnostico, 
         'procedimientos' => $procedimientos, 'medicamentos' => $medicamentos, 'comentarios' => $comentarios, 'coste' => $coste
         ]);
-
         if ($result === false) {
-            // header('Location: AtencionVeterinariaC.php?msg=' . base64_encode(Constants::ERROR_INSERT));
-            // exit();
+            header('Location: AtencionVeterinariaC.php?msg=' . base64_encode(Constants::ERROR_INSERT));
+            exit();
         }
 
-        // // Redirigimos a la página del registro creado
-        // header('Location: AtencionVeterinariaC.php?id=' . $result);
-        // exit();
+        // Redirigimos a la página del registro creado
+        header('Location: AtencionVeterinariaC.php?id=' . $result);
+        exit();
     }
 
     private function update()
@@ -250,7 +248,7 @@ class AtencionVeterinariaC
         }
         $id = htmlspecialchars(trim($_REQUEST['id']), ENT_QUOTES, 'UTF-8'); // Limpiamos la cadena
         $data_bd = $this->atencion->queryParam(Constants::GET_ATENCION_VETERINARIA, ['id' => $id]);    // Comprobamos que existe un usuario en la bd con ese id
-
+        
         if ($data_bd == null || $data_bd == false) {  // Si no se ha encontrado la tarea asignada, se informa
             $this->setMsg(base64_encode(Constants::ERROR_ROW_NOT_FOUND));
             header('Location: AtencionVeterinariaC.php?msg=' . $this->getMsg());

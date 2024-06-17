@@ -19,11 +19,11 @@
                             </div>
                             <div class="col-12 col-md-8">
                                 <label for="fecha_atencion">Fech. atención</label>
-                                <input type="datetime-local" name="fecha_atencion" id="fecha_atencion">
+                                <input type="datetime-local" name="fecha_atencion" id="fecha_atencion" value="">
                             </div>
                             <div class="col-12 col-md-4 mb-3">
                                 <label for="coste">Coste</label>
-                                <input type="number" name="coste" id="coste">
+                                <input type="number" name="coste" id="coste" value="0">
                             </div>
                             <div class="textarea-container mx-1 mt-3">
                                 <h5 class="p-0"><label for="motivo">Motivo de la visita</label></h5>

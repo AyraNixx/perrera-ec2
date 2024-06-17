@@ -50,7 +50,7 @@ $user_profile = $_SESSION["rol"];
         <?php include_once "../views/components/insertEmpleado.php"; ?>
         
         <!-- CHECK ANIMALS -->
-        <?php include_once "../views/components/seeDeleteEmpleados.php"; ?>
+        <?php include_once "../views/components/seeDeletes.php"; ?>
 
         <!-- HEADER -->
         <?php include_once "../views/components/header.php"; ?>
