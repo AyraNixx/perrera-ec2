@@ -49,18 +49,54 @@ class EspecieC
     // 
     // -- GETTERS AND SETTERS
     // 
-    public function getMsg() { return $this->msg; }
-    public function setMsg($msg) { return $this->msg = $msg; }
-    public function getField() { return $this->field; }
-    public function setField($field) { return $this->field = $field; }
-    public function getOrd(){ return $this->ord; }
-    public function setOrd($ord) { return $this->ord = $ord; } 
-    public function getAmount() { return $this->amount; } 
-    public function setAmount($amount) { return $this->amount = $amount; } 
-    public function getPage() { return $this->page; } 
-    public function setPage($page) { return $this->page = $page; } 
-    public function getSearch_val() { return $this->search_val; } 
-    public function setSearch_val($search_val) { return $this->search_val = $search_val; }
+    public function getMsg()
+    {
+        return $this->msg;
+    }
+    public function setMsg($msg)
+    {
+        return $this->msg = $msg;
+    }
+    public function getField()
+    {
+        return $this->field;
+    }
+    public function setField($field)
+    {
+        return $this->field = $field;
+    }
+    public function getOrd()
+    {
+        return $this->ord;
+    }
+    public function setOrd($ord)
+    {
+        return $this->ord = $ord;
+    }
+    public function getAmount()
+    {
+        return $this->amount;
+    }
+    public function setAmount($amount)
+    {
+        return $this->amount = $amount;
+    }
+    public function getPage()
+    {
+        return $this->page;
+    }
+    public function setPage($page)
+    {
+        return $this->page = $page;
+    }
+    public function getSearch_val()
+    {
+        return $this->search_val;
+    }
+    public function setSearch_val($search_val)
+    {
+        return $this->search_val = $search_val;
+    }
 
 
     // 
@@ -86,11 +122,20 @@ class EspecieC
             case "sdelete":
                 $this->sdelete();
                 break;
+            case "undelete":
+                $this->undelete();
+                break;
             case "pagination":
                 $this->pagination();
                 break;
             case "generate_species_sel":
                 $this->generate_species_sel();
+                break;
+            case "show_delete_rows":
+                $this->show_delete_rows();
+                break;
+            default:
+                $this->index();
                 break;
         }
     }
@@ -98,16 +143,16 @@ class EspecieC
 
     private function index($view = 'V_Especies.php')
     {
-        if (strtoupper($_SESSION["rol"]) == USER_ROL_ADMIN) {
-            $data = $this->especie->pagination_all('especies', $this->ord, $this->field, $this->page, $this->amount);
-            $total_pages = $this->especie->total_pages('especies', $this->amount);
-        } else {
+        if (!isset($_REQUEST['id'])) {
             $data = $this->especie->pagination_visible('especies', $this->ord, $this->field, $this->page, $this->amount);
             $total_pages = $this->especie->total_pages_visibles('especies', $this->amount);
+            $page = $this->getPage();
+            $new_msg = $this->getMsg();
+            require_once "../views/" . $view;
+        } else {
+            $id = htmlspecialchars(trim($_REQUEST['id']), ENT_QUOTES, 'UTF-8');
+            $this->show_register($id);
         }
-        $page = $this->getPage();
-        $new_msg = $this->getMsg();
-        require_once "../views/" . $view;
     }
 
     public function show_register($id = '')
@@ -115,57 +160,112 @@ class EspecieC
         if ((isset($_REQUEST['id']) && !empty($_REQUEST['id'])) || !empty($id)) {
             $id = isset($_REQUEST['id']) ? htmlspecialchars(trim($_REQUEST['id']), ENT_QUOTES, 'UTF-8') : htmlspecialchars(trim($id), ENT_QUOTES, 'UTF-8');
             $data = $this->especie->queryParam(Constants::GET_ESPECIE, ['id' => $id])[0];
+            $new_msg = $this->getMsg();
             require_once Constants::VIEW_ESPECIE;
         }
     }
 
     private function add()
     {
-        if (isset($_REQUEST['nombre']) && isset($_REQUEST['descripcion'])) {
-            $nombre = htmlspecialchars(trim($_REQUEST['nombre']), ENT_QUOTES, 'UTF-8');
-            $desc = htmlspecialchars(trim($_REQUEST['descripcion']), ENT_QUOTES, 'UTF-8');
-            $result = $this->especie->insert(['nombre' => $nombre, 'descripcion' => $desc]);
-
-            if ($result == false) {
-                $this->setMsg(Constants::ERROR_INSERT);
-            }
-            // $this->index();
-            $this->show_register($result);
-        } else {
-            $this->setMsg(Constants::ERROR_INSERT);
+        if (!isset($_REQUEST['nombre']) || !isset($_REQUEST['descripcion'])) {
+            header('Location: EspecieC.php?msg=' . Constants::ERROR_INSERT);
+            exit();
         }
+
+        $nombre = htmlspecialchars(trim($_REQUEST['nombre']), ENT_QUOTES, 'UTF-8');
+        $desc = htmlspecialchars(trim($_REQUEST['descripcion']), ENT_QUOTES, 'UTF-8');
+
+        $result = $this->especie->insert(['nombre' => $nombre, 'descripcion' => $desc]);
+
+        if ($result == false) {
+            $this->setMsg(Constants::ERROR_INSERT);
+            header('Location: EspecieC.php?msg=' . Constants::ERROR_INSERT);
+            exit();
+        }
+
+        header('Location: EspecieC.php?id=' . $result);
+        exit();
     }
 
     private function update()
     {
-        if (isset($_REQUEST['nombre']) && isset($_REQUEST['descripcion']) && isset($_REQUEST['id'])) {
-            $nombre = htmlspecialchars(trim($_REQUEST['nombre']), ENT_QUOTES, 'UTF-8');
-            $desc = htmlspecialchars(trim($_REQUEST['descripcion']), ENT_QUOTES, 'UTF-8');
-            $id = htmlspecialchars(trim($_REQUEST['id']), ENT_QUOTES, 'UTF-8');
-            $result = $this->especie->queryParam(Constants::UPDT_ESPECIE, ['id' => $id, 'nombre' => $nombre, 'descripcion' => $desc]);
-            if ($result == false) {
-                $this->setMsg(Constants::ERROR_UPDATE);
-            }
-            // $this->index();  // TO DO!!!!!
-            $this->show_register($result);
-        } else {
-            $this->setMsg(Constants::ERROR_UPDATE);
+        if (!isset($_REQUEST['nombre']) || !isset($_REQUEST['descripcion']) || !isset($_REQUEST['id'])) {
+            header('Location: EspecieC.php?msg=' . Constants::ERROR_UPDATE);
+            exit();
         }
+
+        $id = htmlspecialchars(trim($_REQUEST['id']), ENT_QUOTES, 'UTF-8');
+        $nombre = htmlspecialchars(trim($_REQUEST['nombre']), ENT_QUOTES, 'UTF-8');
+        $desc = htmlspecialchars(trim($_REQUEST['descripcion']), ENT_QUOTES, 'UTF-8');
+
+        $result = $this->especie->queryParam(Constants::UPDT_ESPECIE, ['id' => $id, 'nombre' => $nombre, 'descripcion' => $desc]);
+
+        if ($result == false) {
+            $this->setMsg(Constants::ERROR_UPDATE);
+            header('Location: EspecieC.php?msg=' . Constants::ERROR_UPDATE . '&id=' . $id);
+            exit();
+        }
+
+        header('Location: EspecieC.php?id=' . $id);
+        exit();
+        $this->setMsg(Constants::ERROR_UPDATE);
     }
 
     private function sdelete()
     {
-        if (isset($_REQUEST['id'])) {
-            $id = htmlspecialchars(trim($_REQUEST['id']), ENT_QUOTES, 'UTF-8');
-            $result = $this->especie->queryParam(Constants::DELETE_ESPECIE, ['id' => $id]);
-            $this->setMsg("Registro borrado con éxito.");
-            if ($result == false) {
-                $this->setMsg(Constants::ERROR_DELETE);
-            }
-            $this->index();  // TO DO!!!!!
-        } else {
-            $this->setMsg(Constants::ERROR_DELETE);
+        if (!isset($_REQUEST['id'])) {
+            $this->setMsg(base64_encode(Constants::ERROR_DELETE));
+            header('Location: EspecieC.php?msg=' . $this->getMsg());
+            exit();
         }
+        $id = htmlspecialchars(trim($_REQUEST['id']), ENT_QUOTES, 'UTF-8');
+        $data_bd = $this->especie->queryParam(Constants::GET_ESPECIE, ['id' => $id]);
+
+        if ($data_bd == null || $data_bd == false) {
+            $this->setMsg(base64_encode(Constants::ERROR_ROW_NOT_FOUND));
+            header('Location: EspecieC.php?msg=' . $this->getMsg());
+            exit();
+        }
+        // $result = $this->especie->queryParam(Constants::DELETE_ESPECIE, ['id' => $id]);
+        $result = $this->especie->soft_delete_especie($id);
+
+        if ($result == false) {
+            $this->setMsg(base64_encode(Constants::ERROR_DELETE));
+            header('Location: EspecieC.php?msg=' . $this->getMsg()); // TO DO!!!
+            exit();
+        }
+
+        $this->setMsg(base64_encode(Constants::DELETE_ROW));
+        header('Location: EspecieC.php?msg=' . $this->getMsg()); // TO DO!!!
+        exit();
+    }
+
+    private function undelete()
+    {
+        if (!isset($_REQUEST['id'])) {
+            $this->setMsg(base64_encode(Constants::ERROR_UNDELETE));
+            header('Location: EspecieC.php?msg=' . $this->getMsg());
+            exit();
+        }
+        $id = htmlspecialchars(trim($_REQUEST['id']), ENT_QUOTES, 'UTF-8');
+        $data_bd = $this->especie->queryParam(Constants::GET_ESPECIE, ['id' => $id]);
+
+        if ($data_bd == null || $data_bd == false) {
+            $this->setMsg(base64_encode(Constants::ERROR_ROW_NOT_FOUND));
+            header('Location: EspecieC.php?msg=' . $this->getMsg());
+            exit();
+        }
+        $result = $this->especie->queryParam(Constants::UPDT_UNDELETE_ESPECIES, ['id' => $id]);
+
+        if ($result == false) {
+            $this->setMsg(base64_encode(Constants::ERROR_UNDELETE));
+            header('Location: EspecieC.php?msg=' . $this->getMsg()); // TO DO!!!
+            exit();
+        }
+
+        $this->setMsg(base64_encode(Constants::UNDELETE_ROW));
+        header('Location: EspecieC.php?msg=' . $this->getMsg()); // TO DO!!!
+        exit();
     }
 
     private function pagination()
@@ -177,8 +277,8 @@ class EspecieC
         $this->page = $this->especie->get_value("page", $this->page);
         $this->search_val = (isset($_POST['search_value']) && !empty($_POST['search_value']) && $_POST['search_value'] != '' && $_POST['search_value'] != null) ? ('%' . $this->especie->get_value("search_value", $_POST['search_value']) . '%') : false;
 
-        $data = ($this->search_val) ? ($this->especie->queryParamSearch(Constants::SEARCH_ESPECIES_TABLE, $this->search_val, $this->ord, $this->field, $this->page, $this->amount)) : ($this->especie->pagination_all('especies', $this->ord, $this->field, $this->page, $this->amount));
-        $total_pages = ($this->search_val) ? ceil(count($this->especie->queryParam(Constants::SEARCH_ESPECIES_TABLE_TOTAL_PAGES, ['search_value' => $this->search_val])) / $this->amount) : ((strtoupper($_SESSION["rol"]) == USER_ROL_ADMIN)  ? $this->especie->total_pages("especies", $this->amount) : $this->especie->total_pages_visibles("especies", $this->amount));
+        $data = ($this->search_val) ? ($this->especie->queryParamSearch(Constants::SEARCH_ESPECIES_TABLE, $this->search_val, $this->ord, $this->field, $this->page, $this->amount)) : ($this->especie->pagination_visible('especies', $this->ord, $this->field, $this->page, $this->amount));
+        $total_pages = ($this->search_val) ? ceil(count($this->especie->queryParam(Constants::SEARCH_ESPECIES_TABLE_TOTAL_PAGES, ['search_value' => $this->search_val])) / $this->amount) : $this->especie->total_pages_visibles("especies", $this->amount);
         $total_pages = ($total_pages == 0) ? 1 : $total_pages;
 
         // La página actual
@@ -193,7 +293,6 @@ class EspecieC
             $html_var .= "<tr>";
             $html_var .= "<td class='sticky-column' id='showRegister' value='" . $show_data["id"] . "'> <a href='?id=" . $show_data["id"] . "&action=show_register'>" . $show_data["nombre"] . "</a> </td>";
             $html_var .= "<td style=>" . $show_data["descripcion"] . "</td>";
-            $html_var .= "<td>" . (($show_data["disponible"] == '0') ? 'SI' : 'NO') . "</td>";
             $html_var .= "<td class='ps-4 pe-2'>";
             $html_var .= "<div class='btn-group dropdown d-block' style='position:relative'>";
             $html_var .= "<button type='button' onclick='show_btn_options(event)' id='add' class='button-dropdown rounded' style='padding: .8em;width: 1.3em;height: 1.3em;'>";
@@ -202,16 +301,11 @@ class EspecieC
             $html_var .= "<div class='btn-dropdown-options w-auto position-absolute start-0'>";
             $html_var .= "<ul class='list-unstyled m-0'>";
             $html_var .= "<li>";
-            $html_var .= "<a href='../controllers/EspecieC.php?action=add_or_update&id=" . $show_data["id"] . "'>Editar</a>";
+            $html_var .= "<a href='../controllers/EspecieC.php?action=show_register&id=" . $show_data["id"] . "'>Ver</a>";
             $html_var .= "</li>";
             $html_var .= "<li>";
             $html_var .= "<a href='../controllers/EspecieC.php?action=sdelete&id=" . $show_data["id"] . "'>Borrar</a>";
             $html_var .= "</li>";
-            if ($_SESSION["rol"] == Constants::ROL_ADMIN && $show_data["disponible"] == '0') {
-                $html_var .= "<li>";
-                $html_var .= "<a href='../controllers/EspecieC.php?action=undelete&id=" . $show_data["id"] . "'>Recuperar registro</a>";
-                $html_var .= "</li>";
-            }
             $html_var .= "</ul>";
             $html_var .= "</div>";
             $html_var .= "</div>";
@@ -225,6 +319,11 @@ class EspecieC
     private function generate_species_sel()
     {
         echo json_encode($this->especie->query(Constants::GET_ESPECIES));
+    }
+
+    private function show_delete_rows()
+    {
+        echo json_encode($this->especie->query(Constants::GET_ESPECIES_INACTIVE));
     }
 }
 

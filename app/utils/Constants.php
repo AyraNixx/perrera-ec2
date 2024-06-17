@@ -69,14 +69,15 @@ class Constants
     const GET_ROL = 'SELECT * FROM perrera.roles WHERE id = :id';
     const GET_TAREA = 'SELECT * FROM perrera.tareas WHERE id = :id';
     const GET_EMPLEADO = 'SELECT * FROM perrera.empleados WHERE id = :id';
-    const GET_EMPLEADOS_INACTIVE = 'SELECT * FROM perrera.empleados WHERE disponible = 0';
-    const GET_JAULAS_INACTIVE = 'SELECT j.*, e.nombre as nombre_especie FROM perrera.jaulas j INNER JOIN perrera.especies e ON j.especies_id = e.id  WHERE j.disponible = 0';
+    const GET_EMPLEADOS_INACTIVE = 'SELECT * FROM perrera.empleados INNER JOIN perrera.roles r ON r.id = e.roles_id WHERE e.disponible = 0 AND r.disponible = 1';
+    const GET_ESPECIES_INACTIVE = 'SELECT * FROM perrera.especies WHERE disponible = 0';
+    const GET_JAULAS_INACTIVE = 'SELECT j.*, e.nombre as nombre_especie FROM perrera.jaulas j INNER JOIN perrera.especies e ON j.especies_id = e.id  WHERE j.disponible = 0 AND e.disponible = 1';
     const GET_VOLUNTARIOS_INACTIVE = 'SELECT * FROM perrera.voluntarios WHERE disponible = 0';
     const GET_ROLES_INACTIVE = 'SELECT * FROM perrera.roles WHERE disponible = 0';
     const GET_DUENIOS_INACTIVE = 'SELECT * FROM perrera.duenios WHERE disponible = 0';
     const GET_ADOPTANTES_INACTIVE = 'SELECT * FROM perrera.adoptante WHERE disponible = 0';
     const GET_TAREAS_INACTIVE = 'SELECT * FROM perrera.tareas WHERE disponible = 0';
-    const GET_ANIMALES_INACTIVE = 'SELECT * FROM perrera.animales WHERE disponible = 0';
+    const GET_ANIMALES_INACTIVE = 'SELECT * FROM perrera.animales a INNER JOIN especies e ON a.especies_id = e.id WHERE a.disponible = 0 AND e.disponible = 1';
     const GET_TAREAS_ASIGNADAS_INACTIVE = 'SELECT * FROM perrera.tareas_asignadas WHERE disponible = 0';
     const GET_ATENCION_VETERINARIA_INACTIVE = 'SELECT aav.*, an.nombre as nombre_animal, j.ubicacion, e.nombre AS nombre_especie, CONCAT(v.nombre, " ", v.apellidos) AS nombre_completo_veterinario FROM perrera.animales_atendidos_veterinarios aav JOIN perrera.animales an ON aav.animales_id = an.id JOIN perrera.especies e ON an.especies_id = e.id JOIN perrera.jaulas j ON an.jaulas_id = j.id JOIN perrera.veterinarios v ON aav.veterinarios_id = v.id WHERE aav.disponible = 0';
     const GET_VOLUNTARIO = 'SELECT * FROM perrera.voluntarios WHERE id = :id';
@@ -153,6 +154,21 @@ class Constants
     const FIND_NIF_DUENIO = 'SELECT Id FROM perrera.duenios WHERE NIF = :NIF';
     const FIND_NIF_VOLUNTARIO = 'SELECT Id FROM perrera.voluntarios WHERE NIF = :NIF';
 
+
+    // SOFT-DELETE DE ESPECIES
+    const SOFT_DEL_ESPECIE_ESPECIE = 'UPDATE perrera.especies SET disponible = 0 WHERE id = :id';
+    const SOFT_DEL_ESPECIE_JAULA = 'UPDATE perrera.jaulas SET disponible = 0 WHERE especies_id = :id';
+    const SOFT_DEL_ESPECIE_ANIMAL = 'UPDATE perrera.animales SET disponible = 0, adoptante_id = NULL, jaulas_id = NULL WHERE especies_id = :id';
+    const SOFT_DEL_ESPECIE_ASISTENCIA_VETERINARIA = 'UPDATE perrera.animales_atendidos_veterinarios SET disponible = 0 WHERE animales_id IN (SELECT id FROM perrera.animales WHERE especies_id = :id)';
+    const SOFT_DEL_ESPECIE_IMGS = 'UPDATE perrera.imgs SET disponible = 0 WHERE animales_id IN (SELECT id FROM perrera.animales WHERE especies_id = :id)';
+    const SOFT_DEL_ESPECIE_ANIMALES_CON_DUENIO = 'UPDATE perrera.historial_animal_duenio SET disponible = 0 WHERE animales_id IN (SELECT id FROM perrera.animales WHERE especies_id = :id)';
+    const SOFT_DEL_ESPECIE_TAREAS_ASIGNADAS = 'UPDATE perrera.tareas_asignadas SET disponible = 0 WHERE jaulas_id IN (SELECT id FROM perrera.jaulas WHERE especies_id = :id)';
+    
+    const SOFT_UNDEL_ESPECIE_ESPECIE = 'UPDATE perrera.especies SET disponible = 1 WHERE id = :id';
+    const SOFT_UNDEL_ESPECIE_JAULA = 'UPDATE perrera.jaulas SET disponible = 1 WHERE especies_id = :id';
+    const SOFT_UNDEL_ESPECIE_ANIMAL = 'UPDATE perrera.animales SET disponible = 0, adoptante_id = NULL, jaulas_id = NULL WHERE especies_id = :id';
+    const SOFT_UNDEL_ESPECIE_ASISTENCIA_VETERINARIA = 'UPDATE perrera.animales_atendidos_veterinarios SET disponible = 0 WHERE animales_id IN (SELECT id FROM perrera.animales WHERE especies_id = :id)';
+    
 
     // ACTIONS
     const UPDT_PROFILE_STR = 'CHANGE_PROFILE';

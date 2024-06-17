@@ -85,7 +85,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label for="fecha_solicitud">Inicio de la solicitud</label>
-                                <input type="date" name="fecha_solicitud" id="fecha_solicitud" value="">
+                                <input type="datetime-local" name="fecha_solicitud" id="fecha_solicitud" value="">
                             </div>
                             <div class="col-md-12">
                                 <label for="animals_selected">Animal/es al que se quiere adoptar</label>

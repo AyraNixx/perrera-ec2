@@ -19,7 +19,7 @@ $user_profile = $_SESSION["rol"];
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Animales</title>
+    <title>Especies</title>
     <link rel="shortcut icon" href="../../public/imgs/logos/logo1.png" type="image/x-icon">
     <script src="https://kit.fontawesome.com/8d125d2b91.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../views/css/sass.css">
@@ -50,6 +50,8 @@ $user_profile = $_SESSION["rol"];
         <!-- MODAL ANIMAL -->
         <?php include_once "../views/components/insertEspecie.php"; ?>
 
+        <!-- MODAL REGISTROS ELIMINADOS -->
+        <?php include_once "../views/components/seeDeletes.php"; ?>
         <!-- HEADER -->
         <?php include_once "../views/components/header.php"; ?>
 
@@ -94,7 +96,7 @@ $user_profile = $_SESSION["rol"];
     <script src="../views/js/pagination.js"></script> -->
     <script src="/DES/perrera-ec2/app/views/js/Utils.js"></script>
     <script src="/DES/perrera-ec2/app/views/js/widthMenu.js"></script>
-    <script src="/DES/perrera-ec2/app/views/js/changeJaulaValues.js"></script>
+    <script src="/DES/perrera-ec2/app/views/js/see-delete-rows.js"></script>
     <script src="/DES/perrera-ec2/app/views/js/pagination.js"></script>
 </body>
 
