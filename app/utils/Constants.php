@@ -181,7 +181,13 @@ class Constants
     const SOFT_DEL_VOLUNTARIO_VOLUNTARIO = 'UPDATE perrera.voluntarios SET disponible = 0 WHERE id = :id';
     const SOFT_DEL_VOLUNTARIO_TAREAS_ASIGNADAS = 'UPDATE perrera.tareas_asignadas SET disponible = 0 WHERE voluntarios_id = :id';
     const UNDEL_VOLUNTARIO_VOLUNTARIO = 'UPDATE perrera.voluntarios SET disponible = 1 WHERE id = :id';
-    const UNDEL_VOLUNTARIO_TAREA_ASIGNADA = 'UPDATE perrera.tareas_asignadas ta LEFT JOIN perrera.jaulas j ON ta.jaulas_id = j.id INNER JOIN perrera.tareas t ON ta.tareas_id1 = t.id SET ta.disponible = 1 WHERE ta.voluntarios_id = :id AND (ta.jaulas_id IS NULL OR j.disponible = 1) AND t.disponible = 1;';
+    const UNDEL_VOLUNTARIO_TAREA_ASIGNADA = 'UPDATE perrera.tareas_asignadas ta LEFT JOIN perrera.jaulas j ON ta.jaulas_id = j.id INNER JOIN perrera.tareas t ON ta.tareas_id1 = t.id SET ta.disponible = 1 WHERE ta.voluntarios_id = :id AND (ta.jaulas_id IS NULL OR j.disponible = 1) AND t.disponible = 1';
+
+
+    const SOFT_DEL_TAREA_TAREA = 'UPDATE perrera.tareas SET disponible = 0 WHERE id = :id';
+    const SOFT_DEL_TAREAS_TAREAS_ASIGNADAS = 'UPDATE perrera.tareas_asignadas SET disponible = 0 WHERE tareas_id = :id';
+    const UNDEL_TAREAS_TAREAS = 'UPDATE perrera.tareas SET disponible = 1 WHERE id = :id';
+    const UNDEL_TAREAS_TAREA_ASIGNADA = 'UPDATE perrera.tareas_asignadas ta LEFT JOIN perrera.jaulas j ON ta.jaulas_id = j.id AND j.disponible = 1 LEFT JOIN perrera.empleados e ON ta.empleados_id = e.id AND e.disponible = 1 LEFT JOIN perrera.voluntarios v ON ta.voluntarios_id = v.id AND v.disponible = 1 SET ta.disponible = 1 WHERE ta.tareas_id = :id AND (ta.jaulas_id IS NULL OR j.disponible = 1) AND ((ta.empleados_id IS NOT NULL AND e.disponible = 1 AND ta.voluntarios_id IS NULL) OR (ta.voluntarios_id IS NOT NULL AND v.disponible = 1 AND ta.empleados_id IS NULL))';
 
 
     // ACTIONS

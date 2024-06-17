@@ -187,7 +187,7 @@ class TareaC
             header('Location: TareaC.php?msg=' . $this->getMsg());
             exit();
         }
-        $result = $this->tarea->queryParam(Constants::DELETE_TAREA, ['id' => $id]);
+        $result = $this->tarea->soft_delete_tareas($id);
 
         if ($result == false) {
             $this->setMsg(base64_encode(Constants::ERROR_DELETE));
@@ -215,7 +215,8 @@ class TareaC
             header('Location: TareaC.php?msg=' . $this->getMsg());
             exit();
         }
-        $result = $this->tarea->queryParam(Constants::UPDT_UNDELETE_TAREAS, ['id' => $id]);
+
+        $result = $this->tarea->undelete_tareas($id);
 
         if ($result == false) {
             $this->setMsg(base64_encode(Constants::ERROR_UNDELETE));

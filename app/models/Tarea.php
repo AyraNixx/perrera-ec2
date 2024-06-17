@@ -8,6 +8,7 @@ use \utils\Utils;
 use \PDO;
 use \PDOException;
 use \Exception;
+use utils\Constants;
 
 require_once "Model.php";
 
@@ -58,6 +59,46 @@ class Tarea extends Model
         }
 
         return null;
+    }
+    
+    public function soft_delete_tareas(String $tareas_id)
+    {
+        try {
+            $this->conBD->beginTransaction(); // esto es muy chulo porque se supone que ejecuta todo y si algo falla no se realizan 
+            $result = $this->queryParam(Constants::SOFT_DEL_TAREA_TAREA, ['id' => $tareas_id]);
+            $result = $this->queryParam(Constants::SOFT_DEL_TAREAS_TAREAS_ASIGNADAS, ['id' => $tareas_id]);
+            $this->conBD->commit();
+
+            return $result;
+
+        } catch (PDOException $e) {
+            // Guardamos el error en el log
+            Utils::save_log_error("PDOException caught: " . $e->getMessage());
+        } catch (Exception $e) {
+            // Guardamos el error en el log
+            Utils::save_log_error("Unexpected error caught: " . $e->getMessage());
+        }
+        return false;
+    }
+
+    public function undelete_tareas(String $tareas_id)
+    {
+        try {
+            $this->conBD->beginTransaction(); // esto es muy chulo porque se supone que ejecuta todo y si algo falla no se realizan 
+            $result = $this->queryParam(Constants::UNDEL_TAREAS_TAREAS, ['id' => $tareas_id]);
+            $result = $this->queryParam(Constants::UNDEL_TAREAS_TAREA_ASIGNADA, ['id' => $tareas_id]);
+            $this->conBD->commit();
+
+            return $result;
+
+        } catch (PDOException $e) {
+            // Guardamos el error en el log
+            Utils::save_log_error("PDOException caught: " . $e->getMessage());
+        } catch (Exception $e) {
+            // Guardamos el error en el log
+            Utils::save_log_error("Unexpected error caught: " . $e->getMessage());
+        }
+        return false;
     }
 }
 
