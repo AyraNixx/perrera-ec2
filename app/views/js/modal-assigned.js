@@ -1,8 +1,14 @@
 let modal_origin = "";
 $(document).ready(function () {
+  if(controller_val == 'VoluntarioC.php'){
+    $('#voluntarios_id').val(id_page);
+    $('#assigned_to').val($('#details input[name="nombre"]').val() + ' ' + $('#details input[name="apellidos"]').val());
+  }else if(controller_val == 'EmpleadoC.php'){
+    $('#empleados_id').val(id_page);
+    $('#assigned_to').val($('#details input[name="nombre"]').val() + ' ' + $('#details input[name="apellidos"]').val());
+  }
   $("#assigned_to").on("click", open_assigned_modal);
   $("[data-action='change_assigned_to']").on("click", function () {
-    console.log('entra');
     modal_origin = "change_assigned_to";
     open_assigned_modal();
   });

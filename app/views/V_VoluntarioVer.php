@@ -25,6 +25,8 @@
         <!-- INSERT DUENIO -->
         <?php include_once "../views/components/insertVoluntario.php"; ?>
         <?php include_once "../views/components/insertTareaAsignacion.php"; ?>
+        <!-- Modal para elegir quien debe de realizar las tareas -->
+        <?php include_once "../views/components/assignedModal.php"; ?>
 
         <!-- HEADER -->
         <?php include_once "../views/components/header.php"; ?>
@@ -44,7 +46,7 @@
                         <button class="button-dropdown" data-toggle="modal" data-target="#insert">Añadir</button>
                         <button class="button-dropdown" data-action="update">Editar</button>
                         <button class="button-dropdown" data-action="sdelete">Eliminar</button>
-                        <button class="button-dropdown" data-action="add_tarea_asignada">Asignar tarea</button>
+                        <button class="button-dropdown" data-toggle="modal" data-target="#add_tarea_asignada">Asignar tarea</button>
                     </div>
                     <div class="btn-group dropdown" style="position:relative">
                         <button type="button" class="button-dropdown" data-toggle="modal" data-target="#insert">
@@ -61,7 +63,7 @@
                                 <li data-action="sdelete">
                                     Borrar
                                 </li>
-                                <li data-action="sdelete">
+                                <li data-toggle="modal" data-target="#add_tarea_asignada">
                                     Asignar tarea
                                 </li>
                             </ul>
@@ -205,7 +207,7 @@
                                         } else {
                                             echo '<input type="hidden" name="animales_list_register" id="animales_list_register" value="">';
                                             echo "<div class='card-body' style='max-height:350px; overflow-y:auto;' id='list_animal'>";
-                                            echo "<div class='p-4 text-center'>";
+                                            echo "<div class='p-1 text-center'>";
                                             echo "<p>No hay tareas asignadas</p>";
                                             echo "</div>";
                                             echo "</div>";

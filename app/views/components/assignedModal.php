@@ -5,7 +5,7 @@
                 <h5 class="modal-title px-2">Dueños</h5>
                 <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body py-4" style="max-height: 550px; overflow: auto;">
+            <div class="modal-body py-4" style="height: 250px; overflow: auto;">
                 <div class="container mt-3">
                     <div id="sel_assigned" class="d-flex align-items-center">
                         <select class="selectpicker" id="icon-select">
