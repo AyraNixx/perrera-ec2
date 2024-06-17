@@ -19,7 +19,7 @@ $user_profile = $_SESSION["rol"];
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AsignarTareases</title>
+    <title>Asignar Tareas</title>
     <link rel="shortcut icon" href="../../public/imgs/logos/logo1.png" type="image/x-icon">
     <script src="https://kit.fontawesome.com/8d125d2b91.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css">

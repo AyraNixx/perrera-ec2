@@ -49,54 +49,18 @@ class VeterinarioC
     // 
     // -- GETTERS AND SETTERS
     // 
-    public function getMsg()
-    {
-        return $this->msg;
-    }
-    public function setMsg($msg)
-    {
-        return $this->msg = $msg;
-    }
-    public function getField()
-    {
-        return $this->field;
-    }
-    public function setField($field)
-    {
-        return $this->field = $field;
-    }
-    public function getOrd()
-    {
-        return $this->ord;
-    }
-    public function setOrd($ord)
-    {
-        return $this->ord = $ord;
-    }
-    public function getAmount()
-    {
-        return $this->amount;
-    }
-    public function setAmount($amount)
-    {
-        return $this->amount = $amount;
-    }
-    public function getPage()
-    {
-        return $this->page;
-    }
-    public function setPage($page)
-    {
-        return $this->page = $page;
-    }
-    public function getSearch_val()
-    {
-        return $this->search_val;
-    }
-    public function setSearch_val($search_val)
-    {
-        return $this->search_val = $search_val;
-    }
+    public function getMsg() { return $this->msg; }
+    public function setMsg($msg) { return $this->msg = $msg; }
+    public function getField() { return $this->field; }
+    public function setField($field) { return $this->field = $field; }
+    public function getOrd(){ return $this->ord; }
+    public function setOrd($ord) { return $this->ord = $ord; } 
+    public function getAmount() { return $this->amount; } 
+    public function setAmount($amount) { return $this->amount = $amount; } 
+    public function getPage() { return $this->page; } 
+    public function setPage($page) { return $this->page = $page; } 
+    public function getSearch_val() { return $this->search_val; } 
+    public function setSearch_val($search_val) { return $this->search_val = $search_val; }
 
 
     // 

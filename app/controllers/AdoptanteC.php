@@ -257,7 +257,7 @@ class AdoptanteC
         $NIF = htmlspecialchars(trim($_REQUEST['NIF']), ENT_QUOTES, 'UTF-8');
         $id = htmlspecialchars(trim($_REQUEST['id']), ENT_QUOTES, 'UTF-8');
 
-        $exist_nif = $this->adoptante->queryParam(Constants::FIND_NIF_ADOPTANTE_UPD, ['NIF' => $NIF, 'id' => $id]);
+        $exist_nif = $this->adoptante->queryParam(Constants::FIND_NIF_ADOPTANTE_UPD, ['NIF' => $NIF, 'id' => $id])[0]['resultado'];
 
         if ($exist_nif) {
             header('Location: AdoptanteC.php?msg=' . Constants::ERROR_NIF);

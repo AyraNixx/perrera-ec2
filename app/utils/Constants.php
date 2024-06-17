@@ -151,7 +151,8 @@ class Constants
 
 
     const FIND_NIF_ADOPTANTE = 'SELECT Id FROM perrera.adoptante WHERE NIF = :NIF';
-    const FIND_NIF_ADOPTANTE_UPD = 'SELECT CASE WHEN EXISTS (SELECT 1 FROM perrera.adoptante WHERE NIF = :NIF AND id <> :id) THEN true ELSE false END AS resultado';
+    const FIND_NIF_ADOPTANTE_UPD = 'SELECT EXISTS (SELECT 1 FROM perrera.adoptante WHERE NIF = :NIF AND id <> :id) AS resultado';
+    const FIND_NIF_VOLUNTARIO_UPD = 'SELECT EXISTS (SELECT 1 FROM perrera.voluntarios WHERE NIF = :NIF AND id <> :id) AS resultado';
     const FIND_NIF_DUENIO = 'SELECT Id FROM perrera.duenios WHERE NIF = :NIF';
     const FIND_NIF_VOLUNTARIO = 'SELECT Id FROM perrera.voluntarios WHERE NIF = :NIF';
     const FIND_EMAIL_VETERINARIO = 'SELECT Id FROM perrera.veterinarios WHERE correo = :correo';
@@ -173,9 +174,15 @@ class Constants
     const SOFT_UNDEL_ESPECIE_ASISTENCIA_VETERINARIA = 'UPDATE perrera.animales_atendidos_veterinarios SET disponible = 0 WHERE animales_id IN (SELECT id FROM perrera.animales WHERE especies_id = :id)';
     
     const SOFT_DEL_VETERINARIO_VETERINARIO = 'UPDATE perrera.veterinarios SET disponible = 0 WHERE id = :id';
-    const SOFT_DEL_VETERINARIO_ASISTENCIA = 'UPDATE perrera.animales_atendidos_veterinarios SET disponible = 0 WHERE voluntarios_id IN (SELECT Id FROM perrera.voluntarios WHERE id = :id)';
+    const SOFT_DEL_VETERINARIO_ASISTENCIA = 'UPDATE perrera.animales_atendidos_veterinarios SET disponible = 0 WHERE veterinarios_id = :id';
     const UNDEL_VETERINARIO_VETERINARIO = 'UPDATE perrera.veterinarios SET disponible = 1 WHERE id = :id';
-    const UNDEL_VETERINARIO_ASISTENCIA = 'UPDATE perrera.animales_atendidos_veterinarios aav LEFT JOIN perrera.animales a ON aav.animales_id = a.id SET aav.disponible = 1 WHERE aav.veterinarios_id IN (SELECT Id FROM perrera.veterinarios WHERE id = :id) AND a.disponible = 1';
+    const UNDEL_VETERINARIO_ASISTENCIA = 'UPDATE perrera.animales_atendidos_veterinarios aav INNER JOIN perrera.animales a ON aav.animales_id = a.id SET aav.disponible = 1 WHERE aav.veterinarios_id = :id AND a.disponible = 1';
+
+    const SOFT_DEL_VOLUNTARIO_VOLUNTARIO = 'UPDATE perrera.voluntarios SET disponible = 0 WHERE id = :id';
+    const SOFT_DEL_VOLUNTARIO_TAREAS_ASIGNADAS = 'UPDATE perrera.tareas_asignadas SET disponible = 0 WHERE voluntarios_id = :id';
+    const UNDEL_VOLUNTARIO_VOLUNTARIO = 'UPDATE perrera.voluntarios SET disponible = 1 WHERE id = :id';
+    const UNDEL_VOLUNTARIO_TAREA_ASIGNADA = 'UPDATE perrera.tareas_asignadas ta LEFT JOIN perrera.jaulas j ON ta.jaulas_id = j.id INNER JOIN perrera.tareas t ON ta.tareas_id1 = t.id SET ta.disponible = 1 WHERE ta.voluntarios_id = :id AND (ta.jaulas_id IS NULL OR j.disponible = 1) AND t.disponible = 1;';
+
 
     // ACTIONS
     const UPDT_PROFILE_STR = 'CHANGE_PROFILE';

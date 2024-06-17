@@ -37,7 +37,6 @@
                 <th>
                     <span class="d-flex" style="width: max-content;">Tlf.</span>
                 </th>
-                <th>Telf.</th>
                 <th class='text-center'></th>
                 <!-- <th class='text-center' colspan="2"></th> -->
             </tr>

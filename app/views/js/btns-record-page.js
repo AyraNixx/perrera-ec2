@@ -143,6 +143,11 @@ $(document).ready(function () {
     $("select").addClass(
       "form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3"
     );
+    $("input[type='checkbox']").each(function () {
+      if ($(this).prop("disabled", true)) {
+        $(this).val($(this).val());
+      }
+    });
     $(".btn-hidden-register").addClass("hidden");
 
     if ($('input[type="text"][name="especies-form"]').length) {

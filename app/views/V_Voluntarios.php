@@ -96,7 +96,7 @@ $user_profile = $_SESSION["rol"];
     <script src="/DES/perrera-ec2/app/views/js/Utils.js"></script>
     <script src="/DES/perrera-ec2/app/views/js/widthMenu.js"></script>
     <script src="/DES/perrera-ec2/app/views/js/pagination.js"></script>
-    <script src="/DES/perrera-ec2/app/views/js/create-jaulas.js"></script>
+    <script src="/DES/perrera-ec2/app/views/js/see-delete-rows.js"></script>
 </body>
 
 </html>

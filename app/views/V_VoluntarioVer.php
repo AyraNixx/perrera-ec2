@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Veterinario</title>
+    <title>Voluntario</title>
     <link rel="shortcut icon" href="../../public/imgs/logos/logo1.png" type="image/x-icon">
-    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css'>
     <script src="https://kit.fontawesome.com/8d125d2b91.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css">
     <link rel="stylesheet" href="../views/css/sass.css">
 </head>
 
@@ -23,7 +23,8 @@
         <?php include_once "../views/components/modalAlert.php"; ?>
 
         <!-- INSERT DUENIO -->
-        <?php include_once "../views/components/insertVeterinario.php"; ?>
+        <?php include_once "../views/components/insertVoluntario.php"; ?>
+        <?php include_once "../views/components/insertTareaAsignacion.php"; ?>
 
         <!-- HEADER -->
         <?php include_once "../views/components/header.php"; ?>
@@ -35,14 +36,15 @@
             <!-- Split dropup button -->
             <div class="mb-4 w-100 bg-secondary bg-opacity-75 " style="border-radius:5px;">
                 <div class="button-option-container d-flex justify-content-between align-content-center w-100 bg-primary p-3">
-                    <h1 style="font-size: x-large;" class="pt-2 text-secondary text-uppercase font-weight-light mb-0 d-inline" data-controller="VeterinarioC.php">
+                    <h1 style="font-size: x-large;" class="pt-2 text-secondary text-uppercase font-weight-light mb-0 d-inline" data-controller="VoluntarioC.php">
                         <i class="fa-solid fa-paw"></i>
-                        Veterinario
+                        Voluntario
                     </h1>
                     <div class="btn-group" role="group">
                         <button class="button-dropdown" data-toggle="modal" data-target="#insert">Añadir</button>
                         <button class="button-dropdown" data-action="update">Editar</button>
                         <button class="button-dropdown" data-action="sdelete">Eliminar</button>
+                        <button class="button-dropdown" data-action="add_tarea_asignada">Asignar tarea</button>
                     </div>
                     <div class="btn-group dropdown" style="position:relative">
                         <button type="button" class="button-dropdown" data-toggle="modal" data-target="#insert">
@@ -59,6 +61,9 @@
                                 <li data-action="sdelete">
                                     Borrar
                                 </li>
+                                <li data-action="sdelete">
+                                    Asignar tarea
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -67,19 +72,23 @@
                 <div class="d-flex justify-content-around">
                     <div>
                         <h5 class="text-primary" style="font-weight:600; text-transform:uppercase; font-size: .8em">Nombre</h5>
-                        <p style="font-size: .8em"><?= $data['nombre'] ?></p>
+                        <p style="font-size: .8em"><?= $data['nombre'] ?> <?= $data['apellidos'] ?></p>
                     </div>
                     <div>
-                        <h5 class="text-primary" style="font-weight:600; text-transform:uppercase; font-size: .8em">Apellidos</h5>
-                        <p style="font-size: .8em"><?= $data['apellidos'] ?></p>
-                    </div>
-                    <div>
-                        <h5 class="text-primary" style="font-weight:600; text-transform:uppercase; font-size: .8em">Email</h5>
-                        <p style="font-size: .8em"><?= $data['correo'] ?></p>
+                        <h5 class="text-primary" style="font-weight:600; text-transform:uppercase; font-size: .8em">NIF</h5>
+                        <p style="font-size: .8em"><?= $data['NIF'] ?></p>
                     </div>
                     <div>
                         <h5 class="text-primary" style="font-weight:600; text-transform:uppercase; font-size: .8em">Telf.</h5>
                         <p style="font-size: .8em"><?= $data['telf'] ?></p>
+                    </div>
+                    <div>
+                        <h5 class="text-primary" style="font-weight:600; text-transform:uppercase; font-size: .8em">Fech. inicio del voluntariado</h5>
+                        <p style="font-size: .8em"><?= $data['fecha_inicio'] ?></p>
+                    </div>
+                    <div>
+                        <h5 class="text-primary" style="font-weight:600; text-transform:uppercase; font-size: .8em">Fech. fin del voluntariado</h5>
+                        <p style="font-size: .8em"><?= $data['fecha_fin'] ?></p>
                     </div>
                 </div>
             </div>
@@ -90,71 +99,73 @@
 
             <div class="tab-content w-100 border border-1 border-primary-subtle border-top-0" id="tabcontent" style="height:900px; max-height:900px; overflow-y:auto;">
                 <div class="tab-pane fade show active h-100" id="details" role="tabpanel" aria-labelledby="details-tab">
-                    <form action="../controllers/VeterinarioC.php" method="POST" class="d-inline-flex flex-column justify-content-between h-100 w-100 p-0 form-register">
+                    <form action="../controllers/VoluntarioC.php" method="POST" class="d-inline-flex flex-column justify-content-between h-100 w-100 p-0 form-register">
                         <div role="tablist" class="p-3">
-                            <div class="row" id="infoVeterinario-show">
+                            <div class="row" id="infoVoluntario-show">
                                 <div class="col-md-12 col-lg-7 mb-4">
                                     <div class="card mb-3" role="tab" style="position: unset;">
-                                        <div class="card-header bg-primary" id="info" data-toggle="collapse" href="#info-show" aria-expanded="true" aria-controls="infoVeterinario-show">
+                                        <div class="card-header bg-primary" id="info" data-toggle="collapse" href="#info-show" aria-expanded="true" aria-controls="infoVoluntario-show">
                                             <h5 class="d-inline-flex align-items-center text-secondary"><i class="fa-solid fa-user-large"></i></i>&nbsp;&nbsp;Información Personal</h5>
                                         </div>
                                         <div class="collapse show" role="tabpanel" aria-labelledby="info" data-parent="#accordion">
                                             <div class="card-body">
                                                 <div class="form-group row">
-                                                    <div class="col-12 col-lg-4">
+                                                    <div class="col-12 col-lg-6">
                                                         <label for="nombre" class="col-12 text-primary">Nombre</label>
                                                         <input type="text" name="nombre" id="nombre" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?= $data['nombre'] ?>" readonly>
                                                     </div>
-                                                    <div class="col-12 col-lg-4">
+                                                    <div class="col-12 col-lg-6">
                                                         <label for="apellidos" class="col-12 text-primary">Apellidos</label>
                                                         <input type="text" name="apellidos" id="apellidos" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?= $data['apellidos'] ?>" readonly>
                                                     </div>
                                                     <div class="col-12 col-lg-4">
-                                                        <label for="especialidad" class="col-12 text-primary">Especialidad</label>
-                                                        <input type="text" name="especialidad" id="especialidad" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?= $data['apellidos'] ?>" readonly>
+                                                        <label for="NIF" class="col-12 text-primary">NIF</label>
+                                                        <input type="text" name="NIF" id="NIF" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?= $data['NIF'] ?>" readonly>
                                                     </div>
-                                                    <div class="col-12 col-lg-3">
+                                                    <div class="col-12 col-lg-4">
+                                                        <label for="fech_nac" class="col-12 text-primary">Fech. Nacimiento</label>
+                                                        <input type="date" name="fech_nac" id="fech_nac" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?= $data['fech_nac'] ?>" readonly>
+                                                    </div>
+                                                    <div class="col-12 col-lg-4">
                                                         <label for="telf" class="col-12 text-primary">Telf.</label>
                                                         <input type="tel" name="telf" id="telf" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?= $data['telf'] ?>" readonly>
                                                     </div>
-                                                    <div class="col-12 col-lg-9">
+                                                    <div class="col-12">
                                                         <label for="correo" class="col-12 text-primary">Email</label>
                                                         <input type="email" name="correo" id="correo" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?= $data['correo'] ?>" readonly>
+                                                    </div>
+                                                    <div class="col-12 col-lg-5">
+                                                        <label for="fecha_inicio" class="col-12 text-primary">Fech. inicio del voluntariado</label>
+                                                        <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?= $data['fecha_inicio'] ?>" readonly>
+                                                    </div>
+                                                    <div class="col-12 col-lg-5">
+                                                        <label for="fecha_fin" class="col-12 text-primary">Fech. final del voluntariado</label>
+                                                        <input type="date" name="fecha_fin" id="fecha_fin" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?= $data['fecha_fin'] ?>" readonly>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="card" role="tab" style="position: unset;">
-                                        <div class="card-header bg-primary" id="info" data-toggle="collapse" href="#info-show" aria-expanded="true" aria-controls="infoVeterinario-show">
-                                            <h5 class="d-inline-flex align-items-center text-secondary"><i class="fa-solid fa-hospital"></i>&nbsp;&nbsp;Información de la clínica</h5>
+                                        <div class="card-header bg-primary" id="info" data-toggle="collapse" href="#info-show" aria-expanded="true" aria-controls="infoVoluntario-show">
+                                            <h5 class="d-inline-flex align-items-center text-secondary"><i class="fa-solid fa-hospital"></i>&nbsp;&nbsp;Datos de interés</h5>
                                         </div>
                                         <div class="collapse show" role="tabpanel" aria-labelledby="info" data-parent="#accordion">
                                             <div class="card-body">
                                                 <div class="form-group row">
-                                                    <div class="col-12">
-                                                        <label for="nombre_clinica" class="col-12">Clínica</label>
-                                                        <input type="text" name="nombre_clinica" id="nombre_clinica" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3 w-100" value="<?= $data['nombre_clinica'] ?>" readonly>
+                                                    <div class="col-12 col-md-8 align-self-center">
+                                                        <label for="disponibilidad" class="d-flex align-self-center">Disponible para realizar tareas de voluntariado<input type="checkbox" name="disponibilidad" id="disponibilidad" class="ms-3" style="width: fit-content;" value="<?= $data['disponibilidad'] ?>" disabled <?= ($data['experiencia_previa'] == 1) ? 'checked' : '' ?>></label>
                                                     </div>
-                                                    <div class="col-12 col-lg-6">
-                                                        <label for="hora_apertura" class="col-12">Hora de apertura</label>
-                                                        <input type="time" name="hora_apertura" id="hora_apertura" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3 w-100" value="<?= $data['hora_apertura'] ?>" readonly>
+                                                    <div class="col-12 col-md-4 align-self-center">
+                                                        <label for="experiencia_previa" class="d-flex align-self-center">Experiencia previa<input type="checkbox" name="experiencia_previa" id="experiencia_previa" class="ms-3" style="width: fit-content;" value="<?= $data['experiencia_previa'] ?>" disabled <?= ($data['experiencia_previa'] == 1) ? 'checked' : '' ?>></label>
                                                     </div>
-                                                    <div class="col-12 col-lg-6">
-                                                        <label for="hora_cierre" class="col-12">Hora de cierre</label>
-                                                        <input type="time" name="hora_cierre" id="hora_cierre" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3 w-100" value="<?= $data['hora_cierre'] ?>" readonly>
+                                                    <div class="row textarea-container m-1 p-3 pt-0">
+                                                        <h5 class="p-0 mt-2"><label for="informacion_relevante">Información adicional</label></h5>
+                                                        <textarea class="form-textarea rounded border-dark-subtle" name="informacion_relevante" id="informacion_relevante" cols="30" rows="5" style="resize: none;" readonly><?= $data['informacion_relevante'] ?></textarea>
                                                     </div>
-                                                    <div class="col-12">
-                                                        <label for="direccion_clinica" class="col-12">Direccion</label>
-                                                        <input type="text" name="direccion_clinica" id="direccion_clinica" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?= $data['direccion_clinica'] ?>" readonly>
-                                                    </div>
-                                                    <div class="col-12 col-lg-3">
-                                                        <label for="telf_clinica" class="col-12 text-primary">Telf.</label>
-                                                        <input type="tel" name="telf_clinica" id="telf_clinica" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?= $data['telf_clinica'] ?>" readonly>
-                                                    </div>
-                                                    <div class="col-12 col-lg-9">
-                                                        <label for="correo_clinica" class="col-12 text-primary">Email</label>
-                                                        <input type="email" name="correo_clinica" id="correo_clinica" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?= $data['correo_clinica'] ?>" readonly>
+                                                    <div class="row textarea-container m-1 p-3 pt-0">
+                                                        <h5 class="p-0 mt-2"><label for="comentarios">Comentarios</label></h5>
+                                                        <textarea class="form-textarea rounded border-dark-subtle" name="comentarios" id="comentarios" cols="30" rows="5" style="resize: none;" readonly><?= $data['comentarios'] ?></textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -162,20 +173,10 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12 col-lg-5 mb-4">
-                                    <div class="card" role="tab" style="position: unset;">
-                                        <div class="card-header bg-primary" id="info" data-toggle="collapse" href="#info-show" aria-expanded="true" aria-controls="infoVeterinario-show">
-                                            <h5 class="d-inline-flex align-items-center text-secondary"><i class="fa-solid fa-message"></i>&nbsp;&nbsp;Otros datos de interés</h5>
-                                        </div>
-                                        <div class="row textarea-container m-1 p-3 pt-0">
-                                            <h5 class="p-0 mt-2"><label for="otra_informacion">Comentarios</label></h5>
-                                            <textarea class="form-textarea rounded border-dark-subtle" name="otra_informacion" id="otra_informacion" cols="30" rows="5" style="resize: none;" readonly><?= $data['otra_informacion'] ?></textarea>
-                                        </div>
-                                    </div>
-
-                                    <h5 class="mt-4">ANIMALES RELACIONADOS</h5>
+                                    <h5>TAREAS ASIGNADAS</h5>
                                     <div class="card mt-3">
                                         <div class="card-header d-inline-flex" style=" align-items: center; justify-content: space-between;">
-                                            <h5 class="mb-0">Animales</h5>
+                                            <h5 class="mb-0">Tareas</h5>
                                         </div>
                                         <?php
                                         if (!empty($data['animal_ids'])) {
@@ -205,7 +206,7 @@
                                             echo '<input type="hidden" name="animales_list_register" id="animales_list_register" value="">';
                                             echo "<div class='card-body' style='max-height:350px; overflow-y:auto;' id='list_animal'>";
                                             echo "<div class='p-4 text-center'>";
-                                            echo "<p>No hay animales asociados</p>";
+                                            echo "<p>No hay tareas asignadas</p>";
                                             echo "</div>";
                                             echo "</div>";
                                         }
@@ -228,13 +229,16 @@
 
     </section>
     <!-- JQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js"></script>
 
     <script src="/DES/perrera-ec2/app/views/js/Utils.js"></script>
     <script src="/DES/perrera-ec2/app/views/js/widthMenu.js"></script>
     <script src="/DES/perrera-ec2/app/views/js/btns-record-page.js"></script>
+    <script src="/DES/perrera-ec2/app/views/js/modal-assigned.js"></script>
 </body>
 
 </html>

@@ -51,11 +51,11 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="hora_apertura">Hora de apertura</label>
-                                <input type="email" name="hora_apertura" id="hora_apertura" value="">
+                                <input type="time" name="hora_apertura" id="hora_apertura" value="">
                             </div>
                             <div class="col-md-6">
                                 <label for="hora_cierre">Hora de cierre</label>
-                                <input type="email" name="hora_cierre" id="hora_cierre" value="">
+                                <input type="time" name="hora_cierre" id="hora_cierre" value="">
                             </div>
                             <div class="col-12 mb-3">
                                 <label for="direccion_clinica">Dirección</label>
