@@ -104,7 +104,7 @@
                                                 <div class="form-group row">
                                                     <div class="col-12 col-lg-6">
                                                         <label for="ubicacion" class="col-12 text-primary">Ubicación</label>
-                                                        <input type="hidden" name="id_text" data-jaula-id="<?=$data['id']?>">
+                                                        <input type="hidden" name="id_text" data-jaula-id="<?= $data['id'] ?>">
                                                         <input type="text" name="ubicacion" id="ubicacion" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?= $data['ubicacion'] ?>" readonly>
                                                         <label for="tamanio" class="col-12 text-primary">Tamaño de Jaula</label>
                                                         <input type="num" name="tamanio" id="tamanio" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?= $data['tamanio'] ?>" readonly>
@@ -165,11 +165,6 @@
                                         </div>
 
                                     </div>
-
-
-
-
-
                                     <div class="card mt-3" role="tab" style="position: unset;">
                                         <div class="card-header bg-primary" id="info" data-toggle="collapse" href="#info-show" aria-expanded="true" aria-controls="infoJaula-show">
                                             <h5 class="d-inline-flex align-items-center text-secondary"><i class="fa-solid fa-dog text-secondary"></i>&nbsp;&nbsp;Animales</h5>
@@ -177,38 +172,38 @@
 
                                         <div class="collapse show" role="tabpanel" aria-labelledby="info" data-parent="#accordion">
                                             <div class="card-body" style="max-height:350px; overflow-y:auto;">
-                                                
-                                        <?php
-                                        if (!empty($data['animal_ids'])) {
-                                            echo '<input type="hidden" name="animales_list_register" id="animales_list_register" value="' . $data['animal_ids'] . '">';
-                                            echo "<div class='card-body' style='max-height:350px; overflow-y:auto;' id='list_animal'>";
-                                            $ids = explode(',', $data['animal_ids']);
-                                            $name_a = explode(',', $data['animal_nombres']);
-                                            foreach ($ids as $i => $v) {
-                                                echo "<div class='row mb-2'>";
-                                                echo "<div class='col-6'>";
-                                                echo "<span class='d-block'><strong class='text-primary'>Nombre: </strong>$name_a[$i]</span>";
-                                                echo "<span class='d-block'><strong class='text-primary'>Especie: </strong>" . $data['nombre_especie'] . "</span>";
-                                                echo "</div>";
-                                                echo "<div class='col-6 align-self-center text-end'>";
-                                                echo "<a href='../controllers/AnimalC.php?action=show_register&id=$v' class='btn btn-primary btn-sm'>Ver</a>";
-                                                echo "<a class='ms-2 btn btn-secondary btn-sm' data-list_animal=$v>Eliminar</a>";
-                                                echo "</div>";
-                                                echo "</div>";
-                                                if ($i < count($ids) - 1) {
-                                                    echo "<hr class='mt-3 text-secondary'>";
+
+                                                <?php
+                                                if (!empty($data['animal_ids'])) {
+                                                    echo '<input type="hidden" name="animales_list_register" id="animales_list_register" value="' . $data['animal_ids'] . '">';
+                                                    echo "<div class='card-body' style='max-height:350px; overflow-y:auto;' id='list_animal'>";
+                                                    $ids = explode(',', $data['animal_ids']);
+                                                    $name_a = explode(',', $data['animal_nombres']);
+                                                    foreach ($ids as $i => $v) {
+                                                        echo "<div class='row mb-2'>";
+                                                        echo "<div class='col-6'>";
+                                                        echo "<span class='d-block'><strong class='text-primary'>Nombre: </strong>$name_a[$i]</span>";
+                                                        echo "<span class='d-block'><strong class='text-primary'>Especie: </strong>" . $data['nombre_especie'] . "</span>";
+                                                        echo "</div>";
+                                                        echo "<div class='col-6 align-self-center text-end'>";
+                                                        echo "<a href='../controllers/AnimalC.php?action=show_register&id=$v' class='btn btn-primary btn-sm'>Ver</a>";
+                                                        echo "<a class='ms-2 btn btn-secondary btn-sm' data-list_animal=$v>Eliminar</a>";
+                                                        echo "</div>";
+                                                        echo "</div>";
+                                                        if ($i < count($ids) - 1) {
+                                                            echo "<hr class='mt-3 text-secondary'>";
+                                                        }
+                                                    }
+                                                } else {
+                                                    echo '<input type="hidden" name="animales_list_register" id="animales_list_register" value="">';
+                                                    echo "<div class='card-body' style='max-height:350px; overflow-y:auto;' id='list_animal'>";
+                                                    echo "<div class='p-4 text-center'>";
+                                                    echo "<p>No hay animales asociados</p>";
+                                                    echo "</div>";
+                                                    echo "</div>";
                                                 }
-                                            }
-                                        } else {
-                                            echo '<input type="hidden" name="animales_list_register" id="animales_list_register" value="">';
-                                            echo "<div class='card-body' style='max-height:350px; overflow-y:auto;' id='list_animal'>";
-                                            echo "<div class='p-4 text-center'>";
-                                            echo "<p>No hay animales asociados</p>";
-                                            echo "</div>";
-                                            echo "</div>";
-                                        }
-                                        echo "</div>";
-                                        ?>
+                                                echo "</div>";
+                                                ?>
                                             </div>
                                         </div>
 
@@ -219,12 +214,14 @@
 
 
                             </div>
-                            <div class="form-group p-3 text-center bg-info bg-opacity-25 hidden btn-hidden-register">
-                                <button type="submit" class="btn btn-primary" id="submit_register" name="action" value="update">Guardar Cambios</button>
-                                <button type="button" class="btn btn-primary" id="cancel_register">Descartar</button>
-                            </div>
-                    </form>
+                        </div>
+                        <div class="form-group p-3 text-center bg-info bg-opacity-25 hidden btn-hidden-register">
+                            <button type="submit" class="btn btn-primary" id="submit_register" name="action" value="update">Guardar Cambios</button>
+                            <button type="button" class="btn btn-primary" id="cancel_register">Descartar</button>
+                        </div>
+
                 </div>
+                </form>
                 <br>
             </div>
         </main>
