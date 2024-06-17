@@ -84,6 +84,7 @@ function delete_animal_from_list(animal_id) {
     },
     dataType: "json",
     success: function (res) {
+      console.log('id', id_page);
       if (res) {
         let ids_insert = $("#animales_list_register").val();
         if (ids_insert !== null && ids_insert !== "") {
@@ -103,7 +104,7 @@ function delete_animal_from_list(animal_id) {
           success: function (res) {
             console.log('res', res);
             let content = "";
-            if (res[0].animal_ids != null) {
+            if (res && res.length > 0 && res[0].animal_ids != null) {
               let fech;
               let ids = res[0].animal_ids.split(",");
               let name_a = res[0].animal_nombres.split(",");

@@ -121,7 +121,7 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `perrera`.`animales`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `perrera`.`animales` ;
+DROP TABLE IF EXISTS `perrera`.`animales`;
 
 CREATE TABLE IF NOT EXISTS `perrera`.`animales` (
   `id` VARCHAR(22) NOT NULL,
@@ -139,13 +139,13 @@ CREATE TABLE IF NOT EXISTS `perrera`.`animales` (
   `estado_salud` VARCHAR(50) NOT NULL DEFAULT 'Bien',
   `necesidades_especiales` CHAR(2) NOT NULL DEFAULT 'NO',
   `otras_observaciones` VARCHAR(255) NOT NULL DEFAULT '-',
-  `jaulas_id` VARCHAR(22) NOT NULL,
+  `jaulas_id` VARCHAR(22) NULL,
   `disponible` TINYINT(4) NOT NULL DEFAULT 1,
   `adoptante_id` VARCHAR(22) NULL,
-  PRIMARY KEY (`id`, `especies_id`, `jaulas_id`),
-  INDEX `fk_animales_jaulas1_idx` (`jaulas_id` ASC) ,
-  INDEX `fk_animales_especies1_idx` (`especies_id` ASC) ,
-  INDEX `fk_animales_adoptante1_idx` (`adoptante_id` ASC) ,
+  PRIMARY KEY (`id`, `especies_id`),
+  INDEX `fk_animales_jaulas1_idx` (`jaulas_id` ASC),
+  INDEX `fk_animales_especies1_idx` (`especies_id` ASC),
+  INDEX `fk_animales_adoptante1_idx` (`adoptante_id` ASC),
   CONSTRAINT `fk_animales_especies1`
     FOREIGN KEY (`especies_id`)
     REFERENCES `perrera`.`especies` (`id`)
@@ -154,15 +154,17 @@ CREATE TABLE IF NOT EXISTS `perrera`.`animales` (
   CONSTRAINT `fk_animales_jaulas1`
     FOREIGN KEY (`jaulas_id`)
     REFERENCES `perrera`.`jaulas` (`id`)
-    ON DELETE CASCADE
+    ON DELETE SET NULL 
     ON UPDATE CASCADE,
   CONSTRAINT `fk_animales_adoptante1`
     FOREIGN KEY (`adoptante_id`)
     REFERENCES `perrera`.`adoptante` (`id`)
-	ON DELETE SET NULL
+    ON DELETE SET NULL
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
+
+
 
 
 -- -----------------------------------------------------
@@ -242,7 +244,7 @@ CREATE TABLE IF NOT EXISTS `perrera`.`duenios` (
   `ciudad` VARCHAR(255) NOT NULL,
   `codigo_postal` VARCHAR(45) NOT NULL,
   `pais` VARCHAR(255) NOT NULL,
-  `permiso_visita` TINYINT(4) NOT NULL DEFAULT 1,
+  `permiso_visita` TINYINT(4) NOT NULL DEFAULT 0,
   `fecha_ultima_visita` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
   `observaciones` TEXT NULL,
   `disponible` TINYINT(4) NOT NULL DEFAULT 1,
@@ -426,18 +428,20 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 -- Table `perrera`.`historial_animal_duenio`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `perrera`.`historial_animal_duenio` ;
+DROP TABLE IF EXISTS `perrera`.`historial_animal_duenio`;
 
 CREATE TABLE IF NOT EXISTS `perrera`.`historial_animal_duenio` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `duenios_id` VARCHAR(22) NOT NULL,
   `animales_id` VARCHAR(22) NOT NULL,
-  `fech_registro` DATE NOT NULL,
-  `fech_finalizacion` TIMESTAMP,
-  `estado_actual` VARCHAR(255) NOT NULL DEFAULT 1,
+  `fech_registro` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fech_finalizacion` TIMESTAMP NULL,
+  `estado_actual` VARCHAR(255) NOT NULL DEFAULT '1',
   `disponible` TINYINT(4) NOT NULL DEFAULT 1,
-  PRIMARY KEY (`duenios_id`, `animales_id`),
-  INDEX `fk_duenios_has_animales_animales1_idx` (`animales_id` ASC) ,
-  INDEX `fk_duenios_has_animales_duenios1_idx` (`duenios_id` ASC) ,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_relationship` (`id`, `duenios_id`, `animales_id`),
+  INDEX `fk_duenios_has_animales_animales1_idx` (`animales_id` ASC),
+  INDEX `fk_duenios_has_animales_duenios1_idx` (`duenios_id` ASC),
   CONSTRAINT `fk_duenios_has_animales_duenios1`
     FOREIGN KEY (`duenios_id`)
     REFERENCES `perrera`.`duenios` (`id`)
@@ -447,9 +451,11 @@ CREATE TABLE IF NOT EXISTS `perrera`.`historial_animal_duenio` (
     FOREIGN KEY (`animales_id`)
     REFERENCES `perrera`.`animales` (`id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
+    ON UPDATE NO ACTION
+) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8;
+
+
+
 
 USE `perrera`;
 

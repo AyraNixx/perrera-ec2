@@ -19,8 +19,15 @@ $(document).ready(function () {
   $('[data-action="update"]').click(function () {
     $("input, textarea").attr("readonly", false);
     $("select").attr("disabled", false);
-    $("select").removeClass('form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3');
-    $("select").addClass('col-12 px-2 border border-dark-subtle mt-3 rounded');  
+    $("input[type='checkbox']").each(function () {
+      if ($(this).prop("disabled", false)) {
+        $(this).val($(this).val());
+      }
+    });
+    $("select").removeClass(
+      "form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3"
+    );
+    $("select").addClass("col-12 px-2 border border-dark-subtle mt-3 rounded");
 
     let specie_input = $('input[type="text"][name="especies-form"]');
 
@@ -130,8 +137,12 @@ $(document).ready(function () {
   $("#cancel_register").click(function () {
     $("input, textarea").attr("readonly", true);
     $("select").attr("disabled", true);
-    $("select").removeClass('col-12 px-2 border border-dark-subtle mt-3 rounded');  // Quitar clase existente
-    $("select").addClass('form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3');
+    $("select").removeClass(
+      "col-12 px-2 border border-dark-subtle mt-3 rounded"
+    ); // Quitar clase existente
+    $("select").addClass(
+      "form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3"
+    );
     $(".btn-hidden-register").addClass("hidden");
 
     if ($('input[type="text"][name="especies-form"]').length) {

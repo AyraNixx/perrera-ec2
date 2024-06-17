@@ -177,32 +177,38 @@
 
                                         <div class="collapse show" role="tabpanel" aria-labelledby="info" data-parent="#accordion">
                                             <div class="card-body" style="max-height:350px; overflow-y:auto;">
-                                                <?php
-                                                if (!empty($data['animal_nombres'])) {
-                                                    $ids = explode(',', $data['animal_ids']);
-                                                    $animal_estados_adopcion = explode(',', $data['animal_estados_adopcion']);
-                                                    foreach (explode(',', $data['animal_nombres']) as $i => $nombre) {
-                                                        echo "<div class='row mb-2'>";
-                                                        echo "<div class='col-6'>";
-                                                        echo "<span class='d-block'><strong class='text-primary'>Nombre: </strong>$nombre</span>";
-                                                        echo "<span class='d-block'><strong class='text-primary'>Especie: </strong>" . $data['nombre_especie'] . "</span>";
-                                                        echo "</div>";
-                                                        echo "<div class='col-6 align-self-center text-end'>";
-                                                        echo "<a href='../controllers/AnimalC.php?action=show_register&id=" . $ids[$i] . "' class='btn btn-primary btn-sm'>Ver</a>";
-                                                        echo "<button class='ms-2 btn btn-secondary btn-sm' data-delete_animal='delete_animal'>Eliminar</button>";
-                                                        echo "</div>";
-                                                        echo "</div>";
-                                                        if ($i < count($ids) - 1) {
-                                                            echo "<hr class='mt-3 text-secondary'>";
-                                                        }
-                                                    }
-                                                } else {
-                                                    echo "<div class='row mb-2'>";
-                                                    echo "<div class='col-6'>No hay animales asociados";
-                                                    echo "</div>";
-                                                    echo "</div>";
+                                                
+                                        <?php
+                                        if (!empty($data['animal_ids'])) {
+                                            echo '<input type="hidden" name="animales_list_register" id="animales_list_register" value="' . $data['animal_ids'] . '">';
+                                            echo "<div class='card-body' style='max-height:350px; overflow-y:auto;' id='list_animal'>";
+                                            $ids = explode(',', $data['animal_ids']);
+                                            $name_a = explode(',', $data['animal_nombres']);
+                                            foreach ($ids as $i => $v) {
+                                                echo "<div class='row mb-2'>";
+                                                echo "<div class='col-6'>";
+                                                echo "<span class='d-block'><strong class='text-primary'>Nombre: </strong>$name_a[$i]</span>";
+                                                echo "<span class='d-block'><strong class='text-primary'>Especie: </strong>" . $data['nombre_especie'] . "</span>";
+                                                echo "</div>";
+                                                echo "<div class='col-6 align-self-center text-end'>";
+                                                echo "<a href='../controllers/AnimalC.php?action=show_register&id=$v' class='btn btn-primary btn-sm'>Ver</a>";
+                                                echo "<a class='ms-2 btn btn-secondary btn-sm' data-list_animal=$v>Eliminar</a>";
+                                                echo "</div>";
+                                                echo "</div>";
+                                                if ($i < count($ids) - 1) {
+                                                    echo "<hr class='mt-3 text-secondary'>";
                                                 }
-                                                ?>
+                                            }
+                                        } else {
+                                            echo '<input type="hidden" name="animales_list_register" id="animales_list_register" value="">';
+                                            echo "<div class='card-body' style='max-height:350px; overflow-y:auto;' id='list_animal'>";
+                                            echo "<div class='p-4 text-center'>";
+                                            echo "<p>No hay animales asociados</p>";
+                                            echo "</div>";
+                                            echo "</div>";
+                                        }
+                                        echo "</div>";
+                                        ?>
                                             </div>
                                         </div>
 
@@ -233,6 +239,7 @@
     <script src="/DES/perrera-ec2/app/views/js/widthMenu.js"></script>
     <script src="/DES/perrera-ec2/app/views/js/create-jaulas.js"></script>
     <script src="/DES/perrera-ec2/app/views/js/btns-record-page.js"></script>
+    <script src="/DES/perrera-ec2/app/views/js/searchAnimalModal.js"></script>
 </body>
 
 </html>

@@ -178,10 +178,10 @@
                                                 <div class="form-group row">
                                                     <div class="col-7">
                                                         <label for="fecha_ultima_visita" class="col-12 text-primary">Fech. última visita</label>
-                                                        <input type="datetime-local" name="fecha_ultima_visita" id="fecha_ultima_visita" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" readonly>
+                                                        <input type="datetime-local" name="fecha_ultima_visita" id="fecha_ultima_visita" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?=$data['fecha_ultima_visita']?>" readonly>
                                                     </div>
                                                     <div class="col-5 align-self-center">
-                                                        <label for="permiso_visita" class="d-flex align-self-center">Puede visitar<input type="checkbox" name="permiso_visita" id="permiso_visita" class="ms-3" style="width: fit-content;" value="<?=$data['permiso_visita']?>" disabled></label>
+                                                        <label for="permiso_visita" class="d-flex align-self-center">Puede visitar<input type="checkbox" name="permiso_visita" id="permiso_visita" class="ms-3" style="width: fit-content;" value="<?=$data['permiso_visita']?>" <?=($data['permiso_visita'] == 1 ? 'checked' : '')?> disabled></label>
                                                     </div>
                                                 </div>
                                             </div>

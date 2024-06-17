@@ -140,6 +140,9 @@ class JaulaC
             case "show_delete_rows":
                 $this->show_delete_rows();
                 break;
+            case "delete_animal_from_list":
+                $this->delete_animal_from_list();
+                break;
             default:
                 $this->index();
                 break;
@@ -345,7 +348,6 @@ class JaulaC
 
     private function generate_cages_sel()
     {
-        var_dump($_REQUEST);
         if ((isset($_REQUEST['id']) && !empty($_REQUEST['id'])) || !empty($id)) {
             $id = htmlspecialchars(trim($_REQUEST['id']), ENT_QUOTES, 'UTF-8');
 
@@ -369,6 +371,18 @@ class JaulaC
         echo json_encode($this->jaula->query(Constants::GET_JAULA_SELECT));
     }
 
+
+    private function delete_animal_from_list()
+    {
+        if (isset($_REQUEST['animal_id']) && isset($_REQUEST['id'])) {
+            $animal_id = htmlspecialchars(trim($_REQUEST['animal_id']), ENT_QUOTES, 'UTF-8');
+            $id = htmlspecialchars(trim($_REQUEST['id']), ENT_QUOTES, 'UTF-8');
+            $r = $this->jaula->queryParam(Constants::DELETE_ANIMAL_JAULA, ['id' => $animal_id]);
+            if($r){
+                echo json_encode($this->jaula->queryParam(Constants::UPDATE_JAULA_STATUS, ['id' => $id]));
+            }
+        }
+    }
     private function show_delete_rows()
     {
         echo json_encode($this->jaula->query(Constants::GET_JAULAS_INACTIVE));

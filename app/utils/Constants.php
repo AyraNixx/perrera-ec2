@@ -95,6 +95,7 @@ class Constants
     const GET_DUENIO = 'SELECT d.*, GROUP_CONCAT(a.id SEPARATOR ",") AS animal_ids, GROUP_CONCAT(a.nombre SEPARATOR ",") AS animal_nombres, GROUP_CONCAT(e.nombre SEPARATOR ",") AS nombre_especies, GROUP_CONCAT(ha.fech_registro SEPARATOR ",") AS fechas_registro FROM duenios d LEFT JOIN (SELECT duenios_id, animales_id, fech_registro FROM historial_animal_duenio WHERE disponible = 1) ha ON d.id = ha.duenios_id LEFT JOIN animales a ON ha.animales_id = a.id LEFT JOIN especies e ON a.especies_id = e.id WHERE d.id = :id GROUP BY d.id';
     const GET_ANIMAL_LIST_DUENIO = 'SELECT GROUP_CONCAT(a.id SEPARATOR ",") AS animal_ids, GROUP_CONCAT(a.nombre SEPARATOR ",") AS animal_nombres, GROUP_CONCAT(e.nombre SEPARATOR ",") AS nombre_especies, GROUP_CONCAT(ha.fech_registro SEPARATOR ",") AS fechas_registro FROM historial_animal_duenio ha LEFT JOIN animales a ON ha.animales_id = a.id LEFT JOIN especies e ON a.especies_id = e.id WHERE ha.duenios_id = :id AND ha.disponible = 1';
     const GET_ANIMAL_LIST_ADOPTANTE = 'SELECT GROUP_CONCAT(a.id SEPARATOR ",") AS animal_ids, GROUP_CONCAT(a.nombre SEPARATOR ",") AS animal_nombres, GROUP_CONCAT(e.nombre SEPARATOR ",") AS nombre_especies FROM animales a LEFT JOIN especies e ON a.especies_id = e.id WHERE a.adoptante_id = :adoptante_id AND a.disponible = 1';
+    const GET_ANIMAL_LIST_JAULA = 'SELECT GROUP_CONCAT(a.id SEPARATOR ",") AS animal_ids, GROUP_CONCAT(a.nombre SEPARATOR ",") AS animal_nombres, GROUP_CONCAT(e.nombre SEPARATOR ",") AS nombre_especies, j.id AS jaula_id, j.ubicacion AS ubicacion_jaula FROM animales a LEFT JOIN especies e ON a.especies_id = e.id JOIN jaulas j ON a.jaulas_id = j.id WHERE a.disponible = 1 AND a.jaulas_id = :jaulas_id GROUP BY j.id ORDER BY j.id';
     const GET_ADOPTANTE_SELECT = 'SELECT * FROM perrera.adoptante WHERE disponible = 1 ORDER BY nombre';
     const GET_ROL_SELECT = 'SELECT * FROM perrera.roles WHERE disponible = 1 ORDER BY rol';
     const GET_DUENIO_SELECT = 'SELECT * FROM perrera.duenios WHERE disponible = 1 ORDER BY nombre';
@@ -124,6 +125,7 @@ class Constants
     const UPDATE_ASSIGNED_TO_TAREA_ASIGNACION = 'UPDATE perrera.tareas_asignadas SET empleados_id = :empleados_id, voluntarios_id = :voluntarios_id WHERE id = :id';
     const UPDATE_TAREA_ASIGNADA = 'UPDATE nombre_tabla SET asunto = :asunto, estado_asignacion = :estado_asignacion, prioridad = :prioridad, fecha_asignacion = :fecha_asignacion, fecha_finalizacion = :fecha_finalizacion, tareas_id1 = :tareas_id1, empleados_id = :empleados_id, voluntarios_id = :voluntarios_id, jaulas_id = :jaulas_id WHERE id = :id';
     const UPDATE_ATENCION_VETERINARIA = 'UPDATE animales_atendidos_veterinarios SET motivo = :motivo, fecha_atencion = :fecha_atencion, diagnostico = :diagnostico, procedimientos = :procedimientos, medicamentos = :medicamentos, comentarios = :comentarios, coste = :coste WHERE id = :id';
+    const UPDATE_JAULA_STATUS = 'UPDATE jaulas SET ocupada = 0 WHERE id = :id';
 
     //  DELETES
     const DELETE_ESPECIE = 'UPDATE perrera.especies SET disponible = 0 WHERE id = :id';
@@ -133,6 +135,7 @@ class Constants
     const DELETE_VOLUNTARIO = 'UPDATE perrera.voluntarios SET disponible = 0 WHERE id = :id';
     const DELETE_EMPLEADO = 'UPDATE perrera.empleados SET disponible = 0 WHERE id = :id';
     const DELETE_DUENIO = 'UPDATE perrera.duenios SET disponible = 0 WHERE id = :id';
+    const DELETE_DUENIO_HISTORIAL_DUENIO = 'UPDATE perrera.historial_animal_duenio SET disponible = 0, fech_finalizacion = NOW(), estado_actual = "Terminado" WHERE duenios_id = :duenios_id';
     const DELETE_TAREA = 'UPDATE perrera.tareas SET disponible = 0 WHERE id = :id';
     const DELETE_TAREA_ASIGNADA = 'UPDATE perrera.tareas_asignadas SET disponible = 0 WHERE id = :id';
     const DELETE_ATENCION_VETERINARIA = 'UPDATE perrera.animales_atendidos_veterinarios SET disponible = 0 WHERE id = :id';
@@ -141,6 +144,7 @@ class Constants
     const DELETE_IMGS_ANIMAL_QUERY = 'DELETE FROM perrera.imgs WHERE animales_id = :id';
     const DELETE_ANIMAL_DUENIO = 'UPDATE historial_animal_duenio SET fech_finalizacion = NOW(), estado_actual = "Terminado", disponible = 0 WHERE duenios_id = :id AND animales_id = :animal_id';
     const DELETE_ANIMAL_ADOPTANTE = 'UPDATE animales SET adoptante_id = NULL, estado_adopcion = :estado_adopcion WHERE id = :id';
+    const DELETE_ANIMAL_JAULA = 'UPDATE animales SET jaulas_id = NULL WHERE id = :id';
 
     // ACTIONS
     const UPDT_PROFILE_STR = 'CHANGE_PROFILE';

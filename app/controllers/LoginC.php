@@ -249,9 +249,9 @@ switch ($action) {
 
     default:
         // Incluimos la vista de Login
-        header("Location:../../public/Login.php");
-        exit();
-        break;
+        // header("Location:../../public/Login.php");
+        // exit();
+        // break;
 }
 
-// var_dump(password_hash('paula123', PASSWORD_DEFAULT));
+var_dump(password_hash('paula123', PASSWORD_DEFAULT));

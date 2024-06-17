@@ -1,8 +1,7 @@
 <?php
 
 // //Si no tenemos guardado login 
-if (!isset($_SESSION["login"])) 
-{
+if (!isset($_SESSION["login"])) {
     header("Location:../../public/Login.php");
 }
 
@@ -27,6 +26,7 @@ $user_profile = $_SESSION["rol"];
         #tabla {
             margin-top: 20px;
         }
+
         td {
             overflow: hidden;
             text-overflow: ellipsis;
@@ -53,13 +53,16 @@ $user_profile = $_SESSION["rol"];
         <!-- MODAL ADOPTANTE -->
         <?php include_once "../views/components/insertDuenio.php"; ?>
 
+        <!-- MODAL REGISTROS ELIMINADOS -->
+        <?php include_once "../views/components/seeDeletes.php"; ?>
+
         <!-- HEADER -->
         <?php include_once "../views/components/header.php"; ?>
 
 
         <!-- CONTENEDOR PRINCIPAL -->
         <!-- <main class="mt-5 d-flex flex-column justify-content-center align-content-center p-3"> -->
-        <main class="mt-5 d-flex flex-column justify-content-center align-content-center p-3" id="main">            
+        <main class="mt-5 d-flex flex-column justify-content-center align-content-center p-3" id="main">
             <?php include_once "../views/components/filterDuenio.php"; ?>
 
             <?php include_once "../views/components/duenioList.php"; ?>
@@ -97,7 +100,7 @@ $user_profile = $_SESSION["rol"];
     <script src="../views/js/pagination.js"></script> -->
     <script src="/DES/perrera-ec2/app/views/js/Utils.js"></script>
     <script src="/DES/perrera-ec2/app/views/js/widthMenu.js"></script>
-    <script src="/DES/perrera-ec2/app/views/js/changeJaulaValues.js"></script>
+    <script src="/DES/perrera-ec2/app/views/js/see-delete-rows.js"></script>
     <script src="/DES/perrera-ec2/app/views/js/pagination.js"></script>
     <script src="/DES/perrera-ec2/app/views/js/searchAnimalModal.js"></script>
 </body>

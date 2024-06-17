@@ -479,6 +479,12 @@ class AnimalC
                         echo json_encode($this->animal->queryParam(Constants::GET_ANIMAL_LIST_ADOPTANTE, ['adoptante_id' => $adoptante_id]));
                     }
                     break;
+                case 'JaulaC.php':
+                    if (isset($_REQUEST['register_id'])) {
+                        $jaulas_id = htmlspecialchars(trim($_REQUEST["register_id"]), ENT_QUOTES, 'UTF-8');
+                        echo json_encode($this->animal->queryParam(Constants::GET_ANIMAL_LIST_JAULA, ['jaulas_id' => $jaulas_id]));
+                    }
+                    break;
             }
         }
     }
@@ -505,10 +511,10 @@ class AnimalC
         }
     }
 
-    
+
     private function get_rows_availables()
     {
-        echo json_encode($this->animal->query(Constants::GET_ANIMAL_SELECT));        
+        echo json_encode($this->animal->query(Constants::GET_ANIMAL_SELECT));
     }
 
     public function pagination()

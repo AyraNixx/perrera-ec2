@@ -21,7 +21,7 @@ function close_delete_modal() {
 }
 
 function listCallBack() {
-  console.log(controller_val);
+  console.log('controller_val', 'RTRTRTRTR');
   $.ajax({
     type: "POST",
     url: `../../app/controllers/${controller_val}`,
