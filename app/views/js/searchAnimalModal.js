@@ -191,6 +191,7 @@ function searchAnimalCallBack() {
     },
     dataType: "json",
     success: function (res) {
+      console.log(res);
       let rows;
       res.forEach((a) => {
         let check = ids.includes(a.id.toString()) ? "checked" : "";

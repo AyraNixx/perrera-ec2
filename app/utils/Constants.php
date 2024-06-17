@@ -119,7 +119,7 @@ class Constants
     const UPDT_JAULA = 'UPDATE perrera.jaulas SET ubicacion = :ubicacion, tamanio = :tamanio, ocupada = :ocupada, estado_comida = :estado_comida, estado_limpieza = :estado_limpieza, otros_comentarios = :otros_comentarios, descripcion = :descripcion, especies_id = :especies_id WHERE id = :id';
     const UPDT_VETERINARIO = 'UPDATE veterinarios SET nombre = :nombre, apellidos = :apellidos, correo = :correo, telf = :telf, especialidad = :especialidad, nombre_clinica = :nombre_clinica, direccion_clinica = :direccion_clinica, telf_clinica = :telf_clinica, correo_clinica = :correo_clinica, hora_apertura = :hora_apertura, hora_cierre = :hora_cierre, otra_informacion = :otra_informacion WHERE id = :id;';
     const UPDT_VOLUNTARIO = 'UPDATE voluntarios SET nombre = :nombre, apellidos = :apellidos, fech_nac = :fech_nac, NIF = :NIF, correo = :correo, telf = :telf, disponibilidad = :disponibilidad, experiencia_previa = :experiencia_previa, comentarios = :comentarios, fecha_inicio = :fecha_inicio, fecha_fin = :fecha_fin, informacion_relevante = :informacion_relevante WHERE id = :id;';
-    const UPDT_ADOPTANTE = 'UPDATE adoptante SET nombre = :nombre, apellidos = :apellidos, fech_nac = :fech_nac, NIF = :NIF, correo = :correo, telf = :telf, direccion = :direccion, ciudad = :ciudad, codigo_postal = :codigo_postal, pais = :pais, ocupacion = :ocupacion, tipo_vivienda = :tipo_vivienda, tiene_jardin = :tiene_jardin, preferencia_adopcion = :preferencia_adopcion, otra_mascota = :otra_mascota, tipo_otra_mascota = :tipo_otra_mascota, estado_solicitud = :estado_solicitud, fecha_solicitud = :fecha_solicitud, tiempo_espera = :tiempo_espera, estado_adopcion = :estado_adopcion, fecha_adopcion = :fecha_adopcion, comentarios = :comentarios, animales_id = :animales_id WHERE id = :id';
+    const UPDT_ADOPTANTE = 'UPDATE adoptante SET nombre = :nombre, apellidos = :apellidos, fech_nac = :fech_nac, NIF = :NIF, correo = :correo, telf = :telf, direccion = :direccion, ciudad = :ciudad, codigo_postal = :codigo_postal, pais = :pais, ocupacion = :ocupacion, tipo_vivienda = :tipo_vivienda, tiene_jardin = :tiene_jardin, preferencia_adopcion = :preferencia_adopcion, otra_mascota = :otra_mascota, tipo_otra_mascota = :tipo_otra_mascota, estado_solicitud = :estado_solicitud, fecha_solicitud = :fecha_solicitud, comentarios = :comentarios WHERE id = :id';
     const UPDT_DUENIO = 'UPDATE duenios SET nombre = :nombre, apellidos = :apellidos, fech_nac = :fech_nac, NIF = :NIF, correo = :correo, telf = :telf, ocupacion = :ocupacion, direccion = :direccion, ciudad = :ciudad, codigo_postal = :codigo_postal, pais = :pais, permiso_visita = :permiso_visita, fecha_ultima_visita = :fecha_ultima_visita, observaciones = :observaciones WHERE id = :id';
     const UPDT_ANIMAL_DUENIO = 'UPDATE perrera.animales SET adoptante_id = :adoptante_id WHERE id IN ($in)';
     const UPDATE_ASSIGNED_TO_TAREA_ASIGNACION = 'UPDATE perrera.tareas_asignadas SET empleados_id = :empleados_id, voluntarios_id = :voluntarios_id WHERE id = :id';
@@ -145,6 +145,14 @@ class Constants
     const DELETE_ANIMAL_DUENIO = 'UPDATE historial_animal_duenio SET fech_finalizacion = NOW(), estado_actual = "Terminado", disponible = 0 WHERE duenios_id = :id AND animales_id = :animal_id';
     const DELETE_ANIMAL_ADOPTANTE = 'UPDATE animales SET adoptante_id = NULL, estado_adopcion = :estado_adopcion WHERE id = :id';
     const DELETE_ANIMAL_JAULA = 'UPDATE animales SET jaulas_id = NULL WHERE id = :id';
+    const DELETE_ADOPTANTE_ANIMALS = 'UPDATE animales SET adoptante_id = NULL, estado_adopcion = "Disponible para adopcion" WHERE adoptante_id = :id';
+
+
+    const FIND_NIF_ADOPTANTE = 'SELECT Id FROM perrera.adoptante WHERE NIF = :NIF';
+    const FIND_NIF_ADOPTANTE_UPD = 'SELECT CASE WHEN EXISTS (SELECT 1 FROM perrera.adoptante WHERE NIF = :NIF AND id <> :id) THEN true ELSE false END AS resultado';
+    const FIND_NIF_DUENIO = 'SELECT Id FROM perrera.duenios WHERE NIF = :NIF';
+    const FIND_NIF_VOLUNTARIO = 'SELECT Id FROM perrera.voluntarios WHERE NIF = :NIF';
+
 
     // ACTIONS
     const UPDT_PROFILE_STR = 'CHANGE_PROFILE';
@@ -215,6 +223,7 @@ class Constants
     const ERROR_DONT_EXIST_EMPLOYEE = 'No se ha encontrado el empleado en la bd';
     const ERROR_DONT_EXIST_VOLUNTEER = 'No se ha encontrado el voluntario en la bd';
     const ERROR_DONT_EXIST_CAGE = 'No se ha encontrado la jaula en la bd';
+    const ERROR_NIF = 'Existe un registro con este NIF en la base de datos';
 
     // MSGs
     const ADD_IMG_SUCCESS = 'La/s imagen/es han sido añadidas con éxito.';

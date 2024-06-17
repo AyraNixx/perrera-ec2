@@ -162,7 +162,7 @@
                                                         <select name="tipo_vivienda" id="tipo_vivienda" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" disabled></select>
                                                     </div>
                                                     <div class="col-4 align-self-center">
-                                                        <label for="tiene_jardin" class="d-flex align-self-center">¿Consta de jardín?<input type="checkbox" name="tiene_jardin" id="tiene_jardin" class="ms-3" style="width: fit-content;" value="<?= $data['tiene_jardin'] ?>" disabled></label>
+                                                        <label for="tiene_jardin" class="d-flex align-self-center">¿Consta de jardín?<input type="checkbox" name="tiene_jardin" id="tiene_jardin" class="ms-3" style="width: fit-content;" value="<?= $data['tiene_jardin'] ?>" disabled <?= ($data['tiene_jardin'] == 1) ? 'checked' : '' ?>></label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -208,20 +208,20 @@
                                                 <div class="form-group row">
                                                     <div class="col-12 col-lg-6 align-self-center">
                                                         <label for="estado_solicitud" class="d-flex align-self-center">Estado de la solicitud</label>
-                                                        <input type="hidden" name="estado_solicitud_text" id="estado_solicitud_text" value="En revisión">
+                                                        <input type="hidden" name="estado_solicitud_text" id="estado_solicitud_text" value="<?=$data['estado_solicitud']?>">
                                                         <select name="estado_solicitud" id="estado_solicitud" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" disabled></select>
                                                     </div>
                                                     <div class="col-12 col-lg-6 align-self-center">
                                                         <label for="fecha_solicitud" class="d-flex align-self-center">Fecha de presentación de la solicitud</label>
-                                                        <input type="datetime-local" name="fecha_solicitud" id="fecha_solicitud" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3 w-100" style="width: fit-content;" readonly>
+                                                        <input type="datetime-local" name="fecha_solicitud" id="fecha_solicitud" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3 w-100" style="width: fit-content;" value="<?=$data['fecha_solicitud']?>" readonly>
                                                     </div>
                                                     <div class="col-12 col-lg-4 align-self-center my-3">
-                                                        <label for="preferencia_adopcion" class="d-flex align-self-center">Preferencia para la adopción<input type="checkbox" name="preferencia_adopcion" id="preferencia_adopcion" class="ms-3" style="width: fit-content;" value="<?= $data['preferencia_adopcion'] ?>" disabled></label>
+                                                        <label for="preferencia_adopcion" class="d-flex align-self-center">Preferencia para la adopción<input type="checkbox" name="preferencia_adopcion" id="preferencia_adopcion" class="ms-3" style="width: fit-content;" value="<?= $data['preferencia_adopcion'] ?>" disabled <?= ($data['preferencia_adopcion'] == 1) ? 'checked' : '' ?>></label>
                                                     </div>
                                                 </div>
                                                 <div class="row textarea-container m-1 px-0 pt-0">
-                                                    <h5 class="px-0"><label for="observaciones">Otros datos de interés</label></h5>
-                                                    <textarea class="form-textarea" name="observaciones" id="observaciones" cols="30" rows="5" style="resize: none;" readonly></textarea>
+                                                    <h5 class="px-0"><label for="comentarios">Otros datos de interés</label></h5>
+                                                    <textarea class="form-textarea" name="comentarios" id="comentarios" cols="30" rows="5" style="resize: none;" readonly><?=$data['comentarios']?></textarea>
                                                 </div>
                                             </div>
                                         </div>
