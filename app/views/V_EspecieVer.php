@@ -85,7 +85,7 @@
                     <form action="../controllers/EspecieC.php" method="POST" class="d-inline-flex flex-column justify-content-between h-100 w-100 p-0 form-register">
                         <div role="tablist" class="p-3">
                             <div class="row" id="infoEspecie-show">
-                                <div class="col-md-12 col-lg-6 mb-4">
+                                <div class="col-md-12 col-lg-9 mb-4">
                                     <div class="card" role="tab" style="position: unset;">
                                         <div class="card-header bg-primary" id="info" data-toggle="collapse" href="#info-show" aria-expanded="true" aria-controls="infoEspecie-show">
                                             <h5 class="d-inline-flex align-items-center text-secondary"><i class="fa-solid fa-dog text-secondary"></i>&nbsp;&nbsp;Información de la Especie</h5>
@@ -94,7 +94,7 @@
                                         <div class="collapse show" role="tabpanel" aria-labelledby="info" data-parent="#accordion">
                                             <div class="card-body">
                                                 <div class="form-group row">
-                                                    <div class="col-12 col-lg-6">
+                                                    <div class="col-12">
                                                         <label for="nombre" class="col-12 text-primary">Nombre</label>
                                                         <input type="text" name="nombre" id="nombre" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?= $data['nombre'] ?>" readonly>                                                        
                                                         <label for="descripcion" class="col-12">Descripción</label>
@@ -126,6 +126,7 @@
 
     <script src="/DES/perrera-ec2/app/views/js/Utils.js"></script>
     <script src="/DES/perrera-ec2/app/views/js/widthMenu.js"></script>
+    <script src="/DES/perrera-ec2/app/views/js/btns-record-page.js"></script>
 </body>
 
 </html>
