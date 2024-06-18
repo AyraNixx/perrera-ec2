@@ -49,62 +49,24 @@ class AsignarTareasC
     // 
     // -- GETTERS AND SETTERS
     // 
+    public function getMsg() { return $this->msg; }
+    public function setMsg($msg) { return $this->msg = $msg; }
+    public function getField() { return $this->field; }
+    public function setField($field) { return $this->field = $field; }
+    public function getOrd(){ return $this->ord; }
+    public function setOrd($ord) { return $this->ord = $ord; } 
+    public function getAmount() { return $this->amount; } 
+    public function setAmount($amount) { return $this->amount = $amount; } 
+    public function getPage() { return $this->page; } 
+    public function setPage($page) { return $this->page = $page; } 
+    public function getSearch_val() { return $this->search_val; } 
+    public function setSearch_val($search_val) { return $this->search_val = $search_val; }
 
-    public function getMsg()
-    {
-        return $this->msg;
-    }
-    public function setMsg($msg)
-    {
-        return $this->msg = $msg;
-    }
-    public function getField()
-    {
-        return $this->field;
-    }
-    public function setField($field)
-    {
-        return $this->field = $field;
-    }
-    public function getOrd()
-    {
-        return $this->ord;
-    }
-    public function setOrd($ord)
-    {
-        return $this->ord = $ord;
-    }
-    public function getAmount()
-    {
-        return $this->amount;
-    }
-    public function setAmount($amount)
-    {
-        return $this->amount = $amount;
-    }
-    public function getPage()
-    {
-        return $this->page;
-    }
-    public function setPage($page)
-    {
-        return $this->page = $page;
-    }
-    public function getSearch_val()
-    {
-        return $this->search_val;
-    }
-    public function setSearch_val($search_val)
-    {
-        return $this->search_val = $search_val;
-    }
 
 
     // 
     // -- MÉTODOS
     // 
-
-
     public function run(String $action = "index")
     {
         switch ($action) {
@@ -160,6 +122,7 @@ class AsignarTareasC
         if ((isset($_REQUEST['id']) && !empty($_REQUEST['id'])) || !empty($id)) {
             $id = isset($_REQUEST['id']) ? htmlspecialchars(trim($_REQUEST['id']), ENT_QUOTES, 'UTF-8') : htmlspecialchars(trim($id), ENT_QUOTES, 'UTF-8');
             $data = $this->asignar->queryParam(Constants::GET_TAREA_ASIGNADA, ['id' => $id])[0];
+            $new_msg = $this->getMsg();
             require_once Constants::VIEW_TAREA_ASIGNADA;
         }
     }
@@ -233,7 +196,8 @@ class AsignarTareasC
             'jaulas_id' => $jaulas_id
         ]);
 
-        if ($result == false) { // Si no se ha podido insertar la asignacion
+        if ($result == false) {
+            // Si no se ha podido insertar la asignacion
             header('Location: AsignarTareasC.php?msg=' . base64_encode(Constants::ERROR_INSERT));
             exit();
         }

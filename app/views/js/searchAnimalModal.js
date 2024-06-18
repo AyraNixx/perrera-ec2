@@ -191,16 +191,16 @@ function searchAnimalCallBack() {
     },
     dataType: "json",
     success: function (res) {
-      console.log(res);
       let rows;
       res.forEach((a) => {
+        let j_text = a.jaula !== null ? a.jaula : '-';
         let check = ids.includes(a.id.toString()) ? "checked" : "";
         rows += `
                 <tr>
                     <td><input type="checkbox" class="animal-select" value="${a.id}" data-id="${a.id}" data-name="${a.nombre}" ${check}></td>
                     <td>${a.nombre}</td>
                     <td>${a.especie}</td>
-                    <td>${a.jaula}</td>
+                    <td>${j_text}</td>
                 </tr>
             `;
       });

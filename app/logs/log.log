@@ -1,8 +1,22 @@
-2024-06-18 01:32:56: PDOException caught: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'tareas_id' in 'where clause'
-2024-06-18 01:32:56: PDOException caught: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'tareas_id' in 'where clause'
-2024-06-18 01:33:08: PDOException caught: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ta.tareas_id' in 'where clause'
-2024-06-18 01:33:08: PDOException caught: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ta.tareas_id' in 'where clause'
-2024-06-18 01:33:47: PDOException caught: SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'id' at row 1
-2024-06-18 01:33:47: PDOException caught: SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'id' at row 1
-2024-06-18 01:34:11: PDOException caught: SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'id' at row 1
-2024-06-18 01:34:11: PDOException caught: SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'id' at row 1
+2024-06-18 01:37:20: PDOException caught: SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'id' at row 1
+2024-06-18 01:37:20: PDOException caught: SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'id' at row 1
+2024-06-18 01:37:30: PDOException caught: SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'id' at row 1
+2024-06-18 01:37:30: PDOException caught: SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'id' at row 1
+2024-06-18 01:37:44: PDOException caught: SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'id' at row 1
+2024-06-18 01:37:44: PDOException caught: SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'id' at row 1
+2024-06-18 01:37:57: PDOException caught: SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'id' at row 1
+2024-06-18 01:37:57: PDOException caught: SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'id' at row 1
+2024-06-18 01:38:03: PDOException caught: SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'id' at row 1
+2024-06-18 01:38:03: PDOException caught: SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'id' at row 1
+2024-06-18 01:38:23: PDOException caught: SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'id' at row 1
+2024-06-18 01:38:23: PDOException caught: SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'id' at row 1
+2024-06-18 01:38:32: PDOException caught: SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'id' at row 1
+2024-06-18 01:38:32: PDOException caught: SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'id' at row 1
+2024-06-18 01:38:37: PDOException caught: SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'id' at row 1
+2024-06-18 01:38:37: PDOException caught: SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'id' at row 1
+2024-06-18 01:38:58: PDOException caught: SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'id' at row 1
+2024-06-18 01:38:58: PDOException caught: SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'id' at row 1
+2024-06-18 01:39:11: PDOException caught: SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'id' at row 1
+2024-06-18 01:39:11: PDOException caught: SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'id' at row 1
+2024-06-18 01:39:32: PDOException caught: SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'id' at row 1
+2024-06-18 01:39:32: PDOException caught: SQLSTATE[22003]: Numeric value out of range: 1264 Out of range value for column 'id' at row 1

@@ -20,8 +20,10 @@ $(document).ready(function () {
 
     if (icon_sel === "empleado") {
       $("#empleados_id").val(assigned_id);
+      $("#voluntarios_id").val(null);
     } else if (icon_sel === "voluntario") {
       $("#voluntarios_id").val(assigned_id);
+      $("#empleados_id").val(null);
     }
   });
 
@@ -63,9 +65,11 @@ function save_value() {
   if (icon_select_val === "empleado") {
     $("#assigned_to").val(text);
     $('input[name="empleados_id"]').val(val);
+    $('input[name="voluntarios_id"]').val(null);
   } else if (icon_select_val === "voluntario") {
     $("#assigned_to").val(text);
     $('input[name="voluntarios_id"]').val(val);
+    $('input[name="empleados_id"]').val(null);
   }
 
   if (modal_origin === "change_assigned_to") {

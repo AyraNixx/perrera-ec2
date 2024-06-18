@@ -126,7 +126,7 @@
                                                     </div>
                                                     <div class="col-12 col-lg-4">
                                                         <label for="ocupacion" class="col-12 text-primary">Ocupación</label>
-                                                        <input type="hidden" name="ocupacion" id="ocupacion" value="<?= $data['ocupacion'] ?>"> 
+                                                        <input type="hidden" name="ocupacion" id="ocupacion" value="<?= $data['ocupacion'] ?>">
                                                         <select name="ocupacion" id="ocupacion" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" disabled></select>
                                                     </div>
                                                     <div class="col-12 col-lg-3">
@@ -154,15 +154,15 @@
                                                     </div>
                                                     <div class="col-12 col-lg-4">
                                                         <label for="codigo_postal" class="col-12 text-primary">Código postal</label>
-                                                        <input type="text" name="codigo_postal" id="codigo_postal" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?= $data['codigo_postal'] ?>" readonly> 
+                                                        <input type="text" name="codigo_postal" id="codigo_postal" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?= $data['codigo_postal'] ?>" readonly>
                                                     </div>
                                                     <div class="col-12 col-lg-4">
                                                         <label for="ciudad" class="col-12 text-primary">Ciudad</label>
-                                                        <input type="text" name="ciudad" id="ciudad" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?= $data['ciudad'] ?>" readonly> 
+                                                        <input type="text" name="ciudad" id="ciudad" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?= $data['ciudad'] ?>" readonly>
                                                     </div>
                                                     <div class="col-12 col-lg-4">
                                                         <label for="pais" class="col-12 text-primary">País</label>
-                                                        <input type="hidden" name="pais_text" id="pais_text" value="<?= $data['pais'] ?>"> 
+                                                        <input type="hidden" name="pais_text" id="pais_text" value="<?= $data['pais'] ?>">
                                                         <select name="pais" id="pais" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" disabled></select>
                                                     </div>
                                                 </div>
@@ -178,17 +178,17 @@
                                                 <div class="form-group row">
                                                     <div class="col-7">
                                                         <label for="fecha_ultima_visita" class="col-12 text-primary">Fech. última visita</label>
-                                                        <input type="datetime-local" name="fecha_ultima_visita" id="fecha_ultima_visita" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?=$data['fecha_ultima_visita']?>" readonly>
+                                                        <input type="datetime-local" name="fecha_ultima_visita" id="fecha_ultima_visita" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?= $data['fecha_ultima_visita'] ?>" readonly>
                                                     </div>
                                                     <div class="col-5 align-self-center">
-                                                        <label for="permiso_visita" class="d-flex align-self-center">Puede visitar<input type="checkbox" name="permiso_visita" id="permiso_visita" class="ms-3" style="width: fit-content;" value="<?=$data['permiso_visita']?>" <?=($data['permiso_visita'] == 1 ? 'checked' : '')?> disabled></label>
+                                                        <label for="permiso_visita" class="d-flex align-self-center">Puede visitar<input type="checkbox" name="permiso_visita" id="permiso_visita" class="ms-3" style="width: fit-content;" value="<?= $data['permiso_visita'] ?>" <?= ($data['permiso_visita'] == 1 ? 'checked' : '') ?> disabled></label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row textarea-container m-1 p-3 pt-0">
                                             <h5><label for="observaciones">Otros datos de interés</label></h5>
-                                            <textarea class="form-textarea" name="observaciones" id="observaciones" cols="30" rows="10" style="resize: none;" readonly><?=$data['observaciones']?></textarea>
+                                            <textarea class="form-textarea" name="observaciones" id="observaciones" cols="30" rows="10" style="resize: none;" readonly><?= $data['observaciones'] ?></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -235,13 +235,14 @@
                                         <div class="card-footer text-center p-3"></div>
                                     </div>
                                 </div>
-                                <div class="form-group p-3 text-center bg-info bg-opacity-25 hidden btn-hidden-register">
-                                    <button type="submit" class="btn btn-primary" id="submit_register" name="action" value="update">Guardar Cambios</button>
-                                    <button type="button" class="btn btn-primary" id="cancel_register">Descartar</button>
-                                </div>
+                            </div>
+                            <div class="form-group p-3 text-center bg-info bg-opacity-25 hidden btn-hidden-register">
+                                <button type="submit" class="btn btn-primary" id="submit_register" name="action" value="update">Guardar Cambios</button>
+                                <button type="button" class="btn btn-primary" id="cancel_register">Descartar</button>
+                            </div>
+                        </div>
                     </form>
                 </div>
-                <br>
             </div>
         </main>
 

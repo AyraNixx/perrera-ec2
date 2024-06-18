@@ -121,9 +121,9 @@
                                                         <input type="hidden" name="prioridad_text" value="<?= $data['prioridad'] ?>">
                                                         <select name="prioridad" id="prioridad" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" disabled></select>
                                                     </div>
-                                                    <div class="col-12">
+                                                    <div class="col-12 mt-3">
                                                         <h5 class="px-0"><label for="tarea_descripcion">Descripción de la tarea</label></h5>
-                                                        <textarea class="form-textarea w-100 rounded-1 p-1" name="tarea_descripcion" id="tarea_descripcion" rows="5" style="resize: none;" readonly><?= $data['tarea_descripcion'] ?></textarea>
+                                                        <textarea class="form-textarea w-100 rounded-1 p-1" name="tarea_descripcion" id="tarea_descripcion" rows="5" style="resize: none;" readonly disabled><?= $data['tarea_descripcion'] ?></textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -140,14 +140,19 @@
                                         if (!empty($data['empleados_id'])) {
                                             echo "<input type='hidden' name='empleados_id' id='empleados_id' value='" . $data['empleados_id'] . "'>";
                                             echo "<div class='card-body' style='max-height:350px; overflow-y:auto;' id='list_empleado'>";
-                                            echo "<div class='p-2'>";
-                                            echo "<a href='../controllers/EmpleadoC.php?action=show_register&id=" . $data['empleados_id'] . "'>" . $data['nombre_empleado'] . "</a>";
+                                            echo "<div class='row mb-2'>";
+                                            echo "<div class='col-8'>";
+                                            echo "<span class='d-block'><strong class='text-primary'>Nombre: </strong>" . $data['nombre_empleado'] . "</span>";
+                                            echo "</div>";
+                                            echo "<div class='col-4 align-self-center text-end'>";
+                                            echo "<a href='../controllers/JaulaC.php?action=show_register&id=" . $data['empleados_id'] . "' class='btn btn-primary btn-sm'>Ver</a>";
+                                            echo "</div>";
                                             echo "</div>";
                                             echo "</div>";
                                         } else {
                                             echo "<div class='card-body' style='max-height:350px; overflow-y:auto;' id='list_empleado'>";
                                             echo "<div class='p-2 pb-1 text-center'>";
-                                            echo "<p>No hay empleado asignado</p>";
+                                            echo "<p>Tarea no asignada a un voluntario.</p>";
                                             echo "</div>";
                                             echo "</div>";
                                         }
@@ -162,14 +167,19 @@
                                         if (!empty($data['voluntarios_id'])) {
                                             echo "<input type='hidden' name='voluntarios_id' id='voluntarios_id' value='" . $data['voluntarios_id'] . "'>";
                                             echo "<div class='card-body' style='max-height:350px; overflow-y:auto;' id='list_voluntario'>";
-                                            echo "<div class='p-2'>";
-                                            echo "<a href='../controllers/VoluntarioC.php?action=show_register&id=" . $data['voluntarios_id'] . "'>" . $data['nombre_voluntario'] . "</a>";
+                                            echo "<div class='row mb-2'>";
+                                            echo "<div class='col-8'>";
+                                            echo "<span class='d-block'><strong class='text-primary'>Nombre: </strong>" . $data['nombre_voluntario'] . "</span>";
+                                            echo "</div>";
+                                            echo "<div class='col-4 align-self-center text-end'>";
+                                            echo "<a href='../controllers/JaulaC.php?action=show_register&id=" . $data['voluntarios_id'] . "' class='btn btn-primary btn-sm'>Ver</a>";
+                                            echo "</div>";
                                             echo "</div>";
                                             echo "</div>";
                                         } else {
                                             echo "<div class='card-body' style='max-height:350px; overflow-y:auto;' id='list_voluntario'>";
                                             echo "<div class='p-2 pb-1 text-center'>";
-                                            echo "<p>No hay voluntario asignado</p>";
+                                            echo "<p>Tarea no asignada a un voluntario.</p>";
                                             echo "</div>";
                                             echo "</div>";
                                         }
@@ -183,11 +193,18 @@
                                         <?php
                                         if (!empty($data['jaulas_id'])) {
                                             echo "<div class='card-body' style='max-height:350px; overflow-y:auto;' id='list_jaula'>";
-                                            echo "<div class='p-2'>";
-                                            echo "<a href='../controllers/JaulaC.php?action=show_register&id=" . $data['jaulas_id'] . "'>" . $data['ubicacion'] . ' - ' . $data['nombre_especie'] . "</a>";
+                                            echo "<div class='row mb-2'>";
+                                            echo "<div class='col-6'>";
+                                            echo "<span class='d-block'><strong class='text-primary'>Ubicación: </strong>" . $data['ubicacion'] . "</span>";
+                                            echo "<span class='d-block'><strong class='text-primary'>Especie: </strong>" . $data['nombre_especie'] . "</span>";
+                                            echo "</div>";
+                                            echo "<div class='col-6 align-self-center text-end'>";
+                                            echo "<a href='../controllers/JaulaC.php?action=show_register&id=" . $data['jaulas_id'] . "' class='btn btn-primary btn-sm'>Ver</a>";
+                                            echo "</div>";
                                             echo "</div>";
                                             echo "</div>";
                                         } else {
+                                            echo '<input type="hidden" name="jaula_id_register" id="jaula_id_register" value="">';
                                             echo "<div class='card-body' style='max-height:350px; overflow-y:auto;' id='list_jaula'>";
                                             echo "<div class='p-2 pb-1 text-center'>";
                                             echo "<p>No hay jaula asignada</p>";
@@ -197,14 +214,14 @@
                                         ?>
                                     </div>
                                 </div>
-
-                                <div class="form-group p-3 text-center bg-info bg-opacity-25 hidden btn-hidden-register">
-                                    <button type="submit" class="btn btn-primary" id="submit_register" name="action" value="update">Guardar Cambios</button>
-                                    <button type="button" class="btn btn-primary" id="cancel_register">Descartar</button>
-                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group p-3 text-center bg-info bg-opacity-25 hidden btn-hidden-register">
+                            <button type="submit" class="btn btn-primary" id="submit_register" name="action" value="update">Guardar Cambios</button>
+                            <button type="button" class="btn btn-primary" id="cancel_register">Descartar</button>
+                        </div>
                     </form>
                 </div>
-                <br>
             </div>
         </main>
 
