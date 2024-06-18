@@ -38,14 +38,6 @@
                     <span class="d-flex" style="width: max-content;">Estado adopción</span>
                 </th>
                 <th>Jaula</th>
-                <th>
-                    <div class="d-flex align-items-center justify-content-space-between">
-                        <span style="width: max-content;">ELIMINADO</span>
-                        <button class="btn btn-link sort-btn p-0" data-field="disponible" data-ord="asc">
-                            <i class="fas fa-sort"></i>
-                        </button>
-                    </div>
-                </th>
 
                 <th class='text-center'></th>
                 <!-- <th class='text-center' colspan="2"></th> -->
@@ -69,35 +61,12 @@
                 echo "<td>" . $show_data["fech_nac"] . "</td>";
                 echo "<td style='white-space:normal'>" . $show_data["estado_adopcion"] . "</td>";
                 echo "<td>" . $show_data["ubicacion"] . "</td>";
-                echo "<td>" . (($show_data["disponible"] == '0') ? 'SI' : 'NO') . "</td>";
                 echo "<td class='ps-4 pe-2'>";
             ?>
-                <div class="btn-group dropdown d-block" style="position:relative">
-                    <button type="button" onclick="show_btn_options(event)" id="add" class="button-dropdown rounded" style="padding: .8em;width: 1.3em;height: 1.3em;">
-                        <i class="fa-solid fa-caret-down text-primary"></i>
-                    </button>
-                    <!-- <div class="btn-dropdown-options w-100 position-absolute start-0 show-block"> -->
-                    <div class="btn-dropdown-options w-auto position-absolute start-0">
-                        <ul class="list-unstyled m-0">
-                            <li>
-                            <a href=<?="../controllers/AnimalC.php?action=show_register&id=". $show_data["id"]?>>Ver</a>
-                            </li>
-                            <li>
-                            <a href=<?="../controllers/AnimalC.php?action=update_modal&id=". $show_data["id"]?>>Editar</a>
-                            </li>
-                            <li>
-                                <a href=<?="../controllers/AnimalC.php?action=sdelete&id=". $show_data["id"]?>>Borrar</a>                                
-                            </li>                                                       
-                            <?php
-                                if($_SESSION["rol"] == Constants::ROL_ADMIN && $show_data["disponible"] == '0'){
-                            ?>
-                            <li>
-                                <a href=<?="../controllers/AnimalC.php?action=undelete&id=". $show_data["id"]?>>Recuperar registro</a>                                
-                            </li>
-                            <?php } ?>
-                        </ul>
-                    </div>
-                </div>
+
+                <a href=<?= "../controllers/AnimalC.php?action=show_register&id=" . $show_data["id"] ?> class="btn btn-primary text-white btn-sm me-1">Ver</a>
+                <a href=<?= "../controllers/AnimalC.php?action=sdelete&id=" . $show_data["id"] ?> class="btn btn-danger text-white btn-sm me-1">Borrar</a>
+
             <?php
                 echo "</td>";
                 echo "</tr>";

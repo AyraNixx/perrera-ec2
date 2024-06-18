@@ -24,6 +24,8 @@ $user_profile = $_SESSION["rol"];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio</title>
     <link rel="shortcut icon" href="../../public/imgs/logos/logo1.png" type="image/x-icon">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/css/bootstrap-select.min.css">
     <script src="https://kit.fontawesome.com/8d125d2b91.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../views/css/sass.css">
 </head>
@@ -76,6 +78,88 @@ $user_profile = $_SESSION["rol"];
                     </select>
 
                 </div>
+
+                <div class="container-fluid">
+        <div class="table-container">
+            <h2 class="text-center mb-4">Tabla de Tareas</h2>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Clark</td>
+                            <td><span class="badge bg-success">Activa</span></td>
+                            <td>
+                                <button class="btn btn-primary btn-sm me-1">Ver</button>
+                                <button class="btn btn-secondary btn-sm">Eliminar</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Peter</td>
+                            <td><span class="badge bg-success">Activa</span></td>
+                            <td>
+                                <button class="btn btn-primary btn-sm me-1">Ver</button>
+                                <button class="btn btn-secondary btn-sm">Eliminar</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td>John</td>
+                            <td><span class="badge bg-success">Activa</span></td>
+                            <td>
+                                <button class="btn btn-primary btn-sm me-1">Ver</button>
+                                <button class="btn btn-secondary btn-sm">Eliminar</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">4</th>
+                            <td>Sarah</td>
+                            <td><span class="badge bg-success">Activa</span></td>
+                            <td>
+                                <button class="btn btn-primary btn-sm me-1">Ver</button>
+                                <button class="btn btn-secondary btn-sm">Eliminar</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">5</th>
+                            <td>Emma</td>
+                            <td><span class="badge bg-success">Activa</span></td>
+                            <td>
+                                <button class="btn btn-primary btn-sm me-1">Ver</button>
+                                <button class="btn btn-secondary btn-sm">Eliminar</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- PAGINACIÓN -->
+            <div class="d-flex justify-content-end align-items-center mt-3">
+                <div class="me-2">Página:</div>
+                <select class="form-select form-select-sm mx-1" id="page">
+                    <?php for ($i = 1; $i <= 5; $i++) : ?>
+                        <option value="<?= $i ?>"><?= $i ?></option>
+                    <?php endfor; ?>
+                </select>
+                <div class="me-2">de 5</div>
+                <button type="button" class="btn btn-outline-primary btn-sm me-1">
+                    <i class="bi bi-chevron-left"></i>
+                </button>
+                <button type="button" class="btn btn-outline-primary btn-sm">
+                    <i class="bi bi-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
 
                 <!-- TABLA DE TAREAS -->
                 <div class="task-table">
@@ -180,6 +264,8 @@ $user_profile = $_SESSION["rol"];
                         </button>
                     </div>
                 </div>
+
+
             </section>
 
         </main>
@@ -187,6 +273,10 @@ $user_profile = $_SESSION["rol"];
     </section>
     <!-- JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js"></script>
     <script src="./js/widthMenu.js"></script>
 </body>
 

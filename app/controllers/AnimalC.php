@@ -526,8 +526,8 @@ class AnimalC
         $this->page = $this->get_value("page", $this->page);
         $this->search_val = (isset($_POST['search_value']) && !empty($_POST['search_value']) && $_POST['search_value'] != '' && $_POST['search_value'] != null) ? ('%' . $this->get_value("search_value", $_POST['search_value']) . '%') : false;
 
-        $data = ($this->search_val) ? ($this->animal->queryParamSearch(Constants::SEARCH_ANIMALES_TABLE, $this->search_val, $this->ord, $this->field, $this->page, $this->amount)) : ($this->animal->pagination_all_with_more_info($this->ord, $this->field, $this->page, $this->amount));
-        $total_pages = ($this->search_val) ? ceil(count($this->animal->queryParam(Constants::SEARCH_ANIMALES_TABLE_TOTAL_PAGES, ['search_value' => $this->search_val])) / $this->amount) : ((strtoupper($_SESSION["rol"]) == USER_ROL_ADMIN)  ? $this->animal->total_pages("animales", $this->amount) : $this->animal->total_pages_visibles("animales", $this->amount));
+        $data = ($this->search_val) ? ($this->animal->queryParamSearch(Constants::SEARCH_ANIMALES_TABLE, $this->search_val, $this->ord, $this->field, $this->page, $this->amount)) : ($this->animal->pagination_visible_with_more_info($this->ord, $this->field, $this->page, $this->amount));
+        $total_pages = ($this->search_val) ? ceil(count($this->animal->queryParam(Constants::SEARCH_ANIMALES_TABLE_TOTAL_PAGES, ['search_value' => $this->search_val])) / $this->amount) : $this->animal->total_pages_visibles("animales", $this->amount);
         $total_pages = ($total_pages == 0) ? 1 : $total_pages;
         // Obtenemos todas las especies     
         $data_especies = $this->especie->get_all("especies");
@@ -551,78 +551,13 @@ class AnimalC
             $html_var .= "<td>" . $show_data["ubicacion"] . "</td>";
             $html_var .= "<td>" . (($show_data["disponible"] == '0') ? 'SI' : 'NO') . "</td>";
             $html_var .= "<td class='ps-4 pe-2'>";
-            $html_var .= "<div class='btn-group dropdown d-block' style='position:relative'>";
-            $html_var .= "<button type='button' onclick='show_btn_options(event)' id='add' class='button-dropdown rounded' style='padding: .8em;width: 1.3em;height: 1.3em;'>";
-            $html_var .= "<i class='fa-solid fa-caret-down text-primary'></i>";
-            $html_var .= "</button>";
-            $html_var .= "<div class='btn-dropdown-options w-auto position-absolute start-0'>";
-            $html_var .= "<ul class='list-unstyled m-0'>";
-            $html_var .= "<li>";
-            $html_var .= "<a href='../controllers/AnimalC.php?action=add_or_update&id=" . $show_data["id"] . "'>Editar</a>";
-            $html_var .= "</li>";
-            $html_var .= "<li>";
-            $html_var .= "<a href='../controllers/AnimalC.php?action=sdelete&id=" . $show_data["id"] . "'>Borrar</a>";
-            $html_var .= "</li>";
-            if ($_SESSION["rol"] == Constants::ROL_ADMIN && $show_data["disponible"] == '0') {
-                $html_var .= "<li>";
-                $html_var .= "<a href='../controllers/AnimalC.php?action=undelete&id=" . $show_data["id"] . "'>Recuperar registro</a>";
-                $html_var .= "</li>";
-            }
-            $html_var .= "</ul>";
-            $html_var .= "</div>";
-            $html_var .= "</div>";
+            $html_var .= '<a href="../controllers/AnimalC.php?action=show_register&id=' . $show_data['id'] . '" class="btn btn-primary text-white btn-sm me-1">Ver</a>';
+            $html_var .= '<a href="../controllers/AnimalC.php?action=sdelete&id=' . $show_data['id'] . '" class="btn btn-danger text-white btn-sm me-1">Borrar</a>';            
             $html_var .= "</td>";
             $html_var .= "</tr>";
         }
-        echo json_encode(array("total_pages" => $total_pages, "rows" => $html_var, 'pagination' => $this->generatePaginationHTML($page, $this->amount, $total_pages)));
+        echo json_encode(array("total_pages" => $total_pages, "rows" => $html_var, 'pagination' => $this->animal->generatePaginationHTML($page, $this->amount, $total_pages)));
     }
-
-    public function generatePaginationHTML($page, $amount, $total_pages)
-    {
-
-        $html = '<span class="register-amount w-auto text-uppercase p-0" style="letter-spacing: .1em; ">';
-        $html .= 'Filas por página:';
-        $html .= '<select name="amount" id="amount" class="amount px-1 border-0 cursos-pointer" style="outline: none;" data-page="' . $amount . '">';
-        $options = [10, 25, 50];
-        foreach ($options as $option) {
-            $html .= '<option value="' . $option . '" ' . ($amount == $option ? 'selected' : '') . '>' . $option . '</option>';
-        }
-        $html .= '</select>';
-        $html .= '</span>';
-        $html .= '<div class="select-page h-100 w-auto d-flex align-items-center p-0" style="gap:5px;">';
-
-        if ($page != 1) {
-            $html .= '<button class="previous bg-transparent border-0" value="' . ($page - 1) . '" style="outline: none; box-shadow:none;" id="previous">';
-            $html .= '<i class="fa-solid fa-chevron-left" style="font-size: .7em;"></i>';
-            $html .= '</button>';
-        } else {
-            $html .= '<button class="previous bg-transparent border-0" value="' . $page . '" style="outline: none; box-shadow:none;" id="previous" disabled>';
-            $html .= '<i class="fa-solid fa-chevron-left" style="font-size: .7em;"></i>';
-            $html .= '</button>';
-        }
-
-        $html .= '<select name="page" id="page" class="amount px-1 border-0 cursos-pointer" style="outline: none;">';
-        for ($i = 1; $i <= $total_pages; $i++) {
-            $html .= '<option value="' . $i . '" ' . ($i == $page ? 'selected' : '') . '>' . $i . '</option>';
-        }
-        $html .= '</select>';
-        $html .= 'de <span class="me-1" id="total_pages">' . $total_pages . '</span>';
-
-        if ($page != $total_pages) {
-            $html .= '<button class="next bg-transparent border-0" value="' . ($page + 1) . '" style="outline: none; box-shadow:none;" id="next">';
-            $html .= '<i class="fa-solid fa-chevron-right" style="font-size: .7em;"></i>';
-            $html .= '</button>';
-        } else {
-            $html .= '<button class="next bg-transparent border-0" value="' . $page . '" style="outline: none; box-shadow:none;" id="next" disabled>';
-            $html .= '<i class="fa-solid fa-chevron-right" style="font-size: .7em;"></i>';
-            $html .= '</button>';
-        }
-
-        $html .= '</div>';
-
-        return $html;
-    }
-
 
     // Obtiene el valor de post y si no existe, te devuelve el original
     public function get_value(String $val, String $originalVal)

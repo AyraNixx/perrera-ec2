@@ -40,6 +40,7 @@
         <tbody>
 
             <?php
+
             use utils\Constants;
 
             // Recorremos el array data y concatenamos el HTML generado dinámicamente
@@ -53,26 +54,14 @@
                 echo "<td>" . $show_data["nombre_clinica"] . "</td>";
                 echo "<td>" . $show_data["nombre_animal"] . "</td>";
                 echo "<td class='ps-4 pe-2'>";
-                echo "<div class='btn-group dropdown d-block' style='position:relative'>";
-                echo "<button type='button' onclick='show_btn_options(event)' id='add' class='button-dropdown rounded' style='padding: .8em;width: 1.3em;height: 1.3em;'>";
-                echo "<i class='fa-solid fa-caret-down text-primary'></i>";
-                echo "</button>";
-                echo "<div class='btn-dropdown-options w-auto position-absolute start-0'>";
-                echo "<ul class='list-unstyled m-0'>";
-                echo "<li>";
-                echo "<a href='../controllers/AtencionVeterinariaC.php?action=show_register&id=" . $show_data["id"] . "'>Ver</a>";
-                echo "</li>";
-                echo "<li>";
-                echo "<a href='../controllers/AtencionVeterinariaC.php?action=sdelete&id=" . $show_data["id"] . "'>Borrar</a>";
-                echo "</li>";
-                echo "</ul>";
-                echo "</div>";
-                echo "</div>";
+            ?>
+                <a href=<?= "../controllers/AtencionVeterinariaC.php?action=show_register&id=" . $show_data["id"] ?> class="btn btn-primary text-white btn-sm me-1">Ver</a>
+                <a href=<?= "../controllers/AtencionVeterinariaC.php?action=sdelete&id=" . $show_data["id"] ?> class="btn btn-danger text-white btn-sm me-1">Borrar</a>
+            <?php
                 echo "</td>";
                 echo "</tr>";
             }
             ?>
-
         </tbody>
     </table>
 </div>
