@@ -112,7 +112,7 @@
                                                     </div>
                                                     <div class="col-12 col-md-6">
                                                         <label for="nombre_veterinario" class="col-12 text-primary">Veterinario</label>
-                                                        <input type="text" name="nombre_veterinario" id="nombre_veterinario" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?= $data['nombre_veterinario'] . ' ' . $data['apellidos_veterinario'] ?>" readonly disabled>                                                        
+                                                        <input type="text" name="nombre_veterinario" id="nombre_veterinario" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?= $data['nombre_veterinario'] . ' ' . $data['apellidos_veterinario'] ?>" readonly disabled>
                                                     </div>
                                                     <div class="col-12 col-md-4">
                                                         <label for="fecha_atencion" class="col-12 text-primary">Fech. asistencia</label>
@@ -277,14 +277,15 @@
                                         ?>
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="form-group p-3 text-center bg-info bg-opacity-25 hidden btn-hidden-register">
-                                    <button type="submit" class="btn btn-primary" id="submit_register" name="action" value="update">Guardar Cambios</button>
-                                    <button type="button" class="btn btn-primary" id="cancel_register">Descartar</button>
-                                </div>
+                        </div>
+                        <div class="form-group p-3 text-center bg-info bg-opacity-25 hidden btn-hidden-register">
+                            <button type="submit" class="btn btn-primary" id="submit_register" name="action" value="update">Guardar Cambios</button>
+                            <button type="button" class="btn btn-primary" id="cancel_register">Descartar</button>
+                        </div>
                     </form>
                 </div>
-                <br>
             </div>
         </main>
 

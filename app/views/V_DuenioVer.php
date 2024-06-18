@@ -236,11 +236,12 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group p-3 text-center bg-info bg-opacity-25 hidden btn-hidden-register">
-                                <button type="submit" class="btn btn-primary" id="submit_register" name="action" value="update">Guardar Cambios</button>
-                                <button type="button" class="btn btn-primary" id="cancel_register">Descartar</button>
-                            </div>
                         </div>
+                        <div class="form-group p-3 text-center bg-info bg-opacity-25 hidden btn-hidden-register">
+                            <button type="submit" class="btn btn-primary" id="submit_register" name="action" value="update">Guardar Cambios</button>
+                            <button type="button" class="btn btn-primary" id="cancel_register">Descartar</button>
+                        </div>
+
                     </form>
                 </div>
             </div>

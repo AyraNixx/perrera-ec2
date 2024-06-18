@@ -29,8 +29,8 @@
                 echo "<td style=>" . $show_data["descripcion"] . "</td>";
                 echo "<td class='ps-4 pe-2 text-center'>";
             ?>
-                <a href=<?= "../controllers/TareasC.php?action=show_register&id=" . $show_data["id"] ?> class="btn btn-primary text-white btn-sm me-1">Ver</a>
-                <a href=<?= "../controllers/TareasC.php?action=sdelete&id=" . $show_data["id"] ?> class="btn btn-danger text-white btn-sm me-1">Borrar</a>
+                <a href=<?= "../controllers/TareaC.php?action=show_register&id=" . $show_data["id"] ?> class="btn btn-primary text-white btn-sm me-1">Ver</a>
+                <a href=<?= "../controllers/TareaC.php?action=sdelete&id=" . $show_data["id"] ?> class="btn btn-danger text-white btn-sm me-1">Borrar</a>
             <?php
                 echo "</td>";
                 echo "</tr>";
