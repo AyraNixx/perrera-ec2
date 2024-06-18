@@ -73,6 +73,9 @@ class AsignarTareasC
             case "index":
                 $this->index();
                 break;
+            case "index_home":
+                $this->index_home();
+                break;
             case "show_register":
                 $this->show_register();
                 break;
@@ -91,6 +94,9 @@ class AsignarTareasC
             case "show_delete_rows":
                 $this->show_delete_rows();
                 break;
+            case "get_tasks_home":
+                $this->get_tasks_home();
+                break;
             case "change_assigned_to":
                 $this->change_assigned_to();
                 break;
@@ -101,6 +107,20 @@ class AsignarTareasC
                 $this->index();
                 break;
         }
+    }
+
+    private function index_home($view = 'V_Home-Page.php'){
+        if(!isset($_SESSION['correo'])){
+            header('Location: LoginC.php?action=logout');
+            exit();
+        }
+        $correo = htmlspecialchars(trim($_SESSION['correo']), ENT_QUOTES, 'UTF-8');
+        $data = $this->asignar->queryParam(Constants::GET_TAREAS_EMPLEADO_LOGIN, ['correo' => $correo]);
+        if($data == false){
+            header('Location: LoginC.php?action=logout&msg=' . 'Ha ocurrido un problema al iniciar sesión. Si persiste, contactar con un administrador.');
+            exit();
+        }
+        require_once "../views/" . $view;
     }
 
     private function index($view = 'V_TareasAsignadas.php')
@@ -368,6 +388,15 @@ class AsignarTareasC
         echo json_encode($this->asignar->query(Constants::GET_TAREAS_ASIGNADAS_INACTIVE));
     }
 
+    private function get_tasks_home()
+    {
+        if(isset($_REQUEST['estado'])){
+            $estado = $_REQUEST['estado'];
+
+            $query = ($estado == 'finished') ? Constants::GET_TAREAS_EMPLEADO_TERMINADAS : Constants::GET_TAREAS_EMPLEADO;
+            echo json_encode($this->asignar->queryParam($query, ['id' => $_REQUEST['id']]));
+        }
+    }
 
     private function pagination()
     {

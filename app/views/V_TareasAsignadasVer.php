@@ -109,7 +109,7 @@
                                                 <div class="form-group row">
                                                     <div class="col-12">
                                                         <label for="asunto" class="col-12 text-primary">Asunto</label>
-                                                        <input type="text" name="asunto" id="asunto" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?= $data['asunto'] ?>" readonly>
+                                                        <input type="text" name="asunto" id="asunto" class="form-control-plaintext border-dark-subtle border-0 border-bottom mt-1 mb-3" value="<?= $data['asunto'] ?>" readonly disabled>
                                                     </div>
                                                     <div class="col-12 col-lg-6">
                                                         <label for="estado_asignacion" class="col-12 text-primary">Estado</label>

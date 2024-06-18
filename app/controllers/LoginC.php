@@ -162,7 +162,7 @@ class LoginC
             // Dependiendo del rol asignado  
             // POR AHORA VOY A MANDARLOS TODOS AL MISMO INDEX
 
-            header("Location: " . self::VIEW_INDEX);
+            header("Location: AsignarTareasC.php?action=index_home");
             exit();
         } catch (Exception $e) {
             Utils::save_log_error("Unexpected error caught: " . $e->getMessage());

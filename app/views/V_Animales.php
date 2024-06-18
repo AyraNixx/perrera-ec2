@@ -50,6 +50,8 @@ $user_profile = $_SESSION["rol"];
 
         <!-- MODAL ANIMAL -->
         <?php include_once "../views/components/insertAnimal.php"; ?>
+        <!-- Modal para ver las tareas eliminadas -->
+        <?php include_once "../views/components/seeDeletes.php"; ?>
 
         <!-- HEADER -->
         <?php include_once "../views/components/header.php"; ?>
@@ -91,14 +93,11 @@ $user_profile = $_SESSION["rol"];
             $("#aviso").modal("hide");
         }
     </script>
-    <!-- <script src="../views/js/widthMenu.js"></script>
-    <script src="../views/js/filteredTable.js"></script>
-    <script src="../views/js/changeJaulaValues.js"></script>
-    <script src="../views/js/pagination.js"></script> -->
     <script src="/DES/perrera-ec2/app/views/js/Utils.js"></script>
     <script src="/DES/perrera-ec2/app/views/js/widthMenu.js"></script>
     <script src="/DES/perrera-ec2/app/views/js/changeJaulaValues.js"></script>
     <script src="/DES/perrera-ec2/app/views/js/pagination.js"></script>
+    <script src="/DES/perrera-ec2/app/views/js/see-delete-rows.js"></script>
 </body>
 
 </html>

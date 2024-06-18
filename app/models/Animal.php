@@ -244,7 +244,7 @@ class Animal extends Model
             $query = "SELECT a.*, e.nombre as nombre_especie, j.ubicacion 
                         FROM perrera.animales a
                             INNER JOIN especies e ON a.especies_id = e.id
-                            INNER JOIN jaulas j ON a.jaulas_id = j.id
+                            LEFT JOIN jaulas j ON a.jaulas_id = j.id
                                 WHERE a.disponible = 1 
                                     ORDER BY $field $ord LIMIT :amount OFFSET :offset";
             // Preparamos la consulta para su ejecución

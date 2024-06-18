@@ -35,10 +35,14 @@
 
         <div class="col-md-6 col-lg-5 align-self-end">
             <div class="row">
-                <div class="col-lg-10 col-md-12 md-sm-1 mb-1">
+            <div class="col-lg-10 col-md-12 md-sm-1 mb-1">
                     <div class="btn-group" role="group">
                         <button class="button-dropdown" id="add" data-toggle="modal" data-target="#insert">Añadir</button>
-                        <button class="button-dropdown" id="new_filter">Crear nuevo filtro</button>
+                        <?php
+                        if ($user_profile == 'Administrador') {
+                            echo '<button type="button" id="see_delete" class="button-dropdown " data-toggle="modal" data-target="#see_delete_modal">Ver eliminados</button>';
+                        }
+                        ?>
                     </div>
                     <div class="btn-group dropdown" style="position:relative">
                         <button type="button" id="add" class="button-dropdown " data-toggle="modal" data-target="#insert">
@@ -49,9 +53,11 @@
                         </button>
                         <div class="btn-dropdown-options w-100 position-absolute start-0">
                             <ul class="list-unstyled m-0">
-                                <li>
-                                    Nuevo filtro
-                                </li>
+                                <?php
+                                if ($user_profile == 'Administrador') {
+                                    echo '<li id="see_delete" data-toggle="modal" data-target="#see_delete_modal"> Mostrar eliminados </li>';
+                                }
+                                ?>
                             </ul>
                         </div>
                     </div>

@@ -1,11 +1,8 @@
 <?php
 
 // Comprobamos que la sesion esta iniciada
-session_start();
-//Si no tenemos guardado login 
 
-if (!isset($_SESSION["login"])) 
-{
+if (!isset($_SESSION["login"])) {
     header("Location:../../public/Login.php");
 }
 
@@ -32,14 +29,15 @@ $user_profile = $_SESSION["rol"];
 
 <body>
     <!-- MENU -->
-    <?php include_once "./components/menu.php"; ?>
+    <?php include_once "../views/components/menu.php"; ?>
+
 
 
     <!-- CONTENIDO -->
     <section id="content">
 
         <!-- HEADER -->
-        <?php include_once "./components/header.php"; ?>
+        <?php include_once "../views/components/header.php"; ?>
 
 
         <!-- CONTENEDOR PRINCIPAL -->
@@ -66,209 +64,66 @@ $user_profile = $_SESSION["rol"];
             </h4>
 
             <!-- TABLA DE TAREAS -->
-            <section class="home-tasks m-3 mt-5 p-3">
+            <section class="home-tasks m-3 mt-5 p-3 overflow-hidden" style="max-height: 550px; height:550px;">
 
                 <div class="task-header d-flex justify-content-between align-items-center flex-wrap w-100 py-3 pb-4 text-primary">
                     <!-- TÍTULO -->
                     <h5 class="mb-0">Mis tareas</h5>
                     <!-- SELECT -->
                     <select name="show_task" id="show_task" class="border-0 bg-transparent text-uppercase">
-                        <option value="pending_task">Pendientes</option>
-                        <option value="finished_task">Finalizadas</option>
+                        <option value="pending">Pendientes</option>
+                        <option value="finished">Finalizadas</option>
                     </select>
 
                 </div>
+                <div class="table-container overflow-y-auto" style="max-height: 550px; height:450px;">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover" style="vertical-align: middle;" id="home-tasks">
+                            <thead>
+                                <tr>
+                                    <th class="bg-primary text-secondary" scope="col">Asunto</th>
+                                    <th class="bg-primary text-secondary" scope="col">Estado</th>
+                                    <th class="bg-primary text-secondary" scope="col">Fech. Asignación</th>
+                                    <th class="bg-primary text-secondary" scope="col">Fech. Finalización</th>
+                                    <th class="bg-primary text-secondary text-center" scope="col" class="text-center">Prioridad</th>
+                                </tr>
+                            </thead>
+                            <tbody><?php
+                                    function class_badge($prioridad)
+                                    {
+                                        switch ($prioridad) {
+                                            case 'baja':
+                                                return 'badge bg-success text-white';
+                                            case 'media':
+                                                return 'badge bg-warning text-dark';
+                                            case 'alta':
+                                                return 'badge bg-danger text-white';
+                                            default:
+                                                return 'badge bg-secondary';
+                                        }
+                                    }
+                                    $i = 0;
+                                    foreach ($data as $a) {
 
-                <div class="container-fluid">
-        <div class="table-container">
-            <h2 class="text-center mb-4">Tabla de Tareas</h2>
-            <div class="table-responsive">
-                <table class="table table-striped table-hover">
-                    <thead class="table-dark">
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Nombre</th>
-                            <th scope="col">Estado</th>
-                            <th scope="col">Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Clark</td>
-                            <td><span class="badge bg-success">Activa</span></td>
-                            <td>
-                                <button class="btn btn-primary btn-sm me-1">Ver</button>
-                                <button class="btn btn-secondary btn-sm">Eliminar</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">2</th>
-                            <td>Peter</td>
-                            <td><span class="badge bg-success">Activa</span></td>
-                            <td>
-                                <button class="btn btn-primary btn-sm me-1">Ver</button>
-                                <button class="btn btn-secondary btn-sm">Eliminar</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">3</th>
-                            <td>John</td>
-                            <td><span class="badge bg-success">Activa</span></td>
-                            <td>
-                                <button class="btn btn-primary btn-sm me-1">Ver</button>
-                                <button class="btn btn-secondary btn-sm">Eliminar</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">4</th>
-                            <td>Sarah</td>
-                            <td><span class="badge bg-success">Activa</span></td>
-                            <td>
-                                <button class="btn btn-primary btn-sm me-1">Ver</button>
-                                <button class="btn btn-secondary btn-sm">Eliminar</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">5</th>
-                            <td>Emma</td>
-                            <td><span class="badge bg-success">Activa</span></td>
-                            <td>
-                                <button class="btn btn-primary btn-sm me-1">Ver</button>
-                                <button class="btn btn-secondary btn-sm">Eliminar</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- PAGINACIÓN -->
-            <div class="d-flex justify-content-end align-items-center mt-3">
-                <div class="me-2">Página:</div>
-                <select class="form-select form-select-sm mx-1" id="page">
-                    <?php for ($i = 1; $i <= 5; $i++) : ?>
-                        <option value="<?= $i ?>"><?= $i ?></option>
-                    <?php endfor; ?>
-                </select>
-                <div class="me-2">de 5</div>
-                <button type="button" class="btn btn-outline-primary btn-sm me-1">
-                    <i class="bi bi-chevron-left"></i>
-                </button>
-                <button type="button" class="btn btn-outline-primary btn-sm">
-                    <i class="bi bi-chevron-right"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-
-                <!-- TABLA DE TAREAS -->
-                <div class="task-table">
-                    <table class="table table-striped" width="100%">
-                        <thead class="text-center">
-                            <tr>
-                                <th></th>
-                                <th>Nombre</th>
-                                <th>Estado</th>
-                            </tr>
-                        </thead>
-                        <tbody class="text-center">
-                            <tr>
-                                <td>1</td>
-                                <td>Clark</td>
-                                <td>
-                                    <span class="task-active rounded-pill bg-success px-3 text-uppercase text-white small">Activa</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Peter</td>
-                                <td>
-                                    <span class="task-active rounded-pill bg-success px-3 text-uppercase text-white small">Activa</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>John</td>
-                                <td>
-                                    <span class="task-active rounded-pill bg-success px-3 text-uppercase text-white small">Activa</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Peter</td>
-                                <td>
-                                    <span class="task-active rounded-pill bg-success px-3 text-uppercase text-white small">Activa</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>John</td>
-                                <td>
-                                    <span class="task-active rounded-pill bg-success px-3 text-uppercase text-white small">Activa</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Peter</td>
-                                <td>
-                                    <span class="task-active rounded-pill bg-success px-3 text-uppercase text-white small">Activa</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>John</td>
-                                <td>
-                                    <span class="task-active rounded-pill bg-success px-3 text-uppercase text-white small">Activa</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Peter</td>
-                                <td>
-                                    <span class="task-active rounded-pill bg-success px-3 text-uppercase text-white small">Activa</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>John</td>
-                                <td>
-                                    <span class="task-active rounded-pill bg-success px-3 text-uppercase text-white small">Activa</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Peter</td>
-                                <td>
-                                    <span class="task-active rounded-pill bg-success px-3 text-uppercase text-white small">Activa</span>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <!-- PAGINACIÓN -->
-
-                    <div class="pagination float-end p-2">
-                        <button type="submit" class="border-0 bg-transparent text-primary">
-                            <i class="fa-sharp fa-solid fa-backward"></i>
-                        </button>
-                        <select name="page" id="page" class="mx-1 ">
-                            <?php
-                            for ($i = 1; $i <= 100; $i++) {
-                                echo "<option value'$i'>$i</option>";
-                            }
-                            ?>
-                        </select>
-                        <span class="pe-2">of <?= 10 ?></span>
-                        <button type="submit" class="border-0 bg-transparent text-primary">
-                            <i class="fa-sharp fa-solid fa-forward"></i>
-                        </button>
+                                        $st = ($i % 2 != 0) ? 'bg-white' : 'bg-secondary';
+                                        echo "<tr>";
+                                        echo "<td class='$st'><a href='../controllers/AsignarTareasC.php?action=show_register&id=" . $a['id'] . "'>" . $a['asunto'] . "</a></td>";
+                                        echo "<td class='$st'>" . $a['estado_asignacion'] . "</td>";
+                                        echo "<td class='$st'>" . $a['fecha_asignacion'] . "</td>";
+                                        echo "<td class='$st'>" . $a['fecha_finalizacion'] . "</td>";
+                                        echo "<td class='$st'><span class='" . class_badge(strtolower($a['prioridad'])) . "'>" . $a['prioridad'] . "</span></td>";
+                                        echo "</tr>";
+                                        $i++;
+                                    }
+                                    ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-
-
+                <input type="hidden" id="empleados_id" value="<?= $correo ?>">
             </section>
-
-        </main>
+    </section>
+    </main>
 
     </section>
     <!-- JQuery -->
@@ -277,7 +132,8 @@ $user_profile = $_SESSION["rol"];
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js'></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js"></script>
-    <script src="./js/widthMenu.js"></script>
+    <script src="/DES/perrera-ec2/app/views/js/widthMenu.js"></script>
+    <script src="/DES/perrera-ec2/app/views/js/get-task-home.js"></script>
 </body>
 
 </html>

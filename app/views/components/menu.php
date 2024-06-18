@@ -18,7 +18,7 @@
             <!-- ENLANCES DEL MENÚ -->
             <div class="menu-items mt-4">
 
-                <h5><a href="/app/controllers/C_Home.php" class="text-white">Inicio</a></h5>
+                <h5><a href="../../app/controllers/AsignarTareasC.php?action=index_home" class="text-white">Inicio</a></h5>
 
                 <details>
                     <summary>

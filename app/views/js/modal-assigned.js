@@ -1,11 +1,19 @@
 let modal_origin = "";
 $(document).ready(function () {
-  if(controller_val == 'VoluntarioC.php'){
-    $('#voluntarios_id').val(id_page);
-    $('#assigned_to').val($('#details input[name="nombre"]').val() + ' ' + $('#details input[name="apellidos"]').val());
-  }else if(controller_val == 'EmpleadoC.php'){
-    $('#empleados_id').val(id_page);
-    $('#assigned_to').val($('#details input[name="nombre"]').val() + ' ' + $('#details input[name="apellidos"]').val());
+  if (controller_val == "VoluntarioC.php") {
+    $("#voluntarios_id").val(id_page);
+    $("#assigned_to").val(
+      $('#details input[name="nombre"]').val() +
+        " " +
+        $('#details input[name="apellidos"]').val()
+    );
+  } else if (controller_val == "EmpleadoC.php") {
+    $("#empleados_id").val(id_page);
+    $("#assigned_to").val(
+      $('#details input[name="nombre"]').val() +
+        " " +
+        $('#details input[name="apellidos"]').val()
+    );
   }
   $("#assigned_to").on("click", open_assigned_modal);
   $("[data-action='change_assigned_to']").on("click", function () {
@@ -98,24 +106,28 @@ function save_value() {
               `<input type="hidden" name="empleados_id" id="empleados_id" value="${empleado.id}">`
             );
             $("#list_empleado").append(
-              `<div class="card-body" style="max-height:350px; overflow-y:auto;">
-                <div class="p-2">
-                  <a href="../controllers/EmpleadoC.php?action=show_register&id=${empleado.id}">
-                    ${empleado.nombre} ${empleado.apellidos}
-                  </a>
+              `<div class='card-body' style='max-height:350px; overflow-y:auto;' id='list_empleado'>
+                <div class='row mb-2'>
+                <div class='col-8'>
+                <span class='d-block'><strong class='text-primary'>Nombre: </strong>${empleado.nombre} ${empleado.apellidos}</span>
+                </div>
+                <div class='col-4 align-self-center text-end'>
+                   <a href="../controllers/VoluntarioC.php?action=show_register&id=${empleado.id}" class="btn btn-primary btn-sm">Ver</a>
+                     </div>
                 </div>
               </div>`
             );
           } else {
             $("#list_empleado").append(
-              `<div class="card-body" style="max-height:350px; overflow-y:auto;">
-                <div class="p-2 pb-1">
-                  <p>No hay empleado asignado</p>
+              `<div class='card-body' style='max-height:350px; overflow-y:auto;' id='list_empleado'>
+                <div class='p-2 pb-1 text-center'>
+                  <p>Tarea no asignada a un voluntario.</p>
                 </div>
               </div>`
             );
           }
 
+          $("#list_voluntario").empty();
           if (res.voluntario && res.voluntario.length > 0) {
             let voluntario = res.voluntario[0];
             $("#list_voluntario").append(
@@ -123,31 +135,36 @@ function save_value() {
             );
             $("#list_voluntario").append(
               `<div class="card-body" style="max-height:350px; overflow-y:auto;">
-                <div class="p-2">
-                  <a href="../controllers/VoluntarioC.php?action=show_register&id=${voluntario.id}">
-                    ${voluntario.nombre} ${voluntario.apellidos}
-                  </a>
-                </div>
-              </div>`
+                    <div class="row mb-2">
+                      <div class="col-8">
+                        <span class="d-block"><strong class="text-primary">Nombre: </strong>${voluntario.nombre} ${voluntario.apellidos}</span>
+                      </div>
+                      <div class="col-4 align-self-center text-end">
+                        <a href="../controllers/VoluntarioC.php?action=show_register&id=${voluntario.id}" class="btn btn-primary btn-sm">Ver</a>
+                      </div>
+                    </div>
+                  </div>`
             );
           } else {
             $("#list_voluntario").append(
               `<div class="card-body" style="max-height:350px; overflow-y:auto;">
-                <div class="p-2 pb-1">
-                  <p>No hay voluntario asignado</p>
-                </div>
-              </div>`
+                    <div class="p-2 pb-1 text-center">
+                      <p>No hay voluntario asignado</p>
+                    </div>
+                  </div>`
             );
           }
         } else {
           msg = res.msg;
         }
 
-        $("#aviso .modal-body").empty().append("<p>" + msg + "</p>");
+        $("#aviso .modal-body")
+          .empty()
+          .append("<p>" + msg + "</p>");
         $("#aviso").modal("show");
       },
       error: function (xhr, status, error) {
-        console.error('Error: ', xhr.responseText);
+        console.error("Error: ", xhr.responseText);
       },
     });
   }
@@ -157,7 +174,8 @@ function save_value() {
 
 function get_people() {
   let icon_sel = $("#icon-select").val();
-  let controller = icon_sel === "empleado" ? "EmpleadoC.php" : "VoluntarioC.php";
+  let controller =
+    icon_sel === "empleado" ? "EmpleadoC.php" : "VoluntarioC.php";
 
   $.ajax({
     type: "POST",

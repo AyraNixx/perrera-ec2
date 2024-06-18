@@ -167,6 +167,9 @@ class AnimalC
                 // Llama a la funcion delete
                 $this->delete();
                 break;
+            case "show_delete_rows":
+                $this->show_delete_rows();
+                break;
                 // Por defecto, llamará a la función index
             case "show_cages":
                 $this->show_cages_available();
@@ -191,22 +194,10 @@ class AnimalC
 
     public function index($view = "V_Animales.php")
     {
-        if (strtoupper($_SESSION["rol"]) == USER_ROL_ADMIN) {
-            // Obtenemos todos los registros, tantos los visibles como los no visibles
-            $data = $this->animal->pagination_all_with_more_info($this->ord, $this->field, $this->page, $this->amount);
-            // Obtenemos el total de páginas de todos los registros, tanto los visibles como los que no
-            $total_pages = $this->animal->total_pages("animales", $this->amount);
-        } else {
-            // Obtenemos todos los registros los visibles
-            $data = $this->animal->pagination_visible_with_more_info($this->ord, $this->field, $this->page, $this->amount);
-            // Obtenemos el total de páginas de todos los registros, solo los visibles
-            $total_pages = $this->animal->total_pages_visibles("animales", $this->amount);
-        }
-        // Obtenemos todas las especies     
+        $data = $this->animal->pagination_visible_with_more_info($this->ord, $this->field, $this->page, $this->amount);
+        $total_pages = $this->animal->total_pages_visibles("animales", $this->amount);
         $data_especies = $this->especie->get_all("especies");
-        // La página actual
         $page = $this->getPage();
-        // Mensaje
         $new_msg = $this->getMsg();
 
         require_once "../views/" . $view;
@@ -549,10 +540,9 @@ class AnimalC
             $html_var .= "<td>" . $show_data["fech_nac"] . "</td>";
             $html_var .= "<td>" . $show_data["estado_adopcion"] . "</td>";
             $html_var .= "<td>" . $show_data["ubicacion"] . "</td>";
-            $html_var .= "<td>" . (($show_data["disponible"] == '0') ? 'SI' : 'NO') . "</td>";
             $html_var .= "<td class='ps-4 pe-2'>";
             $html_var .= '<a href="../controllers/AnimalC.php?action=show_register&id=' . $show_data['id'] . '" class="btn btn-primary text-white btn-sm me-1">Ver</a>';
-            $html_var .= '<a href="../controllers/AnimalC.php?action=sdelete&id=' . $show_data['id'] . '" class="btn btn-danger text-white btn-sm me-1">Borrar</a>';            
+            $html_var .= '<a href="../controllers/AnimalC.php?action=sdelete&id=' . $show_data['id'] . '" class="btn btn-danger text-white btn-sm me-1">Borrar</a>';
             $html_var .= "</td>";
             $html_var .= "</tr>";
         }
@@ -570,6 +560,11 @@ class AnimalC
         }
     }
 
+
+    private function show_delete_rows()
+    {
+        echo json_encode($this->animal->query(Constants::GET_ANIMALES_INACTIVE));
+    }
 
     // Te lleva a la vista
     public function view(array $datos_visibles, array $datos, String $view)
