@@ -57,7 +57,7 @@
                 echo "<td>" . $show_data["correo"] . "</td>";
                 echo "<td class='ps-4 pe-2'>";
             ?>
-                <a href=<?= "../controllers/Empleado.php?action=show_register&id=" . $show_data["id"] ?> class="btn btn-primary text-white btn-sm me-1">Ver</a>
+                <a href=<?= "../controllers/EmpleadoC.php?action=show_register&id=" . $show_data["id"] ?> class="btn btn-primary text-white btn-sm me-1">Ver</a>
                 <a href=<?= "../controllers/EmpleadoC.php?action=sdelete&id=" . $show_data["id"] ?> class="btn btn-danger text-white btn-sm me-1">Borrar</a>
 
             <?php

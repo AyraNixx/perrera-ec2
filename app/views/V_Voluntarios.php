@@ -77,7 +77,7 @@ $user_profile = $_SESSION["rol"];
 
     <?php
 
-    if ($new_msg != null) { ?>
+    if ($_REQUEST['msg'] != null) { ?>
 
         <script>
             $(document).ready(function() {

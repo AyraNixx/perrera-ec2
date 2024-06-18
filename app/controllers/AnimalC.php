@@ -207,14 +207,8 @@ class AnimalC
     {
         if (isset($_REQUEST['id']) && !empty($_REQUEST['id']) || !empty($id)) {
             $id = isset($_REQUEST['id']) ? htmlspecialchars(trim($_REQUEST['id']), ENT_QUOTES, 'UTF-8') : htmlspecialchars(trim($id), ENT_QUOTES, 'UTF-8');
-            $data = $this->animal->queryParam(Constants::GET_ANIMAL, ['id' => $id]);
-            if ($data == null) {
-                $data = $this->animal->queryParam(Constants::GET_ANIMAL2, ['id' => $id]);
-            }
-            $data = $data[0];
-            // Obtenemos todas las especies     
+            $data = $this->animal->queryParam(Constants::GET_ANIMAL, ['id' => $id])[0];
             $data_especies = $this->especie->get_all("especies");
-
             require_once Constants::VIEW_ANIMAL;
         }
     }

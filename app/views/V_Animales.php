@@ -77,8 +77,9 @@ $user_profile = $_SESSION["rol"];
 
     <?php
 
-    if ($new_msg != null) { ?>
-
+    if ($new_msg != null) { 
+    ?>
+        
         <script>
             $(document).ready(function() {
                 $("#aviso").modal("show");

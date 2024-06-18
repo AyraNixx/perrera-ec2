@@ -39,16 +39,8 @@ class LoginC
     // 
     // -- CONSTANTES
     // 
-    // const VIEW_LOGIN = '../../../public/Login.php';
-    // const VIEW_INDEX = '../views/V_Home-Page.php'; // TEMPORAL! Por alguna razón DIR me da fallos con el header
-    // const VIEW_NOT_FOUND = __DIR__ . '/../views/NotFound.php'; // TEMPORAL!
-    // const VIEW_NOT_ACTIVATE = __DIR__ . '/../views/Activate.php'; // TEMPORAL!
-
     const VIEW_LOGIN = '../../public/Login.php';
     const VIEW_INDEX = '../views/V_Home-Page.php'; // TEMPORAL! Por alguna razón DIR me da fallos con el header
-    // const VIEW_NOT_FOUND = __DIR__ . '/../views/NotFound.php'; // TEMPORAL!
-    // const VIEW_NOT_ACTIVATE = __DIR__ . '/../views/Activate.php'; // TEMPORAL!
-
     const USER_NOT_FOUND = "El usuario o contraseña es erróneo";
     const USER_NOT_ACTIVATE = "Cuenta no activada, por favor, cambie su contraseña"; // TEMPORAL
 
